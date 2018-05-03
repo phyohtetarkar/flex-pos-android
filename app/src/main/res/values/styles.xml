@@ -1,0 +1,61 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="buttonBarNegativeButtonStyle">@style/BorderlessColoredButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/BorderlessColoredButton</item>
+        <item name="titleTextAppearance">@style/TitleTextMedium</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
+    <style name="TitleTextNormal" parent="@android:style/TextAppearance">
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/app_font_normal</item>
+    </style>
+
+    <style name="TitleTextMedium" parent="@android:style/TextAppearance">
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/app_font_medium</item>
+    </style>
+
+    <style name="AppTextNormal" parent="@android:style/TextAppearance">
+        <item name="fontFamily">@font/app_font_normal</item>
+    </style>
+    <style name="AppTextMedium" parent="@android:style/TextAppearance">
+        <item name="fontFamily">@font/app_font_medium</item>
+    </style>
+    <style name="AppTextBold" parent="@android:style/TextAppearance">
+        <item name="fontFamily">@font/app_font_bold</item>
+    </style>
+
+    <style name="ErrorText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorError</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/app_font_normal</item>
+    </style>
+
+    <style name="BorderlessColoredButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAppearance">@style/AppTextNormal</item>
+    </style>
+
+</resources>

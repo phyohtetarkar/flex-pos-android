@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="unit"
+            type="android.databinding.ObservableField&lt;com.jsoft.es.data.entity.Unit&gt;" />
+
+        <variable
+            name="delegate"
+            type="com.jsoft.es.ui.views.unit.EditUnitDialogDelegate" />
+
+        <variable
+            name="isValidUnitName"
+            type="Boolean" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/Base.DialogWindowTitle.AppCompat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/app_font_medium"
+            android:text='@{unit.id > 0 ? "Edit Unit" : "Create Unit"}'
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Edit Unit" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="20dp"
+            app:checkResult="@{safeUnbox(isValidUnitName)}"
+            app:errorMessage='@{@string/error_empty_input_format("Unit name")}'
+            app:errorTextAppearance="@style/ErrorText"
+            app:hintAnimationEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/editText_hint_unit_name"
+                android:text="@={unit.name}"
+                app:checkResult="@{safeUnbox(isValidUnitName)}" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSaveUnit"
+            style="@style/BorderlessColoredButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/save"
+            android:textAllCaps="true"
+            android:onClick="@{v -> delegate.onSaveClick()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+        <Button
+            android:id="@+id/btnCancelUnit"
+            style="@style/BorderlessColoredButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@android:string/cancel"
+            android:textAllCaps="true"
+            android:onClick="@{v -> delegate.onCancelClick()}"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSaveUnit"
+            app:layout_constraintEnd_toStartOf="@+id/btnSaveUnit"
+            app:layout_constraintTop_toTopOf="@+id/btnSaveUnit" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</layout>
