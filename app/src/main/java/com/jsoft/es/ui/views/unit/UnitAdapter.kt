@@ -20,9 +20,8 @@ class UnitAdapter : RecyclerView.Adapter<BindingViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
-        val u = list[position] as Unit?
-        if (u != null) {
-            holder.bind(u)
+        list.getOrNull(position)?.apply {
+            holder.bind(this)
         }
     }
 

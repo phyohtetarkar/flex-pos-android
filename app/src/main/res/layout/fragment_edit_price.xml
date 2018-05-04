@@ -32,31 +32,29 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/app_font_medium"
-            android:text='@{unit.id > 0 ? "Edit Unit" : "Create Unit"}'
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Edit Unit" />
+            tools:text="Edit Price" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/textInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="20dp"
             app:checkResult="@{safeUnbox(isValidUnitName)}"
             app:errorMessage='@{@string/error_empty_input_format("Unit name")}'
             app:errorTextAppearance="@style/ErrorText"
             app:hintAnimationEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textInputLayout5"
             app:layout_constraintStart_toStartOf="@+id/textViewEditPrice"
             app:layout_constraintTop_toBottomOf="@+id/textViewEditPrice">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_unit_name"
-                android:text="@={unit.name}"
+                android:hint="@string/hint_size"
                 app:checkResult="@{safeUnbox(isValidUnitName)}" />
 
         </android.support.design.widget.TextInputLayout>
@@ -72,10 +70,9 @@
             android:layout_marginTop="16dp"
             android:text="@string/save"
             android:textAllCaps="true"
-            android:onClick="@{v -> delegate.onSaveClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
 
         <Button
             android:id="@+id/btnCancelUnit"
@@ -86,10 +83,45 @@
             android:layout_marginRight="8dp"
             android:text="@android:string/cancel"
             android:textAllCaps="true"
-            android:onClick="@{v -> delegate.onCancelClick()}"
             app:layout_constraintBottom_toBottomOf="@+id/btnSaveUnit"
             app:layout_constraintEnd_toStartOf="@+id/btnSaveUnit"
             app:layout_constraintTop_toTopOf="@+id/btnSaveUnit" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout5"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_arrow_drop_dark"
+                android:drawableEnd="@drawable/ic_arrow_drop_dark"
+                android:hint="@string/hint_unit" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_price" />
+        </android.support.design.widget.TextInputLayout>
 
     </android.support.constraint.ConstraintLayout>
 

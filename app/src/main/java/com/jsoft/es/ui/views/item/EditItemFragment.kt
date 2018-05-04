@@ -45,16 +45,10 @@ class EditItemFragment : Fragment() {
             viewModel.item.notifyChange()
         })
 
-        viewModel.unitLiveData.observe(this, Observer {
-            viewModel.item.get()?.unit = it
-            viewModel.item.notifyChange()
-        })
-
         if (itemId > 0) {
             viewModel.itemLiveData.observe(this, Observer {
                 viewModel.item.set(it)
                 viewModel.categoryInput.value = it?.categoryId
-                viewModel.unitInput.value = it?.unitId
             })
             viewModel.itemInput.value = itemId
         } else {
@@ -74,17 +68,6 @@ class EditItemFragment : Fragment() {
                 val i = Intent(activity, CategoryActivity::class.java)
                 i.putExtra("mode", CategoriesFragment.Mode.SELECT)
                 startActivityForResult(i, CATEGORY_REQUEST_CODE)
-            }
-            true
-        }
-
-        edEditItemUnit.setOnKeyListener { p0, p1, p2 -> true}
-        edEditItemUnit.setOnTouchListener { _, me ->
-            edEditItemUnit.requestFocus()
-            if (me.action == MotionEvent.ACTION_DOWN) {
-                val i = Intent(activity, UnitActivity::class.java)
-                i.putExtra("mode", UnitsFragment.Mode.SELECT)
-                startActivityForResult(i, UNIT_REQUEST_CODE)
             }
             true
         }
@@ -133,7 +116,7 @@ class EditItemFragment : Fragment() {
             UNIT_REQUEST_CODE -> {
                 if (resultCode == RESULT_OK) {
                     val unitId = data!!.getIntExtra("unitId", 0)
-                    viewModel.item.get()?.unitId = unitId
+                    //viewModel.item.get()?.unitId = unitId
                     viewModel.unitInput.value = unitId
                 }
             }

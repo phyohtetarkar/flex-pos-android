@@ -48,7 +48,6 @@ class ItemRepo(private val dao: ItemDao) {
         val itemLiveData = MutableLiveData<Item>()
         DaoWorkerAsync<Long>({
             val item = dao.findByIdSync(id)
-            item.unit = unitDao.findByIdSync(item.unitId)
             item.category = categoryDao.findByIdSync(item.categoryId)
 
             itemLiveData.value = item
@@ -172,8 +171,5 @@ interface ItemDao : BaseDao<Item> {
 
     @Query("SELECT * FROM item WHERE id = :id LIMIT 1")
     fun findByIdSync(id: Long): Item
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAndGet(t: Item): Long
 
 }

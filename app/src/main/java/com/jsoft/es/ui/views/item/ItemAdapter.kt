@@ -19,9 +19,8 @@ class ItemAdapter : PagedListAdapter<ItemVO, BindingViewHolder>(DIFF_CALLBACK) {
     }
 
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
-        val itemVO = getItem(position)
-        if (itemVO != null) {
-            holder.bind(itemVO)
+        getItem(position)?.apply {
+            holder.bind(this)
         }
     }
 

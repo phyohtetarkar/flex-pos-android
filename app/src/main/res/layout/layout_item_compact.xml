@@ -61,7 +61,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:text="@{obj.rate}"
                 tools:text="(120 ml)" />
 
         </LinearLayout>
@@ -75,7 +74,6 @@
             android:layout_marginRight="16dp"
             android:fontFamily="@font/app_font_medium"
             android:textSize="16sp"
-            android:text='@{obj.price + " Ks"}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="1000 Ks" />

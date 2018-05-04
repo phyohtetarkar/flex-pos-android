@@ -4,21 +4,22 @@
 
     <string name="app_name">Easy Shop</string>
     <string name="save">Save</string>
-    <string name="editText_hint_unit_name">Unit Name *</string>
-    <string name="editText_hint_category_name">Category Name *</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="hint_unit_name">Unit Name *</string>
+    <string name="hint_category_name">Category Name *</string>
     <string name="select_color">Select Color</string>
     <string name="choose">Choose</string>
-    <string name="editText_hint_unit">Unit *</string>
-    <string name="editText_hint_item_name">Name *</string>
-    <string name="editText_hint_amount">Amount</string>
-    <string name="editText_hint_item_barcode">Barcode</string>
-    <string name="editText_hint_purchase_price">Purchase Price *</string>
-    <string name="editText_hint_retail_price">Retail Price *</string>
-    <string name="editText_hint_discount">Discount(%)</string>
+    <string name="hint_unit">Unit *</string>
+    <string name="hint_name">Name *</string>
+    <string name="hint_amount">Amount</string>
+    <string name="hint_barcode">Barcode</string>
+    <string name="hint_price">Price *</string>
+    <string name="hint_discount">Discount(%)</string>
     <string name="discount">Discount</string>
     <string name="available_for_sale">Available For Sale</string>
     <string name="textView_title_product_image">Product Image</string>
-    <string name="editText_hint_category">Category *</string>
+    <string name="hint_category">Category *</string>
     <string name="textView_title_product_info">Product Info</string>
     <string name="app_mail">phyohtetarkar@gmail.com</string>
     <string name="no_data">No Data</string>
@@ -27,8 +28,12 @@
     <string name="receipts">Receipts</string>
     <string name="statistic">Statistic</string>
 
+    <string name="confirm_message_delete">Are you sure to delete?</string>
+
     <!-- error messages -->
     <string name="error_empty_input_format">%s must not empty</string>
     <string name="items">items</string>
+    <string name="editText_hint_remark">Remark</string>
+    <string name="hint_size">Size</string>
 
 </resources>

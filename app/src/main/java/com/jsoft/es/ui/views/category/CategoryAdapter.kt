@@ -20,9 +20,8 @@ class CategoryAdapter : RecyclerView.Adapter<BindingViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
-        val c = list[position] as CategoryVO?
-        if (c != null) {
-            holder.bind(c)
+        list.getOrNull(position)?.apply {
+            holder.bind(this)
         }
     }
 

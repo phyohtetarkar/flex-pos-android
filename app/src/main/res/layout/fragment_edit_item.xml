@@ -62,18 +62,16 @@
                         <android.support.v7.widget.SwitchCompat
                             android:id="@+id/switchCompat2"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginStart="20dp"
+                            android:layout_height="31dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginStart="4dp"
                             android:layout_marginTop="16dp"
                             android:checked="@={item.available, default=true}"
                             android:text="@string/available_for_sale"
                             android:textAppearance="@style/AppTextNormal"
-                            app:layout_constraintBottom_toTopOf="@+id/textInputLayout7"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+                            app:layout_constraintEnd_toEndOf="@+id/textInputLayout8"
+                            app:layout_constraintStart_toStartOf="@+id/textInputLayout8"
                             app:layout_constraintTop_toBottomOf="@+id/textInputLayout8" />
 
                         <android.support.design.widget.TextInputLayout
@@ -93,9 +91,9 @@
                             <android.support.design.widget.TextInputEditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@={item.name}"
-                                android:hint="@string/editText_hint_item_name"
-                                android:inputType="text" />
+                                android:hint="@string/hint_name"
+                                android:inputType="text"
+                                android:text="@={item.name}" />
                         </android.support.design.widget.TextInputLayout>
 
                         <android.support.design.widget.TextInputLayout
@@ -114,67 +112,9 @@
                                 android:layout_height="wrap_content"
                                 android:drawableEnd="@drawable/ic_arrow_drop_dark"
                                 android:drawableRight="@drawable/ic_arrow_drop_dark"
-                                android:hint="@string/editText_hint_category"
+                                android:hint="@string/hint_category"
                                 android:inputType="none"
                                 android:text="@{item.category.name, default=choose}" />
-
-                        </android.support.design.widget.TextInputLayout>
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/textInputLayout5"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            app:layout_constraintBottom_toTopOf="@+id/textInputLayout6"
-                            app:layout_constraintEnd_toEndOf="@+id/textInputLayout7"
-                            app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
-                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/editText_hint_purchase_price"
-                                android:text="@={item.purchasePrice}"
-                                android:inputType="number" />
-
-                        </android.support.design.widget.TextInputLayout>
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/textInputLayout6"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            app:layout_constraintBottom_toTopOf="@+id/textInputLayout10"
-                            app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
-                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/editText_hint_retail_price"
-                                android:text="@={item.retailPrice}"
-                                android:inputType="number" />
-
-                        </android.support.design.widget.TextInputLayout>
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/textInputLayout7"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            app:layout_constraintBottom_toTopOf="@+id/textInputLayout5"
-                            app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
-                            app:layout_constraintStart_toStartOf="@+id/textInputLayout4"
-                            app:layout_constraintTop_toBottomOf="@+id/switchCompat2">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/editText_hint_item_barcode"
-                                android:text="@={item.barcode}"
-                                android:inputType="text"/>
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -182,77 +122,119 @@
                             android:id="@+id/textInputLayout8"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginRight="8dp"
                             android:layout_marginTop="16dp"
                             app:layout_constraintBottom_toTopOf="@+id/switchCompat2"
-                            app:layout_constraintEnd_toStartOf="@+id/textInputLayout9"
+                            app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
                             app:layout_constraintStart_toStartOf="@+id/textInputLayout4"
                             app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
                             <android.support.design.widget.TextInputEditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/editText_hint_amount"
+                                android:hint="@string/hint_barcode"
                                 android:inputType="number|numberDecimal"
                                 android:text="@={item.amount}" />
                         </android.support.design.widget.TextInputLayout>
 
                         <android.support.design.widget.TextInputLayout
-                            android:id="@+id/textInputLayout9"
-                            android:layout_width="110dp"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout8"
-                            app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
-                            app:layout_constraintTop_toTopOf="@+id/textInputLayout8">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:id="@+id/edEditItemUnit"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableEnd="@drawable/ic_arrow_drop_dark"
-                                android:drawableRight="@drawable/ic_arrow_drop_dark"
-                                android:hint="@string/editText_hint_unit"
-                                android:inputType="none"
-                                android:text="@{item.unit.name, default=choose}" />
-                        </android.support.design.widget.TextInputLayout>
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/textInputLayout10"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            app:layout_constraintBottom_toTopOf="@+id/switchCompat"
-                            app:layout_constraintEnd_toEndOf="@+id/textInputLayout6"
-                            app:layout_constraintStart_toStartOf="@+id/textInputLayout6"
-                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/editText_hint_discount"
-                                android:text="@{item.discount}"
-                                android:inputType="number" />
-                        </android.support.design.widget.TextInputLayout>
-
-
-                        <android.support.v7.widget.SwitchCompat
-                            android:id="@+id/switchCompat"
+                            android:id="@+id/textInputLayout2"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginStart="4dp"
                             android:layout_marginTop="16dp"
-                            android:text="@string/discount"
-                            android:checked="@={item.discountFlag}"
-                            android:textAppearance="@style/AppTextNormal"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/textInputLayout10"
-                            app:layout_constraintStart_toStartOf="@+id/textInputLayout10"
-                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout10" />
+                            app:layout_constraintEnd_toEndOf="@+id/textInputLayout8"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/textInputLayout8"
+                            app:layout_constraintTop_toBottomOf="@+id/switchCompat2">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:gravity="top"
+                                android:lines="4"
+                                android:hint="@string/editText_hint_remark"
+                                android:text="@={item.remark}"/>
+                        </android.support.design.widget.TextInputLayout>
+
 
                     </android.support.constraint.ConstraintLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/cardview_default_radius"
+                    app:cardElevation="@dimen/cardview_default_elevation"
+                    app:cardUseCompatPadding="true">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/whitePrimary">
+
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/app_font_bold"
+                            android:text="Pricing"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toTopOf="@+id/view6"
+                            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageButton
+                            android:id="@+id/imageButton"
+                            style="@style/Base.Widget.AppCompat.Button.Borderless"
+                            android:layout_width="25dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginRight="16dp"
+                            android:src="@drawable/ic_arrow_drop_dark"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView10"
+                            app:layout_constraintTop_toTopOf="@+id/textView10"
+                            tools:ignore="ContentDescription" />
+
+                        <View
+                            android:id="@+id/view6"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/darkDivider"
+                            app:layout_constraintBottom_toTopOf="@+id/pricingContainer"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+                        <LinearLayout
+                            android:id="@+id/pricingContainer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/view6">
+
+                            <include layout="@layout/layout_item_price"/>
+
+                            <include layout="@layout/layout_item_price"/>
+
+                        </LinearLayout>
+                    </android.support.constraint.ConstraintLayout>
+
 
                 </android.support.v7.widget.CardView>
 
