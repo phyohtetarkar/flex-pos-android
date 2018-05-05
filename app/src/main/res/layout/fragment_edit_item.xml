@@ -20,7 +20,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clipToPadding="false">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
@@ -41,10 +42,8 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/app_font_bold"
                             android:text="@string/textView_title_product_info"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
+                            style="@style/HeaderTextColored"
                             app:layout_constraintBottom_toTopOf="@+id/view"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -133,7 +132,7 @@
                                 android:layout_height="wrap_content"
                                 android:hint="@string/hint_barcode"
                                 android:inputType="number|numberDecimal"
-                                android:text="@={item.amount}" />
+                                android:text="@={item.barcode}" />
                         </android.support.design.widget.TextInputLayout>
 
                         <android.support.design.widget.TextInputLayout
@@ -185,9 +184,8 @@
                             android:layout_marginRight="8dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/app_font_bold"
                             android:text="Pricing"
-                            android:textSize="16sp"
+                            style="@style/HeaderTextColored"
                             app:layout_constraintBottom_toTopOf="@+id/view6"
                             app:layout_constraintEnd_toStartOf="@+id/imageButton"
                             app:layout_constraintStart_toStartOf="parent"
@@ -195,12 +193,13 @@
 
                         <ImageButton
                             android:id="@+id/imageButton"
-                            style="@style/Base.Widget.AppCompat.Button.Borderless"
-                            android:layout_width="25dp"
+                            android:layout_width="35dp"
                             android:layout_height="0dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginRight="16dp"
-                            android:src="@drawable/ic_arrow_drop_dark"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_add_white"
+                            android:tint="@color/darkSecondary"
                             app:layout_constraintBottom_toBottomOf="@+id/textView10"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView10"
@@ -257,9 +256,8 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/app_font_bold"
                             android:text="@string/textView_title_product_image"
-                            android:textSize="16sp"
+                            style="@style/HeaderTextColored"
                             app:layout_constraintBottom_toTopOf="@+id/view2"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

@@ -15,13 +15,13 @@ import android.arch.persistence.room.*
 ])
 data class ItemPrice(
         @PrimaryKey(autoGenerate = true)
-        val id: Long = 0,
-        val size: Double = 0.00,
-        val price: Double = 0.00,
+        var id: Long = 0,
+        var size: Double = 0.00,
+        var price: Double = 0.00,
         @ColumnInfo(name = "unit_id")
         var unitId: Int = 0,
         @ColumnInfo(name = "item_id")
-        val itemId: Long = 0,
+        var itemId: Long = 0,
 
         @Ignore
         var unit: Unit = Unit(name = "choose")

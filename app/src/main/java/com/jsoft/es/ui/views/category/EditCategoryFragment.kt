@@ -58,7 +58,7 @@ class EditCategoryFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_edit_category, menu)
+        inflater?.inflate(R.menu.menu_save, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

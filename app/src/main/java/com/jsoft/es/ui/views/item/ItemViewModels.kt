@@ -70,3 +70,11 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     }
 
 }
+
+class EditItemPriceViewModel(application: Application) : AndroidViewModel(application) {
+
+    init {
+
+    }
+
+}

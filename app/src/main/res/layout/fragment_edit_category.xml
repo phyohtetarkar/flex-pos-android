@@ -87,8 +87,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/select_color"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        style="@style/HeaderTextColored" />
 
                     <View
                         android:id="@+id/view12"

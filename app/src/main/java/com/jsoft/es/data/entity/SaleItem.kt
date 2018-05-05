@@ -21,7 +21,7 @@ data class SaleItem(
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0,
         var quantity: Int = 0,
-        val size: Double = 0.00,
+        var size: Double = 0.00,
         var price: Double = 0.00,
         var discount: Int = 0,
         var remark: String = "",

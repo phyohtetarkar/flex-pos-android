@@ -66,7 +66,7 @@ class ItemsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.searchModel.value = ItemSearch()
+        //viewModel.searchModel.value = ItemSearch()
     }
 
     private fun showEdit(id: Long) {

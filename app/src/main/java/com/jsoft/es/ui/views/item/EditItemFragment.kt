@@ -14,9 +14,6 @@ import com.jsoft.es.R
 import com.jsoft.es.data.entity.Item
 import com.jsoft.es.ui.views.category.CategoriesFragment
 import com.jsoft.es.ui.views.category.CategoryActivity
-import com.jsoft.es.ui.views.category.EditCategoryFragment
-import com.jsoft.es.ui.views.unit.UnitActivity
-import com.jsoft.es.ui.views.unit.UnitsFragment
 import kotlinx.android.synthetic.main.fragment_edit_item.*
 
 class EditItemFragment : Fragment() {
@@ -75,7 +72,7 @@ class EditItemFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_edit_item, menu)
+        inflater?.inflate(R.menu.menu_save_delete, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
