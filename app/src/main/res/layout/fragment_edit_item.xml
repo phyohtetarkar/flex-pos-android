@@ -80,7 +80,7 @@
                             android:layout_marginEnd="16dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
+                            app:layout_constraintBottom_toTopOf="@+id/spinnerCategories"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
@@ -95,27 +95,18 @@
                                 android:text="@={item.name}" />
                         </android.support.design.widget.TextInputLayout>
 
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/textInputLayout4"
+                        <Spinner
+                            android:id="@+id/spinnerCategories"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="56dp"
                             android:layout_marginTop="16dp"
+                            style="@style/Widget.AppCompat.Spinner.Underlined"
                             app:layout_constraintBottom_toTopOf="@+id/textInputLayout8"
                             app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
                             app:layout_constraintStart_toStartOf="@+id/textInputLayout"
                             app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
-                            <android.support.design.widget.TextInputEditText
-                                android:id="@+id/edEditItemCategory"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableEnd="@drawable/ic_arrow_drop_dark"
-                                android:drawableRight="@drawable/ic_arrow_drop_dark"
-                                android:hint="@string/hint_category"
-                                android:inputType="none"
-                                android:text="@{item.category.name, default=choose}" />
-
-                        </android.support.design.widget.TextInputLayout>
+                        </Spinner>
 
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/textInputLayout8"
@@ -123,9 +114,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             app:layout_constraintBottom_toTopOf="@+id/switchCompat2"
-                            app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
-                            app:layout_constraintStart_toStartOf="@+id/textInputLayout4"
-                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+                            app:layout_constraintEnd_toEndOf="@+id/spinnerCategories"
+                            app:layout_constraintStart_toStartOf="@+id/spinnerCategories"
+                            app:layout_constraintTop_toBottomOf="@+id/spinnerCategories">
 
                             <android.support.design.widget.TextInputEditText
                                 android:layout_width="match_parent"

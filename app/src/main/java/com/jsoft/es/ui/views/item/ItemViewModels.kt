@@ -39,7 +39,6 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     val itemInput = MutableLiveData<Long>()
     val categoryInput = MutableLiveData<Int>()
-    val unitInput = MutableLiveData<Int>()
 
     val itemLiveData: LiveData<Item> =
             Transformations.switchMap(itemInput) { repo.getItem(it) }
@@ -47,18 +46,17 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val categoryLiveData: LiveData<Category> =
             Transformations.switchMap(categoryInput) { categoryRepo.getCategory(it) }
 
-    val unitLiveData: LiveData<Unit> =
-            Transformations.switchMap(unitInput) { unitRepo.getUnit(it) }
+    val categories: LiveData<List<Category>>
 
     private val repo: ItemRepo
     private val categoryRepo: CategoryRepo
-    private val unitRepo: UnitRepo
 
     init {
         val app = application as EasyShopApplication
         repo = ItemRepo(app.db.itemDao())
         categoryRepo = CategoryRepo(app.db.categoryDao())
-        unitRepo = UnitRepo(app.db.unitDao())
+
+        categories = categoryRepo.finAllCategories()
     }
 
     fun save() {

@@ -19,6 +19,10 @@ class CategoryRepo(private val dao: CategoryDao) {
         return dao.findCategories(SimpleSQLiteQuery(sq.query, sq.objects.toTypedArray()))
     }
 
+    fun finAllCategories(): LiveData<List<Category>> {
+        return dao.findAllCategories()
+    }
+
     fun getCategory(id: Int): LiveData<Category> {
         return dao.findById(id)
     }
@@ -75,6 +79,9 @@ interface CategoryDao : BaseDao<Category> {
 
     @RawQuery(observedEntities = [Category::class])
     fun findCategories(query: SupportSQLiteQuery): LiveData<List<CategoryVO>>
+
+    @Query("SELECT * FROM category")
+    fun findAllCategories(): LiveData<List<Category>>
 
     @Query("SELECT * FROM category WHERE id = :id LIMIT 1")
     fun findById(id: Int): LiveData<Category>

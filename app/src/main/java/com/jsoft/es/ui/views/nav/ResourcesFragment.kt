@@ -1,7 +1,6 @@
 package com.jsoft.es.ui.views.nav
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -9,9 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.jsoft.es.MainActivity
 import com.jsoft.es.R
-import com.jsoft.es.ui.views.category.CategoryActivity
-import com.jsoft.es.ui.views.item.ItemActivity
-import com.jsoft.es.ui.views.unit.UnitActivity
+import com.jsoft.es.ui.views.category.CategoriesFragment
+import com.jsoft.es.ui.views.unit.UnitsFragment
 import kotlinx.android.synthetic.main.fragment_resources.*
 
 class ResourcesFragment : Fragment(), View.OnClickListener {
@@ -35,16 +33,23 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(view: View) {
-        var clazz: Class<*>? = null
+        var fragment: Fragment? = null
         when (view.id) {
-            R.id.tv_res_products -> clazz = ItemActivity::class.java
-            R.id.tv_res_categories -> clazz = CategoryActivity::class.java
-            R.id.tv_res_units -> clazz = UnitActivity::class.java
+            R.id.tv_res_products -> {
+
+            }
+            R.id.tv_res_categories -> {
+                fragment = CategoriesFragment.INSTANCE
+            }
+            R.id.tv_res_units -> {
+                fragment = UnitsFragment.INSTANCE
+            }
         }
 
-        if (clazz != null) {
-            val i = Intent(activity, clazz)
-            startActivity(i)
-        }
+        fragmentManager?.beginTransaction()
+                ?.addToBackStack(null)
+                ?.replace(R.id.contentMain, fragment)
+                ?.commit()
+
     }
 }

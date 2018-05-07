@@ -21,18 +21,10 @@ import kotlinx.android.synthetic.main.fragment_units.*
 
 class UnitsFragment : Fragment() {
 
-    enum class Mode {
-        SHOW, SELECT
-    }
-
-    private lateinit var mode: Mode
-
     private lateinit var viewModel: UnitsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.getSerializable("mode")?.apply { mode = this as Mode }
 
         viewModel = ViewModelProviders.of(this).get(UnitsViewModel::class.java)
     }
@@ -51,15 +43,7 @@ class UnitsFragment : Fragment() {
         recyclerViewUnits.addOnItemTouchListener(RecyclerViewItemTouchListener(recyclerViewUnits, object : RecyclerViewItemTouchListener.OnTouchListener {
             override fun onTouch(view: View, position: Int) {
                 val (id) = adapter.getItemAt(position)
-                when (mode) {
-                    Mode.SHOW -> showEdit(id)
-                    Mode.SELECT -> {
-                        val i = Intent()
-                        i.putExtra("unitId", id)
-                        activity?.setResult(Activity.RESULT_OK, i)
-                        activity?.onBackPressed()
-                    }
-                }
+                showEdit(id)
 
             }
 
@@ -115,15 +99,10 @@ class UnitsFragment : Fragment() {
     }
 
     companion object {
-        fun getInstance(mode: Mode): UnitsFragment {
-            val frag = UnitsFragment()
-
-            val args = Bundle()
-            args.putSerializable("mode", mode)
-            frag.arguments = args
-
-            return frag
-        }
+        val INSTANCE: UnitsFragment
+            get() {
+                return UnitsFragment()
+            }
     }
 
 }

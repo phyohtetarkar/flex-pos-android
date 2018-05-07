@@ -1,5 +1,7 @@
 package com.jsoft.es
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -16,6 +18,7 @@ import kotlinx.android.synthetic.main.layout_app_bar_main.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var mPendingRunnable: (() -> Unit)? = null
+    private lateinit var toggle: ActionBarDrawerToggle
 
     private val drawerDelegate = object : DrawerLayout.DrawerListener {
         override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
@@ -43,8 +46,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbarMain)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val toggle = ActionBarDrawerToggle(
+        toggle = ActionBarDrawerToggle(
                 this, drawerLayoutMain, toolbarMain, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+
+        toggle.setToolbarNavigationClickListener {
+            animateToBurger()
+            super.onBackPressed()
+        }
+
         drawerLayoutMain.addDrawerListener(toggle)
         drawerLayoutMain.addDrawerListener(drawerDelegate)
         toggle.syncState()
@@ -89,6 +98,45 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayoutMain.closeDrawer(GravityCompat.START)
 
         return true
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayoutMain.isDrawerOpen(GravityCompat.START)) {
+            drawerLayoutMain.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed()
+        }
+
+        if (drawerLayoutMain.getDrawerLockMode(GravityCompat.START) == DrawerLayout.LOCK_MODE_LOCKED_CLOSED) {
+            animateToBurger();
+        }
+    }
+
+    fun animateToArrow() {
+        val drawable = toggle.drawerArrowDrawable
+        val animator = ObjectAnimator.ofFloat(drawable, "progress", 1f)
+        animator.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animator: Animator) {}
+
+            override fun onAnimationEnd(animator: Animator) {
+                toggle.isDrawerIndicatorEnabled = false
+                drawerLayoutMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            }
+
+            override fun onAnimationCancel(animator: Animator) {}
+
+            override fun onAnimationRepeat(animator: Animator) {}
+        })
+        animator.start()
+
+    }
+
+    fun animateToBurger() {
+        toggle.setDrawerIndicatorEnabled(true)
+        drawerLayoutMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        val drawable = toggle.drawerArrowDrawable
+        val animator = ObjectAnimator.ofFloat(drawable, "progress", 0f)
+        animator.start()
     }
 
 }

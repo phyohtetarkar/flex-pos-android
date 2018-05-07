@@ -1,9 +1,7 @@
 package com.jsoft.es.ui.views.category
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -15,23 +13,13 @@ import com.jsoft.es.R
 import com.jsoft.es.data.model.CategorySearch
 import com.jsoft.es.ui.custom.SimpleDividerItemDecoration
 import com.jsoft.es.ui.utils.RecyclerViewItemTouchListener
-import com.jsoft.es.ui.views.item.EditItemFragment
 import kotlinx.android.synthetic.main.fragment_categories.*
 
 class CategoriesFragment : Fragment() {
-
-    enum class Mode {
-        SHOW, SELECT
-    }
-
-    lateinit var mode: Mode
-
     private lateinit var viewModel: CategoriesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.getSerializable("mode")?.apply { mode = this as Mode }
 
         viewModel = ViewModelProviders.of(this).get(CategoriesViewModel::class.java)
     }
@@ -51,15 +39,7 @@ class CategoriesFragment : Fragment() {
         recyclerViewCategories.addOnItemTouchListener(RecyclerViewItemTouchListener(recyclerViewCategories, object : RecyclerViewItemTouchListener.OnTouchListener {
             override fun onTouch(view: View, position: Int) {
                 val (id) = adapter.getItemAt(position)
-                when (mode) {
-                    Mode.SHOW -> showEdit(id)
-                    Mode.SELECT -> {
-                        val i = Intent()
-                        i.putExtra("categoryId", id)
-                        activity?.setResult(Activity.RESULT_OK, i)
-                        activity?.onBackPressed()
-                    }
-                }
+                showEdit(id)
 
             }
 
@@ -100,15 +80,10 @@ class CategoriesFragment : Fragment() {
     }
 
     companion object {
-        fun getInstance(mode: Mode): CategoriesFragment {
-            val frag = CategoriesFragment()
-
-            val args = Bundle()
-            args.putSerializable("mode", mode)
-            frag.arguments = args
-
-            return frag
-        }
+        val INSTANCE: CategoriesFragment
+            get() {
+                return CategoriesFragment()
+            }
     }
 
 }

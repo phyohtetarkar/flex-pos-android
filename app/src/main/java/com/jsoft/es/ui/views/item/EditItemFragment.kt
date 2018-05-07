@@ -1,19 +1,16 @@
 package com.jsoft.es.ui.views.item
 
-import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
+import android.widget.AdapterView
 import com.jsoft.es.BR
 import com.jsoft.es.R
 import com.jsoft.es.data.entity.Item
-import com.jsoft.es.ui.views.category.CategoriesFragment
-import com.jsoft.es.ui.views.category.CategoryActivity
 import kotlinx.android.synthetic.main.fragment_edit_item.*
 
 class EditItemFragment : Fragment() {
@@ -37,9 +34,37 @@ class EditItemFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_item, container, false)
         binding.setVariable(BR.item, viewModel.item)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val adapter = CategoryArrayAdapter(activity, android.R.layout.simple_spinner_item)
+        spinnerCategories.adapter = adapter
+        spinnerCategories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onNothingSelected(adapterView: AdapterView<*>?) { }
+
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position > 0) {
+                    val category = adapter.getItem(position)
+                    viewModel.item.get()?.category = category
+                } else {
+
+                }
+            }
+
+        }
+
         viewModel.categoryLiveData.observe(this, Observer {
             viewModel.item.get()?.category = it
-            viewModel.item.notifyChange()
+
+            viewModel.categories.observe(this, Observer {
+                val list = it?.toMutableList() ?: mutableListOf()
+                adapter.setCategories(list)
+                spinnerCategories.setSelection(adapter.getPosition(viewModel.item.get()?.category))
+            })
+
         })
 
         if (itemId > 0) {
@@ -50,23 +75,6 @@ class EditItemFragment : Fragment() {
             viewModel.itemInput.value = itemId
         } else {
             viewModel.item.set(Item())
-        }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        edEditItemCategory.setOnKeyListener { p0, p1, p2 -> true}
-        edEditItemCategory.setOnTouchListener { _, me ->
-            edEditItemCategory.requestFocus()
-            if (me.action == MotionEvent.ACTION_DOWN) {
-                val i = Intent(activity, CategoryActivity::class.java)
-                i.putExtra("mode", CategoriesFragment.Mode.SELECT)
-                startActivityForResult(i, CATEGORY_REQUEST_CODE)
-            }
-            true
         }
 
     }
@@ -97,41 +105,12 @@ class EditItemFragment : Fragment() {
         return true
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-
-            CATEGORY_REQUEST_CODE -> {
-                if (resultCode == RESULT_OK) {
-                    val categoryId = data!!.getIntExtra("categoryId", 0)
-                    viewModel.item.get()?.categoryId = categoryId
-                    viewModel.categoryInput.value = categoryId
-                }
-            }
-
-            UNIT_REQUEST_CODE -> {
-                if (resultCode == RESULT_OK) {
-                    val unitId = data!!.getIntExtra("unitId", 0)
-                    //viewModel.item.get()?.unitId = unitId
-                    viewModel.unitInput.value = unitId
-                }
-            }
-
-        }
-
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         binding.unbind()
     }
 
     companion object {
-
-        const val CATEGORY_REQUEST_CODE = 0
-        const val UNIT_REQUEST_CODE = 1
-
         fun getInstance(id: Long): EditItemFragment {
             val frag = EditItemFragment()
 
