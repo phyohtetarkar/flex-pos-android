@@ -2,6 +2,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="title_items">Items</string>
+    <string name="title_categories">Categories</string>
+    <string name="title_units">Units</string>
+    <string name="title_Resources">Resources</string>
+
     <string name="app_name">Easy Shop</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>

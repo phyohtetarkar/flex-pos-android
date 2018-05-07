@@ -2,12 +2,14 @@ package com.jsoft.es.ui.views.item
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jsoft.es.MainActivity
 import com.jsoft.es.R
 import com.jsoft.es.data.model.ItemSearch
 import com.jsoft.es.ui.utils.RecyclerViewItemTouchListener
@@ -67,6 +69,12 @@ class ItemsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         //viewModel.searchModel.value = ItemSearch()
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val activity = context as MainActivity
+        activity.setTitle(R.string.title_units)
     }
 
     private fun showEdit(id: Long) {
