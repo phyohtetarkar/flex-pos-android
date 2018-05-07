@@ -7,11 +7,9 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
-import android.widget.AdapterView
 import com.jsoft.es.BR
 import com.jsoft.es.R
 import com.jsoft.es.data.entity.Item
-import kotlinx.android.synthetic.main.fragment_edit_item.*
 
 class EditItemFragment : Fragment() {
 
@@ -39,32 +37,8 @@ class EditItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = CategoryArrayAdapter(activity, android.R.layout.simple_spinner_item)
-        spinnerCategories.adapter = adapter
-        spinnerCategories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onNothingSelected(adapterView: AdapterView<*>?) { }
-
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position > 0) {
-                    val category = adapter.getItem(position)
-                    viewModel.item.get()?.category = category
-                } else {
-
-                }
-            }
-
-        }
-
         viewModel.categoryLiveData.observe(this, Observer {
             viewModel.item.get()?.category = it
-
-            viewModel.categories.observe(this, Observer {
-                val list = it?.toMutableList() ?: mutableListOf()
-                adapter.setCategories(list)
-                spinnerCategories.setSelection(adapter.getPosition(viewModel.item.get()?.category))
-            })
-
         })
 
         if (itemId > 0) {

@@ -46,5 +46,8 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
                 ?.replace(R.id.contentMain, fragment)
                 ?.commit()
 
+        val main = activity as MainActivity
+        main.animateToArrow()
+
     }
 }

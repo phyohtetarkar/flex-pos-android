@@ -72,10 +72,6 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun showEdit(id: Int) {
-        fragmentManager?.beginTransaction()
-                ?.replace(R.id.contentCategory, EditCategoryFragment.getInstance(id), CategoryActivity.CONTENT)
-                ?.addToBackStack(null)
-                ?.commit()
 
     }
 

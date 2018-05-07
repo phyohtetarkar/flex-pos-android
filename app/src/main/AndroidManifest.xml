@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".ui.views.unit.UnitActivity"/>
         <activity android:name=".ui.views.category.CategoryActivity" />
-        <activity android:name=".ui.views.item.ItemActivity" />
+        <activity android:name=".ui.views.item.EditItemActivity" />
     </application>
 
 </manifest>

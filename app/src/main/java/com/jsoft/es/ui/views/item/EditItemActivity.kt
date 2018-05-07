@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.jsoft.es.R
 
-class ItemActivity : AppCompatActivity() {
+class EditItemActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,10 +13,10 @@ class ItemActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val frag = supportFragmentManager.findFragmentByTag(ItemActivity.CONTENT)
+        val id = intent.extras.getLong("id")
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.contentItem, frag ?: ItemsFragment.INSTANCE)
+                .replace(R.id.contentItem, EditItemFragment.getInstance(id))
                 .commit()
     }
 
@@ -27,10 +27,6 @@ class ItemActivity : AppCompatActivity() {
         }
 
         return false
-    }
-
-    companion object {
-        internal const val CONTENT = "content"
     }
 
 }

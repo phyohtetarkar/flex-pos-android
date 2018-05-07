@@ -19,7 +19,7 @@ class CategoryRepo(private val dao: CategoryDao) {
         return dao.findCategories(SimpleSQLiteQuery(sq.query, sq.objects.toTypedArray()))
     }
 
-    fun finAllCategories(): LiveData<List<Category>> {
+    fun findAllCategories(): LiveData<List<Category>> {
         return dao.findAllCategories()
     }
 

@@ -13,12 +13,8 @@ class CategoryActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val frag = supportFragmentManager.findFragmentByTag(CONTENT)
-
-        val mode = intent.getSerializableExtra("mode") as? CategoriesFragment.Mode
-
         supportFragmentManager.beginTransaction()
-                .replace(R.id.contentCategory, frag ?: CategoriesFragment.getInstance( mode ?: CategoriesFragment.Mode.SHOW))
+                .replace(R.id.contentCategory, CategoriesFragment.INSTANCE)
                 .commit()
 
     }
@@ -30,10 +26,6 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         return false
-    }
-
-    companion object {
-        internal const val CONTENT = "content"
     }
 
 }

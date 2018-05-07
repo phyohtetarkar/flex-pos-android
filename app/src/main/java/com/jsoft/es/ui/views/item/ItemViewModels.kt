@@ -11,11 +11,9 @@ import com.jsoft.es.EasyShopApplication
 import com.jsoft.es.data.entity.Category
 import com.jsoft.es.data.entity.Item
 import com.jsoft.es.data.entity.ItemVO
-import com.jsoft.es.data.entity.Unit
 import com.jsoft.es.data.model.CategoryRepo
 import com.jsoft.es.data.model.ItemRepo
 import com.jsoft.es.data.model.ItemSearch
-import com.jsoft.es.data.model.UnitRepo
 import com.jsoft.es.data.utils.SearchMutableLiveData
 
 class ItemsViewModel(application: Application) : AndroidViewModel(application) {
@@ -46,8 +44,6 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val categoryLiveData: LiveData<Category> =
             Transformations.switchMap(categoryInput) { categoryRepo.getCategory(it) }
 
-    val categories: LiveData<List<Category>>
-
     private val repo: ItemRepo
     private val categoryRepo: CategoryRepo
 
@@ -55,8 +51,6 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         val app = application as EasyShopApplication
         repo = ItemRepo(app.db.itemDao())
         categoryRepo = CategoryRepo(app.db.categoryDao())
-
-        categories = categoryRepo.finAllCategories()
     }
 
     fun save() {

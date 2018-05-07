@@ -3,6 +3,7 @@ package com.jsoft.es.ui.views.item
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,10 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jsoft.es.MainActivity
 import com.jsoft.es.R
-import com.jsoft.es.data.model.ItemSearch
 import com.jsoft.es.ui.utils.RecyclerViewItemTouchListener
-import com.jsoft.es.ui.views.category.CategoryActivity
-import com.jsoft.es.ui.views.category.EditCategoryFragment
 import kotlinx.android.synthetic.main.fragment_items.*
 
 class ItemsFragment : Fragment() {
@@ -74,14 +72,13 @@ class ItemsFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val activity = context as MainActivity
-        activity.setTitle(R.string.title_units)
+        activity.setTitle(R.string.title_items)
     }
 
     private fun showEdit(id: Long) {
-        fragmentManager?.beginTransaction()
-                ?.replace(R.id.contentItem, EditItemFragment.getInstance(id), ItemActivity.CONTENT)
-                ?.addToBackStack(null)
-                ?.commit()
+        val i = Intent(activity, EditItemActivity::class.java)
+        i.putExtra("id", id)
+        startActivity(i)
 
     }
 
