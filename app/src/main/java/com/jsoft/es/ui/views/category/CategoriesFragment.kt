@@ -2,6 +2,7 @@ package com.jsoft.es.ui.views.category
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -40,7 +41,6 @@ class CategoriesFragment : Fragment() {
             override fun onTouch(view: View, position: Int) {
                 val (id) = adapter.getItemAt(position)
                 showEdit(id)
-
             }
 
             override fun onLongTouch(view: View, position: Int) {
@@ -72,7 +72,9 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun showEdit(id: Int) {
-
+        val i = Intent(activity, EditCategoryActivity::class.java)
+        i.putExtra("id", id)
+        startActivity(i)
     }
 
     companion object {

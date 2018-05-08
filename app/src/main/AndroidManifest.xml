@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.views.unit.UnitActivity"/>
-        <activity android:name=".ui.views.category.CategoryActivity" />
+        <activity android:name=".ui.views.category.EditCategoryActivity" />
         <activity android:name=".ui.views.item.EditItemActivity" />
     </application>
 

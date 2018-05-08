@@ -5,31 +5,12 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
-import android.arch.paging.PagedList
 import android.databinding.ObservableField
 import com.jsoft.es.EasyShopApplication
 import com.jsoft.es.data.entity.Category
 import com.jsoft.es.data.entity.Item
-import com.jsoft.es.data.entity.ItemVO
 import com.jsoft.es.data.model.CategoryRepo
 import com.jsoft.es.data.model.ItemRepo
-import com.jsoft.es.data.model.ItemSearch
-import com.jsoft.es.data.utils.SearchMutableLiveData
-
-class ItemsViewModel(application: Application) : AndroidViewModel(application) {
-
-    val searchModel = SearchMutableLiveData<ItemSearch>()
-    val items: LiveData<PagedList<ItemVO>> =
-            Transformations.switchMap(searchModel) { repo.findItems(it) }
-
-    private val repo: ItemRepo
-
-    init {
-        val app = application as EasyShopApplication
-        repo = ItemRepo(app.db.itemDao())
-    }
-
-}
 
 class EditItemViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -59,14 +40,6 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     fun delete() {
         item.get()?.apply { repo.delete(this) }
-    }
-
-}
-
-class EditItemPriceViewModel(application: Application) : AndroidViewModel(application) {
-
-    init {
-
     }
 
 }

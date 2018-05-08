@@ -3,39 +3,36 @@ package com.jsoft.es.ui.views.category
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.*
+import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.RadioButton
-import com.jsoft.es.BR
 import com.jsoft.es.R
 import com.jsoft.es.data.entity.Category
+import com.jsoft.es.databinding.EditCategoryBinding
 import com.jsoft.es.func.KConsumer2
 import com.jsoft.es.ui.utils.ValidatorUtils
-import kotlinx.android.synthetic.main.fragment_edit_category.*
+import kotlinx.android.synthetic.main.activity_edit_category.*
 
-class EditCategoryFragment : Fragment() {
+class EditCategoryActivity : AppCompatActivity() {
 
     private var categoryId = 0
 
     private lateinit var viewModel: EditCategoryViewModel
-    private lateinit var binding: ViewDataBinding
+    private lateinit var binding: EditCategoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.getInt("id")?.apply { categoryId = this }
-
+        categoryId = intent.getIntExtra("id", 0)
         viewModel = ViewModelProviders.of(this).get(EditCategoryViewModel::class.java)
 
-        setHasOptionsMenu(true)
-    }
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_category)
+        binding.category = viewModel.category
+        binding.isValidCategoryName = true
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_category, container, false)
-        binding.setVariable(BR.isValidCategoryName, true)
-        binding.setVariable(BR.category, viewModel.category)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val handler: KConsumer2<View, Category> = object : KConsumer2<View, Category> {
 
@@ -45,7 +42,7 @@ class EditCategoryFragment : Fragment() {
 
         }
 
-        binding.setVariable(BR.colorSelectHandler, handler)
+        binding.colorSelectHandler = handler
 
         if (categoryId > 0) {
             viewModel.categoryLive.observe(this, Observer { viewModel.category.set(it) })
@@ -54,35 +51,35 @@ class EditCategoryFragment : Fragment() {
             viewModel.category.set(Category())
         }
 
-        return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_save, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_save, menu)
+        return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.action_category_save -> {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            android.R.id.home -> onBackPressed()
+            R.id.action_save_1 -> {
                 val category = viewModel.category.get()
-
                 val valid = ValidatorUtils.isValid(category?.name, ValidatorUtils.NOT_EMPTY)
 
                 if (!valid) {
-                    binding.setVariable(BR.isValidCategoryName, false)
+                    binding.isValidCategoryName = false
                 } else {
                     viewModel.save()
-                    activity?.onBackPressed()
+                    onBackPressed()
                 }
             }
         }
 
-        return true
+        return false
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         binding.unbind()
     }
 
@@ -100,15 +97,4 @@ class EditCategoryFragment : Fragment() {
         }
     }
 
-    companion object {
-        fun getInstance(id: Int): EditCategoryFragment {
-            val frag = EditCategoryFragment()
-
-            val args = Bundle()
-            args.putInt("id", id)
-            frag.arguments = args
-
-            return frag
-        }
-    }
 }

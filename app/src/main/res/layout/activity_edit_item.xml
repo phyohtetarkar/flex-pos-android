@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+    <data class="EditItemBinding">
 
         <import type="com.jsoft.es.data.entity.Item" />
 
@@ -112,6 +112,7 @@
                             android:layout_height="wrap_content"
                             android:drawableEnd="@drawable/ic_arrow_drop_dark"
                             android:drawableRight="@drawable/ic_arrow_drop_dark"
+                            android:inputType="none"
                             android:hint="@string/hint_category"
                             android:text="@{item.category.name}"
                             tools:text="choose" />

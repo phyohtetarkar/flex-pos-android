@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jsoft.es.MainActivity
 import com.jsoft.es.R
+import com.jsoft.es.data.model.ItemSearch
 import com.jsoft.es.ui.utils.RecyclerViewItemTouchListener
 import kotlinx.android.synthetic.main.fragment_items.*
 
@@ -66,7 +67,7 @@ class ItemsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //viewModel.searchModel.value = ItemSearch()
+        viewModel.searchModel.value = ItemSearch()
     }
 
     override fun onAttach(context: Context?) {
