@@ -25,7 +25,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val categoryLiveData: LiveData<Category> =
             Transformations.switchMap(categoryInput) { categoryRepo.getCategory(it) }
 
-    val categories: LiveData<List<Category>>;
+    val categories: LiveData<List<Category>>
 
     private val repo: ItemRepo
     private val categoryRepo: CategoryRepo

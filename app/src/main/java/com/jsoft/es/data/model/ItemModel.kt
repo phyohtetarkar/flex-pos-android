@@ -91,12 +91,9 @@ class ItemSearch : BaseObservable(), Searchable {
             field = name
             notifyChange()
         }
+
     var categoryId: Int = 0
-    var isDiscount: Boolean = false
-        set(discount) {
-            field = discount
-            notifyChange()
-        }
+
     var isNotAvailable: Boolean = false
         set(notAvailable) {
             field = notAvailable
@@ -118,10 +115,6 @@ class ItemSearch : BaseObservable(), Searchable {
                     "i.name, " +
                     "i.code, " +
                     "i.image, " +
-                    "i.amount, " +
-                    "i.discount_flag, " +
-                    "i.retail_price, " +
-                    "i.discount, " +
                     "u.name as unit, " +
                     "c.name as category, " +
                     "c.color " +
@@ -138,11 +131,6 @@ class ItemSearch : BaseObservable(), Searchable {
             categoryId.takeUnless { it == 0 }?.apply {
                 sb.append("and i.category_id = ? ")
                 objects.add(this)
-            }
-
-            if (isDiscount) {
-                sb.append("and i.discount_flag = ? ")
-                objects.add(true)
             }
 
             if (isNotAvailable) {

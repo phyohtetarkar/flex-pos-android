@@ -67,7 +67,7 @@ class ItemsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.searchModel.value = ItemSearch()
+        //viewModel.searchModel.value = ItemSearch()
     }
 
     override fun onAttach(context: Context?) {

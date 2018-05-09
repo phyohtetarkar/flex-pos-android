@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jsoft.es.R
 import com.jsoft.es.ui.custom.SimpleDividerItemDecoration
+import com.jsoft.es.ui.utils.RecyclerViewItemTouchListener
 import kotlinx.android.synthetic.main.fragment_simple_list_dialog.*
 
 abstract class SimpleListDialogFragment<T> : DialogFragment() {
@@ -32,20 +33,15 @@ abstract class SimpleListDialogFragment<T> : DialogFragment() {
         simpleListRecyclerView.addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         simpleListRecyclerView.adapter = getAdapter()
 
-        simpleListRecyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
-            override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
-                val v = rv!!.findChildViewUnder(e!!.x, e.y)
-                onTouch(rv.getChildAdapterPosition(v))
+        simpleListRecyclerView.addOnItemTouchListener(RecyclerViewItemTouchListener(simpleListRecyclerView, object : RecyclerViewItemTouchListener.OnTouchListener {
+            override fun onTouch(view: View, position: Int) {
+                onTouch(position)
             }
 
-            override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
-                return true
+            override fun onLongTouch(view: View, position: Int) {
             }
 
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-            }
-
-        })
+        }))
 
         simpleListDialogCancelButton.setOnClickListener { dismiss() }
     }
