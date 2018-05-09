@@ -48,7 +48,6 @@ class BadgeDrawable(context: Context) : Drawable() {
         if (!mWillDraw) {
             return
         }
-        val bounds = bounds
         val width = (bounds.right - bounds.left).toFloat()
         val height = (bounds.bottom - bounds.top).toFloat()
 

@@ -30,6 +30,8 @@ class EditUnitFragment : DialogFragment() {
         arguments?.getInt("id")?.apply { unitId = this }
 
         viewModel = ViewModelProviders.of(this).get(EditUnitViewModel::class.java)
+
+        isCancelable = false
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

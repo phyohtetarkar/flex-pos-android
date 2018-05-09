@@ -34,6 +34,7 @@
     <string name="resources">Resources</string>
     <string name="receipts">Receipts</string>
     <string name="statistic">Statistic</string>
+    <string name="select_format">Select %s</string>
 
     <string name="confirm_message_delete">Are you sure to delete?</string>
 

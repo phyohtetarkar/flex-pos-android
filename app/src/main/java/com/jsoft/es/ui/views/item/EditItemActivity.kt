@@ -4,11 +4,11 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
-import android.view.View
 import com.jsoft.es.R
 import com.jsoft.es.data.entity.Item
 import com.jsoft.es.databinding.EditItemBinding
@@ -36,7 +36,7 @@ class EditItemActivity : AppCompatActivity() {
         edChooseCategory.setOnTouchListener { _, me ->
 
             if (me.action == MotionEvent.ACTION_DOWN) {
-
+                showSelectDialog(SelectCategoryFragment())
             }
 
             true
@@ -82,6 +82,17 @@ class EditItemActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding.unbind()
+    }
+
+    private fun showSelectDialog(fragment: DialogFragment) {
+        val ft = supportFragmentManager?.beginTransaction()
+        val prev = supportFragmentManager?.findFragmentByTag("dialog")
+        if (prev != null) {
+            ft?.remove(prev)
+        }
+        ft?.addToBackStack(null)
+
+        fragment.show(ft, "dialog")
     }
 
 }

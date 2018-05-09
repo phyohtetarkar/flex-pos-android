@@ -63,7 +63,7 @@
 
         <Button
             android:id="@+id/btnSaveUnit"
-            style="@style/BorderlessColoredButton"
+            style="@style/BorderLessButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -79,7 +79,7 @@
 
         <Button
             android:id="@+id/btnCancelUnit"
-            style="@style/BorderlessColoredButton"
+            style="@style/BorderLessButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

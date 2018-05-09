@@ -7,8 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
-        <item name="buttonBarNegativeButtonStyle">@style/BorderlessColoredButton</item>
-        <item name="buttonBarPositiveButtonStyle">@style/BorderlessColoredButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/BorderLessButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/BorderLessButton</item>
         <item name="titleTextAppearance">@style/TitleTextMedium</item>
     </style>
 
@@ -65,7 +65,7 @@
         <item name="fontFamily">@font/app_font_normal</item>
     </style>
 
-    <style name="BorderlessColoredButton" parent="Widget.AppCompat.Button.Borderless">
+    <style name="BorderLessButton" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAppearance">@style/AppTextNormal</item>

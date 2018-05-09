@@ -108,6 +108,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edChooseCategory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableEnd="@drawable/ic_arrow_drop_dark"
@@ -149,7 +150,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/edChooseCategory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="top"

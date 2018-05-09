@@ -25,6 +25,8 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val categoryLiveData: LiveData<Category> =
             Transformations.switchMap(categoryInput) { categoryRepo.getCategory(it) }
 
+    val categories: LiveData<List<Category>>;
+
     private val repo: ItemRepo
     private val categoryRepo: CategoryRepo
 
@@ -32,6 +34,8 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         val app = application as EasyShopApplication
         repo = ItemRepo(app.db.itemDao())
         categoryRepo = CategoryRepo(app.db.categoryDao())
+
+        categories = categoryRepo.findAllCategories()
     }
 
     fun save() {
