@@ -1,7 +1,6 @@
 package com.jsoft.es.data.model
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.db.SimpleSQLiteQuery
 import android.arch.persistence.db.SupportSQLiteQuery
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
@@ -10,40 +9,6 @@ import android.databinding.BaseObservable
 import com.jsoft.es.data.BaseDao
 import com.jsoft.es.data.Searchable
 import com.jsoft.es.data.entity.Unit
-import com.jsoft.es.data.utils.DaoWorkerAsync
-
-class UnitRepo(private val dao: UnitDao) {
-
-    fun findUnits(sq: Searchable): LiveData<List<Unit>> {
-        return dao.findUnits(SimpleSQLiteQuery(sq.query, sq.objects.toTypedArray()))
-    }
-
-    fun getUnit(id: Int): LiveData<Unit> {
-        return dao.findById(id)
-    }
-
-    fun save(unit: Unit) {
-        DaoWorkerAsync<Unit>({
-            it.uniqueName = it.name.toUpperCase()
-            if (it.id > 0) {
-                dao.update(it)
-            } else {
-                dao.insert(it)
-            }
-        }, {
-
-        }).execute(unit)
-    }
-
-    fun delete(unit: Unit) {
-        DaoWorkerAsync<Unit>({
-            dao.delete(it)
-        }, {
-
-        }).execute(unit)
-    }
-
-}
 
 class UnitSearch : BaseObservable(), Searchable {
 

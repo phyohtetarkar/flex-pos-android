@@ -1,7 +1,6 @@
 package com.jsoft.es.data.model
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.db.SimpleSQLiteQuery
 import android.arch.persistence.db.SupportSQLiteQuery
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
@@ -11,36 +10,6 @@ import com.jsoft.es.data.BaseDao
 import com.jsoft.es.data.Searchable
 import com.jsoft.es.data.entity.Category
 import com.jsoft.es.data.entity.CategoryVO
-import com.jsoft.es.data.utils.DaoWorkerAsync
-
-class CategoryRepo(private val dao: CategoryDao) {
-
-    fun findCategories(sq: Searchable): LiveData<List<CategoryVO>> {
-        return dao.findCategories(SimpleSQLiteQuery(sq.query, sq.objects.toTypedArray()))
-    }
-
-    fun findAllCategories(): LiveData<List<Category>> {
-        return dao.findAllCategories()
-    }
-
-    fun getCategory(id: Int): LiveData<Category> {
-        return dao.findById(id)
-    }
-
-    fun save(category: Category) {
-        DaoWorkerAsync<Category>({
-            it.uniqueName = it.name.toUpperCase()
-            if (it.id > 0) {
-                dao.update(it)
-            } else {
-                dao.insert(it)
-            }
-        }, {
-
-        }).execute(category)
-    }
-
-}
 
 class CategorySearch : BaseObservable(), Searchable {
 

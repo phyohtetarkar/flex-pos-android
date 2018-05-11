@@ -9,7 +9,7 @@ import com.jsoft.es.R
 import com.jsoft.es.data.entity.ItemPrice
 import com.jsoft.es.ui.custom.SimpleViewAdapter
 
-class PriceListViewAdapter(parent: ViewGroup) : SimpleViewAdapter<PriceListViewAdapter.PriceViewHolder>(parent) {
+class PriceViewAdapter(parent: ViewGroup) : SimpleViewAdapter<PriceViewAdapter.PriceViewHolder>(parent) {
 
     var list: MutableList<ItemPrice> = mutableListOf()
 
