@@ -59,7 +59,7 @@ class UnitsFragment : Fragment() {
             }
 
             override fun onCancel(position: Int) {
-                adapter.refreshItemAt(position)
+                adapter.notifyItemChanged(position)
             }
         })
         val helper = ItemTouchHelper(callback)
@@ -71,7 +71,7 @@ class UnitsFragment : Fragment() {
 
         viewModel.units.observe(this, Observer {
             val list = it?.toMutableList() ?: mutableListOf()
-            adapter.setData(list)
+            adapter.submitList(it)
             if (list.isEmpty()) {
                 stub.visibility = View.VISIBLE
             } else {

@@ -9,7 +9,7 @@
 
     <string name="app_name">Easy Shop</string>
     <string name="save">Save</string>
-    <string name="delete">Delete</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="hint_unit_name">Unit Name *</string>
     <string name="hint_category_name">Category Name *</string>

@@ -29,7 +29,7 @@ class SwipeGestureCallback(private val listener: OnSwipeDeleteListener) : ItemTo
 
         val builder = AlertDialog.Builder(viewHolder.itemView.context)
         builder.setMessage(R.string.confirm_message_delete)
-        builder.setPositiveButton(R.string.delete) { _, _ -> listener.onDelete(position) }
+        builder.setPositiveButton(R.string.ok) { _, _ -> listener.onDelete(position) }
         builder.setNegativeButton(R.string.cancel) { _, _ -> listener.onCancel(position) }
         builder.setCancelable(false)
         builder.show()
