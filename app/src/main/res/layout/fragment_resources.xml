@@ -25,7 +25,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
-                android:fontFamily="@font/app_font_normal"
                 android:padding="16dp"
                 android:text="Products"
                 app:layout_constraintBottom_toTopOf="@+id/view4"

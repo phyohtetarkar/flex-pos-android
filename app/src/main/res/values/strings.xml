@@ -38,10 +38,9 @@
 
     <string name="confirm_message_delete">Are you sure to delete?</string>
 
-    <!-- error messages -->
     <string name="error_empty_input_format">%s must not empty</string>
     <string name="items">items</string>
     <string name="editText_hint_remark">Remark</string>
-    <string name="hint_size">Size</string>
+    <string name="hint_size">Size *</string>
 
 </resources>

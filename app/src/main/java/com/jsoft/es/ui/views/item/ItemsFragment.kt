@@ -5,7 +5,10 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +16,7 @@ import android.view.ViewGroup
 import com.jsoft.es.MainActivity
 import com.jsoft.es.R
 import com.jsoft.es.data.model.ItemSearch
+import com.jsoft.es.ui.custom.SimpleDividerItemDecoration
 import com.jsoft.es.ui.utils.RecyclerViewItemTouchListener
 import kotlinx.android.synthetic.main.fragment_items.*
 
@@ -35,22 +39,26 @@ class ItemsFragment : Fragment() {
 
         val adapter = ItemAdapter()
 
-        recyclerViewItems.layoutManager = LinearLayoutManager(context)
-        recyclerViewItems.setHasFixedSize(true)
-        recyclerViewItems.addOnItemTouchListener(RecyclerViewItemTouchListener(recyclerViewItems, object : RecyclerViewItemTouchListener.OnTouchListener {
-            override fun onTouch(view: View, position: Int) {
-                val itemVO = adapter.getItemAt(position)
-                itemVO?.apply { showEdit((id)) }
-            }
+        recyclerViewItems.apply {
+            setHasFixedSize(true)
+            addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
+                override fun onTouch(view: View, position: Int) {
+                    adapter.getItemAt(position)?.apply {
+                        showEdit((id), view)
+                    }
 
-            override fun onLongTouch(view: View, position: Int) {
-            }
+                }
 
-        }))
+                override fun onLongTouch(view: View, position: Int) {
 
-        recyclerViewItems.adapter = adapter
+                }
+            }))
 
-        fabItems.setOnClickListener { showEdit(0) }
+            this.adapter = adapter
+        }
+
+        fabItems.setOnClickListener { showEdit(0, it) }
 
         val stub = viewStubItems.inflate()
 
@@ -65,21 +73,20 @@ class ItemsFragment : Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        //viewModel.searchModel.value = ItemSearch()
-    }
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val activity = context as MainActivity
         activity.setTitle(R.string.title_items)
     }
 
-    private fun showEdit(id: Long) {
+    private fun showEdit(id: Long, view: View?) {
+        val options = view?.let { ActivityOptionsCompat.makeScaleUpAnimation(view, view.x.toInt(), view.y.toInt(), view.width, view.height) }
         val i = Intent(activity, EditItemActivity::class.java)
         i.putExtra("id", id)
-        startActivity(i)
+
+        context?.apply {
+            ActivityCompat.startActivity(this, i, options?.toBundle())
+        }
 
     }
 

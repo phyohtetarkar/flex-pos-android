@@ -22,7 +22,6 @@
             android:clickable="true"
             android:focusable="true"
             android:text="@{obj.name}"
-            android:textAppearance="@style/AppTextNormal"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

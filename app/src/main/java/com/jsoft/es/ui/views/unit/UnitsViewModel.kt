@@ -4,28 +4,35 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Transformations
+import android.arch.persistence.db.SimpleSQLiteQuery
 import com.jsoft.es.EasyShopApplication
 import com.jsoft.es.data.entity.Unit
-import com.jsoft.es.data.model.UnitRepo
+import com.jsoft.es.data.model.UnitDao
 import com.jsoft.es.data.model.UnitSearch
+import com.jsoft.es.data.utils.DaoWorkerAsync
 import com.jsoft.es.data.utils.SearchMutableLiveData
 
 class UnitsViewModel(application: Application) : AndroidViewModel(application) {
 
     val searchModel = SearchMutableLiveData<UnitSearch>()
 
-    val units: LiveData<List<Unit>> =
-            Transformations.switchMap(searchModel) { repo.findUnits(it) }
+    val units: LiveData<List<Unit>> = Transformations.switchMap(searchModel) {
+        dao.findUnits(SimpleSQLiteQuery(it.query, it.objects.toTypedArray()))
+    }
 
-    private val repo: UnitRepo
+    private val dao: UnitDao
 
     init {
         val app = application as EasyShopApplication
-        repo = UnitRepo(app.db.unitDao())
+        dao = app.db.unitDao()
     }
 
     fun delete(unit: Unit) {
-        repo.delete(unit)
+        DaoWorkerAsync<Unit>({
+            dao.delete(it)
+        }, {
+
+        }).execute(unit)
     }
 
 }

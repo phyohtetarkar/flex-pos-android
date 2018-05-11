@@ -25,14 +25,14 @@
 
         <TextView
             android:id="@+id/textViewEditPrice"
-            style="@style/Base.DialogWindowTitle.AppCompat"
+            style="@style/HeaderText.Normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:fontFamily="@font/app_font_medium"
             android:text='@{unit.id > 0 ? "Edit Unit" : "Create Unit"}'
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Edit Unit" />
@@ -63,7 +63,7 @@
 
         <Button
             android:id="@+id/btnSaveUnit"
-            style="@style/BorderLessButton"
+            style="@style/ButtonTextColored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -79,7 +79,7 @@
 
         <Button
             android:id="@+id/btnCancelUnit"
-            style="@style/BorderLessButton"
+            style="@style/ButtonTextColored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

@@ -8,7 +8,8 @@ import android.arch.lifecycle.Transformations
 import android.databinding.ObservableField
 import com.jsoft.es.EasyShopApplication
 import com.jsoft.es.data.entity.Unit
-import com.jsoft.es.data.model.UnitRepo
+import com.jsoft.es.data.model.UnitDao
+import com.jsoft.es.data.utils.DaoWorkerAsync
 
 class EditUnitViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -17,17 +18,28 @@ class EditUnitViewModel(application: Application) : AndroidViewModel(application
     val unitInput = MutableLiveData<Int>()
 
     val unitLiveData: LiveData<Unit> =
-            Transformations.switchMap(unitInput) { repo.getUnit(it) }
+            Transformations.switchMap(unitInput) { dao.findById(it) }
 
-    private val repo: UnitRepo
+    private val dao: UnitDao
 
     init {
         val app = application as EasyShopApplication
-        repo = UnitRepo(app.db.unitDao())
+        dao = app.db.unitDao()
     }
 
     fun save() {
-        unit.get()?.apply { repo.save(this) }
+        unit.get()?.apply {
+            DaoWorkerAsync<Unit>({
+                it.uniqueName = it.name.toUpperCase()
+                if (it.id > 0) {
+                    dao.update(it)
+                } else {
+                    dao.insert(it)
+                }
+            }, {
+
+            }).execute(this)
+        }
     }
 
 }

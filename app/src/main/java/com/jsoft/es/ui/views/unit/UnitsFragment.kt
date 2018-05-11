@@ -35,20 +35,23 @@ class UnitsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = UnitAdapter()
-        recyclerViewUnits.layoutManager = LinearLayoutManager(context)
-        recyclerViewUnits.setHasFixedSize(true)
-        recyclerViewUnits.addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        recyclerViewUnits.addOnItemTouchListener(RecyclerViewItemTouchListener(recyclerViewUnits, object : RecyclerViewItemTouchListener.OnTouchListener {
-            override fun onTouch(view: View, position: Int) {
-                val (id) = adapter.getItemAt(position)
-                showEdit(id)
 
-            }
+        recyclerViewUnits.apply {
+            setHasFixedSize(true)
+            addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
+                override fun onTouch(view: View, position: Int) {
+                    val (id) = adapter.getItemAt(position)
+                    showEdit(id)
+                }
 
-            override fun onLongTouch(view: View, position: Int) {}
-        }))
+                override fun onLongTouch(view: View, position: Int) {
 
-        recyclerViewUnits.adapter = adapter
+                }
+            }))
+
+            this.adapter = adapter
+        }
 
         val callback = SwipeGestureCallback(object : SwipeGestureCallback.OnSwipeDeleteListener {
             override fun onDelete(position: Int) {

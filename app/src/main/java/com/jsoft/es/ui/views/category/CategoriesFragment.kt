@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -34,23 +36,24 @@ class CategoriesFragment : Fragment() {
 
         val adapter = CategoryAdapter()
 
-        recyclerViewCategories.layoutManager = LinearLayoutManager(activity)
-        recyclerViewCategories.setHasFixedSize(true)
-        recyclerViewCategories.addItemDecoration(SimpleDividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        recyclerViewCategories.addOnItemTouchListener(RecyclerViewItemTouchListener(recyclerViewCategories, object : RecyclerViewItemTouchListener.OnTouchListener {
-            override fun onTouch(view: View, position: Int) {
-                val (id) = adapter.getItemAt(position)
-                showEdit(id)
-            }
+        recyclerViewCategories.apply {
+            setHasFixedSize(true)
+            addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
+                override fun onTouch(view: View, position: Int) {
+                    val (id) = adapter.getItemAt(position)
+                    showEdit(id, view)
+                }
 
-            override fun onLongTouch(view: View, position: Int) {
+                override fun onLongTouch(view: View, position: Int) {
 
-            }
-        }))
+                }
+            }))
 
-        recyclerViewCategories.adapter = adapter
+            this.adapter = adapter
+        }
 
-        fabCategories.setOnClickListener { showEdit(0) }
+        fabCategories.setOnClickListener { showEdit(0, it) }
 
         val stub = viewStubCategories.inflate()
 
@@ -71,10 +74,15 @@ class CategoriesFragment : Fragment() {
         viewModel.searchModel.value = CategorySearch()
     }
 
-    private fun showEdit(id: Int) {
-        val i = Intent(activity, EditCategoryActivity::class.java)
+    private fun showEdit(id: Int, view: View?) {
+        val options = view?.let { ActivityOptionsCompat.makeScaleUpAnimation(view, view.x.toInt(), view.y.toInt(), view.width, view.height) }
+        val i = Intent(context, EditCategoryActivity::class.java)
         i.putExtra("id", id)
-        startActivity(i)
+
+        context?.apply {
+            ActivityCompat.startActivity(this, i, options?.toBundle())
+        }
+
     }
 
     companion object {

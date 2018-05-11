@@ -81,13 +81,13 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/HeaderText.Colored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
-                        android:text="@string/select_color"
-                        style="@style/HeaderTextColored" />
+                        android:text="@string/select_color" />
 
                     <View
                         android:id="@+id/view12"

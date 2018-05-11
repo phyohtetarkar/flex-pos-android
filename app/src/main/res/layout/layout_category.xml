@@ -33,12 +33,12 @@
 
         <TextView
             android:id="@+id/textView2"
+            style="@style/HeaderText.Normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:text="@{obj.name}"
-            android:textAppearance="@style/AppTextMedium"
             app:layout_constraintStart_toEndOf="@+id/roundedView"
             app:layout_constraintTop_toTopOf="@+id/roundedView"
             tools:text="Category" />
@@ -47,7 +47,6 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fontFamily="@font/app_font_normal"
             android:text="@{obj.itemCount, default=0}"
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2"/>

@@ -8,7 +8,8 @@ import android.arch.lifecycle.Transformations
 import android.databinding.ObservableField
 import com.jsoft.es.EasyShopApplication
 import com.jsoft.es.data.entity.Category
-import com.jsoft.es.data.model.CategoryRepo
+import com.jsoft.es.data.model.CategoryDao
+import com.jsoft.es.data.utils.DaoWorkerAsync
 
 class EditCategoryViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -17,17 +18,28 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
     val categoryInput = MutableLiveData<Int>()
 
     val categoryLive: LiveData<Category> =
-            Transformations.switchMap(categoryInput) { repo.getCategory(it) }
+            Transformations.switchMap(categoryInput) { dao.findById(it) }
 
-    private val repo: CategoryRepo
+    private val dao: CategoryDao
 
     init {
         val app = application as EasyShopApplication
-        repo = CategoryRepo(app.db.categoryDao())
+        dao = app.db.categoryDao()
     }
 
     fun save() {
-        category.get()?.apply { repo.save(this) }
+        category.get()?.apply {
+            DaoWorkerAsync<Category>({
+                it.uniqueName = it.name.toUpperCase()
+                if (it.id > 0) {
+                    dao.update(it)
+                } else {
+                    dao.insert(it)
+                }
+            }, {
+
+            }).execute(this)
+        }
     }
 
 }

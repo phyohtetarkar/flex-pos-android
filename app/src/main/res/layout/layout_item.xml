@@ -42,12 +42,12 @@
 
             <TextView
                 android:id="@+id/textViewItemName"
+                style="@style/HeaderText.Normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:text="@{obj.name}"
-                android:textAppearance="@style/AppTextMedium"
                 app:layout_constraintStart_toEndOf="@+id/roundedImageView_itemImage"
                 app:layout_constraintTop_toTopOf="@+id/roundedImageView_itemImage"
                 tools:text="Item Name" />

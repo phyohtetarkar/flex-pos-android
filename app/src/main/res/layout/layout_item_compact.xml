@@ -45,14 +45,13 @@
 
             <TextView
                 android:id="@+id/textView16"
+                style="@style/HeaderText.Normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textAppearance="@style/AppTextMedium"
-                android:textSize="18sp"
                 android:text="@{obj.name}"
                 tools:text="Item Name" />
 
@@ -61,6 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
+                android:textSize="12sp"
                 tools:text="(120 ml)" />
 
         </LinearLayout>
@@ -72,8 +72,8 @@
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:fontFamily="@font/app_font_medium"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="1000 Ks" />
@@ -83,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{obj.code}"
+            android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
             app:layout_constraintStart_toStartOf="@+id/linearLayout2"
             tools:text="10001" />

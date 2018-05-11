@@ -100,9 +100,9 @@ class RoundedImageView : AppCompatImageView {
         paint.color = Color.parseColor("#BAB399")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            canvas.drawRoundRect(0f, 0f, radius.toFloat(), radius.toFloat(), 20f, 20f, paint)
+            canvas.drawRoundRect(0f, 0f, radius.toFloat(), radius.toFloat(), 10f, 10f, paint)
         } else {
-            canvas.drawRoundRect(RectF(0f, 0f, radius.toFloat(), radius.toFloat()), 20f, 20f, paint)
+            canvas.drawRoundRect(RectF(0f, 0f, radius.toFloat(), radius.toFloat()), 10f, 10f, paint)
         }
         /*canvas.drawCircle(radius / 2,
                 radius / 2, radius / 2, paint);*/

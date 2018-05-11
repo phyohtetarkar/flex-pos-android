@@ -30,7 +30,7 @@ subprojects {
 
 ext {
     supportLibVersion = "27.1.1"
-    roomVersion = "1.1.0-beta3"
+    roomVersion = "1.1.0"
     archVersion = "1.1.1"
 }
 
