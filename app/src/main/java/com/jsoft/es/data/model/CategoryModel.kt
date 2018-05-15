@@ -5,6 +5,7 @@ import android.arch.persistence.db.SupportSQLiteQuery
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.RawQuery
+import android.arch.persistence.room.Transaction
 import android.databinding.BaseObservable
 import com.jsoft.es.data.BaseDao
 import com.jsoft.es.data.Searchable
@@ -44,18 +45,25 @@ class CategorySearch : BaseObservable(), Searchable {
 }
 
 @Dao
-interface CategoryDao : BaseDao<Category> {
+abstract class CategoryDao : BaseDao<Category> {
 
     @RawQuery(observedEntities = [Category::class])
-    fun findCategories(query: SupportSQLiteQuery): LiveData<List<CategoryVO>>
+    abstract fun findCategories(query: SupportSQLiteQuery): LiveData<List<CategoryVO>>
 
     @Query("SELECT * FROM category")
-    fun findAllCategories(): LiveData<List<Category>>
+    abstract fun findAllCategories(): LiveData<List<Category>>
 
     @Query("SELECT * FROM category WHERE id = :id LIMIT 1")
-    fun findById(id: Int): LiveData<Category>
+    abstract fun findById(id: Int): LiveData<Category>
 
-    @Query("SELECT * FROM category WHERE id = :id LIMIT 1")
-    fun findByIdSync(id: Int): Category
+    @Transaction
+    open fun save(category: Category) {
+        category.uniqueName = category.name.toUpperCase()
+        if (category.id > 0) {
+            update(category)
+        } else {
+            insert(category)
+        }
+    }
 
 }

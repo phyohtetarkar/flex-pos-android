@@ -4,10 +4,7 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverter
 import android.arch.persistence.room.TypeConverters
-import com.jsoft.es.data.entity.Category
-import com.jsoft.es.data.entity.Item
-import com.jsoft.es.data.entity.Sale
-import com.jsoft.es.data.entity.SaleItem
+import com.jsoft.es.data.entity.*
 import com.jsoft.es.data.entity.Unit
 import com.jsoft.es.data.model.CategoryDao
 import com.jsoft.es.data.model.ItemDao
@@ -20,6 +17,7 @@ import kotlin.Long
     Item::class,
     Category::class,
     Unit::class,
+    ItemPricing::class,
     Sale::class,
     SaleItem::class])
 @TypeConverters(DateConverter::class)

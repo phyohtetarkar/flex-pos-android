@@ -42,5 +42,6 @@
     <string name="items">items</string>
     <string name="editText_hint_remark">Remark</string>
     <string name="hint_size">Size *</string>
+    <string name="add_new">Add new</string>
 
 </resources>

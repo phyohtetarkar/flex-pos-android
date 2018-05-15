@@ -5,6 +5,7 @@ import android.arch.persistence.db.SupportSQLiteQuery
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.RawQuery
+import android.arch.persistence.room.Transaction
 import android.databinding.BaseObservable
 import com.jsoft.es.data.BaseDao
 import com.jsoft.es.data.Searchable
@@ -35,15 +36,25 @@ class UnitSearch : BaseObservable(), Searchable {
 }
 
 @Dao
-interface UnitDao : BaseDao<Unit> {
+abstract class UnitDao : BaseDao<Unit> {
 
     @RawQuery(observedEntities = [Unit::class])
-    fun findUnits(query: SupportSQLiteQuery): LiveData<List<Unit>>
+    abstract fun findUnits(query: SupportSQLiteQuery): LiveData<List<Unit>>
+
+    @Query("SELECT * FROM unit")
+    abstract fun findAllUnits(): LiveData<List<Unit>>
 
     @Query("SELECT * FROM unit WHERE id = :id LIMIT 1")
-    fun findById(id: Int): LiveData<Unit>
+    abstract fun findById(id: Int): LiveData<Unit>
 
-    @Query("SELECT * FROM unit WHERE id = :id LIMIT 1")
-    fun findByIdSync(id: Int): Unit
+    @Transaction
+    open fun save(unit: Unit) {
+        unit.uniqueName = unit.name.toUpperCase()
+        if (unit.id > 0) {
+            update(unit)
+        } else {
+            insert(unit)
+        }
+    }
 
 }

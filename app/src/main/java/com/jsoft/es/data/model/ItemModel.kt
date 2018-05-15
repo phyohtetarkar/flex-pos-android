@@ -6,12 +6,11 @@ import android.arch.persistence.db.SupportSQLiteQuery
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.RawQuery
+import android.arch.persistence.room.Transaction
 import android.databinding.BaseObservable
 import com.jsoft.es.data.BaseDao
 import com.jsoft.es.data.Searchable
-import com.jsoft.es.data.entity.Category
-import com.jsoft.es.data.entity.Item
-import com.jsoft.es.data.entity.ItemVO
+import com.jsoft.es.data.entity.*
 import com.jsoft.es.data.entity.Unit
 
 class ItemSearch : BaseObservable(), Searchable {
@@ -47,10 +46,12 @@ class ItemSearch : BaseObservable(), Searchable {
                     "i.image, " +
                     "u.name as unit, " +
                     "c.name as category, " +
-                    "c.color " +
+                    "c.color, " +
+                    "p.price " +
                     "FROM item i " +
-                    "LEFT OUTER JOIN unit u ON u.id = i.unit_id " +
                     "LEFT OUTER JOIN category c ON c.id = i.category_id " +
+                    "LEFT OUTER JOIN item_pricing p ON i.id = p.item_id " +
+                    "LEFT OUTER JOIN unit u ON u.id = p.unit_id " +
                     "WHERE 1 = 1 ")
 
             name.takeUnless { it.isNullOrBlank() }?.apply {
@@ -79,15 +80,36 @@ class ItemSearch : BaseObservable(), Searchable {
 }
 
 @Dao
-interface ItemDao : BaseDao<Item> {
+abstract class ItemDao : BaseDao<Item> {
 
     @RawQuery(observedEntities = [Item::class, Category::class, Unit::class])
-    fun findItems(query: SupportSQLiteQuery): DataSource.Factory<Int, ItemVO>
+    abstract fun findItems(query: SupportSQLiteQuery): DataSource.Factory<Int, ItemVO>
 
     @Query("SELECT * FROM item WHERE id = :id LIMIT 1")
-    fun findById(id: Long): LiveData<Item>
+    abstract fun findById(id: Long): LiveData<Item>
 
     @Query("SELECT * FROM item WHERE id = :id LIMIT 1")
-    fun findByIdSync(id: Long): Item
+    abstract fun findByIdSync(id: Long): Item
 
+    @Transaction
+    open fun save(item: Item, pricing: MutableList<ItemPricing>) {
+        var itemId: Long = item.id
+        if (item.id > 0) {
+            update(item)
+        } else {
+            itemId = insertAndGet(item)
+            val v = findByIdSync(itemId)
+            v.code = "${10000 + itemId}"
+            update(v)
+        }
+
+        pricing.forEach {
+            it.itemId = itemId
+            if (it.id > 0) {
+
+            } else {
+
+            }
+        }
+    }
 }

@@ -1,8 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -13,6 +12,10 @@
         <item name="android:textViewStyle">@style/AppTextNormal</item>
         <item name="editTextStyle">@style/EditTextNormal</item>
         <item name="android:buttonStyle">@style/ButtonTextNormal</item>
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- Customize your theme here. -->
     </style>
 
     <style name="AppTheme.NoActionBar">

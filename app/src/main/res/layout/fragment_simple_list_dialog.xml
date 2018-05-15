@@ -1,67 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/simpleListDialogtitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Select"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Choose"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <View
         android:id="@+id/view8"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
-        android:background="@color/darkDivider"
-        app:layout_constraintBottom_toTopOf="@+id/simpleListRecyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/simpleListDialogtitle" />
+        android:background="@color/darkDivider"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/simpleListRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        app:layout_constraintBottom_toTopOf="@+id/view9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view8"
-        tools:listitem="@android:layout/simple_list_item_1" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/simpleListDialogCancelButton"
-        style="@style/BorderLessButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="@string/cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/simpleListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/layout_simple_list_item" />
 
-    <View
-        android:id="@+id/view9"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/darkDivider"
-        app:layout_constraintBottom_toTopOf="@+id/simpleListDialogCancelButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/simpleListRecyclerView" />
-</android.support.constraint.ConstraintLayout>
+        <ViewStub
+            android:id="@+id/viewStubList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout="@layout/layout_empty_stub_dlg" />
+
+    </FrameLayout>
+
+</LinearLayout>

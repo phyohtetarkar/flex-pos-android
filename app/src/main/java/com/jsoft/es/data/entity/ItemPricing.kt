@@ -12,8 +12,8 @@ import android.arch.persistence.room.*
 ], indices = [
     (Index(value = ["unit_id"])),
     (Index(value = ["item_id"]))
-])
-data class ItemPrice(
+], tableName = "item_pricing")
+data class ItemPricing(
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0,
         var size: Double = 0.00,

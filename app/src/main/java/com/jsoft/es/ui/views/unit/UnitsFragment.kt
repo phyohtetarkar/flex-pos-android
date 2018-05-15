@@ -37,6 +37,7 @@ class UnitsFragment : Fragment() {
         val adapter = UnitAdapter()
 
         recyclerViewUnits.apply {
+            layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
@@ -70,14 +71,14 @@ class UnitsFragment : Fragment() {
         val stub = viewStubUnits.inflate()
 
         viewModel.units.observe(this, Observer {
-            val list = it?.toMutableList() ?: mutableListOf()
             adapter.submitList(it)
-            if (list.isEmpty()) {
-                stub.visibility = View.VISIBLE
-            } else {
-                stub.visibility = View.GONE
+            it?.apply {
+                if (isEmpty()) {
+                    stub.visibility = View.VISIBLE
+                } else {
+                    stub.visibility = View.GONE
+                }
             }
-
         })
 
     }

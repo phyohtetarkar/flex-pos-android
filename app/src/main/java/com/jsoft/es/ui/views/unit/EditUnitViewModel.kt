@@ -30,12 +30,7 @@ class EditUnitViewModel(application: Application) : AndroidViewModel(application
     fun save() {
         unit.get()?.apply {
             DaoWorkerAsync<Unit>({
-                it.uniqueName = it.name.toUpperCase()
-                if (it.id > 0) {
-                    dao.update(it)
-                } else {
-                    dao.insert(it)
-                }
+                dao.save(it)
             }, {
 
             }).execute(this)

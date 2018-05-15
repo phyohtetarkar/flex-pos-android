@@ -84,11 +84,6 @@ class EditUnitFragment : DialogFragment() {
         window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding.unbind()
-    }
-
     companion object {
         internal fun getInstance(id: Int): EditUnitFragment {
             val frag = EditUnitFragment()

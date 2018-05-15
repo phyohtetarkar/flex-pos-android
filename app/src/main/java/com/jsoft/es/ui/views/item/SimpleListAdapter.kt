@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.jsoft.es.R
 import com.jsoft.es.data.entity.Category
 import com.jsoft.es.data.entity.Unit
 
@@ -14,13 +15,13 @@ class SimpleListAdapter<T> : RecyclerView.Adapter<SimpleListAdapter.SimpleListVi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(android.R.layout.simple_list_item_1, parent, false)
+        val view = inflater.inflate(R.layout.layout_simple_list_item, parent, false)
         return SimpleListViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: SimpleListViewHolder, position: Int) {
         val t = list[position]
-        val textView = holder.itemView.findViewById(android.R.id.text1) as TextView
+        val textView = holder.itemView.findViewById(R.id.simple_list_item) as TextView
 
         when (t) {
             is Category -> textView.text = t.name

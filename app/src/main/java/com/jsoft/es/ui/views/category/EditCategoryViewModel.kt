@@ -30,12 +30,7 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
     fun save() {
         category.get()?.apply {
             DaoWorkerAsync<Category>({
-                it.uniqueName = it.name.toUpperCase()
-                if (it.id > 0) {
-                    dao.update(it)
-                } else {
-                    dao.insert(it)
-                }
+                dao.save(it)
             }, {
 
             }).execute(this)

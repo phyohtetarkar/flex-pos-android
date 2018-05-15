@@ -1,11 +1,11 @@
 package com.jsoft.es.ui.views.category
 
+import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -37,12 +37,13 @@ class CategoriesFragment : Fragment() {
         val adapter = CategoryAdapter()
 
         recyclerViewCategories.apply {
+            layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
                 override fun onTouch(view: View, position: Int) {
                     val (id) = adapter.getItemAt(position)
-                    showEdit(id, view)
+                    showEdit(id)
                 }
 
                 override fun onLongTouch(view: View, position: Int) {
@@ -53,19 +54,19 @@ class CategoriesFragment : Fragment() {
             this.adapter = adapter
         }
 
-        fabCategories.setOnClickListener { showEdit(0, it) }
+        fabCategories.setOnClickListener { showEdit(0) }
 
         val stub = viewStubCategories.inflate()
 
         viewModel.categories.observe(this, Observer {
-            val list = it?.toMutableList() ?: mutableListOf()
-            adapter.setData(list)
-            if (list.isEmpty()) {
-                stub.visibility = View.VISIBLE
-            } else {
-                stub.visibility = View.GONE
+            adapter.submitList(it)
+            it?.apply {
+                if (isEmpty()) {
+                    stub.visibility = View.VISIBLE
+                } else {
+                    stub.visibility = View.GONE
+                }
             }
-
         })
     }
 
@@ -74,13 +75,15 @@ class CategoriesFragment : Fragment() {
         viewModel.searchModel.value = CategorySearch()
     }
 
-    private fun showEdit(id: Int, view: View?) {
-        val options = view?.let { ActivityOptionsCompat.makeScaleUpAnimation(view, view.x.toInt(), view.y.toInt(), view.width, view.height) }
+    private fun showEdit(id: Int) {
         val i = Intent(context, EditCategoryActivity::class.java)
         i.putExtra("id", id)
 
-        context?.apply {
-            ActivityCompat.startActivity(this, i, options?.toBundle())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //startActivity(i, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
+            startActivity(i)
+        } else {
+            startActivity(i)
         }
 
     }

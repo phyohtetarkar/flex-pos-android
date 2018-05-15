@@ -19,25 +19,30 @@ data class Item(
         var remark: String = "",
         var available: Boolean = true,
         @ColumnInfo(name = "category_id")
-        var categoryId: Int = 0,
-
-        @Ignore
-        var category: Category? = Category(name = "choose")
-)
+        var categoryId: Int = 0
+) {
+    @Ignore
+    var category: Category? = Category(name = "choose")
+        set(value) {
+            field = value
+            value?.id?.apply { categoryId = this }
+        }
+}
 
 data class ItemVO(
         var id: Long,
         var name: String,
         var code: String,
         var image: String,
+        var unit: String?,
         var category: String,
         var color: String,
-        var pricing: Int
+        var price: Int?
 )
 
 data class ItemDetailVO(
         @Embedded
         var item: Item = Item(),
-        @Relation(parentColumn = "id", entityColumn = "item_id", entity = ItemPrice::class)
-        var itemPrices: MutableList<ItemPrice> = mutableListOf()
+        @Relation(parentColumn = "id", entityColumn = "item_id", entity = ItemPricing::class)
+        var pricing: MutableList<ItemPricing> = mutableListOf()
 )

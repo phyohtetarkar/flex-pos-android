@@ -61,8 +61,11 @@ class EditCategoryActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            android.R.id.home -> onBackPressed()
-            R.id.action_save_1 -> {
+            android.R.id.home -> {
+                supportFinishAfterTransition()
+                return true
+            }
+            R.id.action_save -> {
                 val category = viewModel.category.get()
                 val valid = ValidatorUtils.isValid(category?.name, ValidatorUtils.NOT_EMPTY)
 
@@ -75,7 +78,7 @@ class EditCategoryActivity : AppCompatActivity() {
             }
         }
 
-        return false
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

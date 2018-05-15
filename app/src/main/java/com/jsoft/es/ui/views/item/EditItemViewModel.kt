@@ -9,8 +9,10 @@ import android.databinding.ObservableField
 import com.jsoft.es.EasyShopApplication
 import com.jsoft.es.data.entity.Category
 import com.jsoft.es.data.entity.Item
+import com.jsoft.es.data.entity.Unit
 import com.jsoft.es.data.model.CategoryDao
 import com.jsoft.es.data.model.ItemDao
+import com.jsoft.es.data.model.UnitDao
 import com.jsoft.es.data.utils.DaoWorkerAsync
 
 class EditItemViewModel(application: Application) : AndroidViewModel(application) {
@@ -27,28 +29,24 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
             Transformations.switchMap(categoryInput) { categoryDao.findById(it) }
 
     val categories: LiveData<List<Category>> by lazy { categoryDao.findAllCategories() }
+    val units: LiveData<List<Unit>> by lazy { unitDao.findAllUnits() }
 
     private val dao: ItemDao
     private val categoryDao: CategoryDao
+    private val unitDao: UnitDao
 
     init {
         val app = application as EasyShopApplication
 
         dao = app.db.itemDao()
         categoryDao = app.db.categoryDao()
+        unitDao = app.db.unitDao()
     }
 
     fun save() {
         item.get()?.apply {
             DaoWorkerAsync<Item>({
-                if (it.id > 0) {
-                    dao.update(it)
-                } else {
-                    val id = dao.insertAndGet(it)
-                    val v = dao.findByIdSync(id)
-                    v.code = "${10000 + id}"
-                    dao.update(v)
-                }
+                dao.save(it, mutableListOf())
             }, {
 
             }).execute(this)

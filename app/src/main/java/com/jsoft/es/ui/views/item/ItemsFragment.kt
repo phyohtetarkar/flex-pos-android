@@ -1,12 +1,12 @@
 package com.jsoft.es.ui.views.item
 
+import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -40,8 +40,8 @@ class ItemsFragment : Fragment() {
         val adapter = ItemAdapter()
 
         recyclerViewItems.apply {
+            layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
                 override fun onTouch(view: View, position: Int) {
                     adapter.getItemAt(position)?.apply {
@@ -73,6 +73,11 @@ class ItemsFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.searchModel.value = ItemSearch()
+    }
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val activity = context as MainActivity
@@ -80,12 +85,14 @@ class ItemsFragment : Fragment() {
     }
 
     private fun showEdit(id: Long, view: View?) {
-        val options = view?.let { ActivityOptionsCompat.makeScaleUpAnimation(view, view.x.toInt(), view.y.toInt(), view.width, view.height) }
-        val i = Intent(activity, EditItemActivity::class.java)
+        val i = Intent(context, EditItemActivity::class.java)
         i.putExtra("id", id)
 
-        context?.apply {
-            ActivityCompat.startActivity(this, i, options?.toBundle())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //startActivity(i, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
+            startActivity(i)
+        } else {
+            startActivity(i)
         }
 
     }

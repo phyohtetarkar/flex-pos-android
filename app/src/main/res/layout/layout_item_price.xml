@@ -6,7 +6,7 @@
     <data>
         <variable
             name="itemPrice"
-            type="com.jsoft.es.data.entity.ItemPrice"/>
+            type="com.jsoft.es.data.entity.ItemPricing"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

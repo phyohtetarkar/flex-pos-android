@@ -2,16 +2,15 @@ package com.jsoft.es.ui.views.category
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
-import android.support.v7.widget.RecyclerView
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jsoft.es.R
 import com.jsoft.es.data.entity.CategoryVO
 import com.jsoft.es.ui.custom.BindingViewHolder
 
-class CategoryAdapter : RecyclerView.Adapter<BindingViewHolder>() {
-
-    private var list: MutableList<CategoryVO> = mutableListOf()
+class CategoryAdapter : ListAdapter<CategoryVO, BindingViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,26 +19,24 @@ class CategoryAdapter : RecyclerView.Adapter<BindingViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
-        list.getOrNull(position)?.apply {
-            holder.bind(this)
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return list.size
+        getItem(position).apply { holder.bind(this) }
     }
 
     fun getItemAt(position: Int): CategoryVO {
-        return list[position]
+        return getItem(position)
     }
 
-    fun refreshItemAt(position: Int) {
-        notifyItemChanged(position)
-    }
+    companion object {
 
-    fun setData(list: MutableList<CategoryVO>) {
-        this.list = list
-        notifyDataSetChanged()
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CategoryVO>() {
+            override fun areItemsTheSame(oldItem: CategoryVO, newItem: CategoryVO): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: CategoryVO, newItem: CategoryVO): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
 }

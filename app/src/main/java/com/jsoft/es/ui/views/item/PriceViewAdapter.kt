@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jsoft.es.BR
 import com.jsoft.es.R
-import com.jsoft.es.data.entity.ItemPrice
+import com.jsoft.es.data.entity.ItemPricing
 import com.jsoft.es.ui.custom.SimpleViewAdapter
 
 class PriceViewAdapter(parent: ViewGroup) : SimpleViewAdapter<PriceViewAdapter.PriceViewHolder>(parent) {
 
-    var list: MutableList<ItemPrice> = mutableListOf()
+    var list: MutableList<ItemPricing> = mutableListOf()
 
     override fun onCreateView(parent: ViewGroup): PriceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -30,14 +30,14 @@ class PriceViewAdapter(parent: ViewGroup) : SimpleViewAdapter<PriceViewAdapter.P
         return list.size
     }
 
-    fun setPriceList(list: MutableList<ItemPrice>) {
+    fun setPriceList(list: MutableList<ItemPricing>) {
         this.list = list
         notifyChange()
     }
 
-    fun addPrice(itemPrice: ItemPrice) {
+    fun addPrice(itemPricing: ItemPricing) {
         val position = list.size
-        list.add(position, itemPrice)
+        list.add(position, itemPricing)
         notifyInserted(position)
     }
 

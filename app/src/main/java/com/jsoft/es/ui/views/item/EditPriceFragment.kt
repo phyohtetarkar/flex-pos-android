@@ -21,6 +21,7 @@ class EditPriceFragment : Fragment() {
         arguments?.apply { priceId = getLong("id") }
         viewModel = activity?.let { ViewModelProviders.of(it).get(EditItemViewModel::class.java) }
 
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,14 +30,14 @@ class EditPriceFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_save, menu)
+        inflater?.inflate(R.menu.menu_save_delete, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
             android.R.id.home -> activity?.onBackPressed()
-            R.id.action_save_1 -> {
+            R.id.action_save -> {
                 activity?.onBackPressed()
             }
         }
