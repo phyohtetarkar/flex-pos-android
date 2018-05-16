@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -31,13 +32,31 @@ class EditItemActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        edChooseCategory.setOnKeyListener { _, _, _ -> false }
+        edChooseCategory.setOnKeyListener { _, code, _ ->
+            if (code == KeyEvent.KEYCODE_TAB) {
+                return@setOnKeyListener false
+            }
+            return@setOnKeyListener true
+        }
         edChooseCategory.setOnTouchListener { _, me ->
 
             if (me.action == MotionEvent.ACTION_DOWN) {
                 showSelectDialog(DialogCategories())
             }
 
+            true
+        }
+
+        edChooseUnit.setOnKeyListener { _, code, _ ->
+            if (code == KeyEvent.KEYCODE_TAB) {
+                return@setOnKeyListener false
+            }
+            return@setOnKeyListener true
+        }
+        edChooseUnit.setOnTouchListener { _, me ->
+            if (me.action == MotionEvent.ACTION_DOWN) {
+                showSelectDialog(DialogUnits())
+            }
             true
         }
 
@@ -53,10 +72,17 @@ class EditItemActivity : AppCompatActivity() {
                 categoryLiveData.removeObservers(this@EditItemActivity)
             })
 
+            unitLiveData.observe(this@EditItemActivity, Observer {
+                item.get()?.unit = it
+                item.notifyChange()
+                unitLiveData.removeObservers(this@EditItemActivity)
+            })
+
             if (itemId > 0) {
                 itemLiveData.observe(this@EditItemActivity, Observer {
                     item.set(it)
                     categoryInput.value = it?.categoryId
+                    unitInput.value = it?.unitId
                     itemLiveData.removeObservers(this@EditItemActivity)
                 })
                 itemInput.value = itemId

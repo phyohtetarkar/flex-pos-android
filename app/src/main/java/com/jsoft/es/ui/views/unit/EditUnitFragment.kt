@@ -2,8 +2,6 @@ package com.jsoft.es.ui.views.unit
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
@@ -14,6 +12,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import com.jsoft.es.BR
 import com.jsoft.es.R
 import com.jsoft.es.data.entity.Unit
+import com.jsoft.es.databinding.EditUnitBinding
 import com.jsoft.es.ui.utils.ValidatorUtils
 import com.jsoft.es.ui.utils.ValidatorUtils.NOT_EMPTY
 
@@ -22,7 +21,7 @@ class EditUnitFragment : DialogFragment() {
     private var unitId: Int = 0
 
     private lateinit var viewModel: EditUnitViewModel
-    private lateinit var binding: ViewDataBinding
+    private lateinit var binding: EditUnitBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +34,9 @@ class EditUnitFragment : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, R.layout.fragment_edit_unit, container, false)
-        binding.setVariable(BR.isValidUnitName, true)
-        binding.setVariable(BR.unit, viewModel.unit)
+        binding = EditUnitBinding.inflate(inflater, container, false)
+        binding.isValidUnitName = true
+        binding.unit = viewModel.unit
 
         viewModel.apply {
             if (unitId > 0) {
@@ -51,7 +50,7 @@ class EditUnitFragment : DialogFragment() {
             }
         }
 
-        binding.setVariable(BR.delegate, object : EditUnitDialogDelegate {
+        binding.delegate = object : EditUnitDialogDelegate {
             override fun onSaveClick() {
                 val unit = viewModel.unit.get()
                 val valid = ValidatorUtils.isValid(unit?.name, NOT_EMPTY)
@@ -68,7 +67,7 @@ class EditUnitFragment : DialogFragment() {
                 dismiss()
             }
 
-        })
+        }
 
         return binding.root
     }

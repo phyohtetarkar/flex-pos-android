@@ -3,19 +3,19 @@ package com.jsoft.es.data.entity
 import android.arch.persistence.room.*
 
 @Entity(foreignKeys = [
-    (ForeignKey(entity = Unit::class,
+    ForeignKey(entity = Unit::class,
             parentColumns = ["id"],
-            childColumns = ["unit_id"])),
-    (ForeignKey(entity = Item::class,
+            childColumns = ["unit_id"]),
+    ForeignKey(entity = Item::class,
             parentColumns = ["id"],
-            childColumns = ["item_id"])),
-    (ForeignKey(entity = Sale::class,
+            childColumns = ["item_id"]),
+    ForeignKey(entity = Sale::class,
             parentColumns = ["id"],
-            childColumns = ["sale_id"]))
+            childColumns = ["sale_id"])
 ], indices = [
-    (Index(value = ["unit_id"])),
-    (Index(value = ["item_id"])),
-    (Index(value = ["sale_id"]))
+    Index(value = ["unit_id"]),
+    Index(value = ["item_id"]),
+    Index(value = ["sale_id"])
 ])
 data class SaleItem(
         @PrimaryKey(autoGenerate = true)

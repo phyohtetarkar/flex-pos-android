@@ -51,7 +51,7 @@ class ItemSearch : BaseObservable(), Searchable {
             val sb = StringBuilder()
             sb.append("SELECT i.id, " +
                     "i.name, " +
-                    "i.code, " +
+                    "i.barcode, " +
                     "i.image, " +
                     "u.name as unit, " +
                     "c.name as category, " +

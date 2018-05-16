@@ -56,7 +56,7 @@ class UnitsFragment : Fragment() {
 
         val callback = SwipeGestureCallback(object : SwipeGestureCallback.OnSwipeDeleteListener {
             override fun onDelete(position: Int) {
-                adapter.getItemAt(position).also { viewModel.delete(it) }
+                adapter.getItemAt(position).apply { viewModel.delete(this) }
             }
 
             override fun onCancel(position: Int) {

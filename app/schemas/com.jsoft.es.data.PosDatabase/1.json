@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d8ed309f626dfa93616a68dc19fca126",
+    "identityHash": "4a0e7e6068f2602df61dc6d9e74529b5",
     "entities": [
       {
         "tableName": "Item",
@@ -76,6 +76,14 @@
           "autoGenerate": true
         },
         "indices": [
+          {
+            "name": "index_Item_unit_id",
+            "unique": false,
+            "columnNames": [
+              "unit_id"
+            ],
+            "createSql": "CREATE  INDEX `index_Item_unit_id` ON `${TABLE_NAME}` (`unit_id`)"
+          },
           {
             "name": "index_Item_category_id",
             "unique": false,
@@ -408,7 +416,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d8ed309f626dfa93616a68dc19fca126\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4a0e7e6068f2602df61dc6d9e74529b5\")"
     ]
   }
 }

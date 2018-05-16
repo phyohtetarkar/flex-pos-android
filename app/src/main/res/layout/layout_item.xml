@@ -92,7 +92,7 @@
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/app_font_normal"
                 android:textSize="12sp"
-                android:text='@{obj.amountDesc}'
+                android:text='@{"(" + obj.amountDesc + ")"}'
                 app:layout_constraintBaseline_toBaselineOf="@+id/textViewItemName"
                 app:layout_constraintStart_toEndOf="@+id/textViewItemName"
                 tools:text="(120 ml)" />

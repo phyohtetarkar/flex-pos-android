@@ -179,7 +179,7 @@
                         android:id="@+id/textInputLayout4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="32dp"
                         app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
                         app:layout_constraintEnd_toStartOf="@+id/guideline"
                         app:layout_constraintStart_toStartOf="@+id/textInputLayout1"
@@ -189,7 +189,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_amount"
-                            android:text="@={item.amount}"/>
+                            android:text="@={item.amount}" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.constraint.Guideline
@@ -218,7 +218,7 @@
                         android:id="@+id/textInputLayout3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="32dp"
                         app:layout_constraintBottom_toTopOf="@+id/textInputLayout5"
                         app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
                         app:layout_constraintStart_toStartOf="@+id/textInputLayout"
@@ -229,7 +229,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_price"
                             android:inputType="numberDecimal"
-                            android:text="@={item.price}"/>
+                            android:text="@={item.price}" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -243,12 +243,14 @@
                         app:layout_constraintTop_toTopOf="@+id/textInputLayout4">
 
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edChooseUnit"
                             android:layout_width="match_parent"
                             android:layout_height="42.2dp"
                             android:drawableEnd="@drawable/ic_arrow_drop_dark"
                             android:drawableRight="@drawable/ic_arrow_drop_dark"
                             android:hint="@string/hint_unit"
                             android:text="@{item.unit.name}"
+                            android:inputType="none"
                             tools:text="choose" />
                     </android.support.design.widget.TextInputLayout>
 

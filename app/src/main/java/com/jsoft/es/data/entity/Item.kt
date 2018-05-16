@@ -10,7 +10,8 @@ import android.arch.persistence.room.*
             parentColumns = ["id"],
             childColumns = ["category_id"])
 ], indices = [
-    (Index(value = ["category_id"]))
+    Index(value = ["unit_id"]),
+    Index(value = ["category_id"])
 ])
 data class Item(
         @PrimaryKey(autoGenerate = true)

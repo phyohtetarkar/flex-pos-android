@@ -20,6 +20,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val item = ObservableField<Item>()
 
     val itemInput = MutableLiveData<Long>()
+    val unitInput = MutableLiveData<Int>()
     val categoryInput = MutableLiveData<Int>()
 
     val itemLiveData: LiveData<Item> =
@@ -27,6 +28,10 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     val categoryLiveData: LiveData<Category> =
             Transformations.switchMap(categoryInput) { categoryDao.findById(it) }
+
+    val unitLiveData: LiveData<Unit> =
+            Transformations.switchMap(unitInput) { unitDao.findById(it) }
+
 
     val categories: LiveData<List<Category>> by lazy { categoryDao.findAllCategories() }
     val units: LiveData<List<Unit>> by lazy { unitDao.findAllUnits() }
