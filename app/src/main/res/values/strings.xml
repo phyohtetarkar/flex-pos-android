@@ -19,7 +19,7 @@
     <string name="choose_unit">Choose Unit *</string>
     <string name="hint_unit">Unit *</string>
     <string name="hint_name">Name *</string>
-    <string name="hint_amount">Amount</string>
+    <string name="hint_amount">Amount *</string>
     <string name="hint_barcode">Barcode</string>
     <string name="hint_price">Price *</string>
     <string name="hint_discount">Discount(%)</string>

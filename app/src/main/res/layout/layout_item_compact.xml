@@ -19,8 +19,8 @@
 
         <com.jsoft.es.ui.custom.RoundedImageView
             android:id="@+id/roundedImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
@@ -30,63 +30,50 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_placeholder" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginStart="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/roundedImageView"
-            app:layout_constraintTop_toTopOf="@+id/roundedImageView">
-
-            <TextView
-                android:id="@+id/textView16"
-                style="@style/HeaderText.Normal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:ellipsize="end"
-                android:lines="1"
-                android:text="@{obj.name}"
-                tools:text="Item Name" />
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:textSize="12sp"
-                tools:text="(120 ml)" />
-
-        </LinearLayout>
-
         <TextView
             android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:textSize="16sp"
+            android:text="@{obj.price}"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/roundedImageView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/roundedImageView"
             tools:text="1000 Ks" />
 
         <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView4"
+            style="@style/HeaderText.Normal"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{obj.code}"
-            android:textSize="14sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-            tools:text="10001" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@{obj.name, default=Name}"
+            app:layout_constraintEnd_toStartOf="@+id/textView14"
+            app:layout_constraintStart_toEndOf="@+id/roundedImageView"
+            app:layout_constraintTop_toTopOf="@+id/roundedImageView" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@{obj.amountDesc}"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/roundedImageView"
+            app:layout_constraintEnd_toStartOf="@+id/textView14"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            tools:text="120 ml" />
 
     </android.support.constraint.ConstraintLayout>
 

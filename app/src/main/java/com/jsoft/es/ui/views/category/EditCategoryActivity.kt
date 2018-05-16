@@ -44,11 +44,16 @@ class EditCategoryActivity : AppCompatActivity() {
 
         binding.colorSelectHandler = handler
 
-        if (categoryId > 0) {
-            viewModel.categoryLive.observe(this, Observer { viewModel.category.set(it) })
-            viewModel.categoryInput.value = categoryId
-        } else {
-            viewModel.category.set(Category())
+        viewModel.apply {
+            if (categoryId > 0) {
+                categoryLive.observe(this@EditCategoryActivity, Observer {
+                    category.set(it)
+                    categoryLive.removeObservers(this@EditCategoryActivity)
+                })
+                categoryInput.value = categoryId
+            } else {
+                category.set(Category())
+            }
         }
 
     }

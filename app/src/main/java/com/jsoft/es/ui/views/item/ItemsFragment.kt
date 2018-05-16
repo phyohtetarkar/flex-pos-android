@@ -1,6 +1,5 @@
 package com.jsoft.es.ui.views.item
 
-import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -8,7 +7,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +14,6 @@ import android.view.ViewGroup
 import com.jsoft.es.MainActivity
 import com.jsoft.es.R
 import com.jsoft.es.data.model.ItemSearch
-import com.jsoft.es.ui.custom.SimpleDividerItemDecoration
 import com.jsoft.es.ui.utils.RecyclerViewItemTouchListener
 import kotlinx.android.synthetic.main.fragment_items.*
 
@@ -45,7 +42,7 @@ class ItemsFragment : Fragment() {
             addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
                 override fun onTouch(view: View, position: Int) {
                     adapter.getItemAt(position)?.apply {
-                        showEdit((id), view)
+                        showEdit((id))
                     }
 
                 }
@@ -58,7 +55,7 @@ class ItemsFragment : Fragment() {
             this.adapter = adapter
         }
 
-        fabItems.setOnClickListener { showEdit(0, it) }
+        fabItems.setOnClickListener { showEdit(0) }
 
         val stub = viewStubItems.inflate()
 
@@ -84,7 +81,7 @@ class ItemsFragment : Fragment() {
         activity.setTitle(R.string.title_items)
     }
 
-    private fun showEdit(id: Long, view: View?) {
+    private fun showEdit(id: Long) {
         val i = Intent(context, EditItemActivity::class.java)
         i.putExtra("id", id)
 

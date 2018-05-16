@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9d4409f3fdebe048e5142f861188d83a",
+    "identityHash": "d8ed309f626dfa93616a68dc19fca126",
     "entities": [
       {
         "tableName": "Item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `code` TEXT NOT NULL, `barcode` TEXT NOT NULL, `image` TEXT NOT NULL, `remark` TEXT NOT NULL, `available` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, FOREIGN KEY(`category_id`) REFERENCES `Category`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `barcode` TEXT NOT NULL, `amount` REAL NOT NULL, `price` REAL NOT NULL, `image` TEXT NOT NULL, `remark` TEXT NOT NULL, `available` INTEGER NOT NULL, `unit_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, FOREIGN KEY(`unit_id`) REFERENCES `Unit`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`category_id`) REFERENCES `Category`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -21,15 +21,21 @@
             "notNull": true
           },
           {
-            "fieldPath": "code",
-            "columnName": "code",
+            "fieldPath": "barcode",
+            "columnName": "barcode",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "barcode",
-            "columnName": "barcode",
-            "affinity": "TEXT",
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "price",
+            "columnName": "price",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -47,6 +53,12 @@
           {
             "fieldPath": "available",
             "columnName": "available",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unitId",
+            "columnName": "unit_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -74,6 +86,17 @@
           }
         ],
         "foreignKeys": [
+          {
+            "table": "Unit",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "unit_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
           {
             "table": "Category",
             "onDelete": "NO ACTION",
@@ -174,90 +197,6 @@
           }
         ],
         "foreignKeys": []
-      },
-      {
-        "tableName": "item_pricing",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `size` REAL NOT NULL, `price` REAL NOT NULL, `unit_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, FOREIGN KEY(`item_id`) REFERENCES `Item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`unit_id`) REFERENCES `Unit`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "size",
-            "columnName": "size",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "price",
-            "columnName": "price",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "unitId",
-            "columnName": "unit_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "itemId",
-            "columnName": "item_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": true
-        },
-        "indices": [
-          {
-            "name": "index_item_pricing_unit_id",
-            "unique": false,
-            "columnNames": [
-              "unit_id"
-            ],
-            "createSql": "CREATE  INDEX `index_item_pricing_unit_id` ON `${TABLE_NAME}` (`unit_id`)"
-          },
-          {
-            "name": "index_item_pricing_item_id",
-            "unique": false,
-            "columnNames": [
-              "item_id"
-            ],
-            "createSql": "CREATE  INDEX `index_item_pricing_item_id` ON `${TABLE_NAME}` (`item_id`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "Item",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "item_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          },
-          {
-            "table": "Unit",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "unit_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
       },
       {
         "tableName": "Sale",
@@ -469,7 +408,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9d4409f3fdebe048e5142f861188d83a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d8ed309f626dfa93616a68dc19fca126\")"
     ]
   }
 }

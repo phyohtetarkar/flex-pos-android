@@ -17,7 +17,6 @@ import kotlin.Long
     Item::class,
     Category::class,
     Unit::class,
-    ItemPricing::class,
     Sale::class,
     SaleItem::class])
 @TypeConverters(DateConverter::class)

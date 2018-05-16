@@ -39,11 +39,16 @@ class EditUnitFragment : DialogFragment() {
         binding.setVariable(BR.isValidUnitName, true)
         binding.setVariable(BR.unit, viewModel.unit)
 
-        if (unitId > 0) {
-            viewModel.unitLiveData.observe(this, Observer { viewModel.unit.set(it) })
-            viewModel.unitInput.value = unitId
-        } else {
-            viewModel.unit.set(Unit())
+        viewModel.apply {
+            if (unitId > 0) {
+                unitLiveData.observe(this@EditUnitFragment, Observer {
+                    viewModel.unit.set(it)
+                    unitLiveData.removeObservers(this@EditUnitFragment)
+                })
+                unitInput.value = unitId
+            } else {
+                unit.set(Unit())
+            }
         }
 
         binding.setVariable(BR.delegate, object : EditUnitDialogDelegate {

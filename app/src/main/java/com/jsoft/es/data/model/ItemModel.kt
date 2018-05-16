@@ -10,8 +10,17 @@ import android.arch.persistence.room.Transaction
 import android.databinding.BaseObservable
 import com.jsoft.es.data.BaseDao
 import com.jsoft.es.data.Searchable
-import com.jsoft.es.data.entity.*
+import com.jsoft.es.data.entity.Category
+import com.jsoft.es.data.entity.Item
+import com.jsoft.es.data.entity.ItemVO
 import com.jsoft.es.data.entity.Unit
+import kotlin.Any
+import kotlin.Boolean
+import kotlin.Int
+import kotlin.Long
+import kotlin.String
+import kotlin.apply
+import kotlin.takeUnless
 
 class ItemSearch : BaseObservable(), Searchable {
 
@@ -47,11 +56,11 @@ class ItemSearch : BaseObservable(), Searchable {
                     "u.name as unit, " +
                     "c.name as category, " +
                     "c.color, " +
-                    "p.price " +
+                    "i.amount, " +
+                    "i.price " +
                     "FROM item i " +
+                    "LEFT OUTER JOIN unit u ON u.id = i.unit_id " +
                     "LEFT OUTER JOIN category c ON c.id = i.category_id " +
-                    "LEFT OUTER JOIN item_pricing p ON i.id = p.item_id " +
-                    "LEFT OUTER JOIN unit u ON u.id = p.unit_id " +
                     "WHERE 1 = 1 ")
 
             name.takeUnless { it.isNullOrBlank() }?.apply {
@@ -92,24 +101,11 @@ abstract class ItemDao : BaseDao<Item> {
     abstract fun findByIdSync(id: Long): Item
 
     @Transaction
-    open fun save(item: Item, pricing: MutableList<ItemPricing>) {
-        var itemId: Long = item.id
+    open fun save(item: Item) {
         if (item.id > 0) {
             update(item)
         } else {
-            itemId = insertAndGet(item)
-            val v = findByIdSync(itemId)
-            v.code = "${10000 + itemId}"
-            update(v)
-        }
-
-        pricing.forEach {
-            it.itemId = itemId
-            if (it.id > 0) {
-
-            } else {
-
-            }
+            insert(item)
         }
     }
 }

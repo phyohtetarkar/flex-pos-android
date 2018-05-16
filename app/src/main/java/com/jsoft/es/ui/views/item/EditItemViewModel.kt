@@ -46,7 +46,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     fun save() {
         item.get()?.apply {
             DaoWorkerAsync<Item>({
-                dao.save(it, mutableListOf())
+                dao.save(it)
             }, {
 
             }).execute(this)
