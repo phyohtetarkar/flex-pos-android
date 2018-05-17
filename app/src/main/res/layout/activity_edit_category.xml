@@ -7,7 +7,7 @@
 
         <import type="android.view.View"/>
 
-        <import type="com.jsoft.es.data.entity.Category" />
+        <import type="com.jsoft.pos.data.entity.Category" />
 
         <variable
             name="category"
@@ -15,7 +15,7 @@
 
         <variable
             name="colorSelectHandler"
-            type="com.jsoft.es.func.KConsumer2&lt;View, Category&gt;"/>
+            type="com.jsoft.pos.func.KConsumer2&lt;View, Category&gt;"/>
 
         <variable
             name="isValidCategoryName"
@@ -98,7 +98,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.jsoft.es.ui.custom.SquareRadioButton
+                        <com.jsoft.pos.ui.custom.SquareRadioButton
                             android:id="@+id/radioButton"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="HardcodedText" />
 
-                        <com.jsoft.es.ui.custom.SquareRadioButton
+                        <com.jsoft.pos.ui.custom.SquareRadioButton
                             android:id="@+id/radioButton2"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                             app:layout_constraintTop_toTopOf="@+id/radioButton"
                             tools:ignore="HardcodedText" />
 
-                        <com.jsoft.es.ui.custom.SquareRadioButton
+                        <com.jsoft.pos.ui.custom.SquareRadioButton
                             android:id="@+id/radioButton3"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
                             app:layout_constraintTop_toTopOf="@+id/radioButton2"
                             tools:ignore="HardcodedText" />
 
-                        <com.jsoft.es.ui.custom.SquareRadioButton
+                        <com.jsoft.pos.ui.custom.SquareRadioButton
                             android:id="@+id/radioButton4"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
                             app:layout_constraintTop_toTopOf="@+id/radioButton3"
                             tools:ignore="HardcodedText" />
 
-                        <com.jsoft.es.ui.custom.SquareRadioButton
+                        <com.jsoft.pos.ui.custom.SquareRadioButton
                             android:id="@+id/radioButton5"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/radioButton"
                             tools:ignore="HardcodedText" />
 
-                        <com.jsoft.es.ui.custom.SquareRadioButton
+                        <com.jsoft.pos.ui.custom.SquareRadioButton
                             android:id="@+id/radioButton6"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
                             app:layout_constraintTop_toTopOf="@+id/radioButton5"
                             tools:ignore="HardcodedText" />
 
-                        <com.jsoft.es.ui.custom.SquareRadioButton
+                        <com.jsoft.pos.ui.custom.SquareRadioButton
                             android:id="@+id/radioButton7"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -222,7 +222,7 @@
                             app:layout_constraintTop_toTopOf="@+id/radioButton6"
                             tools:ignore="HardcodedText" />
 
-                        <com.jsoft.es.ui.custom.SquareRadioButton
+                        <com.jsoft.pos.ui.custom.SquareRadioButton
                             android:id="@+id/radioButton8"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"

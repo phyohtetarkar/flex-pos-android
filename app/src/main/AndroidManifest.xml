@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jsoft.es">
+    package="com.jsoft.pos">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_pos"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme"
-        android:name=".EasyShopApplication">
+        android:name=".FluentPosApplication">
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

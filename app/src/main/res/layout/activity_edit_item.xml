@@ -5,7 +5,7 @@
 
     <data class="EditItemBinding">
 
-        <import type="com.jsoft.es.data.entity.Item" />
+        <import type="com.jsoft.pos.data.entity.Item" />
 
         <variable
             name="item"
@@ -68,7 +68,7 @@
                         android:layout_marginBottom="16dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginStart="4dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="24dp"
                         android:checked="@={item.available, default=true}"
                         android:text="@string/available_for_sale"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -102,7 +102,7 @@
                         android:id="@+id/textInputLayout1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="24dp"
                         app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
                         app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
                         app:layout_constraintStart_toStartOf="@+id/textInputLayout"
@@ -143,7 +143,7 @@
                         android:id="@+id/textInputLayout2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="24dp"
                         app:layout_constraintBottom_toTopOf="@+id/switchCompat2"
                         app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -295,7 +295,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-                    <com.jsoft.es.ui.custom.RoundedImageView
+                    <com.jsoft.pos.ui.custom.RoundedImageView
                         android:id="@+id/roundedImageView_edit_itemImage"
                         android:layout_width="0dp"
                         android:layout_height="150dp"

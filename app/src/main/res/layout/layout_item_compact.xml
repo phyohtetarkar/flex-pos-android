@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="com.jsoft.es.data.entity.ItemVO"/>
+        <import type="com.jsoft.pos.data.entity.ItemVO"/>
         <variable
             name="obj"
             type="android.databinding.ObservableField&lt;ItemVO&gt;"/>
@@ -17,7 +17,7 @@
         android:focusable="true"
         android:background="@drawable/selectable_white_background">
 
-        <com.jsoft.es.ui.custom.RoundedImageView
+        <com.jsoft.pos.ui.custom.RoundedImageView
             android:id="@+id/roundedImageView"
             android:layout_width="50dp"
             android:layout_height="50dp"

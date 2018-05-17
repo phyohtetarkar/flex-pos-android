@@ -7,11 +7,11 @@
 
         <variable
             name="unit"
-            type="android.databinding.ObservableField&lt;com.jsoft.es.data.entity.Unit&gt;" />
+            type="android.databinding.ObservableField&lt;com.jsoft.pos.data.entity.Unit&gt;" />
 
         <variable
             name="delegate"
-            type="com.jsoft.es.ui.views.unit.EditUnitDialogDelegate" />
+            type="com.jsoft.pos.ui.views.unit.EditUnitDialogDelegate" />
 
         <variable
             name="isValidUnitName"
