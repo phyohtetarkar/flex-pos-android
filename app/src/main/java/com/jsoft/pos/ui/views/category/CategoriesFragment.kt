@@ -39,7 +39,7 @@ class CategoriesFragment : Fragment() {
         recyclerViewCategories.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL, 82))
             addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
                 override fun onTouch(view: View, position: Int) {
                     val (id) = adapter.getItemAt(position)

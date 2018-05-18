@@ -8,10 +8,16 @@ import android.view.View
 
 class SimpleDividerItemDecoration(context: Context?, orientation: Int) : DividerItemDecoration(context, orientation) {
 
+    private var leftOffset = 0
+
+    constructor(context: Context?, orientation: Int, leftOffset: Int) : this(context, orientation) {
+        this.leftOffset = leftOffset
+    }
+
     override fun getItemOffsets(outRect: Rect, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        outRect.set(0, 0, 0, 1)
+        outRect.set(leftOffset, 0, 0, 1)
     }
 
 }
