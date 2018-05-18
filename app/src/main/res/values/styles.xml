@@ -1,11 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
         <item name="buttonBarNegativeButtonStyle">@style/BorderLessButton</item>
         <item name="buttonBarPositiveButtonStyle">@style/BorderLessButton</item>
         <item name="titleTextAppearance">@style/TitleTextMedium</item>
@@ -23,7 +23,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     
@@ -47,7 +47,7 @@
     </style>
 
     <style name="ButtonTextColored" parent="@style/Base.Widget.AppCompat.Button.Borderless">
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="AppTextNormal" parent="@android:style/TextAppearance">
@@ -69,7 +69,7 @@
     </style>
 
     <style name="HeaderText.Colored" parent="HeaderText">
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/darkSecondary</item>
     </style>
 
     <style name="ErrorText" parent="@android:style/TextAppearance">

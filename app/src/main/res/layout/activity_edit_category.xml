@@ -10,8 +10,8 @@
         <import type="com.jsoft.pos.data.entity.Category" />
 
         <variable
-            name="category"
-            type="android.databinding.ObservableField&lt;Category&gt;" />
+            name="vm"
+            type="com.jsoft.pos.ui.views.category.EditCategoryViewModel"/>
 
         <variable
             name="colorSelectHandler"
@@ -39,10 +39,10 @@
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true"
                 app:cardBackgroundColor="@color/whitePrimary"
-                app:cardCornerRadius="@dimen/cardview_default_radius"
-                app:cardElevation="@dimen/cardview_default_elevation"
-                app:cardUseCompatPadding="true">
+                app:cardCornerRadius="@dimen/card_custom_radius"
+                app:cardElevation="@dimen/card_custom_elevation">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_category_name"
                         android:inputType="text"
-                        android:text="@={category.name}"
+                        android:text="@={vm.category.name}"
                         app:checkResult="@{safeUnbox(isValidCategoryName)}" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -67,10 +67,10 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true"
                 app:cardBackgroundColor="@color/whitePrimary"
-                app:cardCornerRadius="@dimen/cardview_default_radius"
-                app:cardElevation="@dimen/cardview_default_elevation"
-                app:cardUseCompatPadding="true">
+                app:cardCornerRadius="@dimen/card_custom_radius"
+                app:cardElevation="@dimen/card_custom_elevation">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -107,15 +107,16 @@
                             android:layout_marginTop="16dp"
                             android:background="@drawable/layer_gray_color_state"
                             android:contentDescription="@color/colorGray"
-                            android:checked="@{category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, category)}"
+                            android:checked="@{vm.category.color}"
+                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
                             app:buttonTint="@android:color/transparent"
                             app:layout_constraintBottom_toTopOf="@+id/radioButton5"
                             app:layout_constraintEnd_toStartOf="@+id/radioButton2"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="HardcodedText" />
+                            tools:ignore="HardcodedText"
+                            tools:checked="true"/>
 
                         <com.jsoft.pos.ui.custom.SquareRadioButton
                             android:id="@+id/radioButton2"
@@ -125,8 +126,8 @@
                             android:layout_marginRight="16dp"
                             android:background="@drawable/layer_red_color_state"
                             android:contentDescription="@color/colorRed"
-                            android:checked="@{category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, category)}"
+                            android:checked="@{vm.category.color}"
+                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
                             app:buttonTint="@android:color/transparent"
                             app:layout_constraintEnd_toStartOf="@+id/radioButton3"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -142,8 +143,8 @@
                             android:layout_marginRight="16dp"
                             android:background="@drawable/layer_pink_color_state"
                             android:contentDescription="@color/colorPink"
-                            android:checked="@{category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, category)}"
+                            android:checked="@{vm.category.color}"
+                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
                             app:buttonTint="@android:color/transparent"
                             app:layout_constraintEnd_toStartOf="@+id/radioButton4"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -159,8 +160,8 @@
                             android:layout_marginRight="16dp"
                             android:background="@drawable/layer_purple_color_state"
                             android:contentDescription="@color/colorPurple"
-                            android:checked="@{category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, category)}"
+                            android:checked="@{vm.category.color}"
+                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
                             app:buttonTint="@android:color/transparent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -178,8 +179,8 @@
                             android:layout_marginTop="16dp"
                             android:background="@drawable/layer_deep_purple_color_state"
                             android:contentDescription="@color/colorDeepPurple"
-                            android:checked="@{category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, category)}"
+                            android:checked="@{vm.category.color}"
+                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
                             app:buttonTint="@android:color/transparent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/radioButton6"
@@ -196,8 +197,8 @@
                             android:layout_marginRight="16dp"
                             android:background="@drawable/layer_blue_color_state"
                             android:contentDescription="@color/colorBlue"
-                            android:checked="@{category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, category)}"
+                            android:checked="@{vm.category.color}"
+                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
                             app:buttonTint="@android:color/transparent"
                             app:layout_constraintEnd_toStartOf="@+id/radioButton7"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -213,8 +214,8 @@
                             android:layout_marginRight="16dp"
                             android:background="@drawable/layer_green_color_state"
                             android:contentDescription="@color/colorGreen"
-                            android:checked="@{category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, category)}"
+                            android:checked="@{vm.category.color}"
+                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
                             app:buttonTint="@android:color/transparent"
                             app:layout_constraintEnd_toStartOf="@+id/radioButton8"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -228,8 +229,8 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/layer_lime_color_state"
                             android:contentDescription="@color/colorLime"
-                            android:checked="@{category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, category)}"
+                            android:checked="@{vm.category.color}"
+                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
                             app:buttonTint="@android:color/transparent"
                             app:layout_constraintEnd_toEndOf="@+id/radioButton4"
                             app:layout_constraintStart_toEndOf="@+id/radioButton7"

@@ -5,7 +5,6 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
-import android.databinding.ObservableField
 import com.jsoft.pos.FluentPosApplication
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.entity.Item
@@ -17,21 +16,26 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class EditItemViewModel(application: Application) : AndroidViewModel(application) {
 
-    val item = ObservableField<Item>()
+    //val item = ObservableField<Item>()
 
     val itemInput = MutableLiveData<Long>()
 
-    val itemLiveData: LiveData<Item> = Transformations.switchMap(itemInput) {
+    val item: LiveData<Item> = Transformations.switchMap(itemInput) {
         val live = MutableLiveData<Item>()
 
-        DaoWorkerAsync<Long>({
-            val item = dao.findByIdSync(it)
-            item.category = categoryDao.findByIdSync(item.categoryId)
-            item.unit = unitDao.findByIdSync(item.unitId)
-            live.postValue(item)
-        }, {
+        if (it > 0) {
+            DaoWorkerAsync<Long>({
+                val item = dao.findByIdSync(it)
+                item.category = categoryDao.findByIdSync(item.categoryId)
+                item.unit = unitDao.findByIdSync(item.unitId)
+                live.postValue(item)
 
-        }).execute(it)
+            }, {
+
+            }).execute(it)
+        } else {
+            live.value = Item()
+        }
 
         return@switchMap live
     }
@@ -45,14 +49,13 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     init {
         val app = application as FluentPosApplication
-
         dao = app.db.itemDao()
         categoryDao = app.db.categoryDao()
         unitDao = app.db.unitDao()
     }
 
     fun save() {
-        item.get()?.apply {
+        item.value?.apply {
             DaoWorkerAsync<Item>({
                 dao.save(it)
             }, {
@@ -62,7 +65,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun delete() {
-        item.get()?.apply {
+        item.value?.apply {
             DaoWorkerAsync<Item>({
                 dao.delete(it)
             }, {

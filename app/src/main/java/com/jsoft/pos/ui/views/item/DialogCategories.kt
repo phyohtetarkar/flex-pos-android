@@ -34,8 +34,7 @@ class DialogCategories : SimpleListDialogFragment<Category>() {
 
     override fun onTouch(position: Int) {
         viewModel.apply {
-            item.get()?.category = adapter.getItemAt(position)
-            item.notifyChange()
+            item.value?.category = adapter.getItemAt(position)
         }
         dismiss()
     }

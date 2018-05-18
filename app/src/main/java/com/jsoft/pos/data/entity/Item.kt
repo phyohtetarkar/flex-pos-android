@@ -1,6 +1,9 @@
 package com.jsoft.pos.data.entity
 
 import android.arch.persistence.room.*
+import android.databinding.BaseObservable
+import android.databinding.Bindable
+import com.jsoft.pos.BR
 
 @Entity(foreignKeys = [
     ForeignKey(entity = Unit::class,
@@ -27,19 +30,24 @@ data class Item(
         var unitId: Int = 0,
         @ColumnInfo(name = "category_id")
         var categoryId: Int = 0
-) {
+) : BaseObservable() {
+
+    @Bindable
     @Ignore
     var unit: Unit? = Unit(name = "choose")
         set(value) {
             field = value
             value?.id?.apply { unitId = this }
+            notifyPropertyChanged(BR.unit)
         }
 
+    @Bindable
     @Ignore
     var category: Category? = Category(name = "choose")
         set(value) {
             field = value
             value?.id?.apply { categoryId = this }
+            notifyPropertyChanged(BR.category)
         }
 }
 

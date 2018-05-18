@@ -2,4 +2,8 @@
 <resources>
     <dimen name="color_radio_btn_corner">4dp</dimen>
     <dimen name="badge_text_size">12sp</dimen>
+
+    <dimen name="card_custom_radius">1dp</dimen>
+    <dimen name="card_custom_elevation">1dp</dimen>
+    <dimen name="card_custom_margin">2dp</dimen>
 </resources>

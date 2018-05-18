@@ -35,8 +35,7 @@ class DialogUnits : SimpleListDialogFragment<Unit>() {
 
     override fun onTouch(position: Int) {
         viewModel.apply {
-            item.get()?.unit = adapter.getItemAt(position)
-            item.notifyChange()
+            item.value?.unit = adapter.getItemAt(position)
         }
         dismiss()
     }

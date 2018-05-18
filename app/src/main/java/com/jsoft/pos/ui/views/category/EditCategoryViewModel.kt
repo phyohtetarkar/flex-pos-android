@@ -5,7 +5,6 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
-import android.databinding.ObservableField
 import com.jsoft.pos.FluentPosApplication
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.model.CategoryDao
@@ -13,12 +12,19 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class EditCategoryViewModel(application: Application) : AndroidViewModel(application) {
 
-    val category = ObservableField<Category>()
-
     val categoryInput = MutableLiveData<Int>()
 
-    val categoryLive: LiveData<Category> =
-            Transformations.switchMap(categoryInput) { dao.findById(it) }
+    val category: LiveData<Category> = Transformations.switchMap(categoryInput) {
+        if (it > 0) {
+            return@switchMap dao.findById(it)
+        }
+
+        val data = MutableLiveData<Category>()
+        data.value = Category()
+
+        return@switchMap data
+
+    }
 
     private val dao: CategoryDao
 
@@ -28,7 +34,7 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun save() {
-        category.get()?.apply {
+        category.value?.apply {
             DaoWorkerAsync<Category>({
                 dao.save(it)
             }, {

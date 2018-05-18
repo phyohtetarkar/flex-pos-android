@@ -12,10 +12,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_custom_margin"
         app:cardBackgroundColor='@{obj.color, default="@color/colorAccent"}'
-        app:cardUseCompatPadding="true"
-        app:cardCornerRadius="@dimen/cardview_default_radius"
-        app:cardElevation="@dimen/cardview_default_elevation"
+        app:cardCornerRadius="@dimen/card_custom_radius"
+        app:cardElevation="@dimen/card_custom_elevation"
         app:cardPreventCornerOverlap="true">
 
         <android.support.constraint.ConstraintLayout

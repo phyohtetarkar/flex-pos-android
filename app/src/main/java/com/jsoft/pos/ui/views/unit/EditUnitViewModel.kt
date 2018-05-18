@@ -5,7 +5,6 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
-import android.databinding.ObservableField
 import com.jsoft.pos.FluentPosApplication
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.UnitDao
@@ -13,12 +12,19 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class EditUnitViewModel(application: Application) : AndroidViewModel(application) {
 
-    val unit = ObservableField<Unit>()
-
     val unitInput = MutableLiveData<Int>()
 
-    val unitLiveData: LiveData<Unit> =
-            Transformations.switchMap(unitInput) { dao.findById(it) }
+    val unit: LiveData<Unit> = Transformations.switchMap(unitInput) {
+        if (it > 0) {
+            return@switchMap dao.findById(it)
+        }
+
+        val data = MutableLiveData<Unit>()
+        data.value = Unit()
+
+        return@switchMap data
+
+    }
 
     private val dao: UnitDao
 
@@ -28,7 +34,7 @@ class EditUnitViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun save() {
-        unit.get()?.apply {
+        unit.value?.apply {
             DaoWorkerAsync<Unit>({
                 dao.save(it)
             }, {

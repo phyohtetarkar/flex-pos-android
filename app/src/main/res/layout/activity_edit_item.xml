@@ -5,11 +5,11 @@
 
     <data class="EditItemBinding">
 
-        <import type="com.jsoft.pos.data.entity.Item" />
+        <import type="android.view.View" />
 
         <variable
-            name="item"
-            type="android.databinding.ObservableField&lt;Item&gt;" />
+            name="vm"
+            type="com.jsoft.pos.ui.views.item.EditItemViewModel"/>
     </data>
 
     <ScrollView
@@ -23,15 +23,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:padding="4dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="4dp">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/cardview_default_radius"
-                app:cardElevation="@dimen/cardview_default_elevation"
-                app:cardUseCompatPadding="true">
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="@dimen/card_custom_radius"
+                app:cardElevation="@dimen/card_custom_elevation">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                         android:layout_marginLeft="4dp"
                         android:layout_marginStart="4dp"
                         android:layout_marginTop="24dp"
-                        android:checked="@={item.available, default=true}"
+                        android:checked="@={vm.item.available, default=true}"
                         android:text="@string/available_for_sale"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
@@ -95,7 +95,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_name"
                             android:inputType="text"
-                            android:text="@={item.name}" />
+                            android:text="@={vm.item.name}" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -116,7 +116,7 @@
                             android:drawableRight="@drawable/ic_arrow_drop_dark"
                             android:hint="@string/hint_category"
                             android:inputType="none"
-                            android:text="@{item.category.name}"
+                            android:text="@{vm.item.category.name}"
                             tools:text="choose" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -136,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_barcode"
                             android:inputType="number|numberDecimal"
-                            android:text="@={item.barcode}" />
+                            android:text="@={vm.item.barcode}" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -157,7 +157,7 @@
                             android:hint="@string/editText_hint_remark"
                             android:inputType="textMultiLine"
                             android:lines="4"
-                            android:text="@={item.remark}" />
+                            android:text="@={vm.item.remark}" />
                     </android.support.design.widget.TextInputLayout>
 
                     <TextView
@@ -170,7 +170,7 @@
                         android:padding="4dp"
                         android:text="@string/add_new"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/colorAccent"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@+id/textInputLayout1"
                         app:layout_constraintTop_toBottomOf="@+id/textInputLayout1" />
@@ -189,7 +189,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_amount"
-                            android:text="@={item.amount}" />
+                            android:text="@={vm.item.amount}" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.constraint.Guideline
@@ -203,14 +203,14 @@
                         android:id="@+id/tvAddUnit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/add_new"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="12sp"
-                        android:textAllCaps="true"
-                        android:padding="4dp"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
+                        android:padding="4dp"
+                        android:text="@string/add_new"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@+id/textInputLayout6"
                         app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
 
@@ -229,7 +229,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_price"
                             android:inputType="numberDecimal"
-                            android:text="@={item.price}" />
+                            android:text="@={vm.item.price}" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -249,8 +249,8 @@
                             android:drawableEnd="@drawable/ic_arrow_drop_dark"
                             android:drawableRight="@drawable/ic_arrow_drop_dark"
                             android:hint="@string/hint_unit"
-                            android:text="@{item.unit.name}"
                             android:inputType="none"
+                            android:text="@{vm.item.unit.name}"
                             tools:text="choose" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -262,9 +262,9 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/cardview_default_radius"
-                app:cardElevation="@dimen/cardview_default_elevation"
-                app:cardUseCompatPadding="true">
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="@dimen/card_custom_radius"
+                app:cardElevation="@dimen/card_custom_elevation">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -342,9 +342,10 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:background="@color/darkTransparent"
+                        android:src="@drawable/ic_clear_white"
+                        android:visibility='@{vm.item.image.isEmpty() ? View.GONE : View.VISIBLE}'
                         app:layout_constraintEnd_toEndOf="@+id/roundedImageView_edit_itemImage"
                         app:layout_constraintTop_toTopOf="@+id/roundedImageView_edit_itemImage"
-                        android:src="@drawable/ic_clear_white"
                         tools:ignore="ContentDescription" />
 
                 </android.support.constraint.ConstraintLayout>

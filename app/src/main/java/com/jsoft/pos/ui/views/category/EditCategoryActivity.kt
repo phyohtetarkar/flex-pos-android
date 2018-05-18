@@ -1,6 +1,5 @@
 package com.jsoft.pos.ui.views.category
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -29,8 +28,9 @@ class EditCategoryActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(EditCategoryViewModel::class.java)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_category)
-        binding.category = viewModel.category
+        binding.setLifecycleOwner(this)
         binding.isValidCategoryName = true
+        binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -45,15 +45,12 @@ class EditCategoryActivity : AppCompatActivity() {
         binding.colorSelectHandler = handler
 
         viewModel.apply {
-            if (categoryId > 0) {
-                categoryLive.observe(this@EditCategoryActivity, Observer {
-                    category.set(it)
-                    categoryLive.removeObservers(this@EditCategoryActivity)
-                })
-                categoryInput.value = categoryId
-            } else {
-                category.set(Category())
+
+            if (category.value != null) {
+                return
             }
+
+            categoryInput.value = categoryId
         }
 
     }
@@ -71,7 +68,7 @@ class EditCategoryActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_save -> {
-                val category = viewModel.category.get()
+                val category = viewModel.category.value
                 val valid = ValidatorUtils.isValid(category?.name, ValidatorUtils.NOT_EMPTY)
 
                 if (!valid) {

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3687eb5f5f9629ecf95301d9c273edd2",
+    "identityHash": "edfd0faaac7be4ba59635121ca4b2a66",
     "entities": [
       {
         "tableName": "Item",
@@ -287,13 +287,25 @@
         "foreignKeys": []
       },
       {
-        "tableName": "SaleItem",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `price` REAL NOT NULL, `remark` TEXT NOT NULL, `item_id` INTEGER NOT NULL, `sale_id` INTEGER NOT NULL, FOREIGN KEY(`item_id`) REFERENCES `Item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`sale_id`) REFERENCES `Sale`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "tableName": "sale_item",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `item` TEXT NOT NULL, `unit` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `price` REAL NOT NULL, `category` TEXT NOT NULL, `remark` TEXT NOT NULL, `sale_id` INTEGER NOT NULL, FOREIGN KEY(`sale_id`) REFERENCES `Sale`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "item",
+            "columnName": "item",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unit",
+            "columnName": "unit",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -309,15 +321,15 @@
             "notNull": true
           },
           {
-            "fieldPath": "remark",
-            "columnName": "remark",
+            "fieldPath": "category",
+            "columnName": "category",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "itemId",
-            "columnName": "item_id",
-            "affinity": "INTEGER",
+            "fieldPath": "remark",
+            "columnName": "remark",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -335,34 +347,15 @@
         },
         "indices": [
           {
-            "name": "index_SaleItem_item_id",
-            "unique": false,
-            "columnNames": [
-              "item_id"
-            ],
-            "createSql": "CREATE  INDEX `index_SaleItem_item_id` ON `${TABLE_NAME}` (`item_id`)"
-          },
-          {
-            "name": "index_SaleItem_sale_id",
+            "name": "index_sale_item_sale_id",
             "unique": false,
             "columnNames": [
               "sale_id"
             ],
-            "createSql": "CREATE  INDEX `index_SaleItem_sale_id` ON `${TABLE_NAME}` (`sale_id`)"
+            "createSql": "CREATE  INDEX `index_sale_item_sale_id` ON `${TABLE_NAME}` (`sale_id`)"
           }
         ],
         "foreignKeys": [
-          {
-            "table": "Item",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "item_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          },
           {
             "table": "Sale",
             "onDelete": "NO ACTION",
@@ -379,7 +372,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"3687eb5f5f9629ecf95301d9c273edd2\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"edfd0faaac7be4ba59635121ca4b2a66\")"
     ]
   }
 }

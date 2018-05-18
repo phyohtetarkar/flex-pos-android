@@ -1,6 +1,5 @@
 package com.jsoft.pos.ui.views.unit
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -11,7 +10,6 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import com.jsoft.pos.BR
 import com.jsoft.pos.R
-import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.databinding.EditUnitBinding
 import com.jsoft.pos.ui.utils.ValidatorUtils
 import com.jsoft.pos.ui.utils.ValidatorUtils.NOT_EMPTY
@@ -26,6 +24,10 @@ class EditUnitFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        arguments?.apply {
+            unitId = getInt("id", 0)
+        }
+
         arguments?.getInt("id")?.apply { unitId = this }
 
         viewModel = ViewModelProviders.of(this).get(EditUnitViewModel::class.java)
@@ -35,24 +37,15 @@ class EditUnitFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = EditUnitBinding.inflate(inflater, container, false)
+        binding.setLifecycleOwner(this)
         binding.isValidUnitName = true
-        binding.unit = viewModel.unit
+        binding.vm = viewModel
 
-        viewModel.apply {
-            if (unitId > 0) {
-                unitLiveData.observe(this@EditUnitFragment, Observer {
-                    viewModel.unit.set(it)
-                    unitLiveData.removeObservers(this@EditUnitFragment)
-                })
-                unitInput.value = unitId
-            } else {
-                unit.set(Unit())
-            }
-        }
+        viewModel.unitInput.value = unitId
 
         binding.delegate = object : EditUnitDialogDelegate {
             override fun onSaveClick() {
-                val unit = viewModel.unit.get()
+                val unit = viewModel.unit.value
                 val valid = ValidatorUtils.isValid(unit?.name, NOT_EMPTY)
 
                 if (!valid) {

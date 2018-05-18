@@ -1,6 +1,5 @@
 package com.jsoft.pos.ui.views.item
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -10,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import com.jsoft.pos.R
-import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.databinding.EditItemBinding
 import kotlinx.android.synthetic.main.activity_edit_item.*
 
@@ -28,7 +26,8 @@ class EditItemActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(EditItemViewModel::class.java)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_item)
-        binding.item = viewModel.item
+        binding.setLifecycleOwner(this)
+        binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -44,7 +43,7 @@ class EditItemActivity : AppCompatActivity() {
                 showSelectDialog(DialogCategories())
             }
 
-            true
+            return@setOnTouchListener true
         }
 
         edChooseUnit.setOnKeyListener { _, code, _ ->
@@ -57,24 +56,17 @@ class EditItemActivity : AppCompatActivity() {
             if (me.action == MotionEvent.ACTION_DOWN) {
                 showSelectDialog(DialogUnits())
             }
-            true
+            return@setOnTouchListener true
         }
 
         viewModel.apply {
 
-            if (item.get() != null) {
+            if (item.value != null) {
                 return
             }
 
-            if (itemId > 0) {
-                itemLiveData.observe(this@EditItemActivity, Observer {
-                    item.set(it)
-                    itemLiveData.removeObservers(this@EditItemActivity)
-                })
-                itemInput.value = itemId
-            } else {
-                item.set(Item())
-            }
+            itemInput.value = itemId
+
         }
 
     }
