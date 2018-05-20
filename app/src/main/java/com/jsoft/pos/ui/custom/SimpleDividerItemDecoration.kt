@@ -17,7 +17,7 @@ class SimpleDividerItemDecoration(context: Context?, orientation: Int) : Divider
     override fun getItemOffsets(outRect: Rect, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        outRect.set(leftOffset, 0, 0, 1)
+        outRect.set(0, 0, 0, 1)
     }
 
 }
