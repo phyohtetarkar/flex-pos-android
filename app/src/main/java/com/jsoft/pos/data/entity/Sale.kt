@@ -9,6 +9,8 @@ import java.util.*
 data class Sale(
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0,
+        @ColumnInfo(name = "receipt_code")
+        var receiptCode: String = "",
         @ColumnInfo(name = "issue_date")
         var issueDate: Date = Date(),
         @ColumnInfo(name = "total_item")

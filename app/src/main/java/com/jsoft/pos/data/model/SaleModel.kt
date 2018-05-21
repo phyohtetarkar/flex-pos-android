@@ -41,9 +41,13 @@ abstract class SaleDao : BaseDao<Sale> {
             }
         } else {
             val id = insertAndGet(sale)
+            sale.id = id
+            sale.receiptCode = "${10000 + id}"
+            update(sale)
             saleItems.forEach {
                 it.saleId = id
                 insertSaleItem(it)
+
             }
         }
     }

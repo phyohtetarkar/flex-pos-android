@@ -37,7 +37,7 @@ data class Item(
     var unit: Unit? = Unit(name = "choose")
         set(value) {
             field = value
-            value?.id?.apply { unitId = this }
+            unitId = value?.id ?: 0
             notifyPropertyChanged(BR.unit)
         }
 
@@ -46,7 +46,7 @@ data class Item(
     var category: Category? = Category(name = "choose")
         set(value) {
             field = value
-            value?.id?.apply { categoryId = this }
+            categoryId = value?.id ?: 0
             notifyPropertyChanged(BR.category)
         }
 }
