@@ -154,7 +154,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="top"
-                            android:hint="@string/editText_hint_remark"
+                            android:hint="@string/hint_remark"
                             android:inputType="textMultiLine"
                             android:lines="4"
                             android:text="@={vm.item.remark}" />
