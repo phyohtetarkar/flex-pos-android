@@ -14,7 +14,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_point_of_service"
+        android:src="@drawable/ic_flex"
         tools:ignore="ContentDescription" />
 
     <TextView
