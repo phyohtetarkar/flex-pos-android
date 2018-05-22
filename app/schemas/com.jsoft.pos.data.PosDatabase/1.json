@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "edfd0faaac7be4ba59635121ca4b2a66",
+    "identityHash": "dfde77bda229ee256a91cde488c2f106",
     "entities": [
       {
         "tableName": "Item",
@@ -208,12 +208,18 @@
       },
       {
         "tableName": "Sale",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `issue_date` INTEGER NOT NULL, `total_item` INTEGER NOT NULL, `discount` INTEGER NOT NULL, `tax_amount` INTEGER NOT NULL, `sub_total_price` REAL NOT NULL, `total_price` REAL NOT NULL, `pay_price` REAL NOT NULL, `change` REAL NOT NULL, `receipt` TEXT NOT NULL, `remark` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `receipt_code` TEXT NOT NULL, `issue_date` INTEGER NOT NULL, `total_item` INTEGER NOT NULL, `discount` INTEGER NOT NULL, `tax_amount` INTEGER NOT NULL, `sub_total_price` REAL NOT NULL, `total_price` REAL NOT NULL, `pay_price` REAL NOT NULL, `change` REAL NOT NULL, `receipt` TEXT NOT NULL, `remark` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "receiptCode",
+            "columnName": "receipt_code",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -288,24 +294,12 @@
       },
       {
         "tableName": "sale_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `item` TEXT NOT NULL, `unit` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `price` REAL NOT NULL, `category` TEXT NOT NULL, `remark` TEXT NOT NULL, `sale_id` INTEGER NOT NULL, FOREIGN KEY(`sale_id`) REFERENCES `Sale`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `price` REAL NOT NULL, `category` TEXT NOT NULL, `remark` TEXT NOT NULL, `item_id` INTEGER NOT NULL, `sale_id` INTEGER NOT NULL, FOREIGN KEY(`item_id`) REFERENCES `Item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`sale_id`) REFERENCES `Sale`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "item",
-            "columnName": "item",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "unit",
-            "columnName": "unit",
-            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -333,6 +327,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "saleId",
             "columnName": "sale_id",
             "affinity": "INTEGER",
@@ -347,6 +347,14 @@
         },
         "indices": [
           {
+            "name": "index_sale_item_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "createSql": "CREATE  INDEX `index_sale_item_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          },
+          {
             "name": "index_sale_item_sale_id",
             "unique": false,
             "columnNames": [
@@ -356,6 +364,17 @@
           }
         ],
         "foreignKeys": [
+          {
+            "table": "Item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
           {
             "table": "Sale",
             "onDelete": "NO ACTION",
@@ -372,7 +391,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"edfd0faaac7be4ba59635121ca4b2a66\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"dfde77bda229ee256a91cde488c2f106\")"
     ]
   }
 }

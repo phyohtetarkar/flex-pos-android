@@ -100,7 +100,7 @@
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp"
                     android:textColor="@color/whitePrimary"
-                    android:visibility='@{vm.itemCount > 0 ? View.VISIBLE : View.GONE}'
+                    android:visibility='@{safeUnbox(vm.itemCount > 0) ? View.VISIBLE : View.GONE}'
                     android:text="@{safeUnbox(vm.itemCount)}"
                     android:textSize="12sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_res_products"
@@ -117,7 +117,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:paddingTop="2dp"
-                    android:visibility='@{vm.categoryCount > 0 ? View.VISIBLE : View.GONE}'
+                    android:visibility='@{safeUnbox(vm.categoryCount > 0) ? View.VISIBLE : View.GONE}'
                     android:text="@{safeUnbox(vm.categoryCount)}"
                     android:textColor="@color/whitePrimary"
                     android:textSize="12sp"
@@ -136,7 +136,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:paddingTop="2dp"
-                    android:visibility='@{vm.unitCount > 0 ? View.VISIBLE : View.GONE}'
+                    android:visibility='@{safeUnbox(vm.unitCount > 0) ? View.VISIBLE : View.GONE}'
                     android:text="@{safeUnbox(vm.unitCount)}"
                     android:textColor="@color/whitePrimary"
                     android:textSize="12sp"

@@ -2,6 +2,7 @@ package com.jsoft.pos.ui.views.category
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -14,6 +15,7 @@ import com.jsoft.pos.databinding.EditCategoryBinding
 import com.jsoft.pos.func.KConsumer2
 import com.jsoft.pos.ui.utils.ValidatorUtils
 import kotlinx.android.synthetic.main.activity_edit_category.*
+import java.util.*
 
 class EditCategoryActivity : AppCompatActivity() {
 
@@ -24,6 +26,7 @@ class EditCategoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         categoryId = intent.getIntExtra("id", 0)
         viewModel = ViewModelProviders.of(this).get(EditCategoryViewModel::class.java)
 
