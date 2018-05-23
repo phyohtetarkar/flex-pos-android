@@ -18,18 +18,13 @@ data class SaleItem(
         var id: Long = 0,
         var quantity: Int = 0,
         var price: Double = 0.00,
-        var category: String = "",
         var remark: String = "",
 
         @ColumnInfo(name = "item_id")
-        var itemId: Long = 0,
+        var itemId: Long? = null,
         @ColumnInfo(name = "sale_id")
-        var saleId: Long = 0
+        var saleId: Long? = null
 ) {
     @Ignore
     var item: Item? = Item()
-        set(value) {
-            field = value
-            itemId = value?.id ?: 0
-        }
 }

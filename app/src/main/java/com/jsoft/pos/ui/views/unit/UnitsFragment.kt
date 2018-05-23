@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -11,10 +12,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jsoft.pos.R
+import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.UnitSearch
 import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
 import com.jsoft.pos.ui.utils.RecyclerViewItemTouchListener
 import com.jsoft.pos.ui.utils.SwipeGestureCallback
+import com.jsoft.pos.ui.views.SimpleListAdapter
 import kotlinx.android.synthetic.main.fragment_units.*
 
 class UnitsFragment : Fragment() {
@@ -34,7 +37,15 @@ class UnitsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = UnitAdapter()
+        val adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<Unit>() {
+            override fun areItemsTheSame(oldItem: Unit, newItem: Unit): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Unit, newItem: Unit): Boolean {
+                return oldItem == newItem
+            }
+        })
 
         recyclerViewUnits.apply {
             layoutManager = LinearLayoutManager(context)

@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import com.jsoft.pos.R
 import com.jsoft.pos.databinding.EditItemBinding
+import com.jsoft.pos.ui.views.SimpleListDialogFragment
 import kotlinx.android.synthetic.main.activity_edit_item.*
 
 class EditItemActivity : AppCompatActivity() {

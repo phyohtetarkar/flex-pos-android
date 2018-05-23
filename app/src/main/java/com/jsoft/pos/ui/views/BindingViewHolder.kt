@@ -1,4 +1,4 @@
-package com.jsoft.pos.ui.custom
+package com.jsoft.pos.ui.views
 
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView

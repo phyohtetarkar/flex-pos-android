@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.ItemVO
-import com.jsoft.pos.ui.custom.BindingViewHolder
+import com.jsoft.pos.ui.views.BindingViewHolder
 
 class ItemAdapter : PagedListAdapter<ItemVO, BindingViewHolder>(DIFF_CALLBACK) {
 

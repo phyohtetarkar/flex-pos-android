@@ -11,7 +11,6 @@ import com.jsoft.pos.data.model.ItemDao
 import com.jsoft.pos.data.model.SaleDao
 import com.jsoft.pos.data.model.UnitDao
 import java.util.*
-import kotlin.Long
 
 @Database(version = 1, entities = [
     Item::class,
@@ -19,7 +18,7 @@ import kotlin.Long
     Unit::class,
     Sale::class,
     SaleItem::class])
-@TypeConverters(DateConverter::class)
+@TypeConverters(DateConverter::class, DiscountTypeConverter::class)
 abstract class PosDatabase : RoomDatabase() {
 
     abstract fun unitDao(): UnitDao
@@ -46,6 +45,20 @@ class DateConverter {
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time
+    }
+
+}
+
+class DiscountTypeConverter {
+
+    @TypeConverter
+    fun fromOrdinal(ordinal: Int): DiscountType {
+        return DiscountType.values()[ordinal]
+    }
+
+    @TypeConverter
+    fun toOrdinal(type: DiscountType): Int {
+        return type.ordinal
     }
 
 }

@@ -10,7 +10,7 @@ import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.CategoryDao
-import com.jsoft.pos.data.model.ItemDao
+import com.jsoft.pos.data.model.ItemService
 import com.jsoft.pos.data.model.UnitDao
 import com.jsoft.pos.data.utils.DaoWorkerAsync
 
@@ -23,19 +23,11 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val item: LiveData<Item> = Transformations.switchMap(itemInput) {
         val live = MutableLiveData<Item>()
 
-        if (it > 0) {
-            DaoWorkerAsync<Long>({
-                val item = dao.findByIdSync(it)
-                item.category = categoryDao.findByIdSync(item.categoryId)
-                item.unit = unitDao.findByIdSync(item.unitId)
-                live.postValue(item)
+        DaoWorkerAsync<Long>({
+            live.postValue(service.getItem(it))
+        }, {
 
-            }, {
-
-            }).execute(it)
-        } else {
-            live.value = Item()
-        }
+        }).execute(it)
 
         return@switchMap live
     }
@@ -43,35 +35,23 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val categories: LiveData<List<Category>> by lazy { categoryDao.findAllCategories() }
     val units: LiveData<List<Unit>> by lazy { unitDao.findAllUnits() }
 
-    private val dao: ItemDao
+    private val service: ItemService
     private val categoryDao: CategoryDao
     private val unitDao: UnitDao
 
     init {
         val app = application as FluentPosApplication
-        dao = app.db.itemDao()
         categoryDao = app.db.categoryDao()
         unitDao = app.db.unitDao()
+        service = ItemService(app.db.itemDao(), unitDao, categoryDao)
     }
 
     fun save() {
-        item.value?.apply {
-            DaoWorkerAsync<Item>({
-                dao.save(it)
-            }, {
-
-            }).execute(this)
-        }
+        service.save(item.value)
     }
 
     fun delete() {
-        item.value?.apply {
-            DaoWorkerAsync<Item>({
-                dao.delete(it)
-            }, {
-
-            }).execute(this)
-        }
+        service.delete(item.value)
     }
 
 }

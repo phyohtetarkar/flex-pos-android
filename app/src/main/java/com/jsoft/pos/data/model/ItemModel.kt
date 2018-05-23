@@ -14,13 +14,52 @@ import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.entity.Unit
-import kotlin.Any
-import kotlin.Boolean
-import kotlin.Int
-import kotlin.Long
-import kotlin.String
-import kotlin.apply
-import kotlin.takeUnless
+import com.jsoft.pos.data.utils.DaoWorkerAsync
+
+class ItemService(
+        private val dao: ItemDao,
+        private val unitDao: UnitDao,
+        private val categoryDao: CategoryDao
+) {
+
+    fun getItem(id: Long): Item {
+        return if (id > 0) {
+            val item = dao.findByIdSync(id)
+            item.categoryId?.apply {
+                item.category = categoryDao.findByIdSync(this)
+            }
+
+            item.unitId?.apply {
+                item.unit = unitDao.findByIdSync(this)
+            }
+            item
+        } else {
+            Item()
+        }
+    }
+
+    fun save(item: Item?) {
+        item?.apply {
+            DaoWorkerAsync<Item>({
+                dao.save(it)
+            }, {
+
+            }).execute(this)
+        }
+
+    }
+
+    fun delete(item: Item?) {
+        item?.apply {
+            DaoWorkerAsync<Item>({
+                dao.delete(it)
+            }, {
+
+            }).execute(this)
+        }
+    }
+
+}
 
 class ItemSearch : BaseObservable(), Searchable {
 
@@ -111,4 +150,5 @@ abstract class ItemDao : BaseDao<Item> {
             insert(item)
         }
     }
+
 }

@@ -1,4 +1,4 @@
-package com.jsoft.pos.ui.views.item
+package com.jsoft.pos.ui.views
 
 import android.os.Bundle
 import android.support.v4.app.DialogFragment

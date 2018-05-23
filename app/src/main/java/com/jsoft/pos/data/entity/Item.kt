@@ -6,6 +6,12 @@ import android.databinding.Bindable
 import com.jsoft.pos.BR
 
 @Entity(foreignKeys = [
+    ForeignKey(entity = Tax::class,
+            parentColumns = ["id"],
+            childColumns = ["tax_id"]),
+    ForeignKey(entity = Discount::class,
+            parentColumns = ["id"],
+            childColumns = ["discount_id"]),
     ForeignKey(entity = Unit::class,
             parentColumns = ["id"],
             childColumns = ["unit_id"]),
@@ -23,14 +29,38 @@ data class Item(
         var barcode: String = "",
         var amount: Double = 0.0,
         var price: Double = 0.0,
+        var cost: Double = 0.0,
         var image: String = "",
         var remark: String = "",
         var available: Boolean = true,
+
+        @ColumnInfo(name = "tax_id")
+        var taxId: Int? = null,
+        @ColumnInfo(name = "discount_id")
+        var discountId: Int? = null,
         @ColumnInfo(name = "unit_id")
-        var unitId: Int = 0,
+        var unitId: Int? = null,
         @ColumnInfo(name = "category_id")
-        var categoryId: Int = 0
+        var categoryId: Int? = null
 ) : BaseObservable() {
+
+    @Bindable
+    @Ignore
+    var tax: Tax? = Tax(name = "choose")
+        set(value) {
+            field = value
+            taxId = value?.id ?: 0
+            notifyChange()
+        }
+
+    @Bindable
+    @Ignore
+    var discount: Discount? = Discount(name = "choose")
+        set(value) {
+            field = value
+            discountId = value?.id ?: 0
+            notifyChange()
+        }
 
     @Bindable
     @Ignore
@@ -63,12 +93,13 @@ data class ItemVO(
         var price: Double
 ) {
     @Ignore
-    var amountDesc: String? = null
+    var amountDesc: String? = ""
+        private set
         get() {
-            if ((amount - amount.toInt()) % 10 == 0.0) {
-                return "${amount.toInt()} $unit"
+            return if ((amount - amount.toInt()) % 10 == 0.0) {
+                "${amount.toInt()} $unit"
             } else {
-                return "$amount $unit"
+                "$amount $unit"
             }
         }
 }
