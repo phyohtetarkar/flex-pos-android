@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewStub
 import com.jsoft.pos.ui.utils.RecyclerViewItemTouchListener
 
 abstract class AbstractListFragment<T> : Fragment() {
@@ -29,6 +28,10 @@ abstract class AbstractListFragment<T> : Fragment() {
         }
 
         recyclerView.adapter = _adapter
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         _viewModel.list.observe(this, Observer {
             _adapter.submitList(it)
@@ -40,7 +43,6 @@ abstract class AbstractListFragment<T> : Fragment() {
                 }
             }
         })
-
     }
 
     abstract val recyclerView: RecyclerView

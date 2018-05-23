@@ -1,23 +1,18 @@
 package com.jsoft.pos.ui.views.unit
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewStub
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.UnitSearch
 import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
-import com.jsoft.pos.ui.utils.RecyclerViewItemTouchListener
 import com.jsoft.pos.ui.utils.SwipeGestureCallback
 import com.jsoft.pos.ui.views.AbstractListFragment
 import com.jsoft.pos.ui.views.ListViewModel
@@ -75,9 +70,10 @@ class UnitsFragment : AbstractListFragment<Unit>() {
         viewModel.searchModel.value = UnitSearch()
     }
 
-    override val recyclerView: RecyclerView = recyclerViewUnits
+    override val recyclerView: RecyclerView
+        get() = recyclerViewUnits
 
-    override val viewStub: View = viewStubUnits.inflate()
+    override val viewStub: View by lazy { viewStubUnits.inflate() }
 
     override val _adapter: SimpleListAdapter<Unit>
         get() = adapter

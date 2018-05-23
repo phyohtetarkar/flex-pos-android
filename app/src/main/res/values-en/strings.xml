@@ -44,4 +44,7 @@
     <string name="hint_remark">Remark</string>
     <string name="hint_size">Size *</string>
     <string name="add_new">Add new</string>
+
+    <string name="price">Price</string>
+    <string name="taxes">Taxes</string>
 </resources>

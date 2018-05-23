@@ -43,5 +43,8 @@
     <string name="hint_remark">မှတ်ချက်</string>
     <string name="hint_size">Size *</string>
     <string name="add_new">အသစ်</string>
-]
+
+    <string name="price">စျေးနှုန်း</string>
+
+    <string name="taxes">အခွန်</string>
 </resources>
