@@ -25,30 +25,26 @@ abstract class SaleDao : BaseDao<Sale> {
     @Update
     abstract fun updateSaleItem(saleItem: SaleItem)
 
+    @Delete
+    abstract fun deleteSaleItems(saleItems: List<SaleItem>)
+
     @Transaction
     open fun save(sale: Sale, saleItems: MutableList<SaleItem>) {
+        var saleId = sale.id
+
         if (sale.id > 0) {
             update(sale)
-            saleItems.forEach {
-                saleItems.forEach {
-                    if (it.id > 0) {
-                        updateSaleItem(it)
-                    } else {
-                        it.saleId = sale.id
-                        insertSaleItem(it)
-                    }
-                }
-            }
+            deleteSaleItems(findSaleItemsSync(saleId))
         } else {
-            val id = insertAndGet(sale)
-            sale.id = id
-            sale.receiptCode = "${10000 + id}"
+            saleId = insertAndGet(sale)
+            sale.id = saleId
+            sale.receiptCode = "${10000 + saleId}"
             update(sale)
-            saleItems.forEach {
-                it.saleId = id
-                insertSaleItem(it)
+        }
 
-            }
+        saleItems.forEach {
+            it.saleId = saleId
+            insertSaleItem(it)
         }
     }
 }

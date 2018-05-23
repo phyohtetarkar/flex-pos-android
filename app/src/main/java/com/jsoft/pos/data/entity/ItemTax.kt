@@ -6,24 +6,18 @@ import android.arch.persistence.room.*
     ForeignKey(entity = Item::class,
             parentColumns = ["id"],
             childColumns = ["item_id"]),
-    ForeignKey(entity = Sale::class,
+    ForeignKey(entity = Tax::class,
             parentColumns = ["id"],
-            childColumns = ["sale_id"])
+            childColumns = ["tax_id"])
 ], indices = [
     Index(value = ["item_id"]),
-    Index(value = ["sale_id"])
-], tableName = "sale_item")
-data class SaleItem(
+    Index(value = ["tax_id"])
+], tableName = "item_tax")
+data class ItemTax(
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0,
-        var quantity: Int = 0,
-        var price: Double = 0.00,
-
         @ColumnInfo(name = "item_id")
-        var itemId: Long? = null,
-        @ColumnInfo(name = "sale_id")
-        var saleId: Long? = null
-) {
-    @Ignore
-    var item: Item? = Item()
-}
+        var itemId: Long = 0,
+        @ColumnInfo(name = "tax_id")
+        var taxId: Int = 0
+)

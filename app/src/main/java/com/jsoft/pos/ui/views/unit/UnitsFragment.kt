@@ -7,27 +7,42 @@ import android.support.v4.app.Fragment
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.UnitSearch
 import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
 import com.jsoft.pos.ui.utils.RecyclerViewItemTouchListener
 import com.jsoft.pos.ui.utils.SwipeGestureCallback
+import com.jsoft.pos.ui.views.AbstractListFragment
+import com.jsoft.pos.ui.views.ListViewModel
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import kotlinx.android.synthetic.main.fragment_units.*
 
-class UnitsFragment : Fragment() {
+class UnitsFragment : AbstractListFragment<Unit>() {
 
+    private lateinit var adapter: SimpleListAdapter<Unit>
     private lateinit var viewModel: UnitsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(UnitsViewModel::class.java)
+
+        adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<Unit>() {
+            override fun areItemsTheSame(oldItem: Unit, newItem: Unit): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Unit, newItem: Unit): Boolean {
+                return oldItem == newItem
+            }
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -37,33 +52,7 @@ class UnitsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<Unit>() {
-            override fun areItemsTheSame(oldItem: Unit, newItem: Unit): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(oldItem: Unit, newItem: Unit): Boolean {
-                return oldItem == newItem
-            }
-        })
-
-        recyclerViewUnits.apply {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
-                override fun onTouch(view: View, position: Int) {
-                    val (id) = adapter.getItemAt(position)
-                    showEdit(id)
-                }
-
-                override fun onLongTouch(view: View, position: Int) {
-
-                }
-            }))
-
-            this.adapter = adapter
-        }
+        recyclerViewUnits.addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         val callback = SwipeGestureCallback(object : SwipeGestureCallback.OnSwipeDeleteListener {
             override fun onDelete(position: Int) {
@@ -79,24 +68,25 @@ class UnitsFragment : Fragment() {
 
         fabUnits.setOnClickListener { showEdit(0) }
 
-        val stub = viewStubUnits.inflate()
-
-        viewModel.units.observe(this, Observer {
-            adapter.submitList(it)
-            it?.apply {
-                if (isEmpty()) {
-                    stub.visibility = View.VISIBLE
-                } else {
-                    stub.visibility = View.GONE
-                }
-            }
-        })
-
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.searchModel.value = UnitSearch()
+    }
+
+    override val recyclerView: RecyclerView = recyclerViewUnits
+
+    override val viewStub: View = viewStubUnits.inflate()
+
+    override val _adapter: SimpleListAdapter<Unit>
+        get() = adapter
+
+    override val _viewModel: ListViewModel<Unit>
+        get() = viewModel
+
+    override fun onItemTouch(position: Int) {
+        showEdit(adapter.getItemAt(position).id)
     }
 
     private fun showEdit(id: Int) {

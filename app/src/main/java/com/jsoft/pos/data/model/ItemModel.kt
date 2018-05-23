@@ -3,16 +3,11 @@ package com.jsoft.pos.data.model
 import android.arch.lifecycle.LiveData
 import android.arch.paging.DataSource
 import android.arch.persistence.db.SupportSQLiteQuery
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Query
-import android.arch.persistence.room.RawQuery
-import android.arch.persistence.room.Transaction
+import android.arch.persistence.room.*
 import android.databinding.BaseObservable
 import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.Searchable
-import com.jsoft.pos.data.entity.Category
-import com.jsoft.pos.data.entity.Item
-import com.jsoft.pos.data.entity.ItemVO
+import com.jsoft.pos.data.entity.*
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.utils.DaoWorkerAsync
 
@@ -142,6 +137,15 @@ abstract class ItemDao : BaseDao<Item> {
     @Query("SELECT COUNT(*) FROM item")
     abstract fun findCount(): LiveData<Long>
 
+    @Query("SELECT * FROM item_tax WHERE item_id = :itemId")
+    abstract fun findItemTaxesSync(itemId: Long): List<ItemTax>
+
+    @Insert
+    abstract fun saveItemTax(itemTax: ItemTax)
+
+    @Delete
+    abstract fun deleteItemTaxes(itemTaxes: List<ItemTax>)
+
     @Transaction
     open fun save(item: Item) {
         if (item.id > 0) {
@@ -149,6 +153,27 @@ abstract class ItemDao : BaseDao<Item> {
         } else {
             insert(item)
         }
+    }
+
+    @Transaction
+    open fun save(item: Item, taxes: MutableList<Tax>) {
+        var itemId = item.id
+
+        if (item.id > 0) {
+            update(item)
+            findItemTaxesSync(itemId)
+                    .takeUnless { it.isEmpty() }
+                    ?.apply { deleteItemTaxes(this) }
+        } else {
+            itemId = insertAndGet(item)
+        }
+
+        taxes.filter { it._checked }
+                .map { ItemTax(taxId = it.id) }
+                .forEach {
+                    it.itemId = itemId
+                    saveItemTax(it)
+                }
     }
 
 }

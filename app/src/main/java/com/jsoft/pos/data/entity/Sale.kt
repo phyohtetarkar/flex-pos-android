@@ -26,7 +26,6 @@ data class Sale(
         @ColumnInfo(name = "pay_price")
         var payPrice: Double = 0.00,
         var change: Double = 0.00,
-        var receipt: String = "",
-        var remark: String = ""
+        var receipt: String = ""
 
 )

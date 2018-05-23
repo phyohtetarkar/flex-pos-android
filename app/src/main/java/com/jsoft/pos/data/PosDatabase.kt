@@ -14,6 +14,9 @@ import java.util.*
 
 @Database(version = 1, entities = [
     Item::class,
+    Tax::class,
+    ItemTax::class,
+    Discount::class,
     Category::class,
     Unit::class,
     Sale::class,

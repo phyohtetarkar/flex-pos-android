@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "dfde77bda229ee256a91cde488c2f106",
+    "identityHash": "4086bf24c2cde1aa5e493415f145fa95",
     "entities": [
       {
         "tableName": "Item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `barcode` TEXT NOT NULL, `amount` REAL NOT NULL, `price` REAL NOT NULL, `image` TEXT NOT NULL, `remark` TEXT NOT NULL, `available` INTEGER NOT NULL, `unit_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, FOREIGN KEY(`unit_id`) REFERENCES `Unit`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`category_id`) REFERENCES `Category`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `barcode` TEXT NOT NULL, `amount` REAL NOT NULL, `price` REAL NOT NULL, `cost` REAL NOT NULL, `image` TEXT NOT NULL, `available` INTEGER NOT NULL, `tax_id` INTEGER, `discount_id` INTEGER, `unit_id` INTEGER, `category_id` INTEGER, FOREIGN KEY(`tax_id`) REFERENCES `Tax`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`discount_id`) REFERENCES `Discount`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`unit_id`) REFERENCES `Unit`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`category_id`) REFERENCES `Category`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -39,14 +39,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "image",
-            "columnName": "image",
-            "affinity": "TEXT",
+            "fieldPath": "cost",
+            "columnName": "cost",
+            "affinity": "REAL",
             "notNull": true
           },
           {
-            "fieldPath": "remark",
-            "columnName": "remark",
+            "fieldPath": "image",
+            "columnName": "image",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -57,16 +57,28 @@
             "notNull": true
           },
           {
+            "fieldPath": "taxId",
+            "columnName": "tax_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "discountId",
+            "columnName": "discount_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
             "fieldPath": "unitId",
             "columnName": "unit_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "categoryId",
             "columnName": "category_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -94,6 +106,28 @@
           }
         ],
         "foreignKeys": [
+          {
+            "table": "Tax",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "tax_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "Discount",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "discount_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
           {
             "table": "Unit",
             "onDelete": "NO ACTION",
@@ -208,7 +242,7 @@
       },
       {
         "tableName": "Sale",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `receipt_code` TEXT NOT NULL, `issue_date` INTEGER NOT NULL, `total_item` INTEGER NOT NULL, `discount` INTEGER NOT NULL, `tax_amount` INTEGER NOT NULL, `sub_total_price` REAL NOT NULL, `total_price` REAL NOT NULL, `pay_price` REAL NOT NULL, `change` REAL NOT NULL, `receipt` TEXT NOT NULL, `remark` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `receipt_code` TEXT NOT NULL, `issue_date` INTEGER NOT NULL, `total_item` INTEGER NOT NULL, `discount` REAL NOT NULL, `tax_amount` REAL NOT NULL, `sub_total_price` REAL NOT NULL, `total_price` REAL NOT NULL, `pay_price` REAL NOT NULL, `change` REAL NOT NULL, `receipt` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -237,13 +271,13 @@
           {
             "fieldPath": "discount",
             "columnName": "discount",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "taxAmount",
             "columnName": "tax_amount",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -275,12 +309,6 @@
             "columnName": "receipt",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "remark",
-            "columnName": "remark",
-            "affinity": "TEXT",
-            "notNull": true
           }
         ],
         "primaryKey": {
@@ -289,12 +317,21 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Sale_receipt_code",
+            "unique": true,
+            "columnNames": [
+              "receipt_code"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_Sale_receipt_code` ON `${TABLE_NAME}` (`receipt_code`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
         "tableName": "sale_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `price` REAL NOT NULL, `category` TEXT NOT NULL, `remark` TEXT NOT NULL, `item_id` INTEGER NOT NULL, `sale_id` INTEGER NOT NULL, FOREIGN KEY(`item_id`) REFERENCES `Item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`sale_id`) REFERENCES `Sale`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `price` REAL NOT NULL, `item_id` INTEGER, `sale_id` INTEGER, FOREIGN KEY(`item_id`) REFERENCES `Item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`sale_id`) REFERENCES `Sale`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -315,28 +352,16 @@
             "notNull": true
           },
           {
-            "fieldPath": "category",
-            "columnName": "category",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "remark",
-            "columnName": "remark",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "itemId",
             "columnName": "item_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "saleId",
             "columnName": "sale_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -391,7 +416,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"dfde77bda229ee256a91cde488c2f106\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4086bf24c2cde1aa5e493415f145fa95\")"
     ]
   }
 }

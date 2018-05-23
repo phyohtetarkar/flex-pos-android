@@ -11,12 +11,17 @@ import com.jsoft.pos.data.model.UnitDao
 import com.jsoft.pos.data.model.UnitSearch
 import com.jsoft.pos.data.utils.DaoWorkerAsync
 import com.jsoft.pos.data.utils.SearchMutableLiveData
+import com.jsoft.pos.ui.views.ListViewModel
 
-class UnitsViewModel(application: Application) : AndroidViewModel(application) {
+class UnitsViewModel(application: Application) : AndroidViewModel(application), ListViewModel<Unit> {
 
     val searchModel = SearchMutableLiveData<UnitSearch>()
 
     val units: LiveData<List<Unit>> = Transformations.switchMap(searchModel) {
+        dao.findUnits(SimpleSQLiteQuery(it.query, it.objects.toTypedArray()))
+    }
+
+    override val list: LiveData<List<Unit>> = Transformations.switchMap(searchModel) {
         dao.findUnits(SimpleSQLiteQuery(it.query, it.objects.toTypedArray()))
     }
 

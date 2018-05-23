@@ -14,7 +14,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/colorBack"
         android:clipChildren="false"
         android:scrollbars="none">
@@ -235,7 +235,6 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/whitePrimary">
 
-
                 <TextView
                     android:id="@+id/textView17"
                     style="@style/HeaderText.Colored"
@@ -247,7 +246,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/view6"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Tax" />
+                    tools:text="Taxes" />
 
                 <View
                     android:id="@+id/view6"

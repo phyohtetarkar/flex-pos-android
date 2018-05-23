@@ -31,7 +31,6 @@ data class Item(
         var price: Double = 0.0,
         var cost: Double = 0.0,
         var image: String = "",
-        var remark: String = "",
         var available: Boolean = true,
 
         @ColumnInfo(name = "tax_id")

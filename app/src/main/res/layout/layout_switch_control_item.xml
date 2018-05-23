@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="obj" type="java.lang.String"/>
-        <variable name="sec" type="java.lang.String"/>
+        <variable
+            name="obj"
+            type="com.jsoft.pos.data.entity.Checkable"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="true"
-        android:clickable="true"
-        android:background="@drawable/selectable_white_background">
+        android:background="@color/whitePrimary">
 
         <TextView
             android:id="@+id/simple_list_item"
@@ -22,26 +21,24 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
-            android:text="@{obj}"
+            android:text="@{obj._name}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView16"
+            app:layout_constraintEnd_toStartOf="@+id/switchCompat"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Name" />
 
-        <TextView
-            android:id="@+id/textView16"
+        <Switch
+            android:id="@+id/switchCompat"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:padding="16dp"
+            android:checked="@={obj._checked, default=true}"
             android:textSize="14sp"
-            android:text="@{sec}"
             app:layout_constraintBottom_toBottomOf="@+id/simple_list_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/simple_list_item"
-            tools:text="00" />
+            app:layout_constraintTop_toTopOf="@+id/simple_list_item" />
 
     </android.support.constraint.ConstraintLayout>
-
 
 </layout>
