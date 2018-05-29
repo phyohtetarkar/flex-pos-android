@@ -3,6 +3,7 @@ package com.jsoft.pos.data.model
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Transaction
 import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.entity.Tax
 
@@ -23,5 +24,14 @@ abstract class TaxDao : BaseDao<Tax> {
 
     @Query("SELECT COUNT(*) FROM tax")
     abstract fun findCount(): LiveData<Long>
+
+    @Transaction
+    open fun save(tax: Tax) {
+        if (tax.id > 0) {
+            update(tax)
+        } else {
+            insert(tax)
+        }
+    }
 
 }
