@@ -3,23 +3,17 @@ package com.jsoft.pos.ui.views.unit
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.UnitSearch
-import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
 import com.jsoft.pos.ui.utils.SwipeGestureCallback
-import com.jsoft.pos.ui.views.AbstractListFragment
 import com.jsoft.pos.ui.views.SimpleListAdapter
+import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimpleListViewModel
 import kotlinx.android.synthetic.main.fragment_units.*
 
-class UnitsFragment : AbstractListFragment<Unit>() {
+class UnitsFragment : SimpleListFragment<Unit>() {
 
     private lateinit var adapter: SimpleListAdapter<Unit>
     private lateinit var viewModel: UnitsViewModel
@@ -40,14 +34,8 @@ class UnitsFragment : AbstractListFragment<Unit>() {
         })
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_units, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        recyclerViewUnits.addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         val callback = SwipeGestureCallback(object : SwipeGestureCallback.OnSwipeDeleteListener {
             override fun onDelete(position: Int) {
@@ -61,19 +49,12 @@ class UnitsFragment : AbstractListFragment<Unit>() {
         val helper = ItemTouchHelper(callback)
         helper.attachToRecyclerView(recyclerViewUnits)
 
-        fabUnits.setOnClickListener { showEdit(0) }
-
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.searchModel.value = UnitSearch()
     }
-
-    override val recyclerView: RecyclerView
-        get() = recyclerViewUnits
-
-    override val viewStub: View by lazy { viewStubUnits.inflate() }
 
     override val _adapter: SimpleListAdapter<Unit>
         get() = adapter
@@ -85,7 +66,7 @@ class UnitsFragment : AbstractListFragment<Unit>() {
         showEdit(adapter.getItemAt(position).id)
     }
 
-    private fun showEdit(id: Int) {
+    override fun showEdit(id: Any) {
         val ft = fragmentManager?.beginTransaction()
         val prev = fragmentManager?.findFragmentByTag("dialog")
         if (prev != null) {
@@ -93,7 +74,7 @@ class UnitsFragment : AbstractListFragment<Unit>() {
         }
         ft?.addToBackStack(null)
 
-        val frag = EditUnitFragment.getInstance(id)
+        val frag = EditUnitFragment.getInstance(id as Int)
         frag.show(ft, "dialog")
     }
 

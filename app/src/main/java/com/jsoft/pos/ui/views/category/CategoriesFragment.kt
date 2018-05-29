@@ -5,22 +5,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.CategoryVO
 import com.jsoft.pos.data.model.CategorySearch
-import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
-import com.jsoft.pos.ui.views.AbstractListFragment
 import com.jsoft.pos.ui.views.SimpleListAdapter
+import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimpleListViewModel
-import kotlinx.android.synthetic.main.fragment_categories.*
-import kotlinx.android.synthetic.main.fragment_units.*
 
-class CategoriesFragment : AbstractListFragment<CategoryVO>() {
+class CategoriesFragment : SimpleListFragment<CategoryVO>() {
 
     private lateinit var adapter: SimpleListAdapter<CategoryVO>
     private lateinit var viewModel: CategoriesViewModel
@@ -41,28 +33,10 @@ class CategoriesFragment : AbstractListFragment<CategoryVO>() {
         }, R.layout.layout_category)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_categories, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        recyclerViewCategories.addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL, 82))
-
-        fabCategories.setOnClickListener { showEdit(0) }
-
-    }
-
     override fun onResume() {
         super.onResume()
         viewModel.searchModel.value = CategorySearch()
     }
-
-    override val recyclerView: RecyclerView
-        get() = recyclerViewCategories
-
-    override val viewStub: View by lazy { viewStubUnits.inflate() }
 
     override val _adapter: SimpleListAdapter<CategoryVO>
         get() = adapter
@@ -74,9 +48,9 @@ class CategoriesFragment : AbstractListFragment<CategoryVO>() {
         showEdit(adapter.getItemAt(position).id)
     }
 
-    private fun showEdit(id: Int) {
+    override fun showEdit(id: Any) {
         val i = Intent(context, EditCategoryActivity::class.java)
-        i.putExtra("id", id)
+        i.putExtra("id", id as Int)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //startActivity(i, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
