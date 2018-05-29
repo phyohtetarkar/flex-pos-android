@@ -1,10 +1,12 @@
 package com.jsoft.pos.data.model
 
 import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.entity.Tax
 
+@Dao
 abstract class TaxDao : BaseDao<Tax> {
 
     @Query("SELECT * FROM tax")

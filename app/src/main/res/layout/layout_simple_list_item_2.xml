@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="obj" type="java.lang.String"/>
-        <variable name="sec" type="java.lang.String"/>
+        <variable name="first" type="java.lang.String"/>
+        <variable name="second" type="java.lang.String"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -22,7 +22,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
-            android:text="@{obj}"
+            android:text="@{first}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView16"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
             android:layout_height="0dp"
             android:padding="16dp"
             android:textSize="14sp"
-            android:text="@{sec}"
+            android:text="@{second}"
             app:layout_constraintBottom_toBottomOf="@+id/simple_list_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/simple_list_item"

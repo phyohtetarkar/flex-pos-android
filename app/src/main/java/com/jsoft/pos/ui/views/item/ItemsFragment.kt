@@ -14,12 +14,12 @@ import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.model.ItemSearch
+import com.jsoft.pos.ui.views.AbstractListFragment
 import com.jsoft.pos.ui.views.PagedListViewModel
 import com.jsoft.pos.ui.views.SimplePagedListAdapter
-import com.jsoft.pos.ui.views.SimplePagedListFragment
 import kotlinx.android.synthetic.main.fragment_items.*
 
-class ItemsFragment : SimplePagedListFragment<ItemVO>() {
+class ItemsFragment : AbstractListFragment<ItemVO>() {
 
     private lateinit var adapter: SimplePagedListAdapter<ItemVO>
     private lateinit var viewModel: ItemsViewModel

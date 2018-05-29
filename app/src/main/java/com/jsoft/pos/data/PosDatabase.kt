@@ -13,6 +13,7 @@ import java.util.*
     Item::class,
     Tax::class,
     ItemTax::class,
+    ItemDiscount::class,
     Discount::class,
     Category::class,
     Unit::class,

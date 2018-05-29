@@ -8,11 +8,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Category
+import com.jsoft.pos.data.entity.Discount
+import com.jsoft.pos.data.entity.Tax
 import com.jsoft.pos.data.entity.Unit
 
-open class SimpleListAdapter<T>(
-        DIFF_CALLBACK: DiffUtil.ItemCallback<T>
-) : ListAdapter<T, BindingViewHolder>(DIFF_CALLBACK) {
+open class SimpleListAdapter<T>(DIFF_CALLBACK: DiffUtil.ItemCallback<T>) : ListAdapter<T, BindingViewHolder>(DIFF_CALLBACK) {
 
     private var layoutId = R.layout.layout_simple_list_item
 
@@ -29,13 +29,16 @@ open class SimpleListAdapter<T>(
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
         val t = getItemAt(position)
 
-        when (layoutId) {
-            R.layout.layout_simple_list_item -> {
-                if (t is Unit) {
-                    holder.bind(t.name)
-                } else if (t is Category) {
-                    holder.bind(t.name)
-                }
+        when (t) {
+            is Unit -> holder.bind(t.name)
+            is Category -> holder.bind(t.name)
+
+            is Tax -> {
+
+            }
+
+            is Discount -> {
+
             }
 
             else -> holder.bind(t as Any)

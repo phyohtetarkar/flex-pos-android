@@ -10,12 +10,13 @@ import com.jsoft.pos.data.entity.CategoryVO
 import com.jsoft.pos.data.model.CategoryDao
 import com.jsoft.pos.data.model.CategorySearch
 import com.jsoft.pos.data.utils.SearchMutableLiveData
+import com.jsoft.pos.ui.views.SimpleListViewModel
 
-class CategoriesViewModel(application: Application) : AndroidViewModel(application) {
+class CategoriesViewModel(application: Application) : AndroidViewModel(application), SimpleListViewModel<CategoryVO> {
 
     val searchModel = SearchMutableLiveData<CategorySearch>()
 
-    val categories: LiveData<List<CategoryVO>> = Transformations.switchMap(searchModel) {
+    override val list: LiveData<List<CategoryVO>> = Transformations.switchMap(searchModel) {
         dao.findCategories(SimpleSQLiteQuery(it.query, it.objects.toTypedArray()))
     }
 
