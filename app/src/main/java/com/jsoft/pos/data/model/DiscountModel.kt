@@ -3,6 +3,7 @@ package com.jsoft.pos.data.model
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Transaction
 import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.entity.Discount
 
@@ -24,4 +25,12 @@ abstract class DiscountDao : BaseDao<Discount> {
     @Query("SELECT COUNT(*) FROM discount")
     abstract fun findCount(): LiveData<Long>
 
+    @Transaction
+    open fun save(discount: Discount) {
+        if (discount.id > 0) {
+            update(discount)
+        } else {
+            insert(discount)
+        }
+    }
 }

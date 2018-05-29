@@ -3,6 +3,7 @@ package com.jsoft.pos.ui.views.tax
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
+import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Tax
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListFragment
@@ -27,7 +28,7 @@ class TaxesFragment : SimpleListFragment<Tax>() {
                 return oldItem == newItem
             }
 
-        })
+        }, R.layout.layout_simple_list_item_2)
     }
 
     override val _adapter: SimpleListAdapter<Tax>

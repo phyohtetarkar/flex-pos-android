@@ -6,6 +6,7 @@ import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.jsoft.pos.BR
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.entity.Discount
@@ -34,11 +35,13 @@ open class SimpleListAdapter<T>(DIFF_CALLBACK: DiffUtil.ItemCallback<T>) : ListA
             is Category -> holder.bind(t.name)
 
             is Tax -> {
-
+                holder.bind(BR.first, t.name)
+                holder.bind(BR.second, t.taxDesc)
             }
 
             is Discount -> {
-
+                holder.bind(BR.first, t.name)
+                holder.bind(BR.second, t.discountDesc)
             }
 
             else -> holder.bind(t as Any)

@@ -71,7 +71,7 @@
                 android:gravity="center"
                 android:text="%"
                 android:textColor="@drawable/toggle_text_drawable"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/radioButton10"
@@ -83,7 +83,7 @@
                 android:gravity="center"
                 android:text="00"
                 android:textColor="@drawable/toggle_text_drawable"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
         </RadioGroup>
 
     </android.support.constraint.ConstraintLayout>
