@@ -10,24 +10,26 @@ import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.entity.Unit
 
-open class SimpleListAdapter<T>(DIFF_CALLBACK: DiffUtil.ItemCallback<T>) : ListAdapter<T, BindingViewHolder>(DIFF_CALLBACK) {
+open class SimpleListAdapter<T>(
+        DIFF_CALLBACK: DiffUtil.ItemCallback<T>
+) : ListAdapter<T, BindingViewHolder>(DIFF_CALLBACK) {
 
-    private var layout = R.layout.layout_simple_list_item
+    private var layoutId = R.layout.layout_simple_list_item
 
-    constructor(DIFF_CALLBACK: DiffUtil.ItemCallback<T>, layout: Int) : this(DIFF_CALLBACK) {
-        this.layout = layout
+    constructor(DIFF_CALLBACK: DiffUtil.ItemCallback<T>, layoutId: Int) : this(DIFF_CALLBACK) {
+        this.layoutId = layoutId
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layout, parent, false)
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutId, parent, false)
         return BindingViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
         val t = getItemAt(position)
 
-        when (layout) {
+        when (layoutId) {
             R.layout.layout_simple_list_item -> {
                 if (t is Unit) {
                     holder.bind(t.name)

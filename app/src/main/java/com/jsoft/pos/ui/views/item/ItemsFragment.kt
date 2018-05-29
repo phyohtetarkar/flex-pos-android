@@ -1,30 +1,43 @@
 package com.jsoft.pos.ui.views.item
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.util.DiffUtil
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
+import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.model.ItemSearch
-import com.jsoft.pos.ui.utils.RecyclerViewItemTouchListener
+import com.jsoft.pos.ui.views.PagedListViewModel
+import com.jsoft.pos.ui.views.SimplePagedListAdapter
+import com.jsoft.pos.ui.views.SimplePagedListFragment
 import kotlinx.android.synthetic.main.fragment_items.*
 
-class ItemsFragment : Fragment() {
+class ItemsFragment : SimplePagedListFragment<ItemVO>() {
 
+    private lateinit var adapter: SimplePagedListAdapter<ItemVO>
     private lateinit var viewModel: ItemsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(ItemsViewModel::class.java)
+
+        adapter = SimplePagedListAdapter(object : DiffUtil.ItemCallback<ItemVO>() {
+            override fun areItemsTheSame(oldItem: ItemVO, newItem: ItemVO): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: ItemVO, newItem: ItemVO): Boolean {
+                return oldItem == newItem
+            }
+        }, R.layout.layout_item)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,39 +47,7 @@ class ItemsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ItemAdapter()
-
-        recyclerViewItems.apply {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
-                override fun onTouch(view: View, position: Int) {
-                    adapter.getItemAt(position)?.apply {
-                        showEdit((id))
-                    }
-
-                }
-
-                override fun onLongTouch(view: View, position: Int) {
-
-                }
-            }))
-
-            this.adapter = adapter
-        }
-
         fabItems.setOnClickListener { showEdit(0) }
-
-        val stub = viewStubItems.inflate()
-
-        viewModel.items.observe(this, Observer {
-            adapter.submitList(it)
-            if (it!!.isEmpty()) {
-                stub.visibility = View.VISIBLE
-            } else {
-                stub.visibility = View.GONE
-            }
-        })
 
     }
 
@@ -79,6 +60,21 @@ class ItemsFragment : Fragment() {
         super.onAttach(context)
         val activity = context as MainActivity
         activity.setTitle(R.string.title_items)
+    }
+
+    override val recyclerView: RecyclerView
+        get() = recyclerViewItems
+
+    override val viewStub: View by lazy { viewStubItems.inflate() }
+
+    override val _adapter: SimplePagedListAdapter<ItemVO>
+        get() = adapter
+
+    override val _viewModel: PagedListViewModel<ItemVO>
+        get() = viewModel
+
+    override fun onItemTouch(position: Int) {
+        showEdit(adapter.getItemAt(position).id)
     }
 
     private fun showEdit(id: Long) {

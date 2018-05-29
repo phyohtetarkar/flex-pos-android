@@ -123,7 +123,27 @@ class ItemSearch : BaseObservable(), Searchable {
 }
 
 @Dao
-abstract class ItemDao : BaseDao<Item> {
+interface ItemAssociationDao {
+
+    @Query("SELECT * FROM item_tax WHERE item_id = :itemId")
+    fun findItemTaxesSync(itemId: Long): List<ItemTax>
+    @Query("SELECT * FROM item_discount WHERE item_id = :itemId")
+    fun findItemDiscountsSync(itemId: Long): List<ItemDiscount>
+
+    @Insert
+    fun saveItemTax(itemTax: ItemTax)
+    @Insert
+    fun saveItemDiscount(itemDiscount: ItemDiscount)
+
+    @Delete
+    fun deleteItemTaxes(itemTaxes: List<ItemTax>)
+    @Delete
+    fun deleteItemDiscounts(itemDiscounts: List<ItemDiscount>)
+
+}
+
+@Dao
+abstract class ItemDao : BaseDao<Item>, ItemAssociationDao {
 
     @RawQuery(observedEntities = [Item::class, Category::class, Unit::class])
     abstract fun findItems(query: SupportSQLiteQuery): DataSource.Factory<Int, ItemVO>
@@ -137,15 +157,6 @@ abstract class ItemDao : BaseDao<Item> {
     @Query("SELECT COUNT(*) FROM item")
     abstract fun findCount(): LiveData<Long>
 
-    @Query("SELECT * FROM item_tax WHERE item_id = :itemId")
-    abstract fun findItemTaxesSync(itemId: Long): List<ItemTax>
-
-    @Insert
-    abstract fun saveItemTax(itemTax: ItemTax)
-
-    @Delete
-    abstract fun deleteItemTaxes(itemTaxes: List<ItemTax>)
-
     @Transaction
     open fun save(item: Item) {
         if (item.id > 0) {
@@ -156,7 +167,7 @@ abstract class ItemDao : BaseDao<Item> {
     }
 
     @Transaction
-    open fun save(item: Item, taxes: MutableList<Tax>) {
+    open fun save(item: Item, taxes: MutableList<Tax>, discounts: MutableList<Discount>) {
         var itemId = item.id
 
         if (item.id > 0) {
@@ -164,16 +175,21 @@ abstract class ItemDao : BaseDao<Item> {
             findItemTaxesSync(itemId)
                     .takeUnless { it.isEmpty() }
                     ?.apply { deleteItemTaxes(this) }
+
+            findItemDiscountsSync(itemId)
+                    .takeUnless { it.isEmpty() }
+                    ?.apply { deleteItemDiscounts(this) }
         } else {
             itemId = insertAndGet(item)
         }
 
         taxes.filter { it._checked }
-                .map { ItemTax(taxId = it.id) }
-                .forEach {
-                    it.itemId = itemId
-                    saveItemTax(it)
-                }
+                .map { ItemTax(itemId = itemId, taxId = it.id) }
+                .forEach { saveItemTax(it) }
+
+        discounts.filter { it._checked }
+                .map { ItemDiscount(itemId = itemId, discountId = it.id) }
+                .forEach { saveItemDiscount(it) }
     }
 
 }

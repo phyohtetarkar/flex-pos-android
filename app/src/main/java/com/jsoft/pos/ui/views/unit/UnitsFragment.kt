@@ -14,12 +14,12 @@ import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.UnitSearch
 import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
 import com.jsoft.pos.ui.utils.SwipeGestureCallback
-import com.jsoft.pos.ui.views.AbstractListFragment
-import com.jsoft.pos.ui.views.ListViewModel
 import com.jsoft.pos.ui.views.SimpleListAdapter
+import com.jsoft.pos.ui.views.SimpleListFragment
+import com.jsoft.pos.ui.views.SimpleListViewModel
 import kotlinx.android.synthetic.main.fragment_units.*
 
-class UnitsFragment : AbstractListFragment<Unit>() {
+class UnitsFragment : SimpleListFragment<Unit>() {
 
     private lateinit var adapter: SimpleListAdapter<Unit>
     private lateinit var viewModel: UnitsViewModel
@@ -78,7 +78,7 @@ class UnitsFragment : AbstractListFragment<Unit>() {
     override val _adapter: SimpleListAdapter<Unit>
         get() = adapter
 
-    override val _viewModel: ListViewModel<Unit>
+    override val _viewModel: SimpleListViewModel<Unit>
         get() = viewModel
 
     override fun onItemTouch(position: Int) {

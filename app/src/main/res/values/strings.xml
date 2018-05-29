@@ -23,7 +23,7 @@
     <string name="hint_barcode">ဘားကုဒ်</string>
     <string name="hint_price">စျေးနှုန်း *</string>
     <string name="hint_discount">Discount(%)</string>
-    <string name="discount">ရေှာ့ေစျး</string>
+    <string name="discount">ရှော့စျေး</string>
     <string name="available_for_sale">ရောင်းနိုင်ပြီ</string>
     <string name="textView_title_product_image">ပစ္စည်းပုံ</string>
     <string name="hint_category">အမျိုးအစား *</string>

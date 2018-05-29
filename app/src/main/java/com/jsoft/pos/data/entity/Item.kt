@@ -6,12 +6,6 @@ import android.databinding.Bindable
 import com.jsoft.pos.BR
 
 @Entity(foreignKeys = [
-    ForeignKey(entity = Tax::class,
-            parentColumns = ["id"],
-            childColumns = ["tax_id"]),
-    ForeignKey(entity = Discount::class,
-            parentColumns = ["id"],
-            childColumns = ["discount_id"]),
     ForeignKey(entity = Unit::class,
             parentColumns = ["id"],
             childColumns = ["unit_id"]),
@@ -33,33 +27,11 @@ data class Item(
         var image: String = "",
         var available: Boolean = true,
 
-        @ColumnInfo(name = "tax_id")
-        var taxId: Int? = null,
-        @ColumnInfo(name = "discount_id")
-        var discountId: Int? = null,
         @ColumnInfo(name = "unit_id")
         var unitId: Int? = null,
         @ColumnInfo(name = "category_id")
         var categoryId: Int? = null
 ) : BaseObservable() {
-
-    @Bindable
-    @Ignore
-    var tax: Tax? = Tax(name = "choose")
-        set(value) {
-            field = value
-            taxId = value?.id ?: 0
-            notifyChange()
-        }
-
-    @Bindable
-    @Ignore
-    var discount: Discount? = Discount(name = "choose")
-        set(value) {
-            field = value
-            discountId = value?.id ?: 0
-            notifyChange()
-        }
 
     @Bindable
     @Ignore
