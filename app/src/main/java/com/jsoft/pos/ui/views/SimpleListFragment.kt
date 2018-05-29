@@ -30,7 +30,6 @@ abstract class SimpleListFragment<T> : AbstractListFragment<T>() {
 
     override val viewStub: View by lazy { viewStubSimpleList.inflate() }
 
-
     protected abstract fun showEdit(id: Any)
 
 }

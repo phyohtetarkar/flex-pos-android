@@ -1,6 +1,5 @@
 package com.jsoft.pos.ui.views.category
 
-import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -10,7 +9,7 @@ import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.model.CategoryDao
 import com.jsoft.pos.data.utils.DaoWorkerAsync
 
-class EditCategoryViewModel(application: Application) : AndroidViewModel(application) {
+class EditCategoryViewModel(app: FlexPosApplication) : AndroidViewModel(app) {
 
     val categoryInput = MutableLiveData<Int>()
 
@@ -26,12 +25,7 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
 
     }
 
-    private val dao: CategoryDao
-
-    init {
-        val app = application as FlexPosApplication
-        dao = app.db.categoryDao()
-    }
+    private val dao: CategoryDao = app.db.categoryDao()
 
     fun save() {
         category.value?.apply {
