@@ -32,33 +32,8 @@ class EditItemActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        edChooseCategory.setOnKeyListener { _, code, _ ->
-            if (code == KeyEvent.KEYCODE_TAB) {
-                return@setOnKeyListener false
-            }
-            return@setOnKeyListener true
-        }
-        edChooseCategory.setOnTouchListener { _, me ->
-
-            if (me.action == MotionEvent.ACTION_DOWN) {
-                showSelectDialog(DialogCategories())
-            }
-
-            return@setOnTouchListener true
-        }
-
-        edChooseUnit.setOnKeyListener { _, code, _ ->
-            if (code == KeyEvent.KEYCODE_TAB) {
-                return@setOnKeyListener false
-            }
-            return@setOnKeyListener true
-        }
-        edChooseUnit.setOnTouchListener { _, me ->
-            if (me.action == MotionEvent.ACTION_DOWN) {
-                showSelectDialog(DialogUnits())
-            }
-            return@setOnTouchListener true
-        }
+        edChooseCategory.onTouchDelegate = { showSelectDialog(DialogCategories())}
+        edChooseUnit.onTouchDelegate = { showSelectDialog(DialogUnits()) }
 
         viewModel.apply {
 

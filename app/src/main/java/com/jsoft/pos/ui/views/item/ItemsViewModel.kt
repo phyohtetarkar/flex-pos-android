@@ -7,7 +7,7 @@ import android.arch.lifecycle.Transformations
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import android.arch.persistence.db.SimpleSQLiteQuery
-import com.jsoft.pos.FluentPosApplication
+import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.model.ItemDao
 import com.jsoft.pos.data.model.ItemSearch
@@ -25,7 +25,7 @@ class ItemsViewModel(application: Application) : AndroidViewModel(application), 
     private val dao: ItemDao
 
     init {
-        val app = application as FluentPosApplication
+        val app = application as FlexPosApplication
         dao = app.db.itemDao()
     }
 

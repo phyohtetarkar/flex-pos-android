@@ -5,13 +5,10 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
-import com.jsoft.pos.FluentPosApplication
-import com.jsoft.pos.data.entity.Category
-import com.jsoft.pos.data.entity.Item
+import com.jsoft.pos.FlexPosApplication
+import com.jsoft.pos.data.entity.*
 import com.jsoft.pos.data.entity.Unit
-import com.jsoft.pos.data.model.CategoryDao
-import com.jsoft.pos.data.model.ItemService
-import com.jsoft.pos.data.model.UnitDao
+import com.jsoft.pos.data.model.*
 import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class EditItemViewModel(application: Application) : AndroidViewModel(application) {
@@ -34,16 +31,23 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     val categories: LiveData<List<Category>> by lazy { categoryDao.findAllCategories() }
     val units: LiveData<List<Unit>> by lazy { unitDao.findAllUnits() }
+    val taxes: LiveData<List<Tax>> by lazy { taxDao.findAllTaxes() }
+    val discounts: LiveData<List<Discount>> by lazy { discountDao.findAllDiscounts() }
 
     private val service: ItemService
     private val categoryDao: CategoryDao
     private val unitDao: UnitDao
+    private val taxDao: TaxDao
+    private val discountDao: DiscountDao
 
     init {
-        val app = application as FluentPosApplication
+        val app = application as FlexPosApplication
         categoryDao = app.db.categoryDao()
         unitDao = app.db.unitDao()
-        service = ItemService(app.db.itemDao(), unitDao, categoryDao)
+        taxDao = app.db.taxDao()
+        discountDao = app.db.discountDao()
+        service = ItemService(app.db.itemDao(), unitDao, categoryDao,
+                taxDao, discountDao)
     }
 
     fun save() {

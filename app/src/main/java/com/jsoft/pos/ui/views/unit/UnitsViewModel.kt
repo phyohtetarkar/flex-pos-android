@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Transformations
 import android.arch.persistence.db.SimpleSQLiteQuery
-import com.jsoft.pos.FluentPosApplication
+import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.UnitDao
 import com.jsoft.pos.data.model.UnitSearch
@@ -28,7 +28,7 @@ class UnitsViewModel(application: Application) : AndroidViewModel(application), 
     private val dao: UnitDao
 
     init {
-        val app = application as FluentPosApplication
+        val app = application as FlexPosApplication
         dao = app.db.unitDao()
     }
 

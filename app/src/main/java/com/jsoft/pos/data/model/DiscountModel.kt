@@ -10,6 +10,9 @@ abstract class DiscountDao : BaseDao<Discount> {
     @Query("SELECT * FROM discount")
     abstract fun findAllDiscounts(): LiveData<List<Discount>>
 
+    @Query("SELECT * FROM discount WHERE id IN (SELECT discount_id FROM item_discount WHERE item_id = :itemId)")
+    abstract fun findByItemSync(itemId: Long): List<Discount>
+
     @Query("SELECT * FROM discount WHERE id = :id LIMIT 1")
     abstract fun findById(id: Int): LiveData<Discount>
 

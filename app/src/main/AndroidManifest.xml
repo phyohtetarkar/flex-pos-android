@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_pos"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme"
-        android:name=".FluentPosApplication">
+        android:name=".FlexPosApplication">
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

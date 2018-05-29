@@ -10,6 +10,9 @@ abstract class TaxDao : BaseDao<Tax> {
     @Query("SELECT * FROM tax")
     abstract fun findAllTaxes(): LiveData<List<Tax>>
 
+    @Query("SELECT * FROM tax WHERE id IN (SELECT tax_id FROM item_tax WHERE item_id = :itemId)")
+    abstract fun findByItemSync(itemId: Long): List<Tax>
+
     @Query("SELECT * FROM tax WHERE id = :id LIMIT 1")
     abstract fun findById(id: Int): LiveData<Tax>
 

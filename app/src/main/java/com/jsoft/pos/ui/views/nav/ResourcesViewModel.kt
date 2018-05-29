@@ -3,7 +3,7 @@ package com.jsoft.pos.ui.views.nav
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import com.jsoft.pos.FluentPosApplication
+import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.model.CategoryDao
 import com.jsoft.pos.data.model.ItemDao
 import com.jsoft.pos.data.model.UnitDao
@@ -19,7 +19,7 @@ class ResourcesViewModel(application: Application) : AndroidViewModel(applicatio
     private val categoryDao: CategoryDao
 
     init {
-        val app = application as FluentPosApplication
+        val app = application as FlexPosApplication
         itemDao = app.db.itemDao()
         unitDao = app.db.unitDao()
         categoryDao = app.db.categoryDao()

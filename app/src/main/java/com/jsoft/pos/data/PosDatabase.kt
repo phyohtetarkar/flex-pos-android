@@ -6,10 +6,7 @@ import android.arch.persistence.room.TypeConverter
 import android.arch.persistence.room.TypeConverters
 import com.jsoft.pos.data.entity.*
 import com.jsoft.pos.data.entity.Unit
-import com.jsoft.pos.data.model.CategoryDao
-import com.jsoft.pos.data.model.ItemDao
-import com.jsoft.pos.data.model.SaleDao
-import com.jsoft.pos.data.model.UnitDao
+import com.jsoft.pos.data.model.*
 import java.util.*
 
 @Database(version = 1, entities = [
@@ -31,6 +28,10 @@ abstract class PosDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
 
     abstract fun saleDao(): SaleDao
+
+    abstract fun taxDao(): TaxDao
+
+    abstract fun discountDao(): DiscountDao
 
     companion object {
         const val DB_NAME = "pos"

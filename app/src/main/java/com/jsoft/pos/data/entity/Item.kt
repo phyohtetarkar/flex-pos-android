@@ -50,6 +50,11 @@ data class Item(
             categoryId = value?.id ?: 0
             notifyPropertyChanged(BR.category)
         }
+
+    @Ignore
+    var taxes: MutableList<Tax>? = null
+    @Ignore
+    var discounts: MutableList<Discount>? = null
 }
 
 data class ItemVO(

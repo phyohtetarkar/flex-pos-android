@@ -14,7 +14,9 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 class ItemService(
         private val dao: ItemDao,
         private val unitDao: UnitDao,
-        private val categoryDao: CategoryDao
+        private val categoryDao: CategoryDao,
+        private val taxDao: TaxDao,
+        private val discountDao: DiscountDao
 ) {
 
     fun getItem(id: Long): Item {
@@ -27,6 +29,10 @@ class ItemService(
             item.unitId?.apply {
                 item.unit = unitDao.findByIdSync(this)
             }
+
+            item.taxes = taxDao.findByItemSync(id).toMutableList()
+            item.discounts = discountDao.findByItemSync(id).toMutableList()
+
             item
         } else {
             Item()
