@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".ui.views.category.EditCategoryActivity" />
         <activity android:name=".ui.views.item.EditItemActivity" />
+        <activity android:name=".ui.views.tax.EditTaxActivity" />
+        <activity android:name=".ui.views.discount.EditDiscountActivity" />
     </application>
 
 </manifest>

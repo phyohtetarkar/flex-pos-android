@@ -11,7 +11,7 @@ import com.jsoft.pos.ui.utils.SwipeGestureCallback
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimpleListViewModel
-import kotlinx.android.synthetic.main.fragment_units.*
+import kotlinx.android.synthetic.main.fragment_simple_list.*
 
 class UnitsFragment : SimpleListFragment<Unit>() {
 
@@ -47,7 +47,7 @@ class UnitsFragment : SimpleListFragment<Unit>() {
             }
         })
         val helper = ItemTouchHelper(callback)
-        helper.attachToRecyclerView(recyclerViewUnits)
+        helper.attachToRecyclerView(recyclerViewSimpleList)
 
     }
 

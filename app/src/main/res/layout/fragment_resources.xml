@@ -5,11 +5,11 @@
 
     <data class="ResourcesBinding">
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="vm"
-            type="com.jsoft.pos.ui.views.nav.ResourcesViewModel"/>
+            type="com.jsoft.pos.ui.views.nav.ResourcesViewModel" />
     </data>
 
     <LinearLayout
@@ -18,6 +18,20 @@
         android:background="@color/colorBack"
         android:orientation="vertical"
         android:padding="4dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingEnd="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="4dp"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/basic_info"/>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -39,7 +53,7 @@
                     android:padding="16dp"
                     android:text="@string/title_items"
                     app:layout_constraintBottom_toTopOf="@+id/view4"
-                    app:layout_constraintEnd_toStartOf="@+id/textView11"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,7 +76,7 @@
                     android:padding="16dp"
                     android:text="@string/title_categories"
                     app:layout_constraintBottom_toTopOf="@+id/tv_res_units"
-                    app:layout_constraintEnd_toStartOf="@+id/textView12"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view4" />
 
@@ -84,7 +98,7 @@
                     android:padding="16dp"
                     android:text="@string/title_units"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView13"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_res_categories" />
 
@@ -95,14 +109,14 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:background="@drawable/chip_gray"
+                    android:paddingBottom="2dp"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:textColor="@color/whitePrimary"
-                    android:visibility='@{safeUnbox(vm.itemCount > 0) ? View.VISIBLE : View.GONE}'
                     android:text="@{safeUnbox(vm.itemCount)}"
+                    android:textColor="@color/whitePrimary"
                     android:textSize="12sp"
+                    android:visibility='@{safeUnbox(vm.itemCount > 0) ? View.VISIBLE : View.GONE}'
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_res_products"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="10" />
@@ -113,15 +127,15 @@
                     android:layout_height="0dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
+                    android:background="@drawable/chip_gray"
                     android:paddingBottom="2dp"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:paddingTop="2dp"
-                    android:visibility='@{safeUnbox(vm.categoryCount > 0) ? View.VISIBLE : View.GONE}'
                     android:text="@{safeUnbox(vm.categoryCount)}"
                     android:textColor="@color/whitePrimary"
                     android:textSize="12sp"
-                    android:background="@drawable/chip_gray"
+                    android:visibility='@{safeUnbox(vm.categoryCount > 0) ? View.VISIBLE : View.GONE}'
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_res_categories"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="5" />
@@ -132,20 +146,125 @@
                     android:layout_height="0dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
+                    android:background="@drawable/chip_gray"
                     android:paddingBottom="2dp"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:paddingTop="2dp"
-                    android:visibility='@{safeUnbox(vm.unitCount > 0) ? View.VISIBLE : View.GONE}'
                     android:text="@{safeUnbox(vm.unitCount)}"
                     android:textColor="@color/whitePrimary"
                     android:textSize="12sp"
-                    android:background="@drawable/chip_gray"
+                    android:visibility='@{safeUnbox(vm.unitCount > 0) ? View.VISIBLE : View.GONE}'
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_res_units"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="8" />
 
             </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingEnd="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="4dp"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/extra"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/card_custom_radius"
+            app:cardElevation="@dimen/card_custom_elevation"
+            app:cardUseCompatPadding="true">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/whitePrimary">
+
+
+                <TextView
+                    android:id="@+id/tvResDiscounts"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="16dp"
+                    android:text="@string/title_discounts"
+                    app:layout_constraintBottom_toTopOf="@+id/view13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside" />
+
+                <TextView
+                    android:id="@+id/textView27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/chip_gray"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="2dp"
+                    android:text="@{safeUnbox(vm.discountCount)}"
+                    android:textColor="@color/whitePrimary"
+                    android:textSize="12sp"
+                    android:visibility='@{safeUnbox(vm.discountCount > 0) ? View.VISIBLE : View.GONE}'
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tvResDiscounts"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="2" />
+
+                <View
+                    android:id="@+id/view13"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/darkDivider"
+                    app:layout_constraintBottom_toTopOf="@+id/tvResTaxes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvResDiscounts" />
+
+                <TextView
+                    android:id="@+id/tvResTaxes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="16dp"
+                    android:text="@string/title_taxes"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view13" />
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/chip_gray"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="2dp"
+                    android:text="@{safeUnbox(vm.taxCount)}"
+                    android:textColor="@color/whitePrimary"
+                    android:textSize="12sp"
+                    android:visibility='@{safeUnbox(vm.taxCount > 0) ? View.VISIBLE : View.GONE}'
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tvResTaxes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="2" />
+            </android.support.constraint.ConstraintLayout>
+
 
         </android.support.v7.widget.CardView>
 

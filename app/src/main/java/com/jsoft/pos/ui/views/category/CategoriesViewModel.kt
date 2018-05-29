@@ -1,5 +1,6 @@
 package com.jsoft.pos.ui.views.category
 
+import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Transformations
@@ -11,7 +12,7 @@ import com.jsoft.pos.data.model.CategorySearch
 import com.jsoft.pos.data.utils.SearchMutableLiveData
 import com.jsoft.pos.ui.views.SimpleListViewModel
 
-class CategoriesViewModel(app: FlexPosApplication) : AndroidViewModel(app), SimpleListViewModel<CategoryVO> {
+class CategoriesViewModel(application: Application) : AndroidViewModel(application), SimpleListViewModel<CategoryVO> {
 
     val searchModel = SearchMutableLiveData<CategorySearch>()
 
@@ -19,6 +20,11 @@ class CategoriesViewModel(app: FlexPosApplication) : AndroidViewModel(app), Simp
         dao.findCategories(SimpleSQLiteQuery(it.query, it.objects.toTypedArray()))
     }
 
-    private val dao: CategoryDao = app.db.categoryDao()
+    private val dao: CategoryDao
+
+    init {
+        val app = application as FlexPosApplication
+        dao = app.db.categoryDao()
+    }
 
 }

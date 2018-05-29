@@ -12,7 +12,9 @@ import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.databinding.ResourcesBinding
 import com.jsoft.pos.ui.views.category.CategoriesFragment
+import com.jsoft.pos.ui.views.discount.DiscountsFragment
 import com.jsoft.pos.ui.views.item.ItemsFragment
+import com.jsoft.pos.ui.views.tax.TaxesFragment
 import com.jsoft.pos.ui.views.unit.UnitsFragment
 import kotlinx.android.synthetic.main.fragment_resources.*
 
@@ -39,6 +41,8 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
         tv_res_products.setOnClickListener(this)
         tv_res_categories.setOnClickListener(this)
         tv_res_units.setOnClickListener(this)
+        tvResDiscounts.setOnClickListener(this)
+        tvResTaxes.setOnClickListener(this)
     }
 
     override fun onAttach(context: Context?) {
@@ -53,6 +57,8 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
             R.id.tv_res_products -> fragment = ItemsFragment.INSTANCE
             R.id.tv_res_categories -> fragment = CategoriesFragment.INSTANCE
             R.id.tv_res_units -> fragment = UnitsFragment.INSTANCE
+            R.id.tvResDiscounts -> fragment = DiscountsFragment.INSTANCE
+            R.id.tvResTaxes -> fragment = TaxesFragment.INSTANCE
         }
 
         fragmentManager?.beginTransaction()

@@ -1,5 +1,6 @@
 package com.jsoft.pos.data.entity
 
+import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
@@ -9,8 +10,8 @@ data class Discount(
         @PrimaryKey(autoGenerate = true)
         var id: Int = 0,
         var name: String = "",
-        var value: Double = 0.00,
-        var type: DiscountType = DiscountType.PERCENTAGE
+        var amount: Double = 0.00,
+        var percentage: Boolean = true
 ) : Checkable {
 
     @Ignore
@@ -21,18 +22,12 @@ data class Discount(
 
     val discountDesc: String
         get() {
-            val u = when (type) {
-                DiscountType.PERCENTAGE -> "%"
-                DiscountType.AMOUNT -> ""
-            }
-            return if ((value - value.toInt()) % 10 == 0.0) {
-                "${value.toInt()} $u"
+            val u = if (percentage) "%" else ""
+
+            return if ((amount - amount.toInt()) % 10 == 0.0) {
+                "${amount.toInt()} $u"
             } else {
-                "$value $u"
+                "$amount $u"
             }
         }
-}
-
-enum class DiscountType {
-    PERCENTAGE, AMOUNT
 }

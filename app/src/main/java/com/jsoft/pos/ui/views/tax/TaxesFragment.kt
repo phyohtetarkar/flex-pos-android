@@ -1,6 +1,8 @@
 package com.jsoft.pos.ui.views.tax
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
 import com.jsoft.pos.R
@@ -38,11 +40,19 @@ class TaxesFragment : SimpleListFragment<Tax>() {
         get() = viewModel
 
     override fun onItemTouch(position: Int) {
-
+        showEdit(adapter.getItemAt(position).id)
     }
 
     override fun showEdit(id: Any) {
+        val i = Intent(context, EditTaxActivity::class.java)
+        i.putExtra("id", id as Int)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //startActivity(i, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
+            startActivity(i)
+        } else {
+            startActivity(i)
+        }
     }
 
     companion object {

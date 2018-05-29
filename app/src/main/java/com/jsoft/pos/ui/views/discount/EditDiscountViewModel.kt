@@ -1,5 +1,6 @@
 package com.jsoft.pos.ui.views.discount
 
+import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -9,11 +10,11 @@ import com.jsoft.pos.data.entity.Discount
 import com.jsoft.pos.data.model.DiscountDao
 import com.jsoft.pos.data.utils.DaoWorkerAsync
 
-class EditDiscountViewModel(app: FlexPosApplication) : AndroidViewModel(app) {
+class EditDiscountViewModel(application: Application) : AndroidViewModel(application) {
 
     val discountInput = MutableLiveData<Int>()
 
-    val tax: LiveData<Discount> = Transformations.switchMap(discountInput) {
+    val discount: LiveData<Discount> = Transformations.switchMap(discountInput) {
         if (it > 0) {
             return@switchMap dao.findById(it)
         }
@@ -24,15 +25,26 @@ class EditDiscountViewModel(app: FlexPosApplication) : AndroidViewModel(app) {
         return@switchMap data
     }
 
-    private val dao: DiscountDao = app.db.discountDao()
+    private val dao: DiscountDao
+
+    init {
+        val app = application as FlexPosApplication
+        dao = app.db.discountDao()
+    }
 
     fun save() {
-        tax.value?.apply {
+        discount.value?.apply {
             DaoWorkerAsync<Discount>({
                 dao.save(it)
             }, {
 
             }).execute(this)
+        }
+    }
+
+    fun updateDiscountMode(isPercent: Boolean) {
+        discount.value?.apply {
+            percentage = isPercent
         }
     }
 

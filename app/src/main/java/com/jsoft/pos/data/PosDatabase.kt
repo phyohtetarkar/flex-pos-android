@@ -19,7 +19,7 @@ import java.util.*
     Unit::class,
     Sale::class,
     SaleItem::class])
-@TypeConverters(DateConverter::class, DiscountTypeConverter::class)
+@TypeConverters(DateConverter::class)
 abstract class PosDatabase : RoomDatabase() {
 
     abstract fun unitDao(): UnitDao
@@ -50,20 +50,6 @@ class DateConverter {
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time
-    }
-
-}
-
-class DiscountTypeConverter {
-
-    @TypeConverter
-    fun fromOrdinal(ordinal: Int): DiscountType {
-        return DiscountType.values()[ordinal]
-    }
-
-    @TypeConverter
-    fun toOrdinal(type: DiscountType): Int {
-        return type.ordinal
     }
 
 }

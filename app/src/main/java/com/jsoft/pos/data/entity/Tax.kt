@@ -9,7 +9,7 @@ data class Tax(
         @PrimaryKey(autoGenerate = true)
         var id: Int = 0,
         var name: String = "",
-        var value: Double = 0.0,
+        var amount: Double = 0.0,
         var included: Boolean = true
 ) : Checkable {
 
@@ -21,10 +21,10 @@ data class Tax(
 
     val taxDesc: String
         get() {
-            return if ((value - value.toInt()) % 10 == 0.0) {
-                "${value.toInt()} %"
+            return if ((amount - amount.toInt()) % 10 == 0.0) {
+                "${amount.toInt()} %"
             } else {
-                "$value %"
+                "$amount %"
             }
         }
 }

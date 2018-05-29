@@ -7,6 +7,9 @@
     <string name="title_units">ယူနစ်များ</string>
     <string name="title_Resources">Resources</string>
 
+    <string name="title_taxes">အခွန်နှုန်းများ</string>
+    <string name="title_discounts">ရှော့စျေးများ</string>
+
     <string name="app_name">Flex POS</string>
     <string name="save">သိမ်းမည်</string>
     <string name="ok">လုပ်မည်</string>
@@ -45,6 +48,7 @@
     <string name="add_new">အသစ်</string>
 
     <string name="price">စျေးနှုန်း</string>
+    <string name="basic_info">အခြေခံစာရင်း</string>
+    <string name="extra">အခြား</string>
 
-    <string name="taxes">အခွန်</string>
 </resources>
