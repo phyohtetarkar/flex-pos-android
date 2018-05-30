@@ -36,6 +36,7 @@ class EditCategoryActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
         val handler: KConsumer2<View, Category> = object : KConsumer2<View, Category> {
 

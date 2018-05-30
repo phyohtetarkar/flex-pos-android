@@ -31,7 +31,13 @@ data class Item(
         var unitId: Int? = null,
         @ColumnInfo(name = "category_id")
         var categoryId: Int? = null
-) : BaseObservable() {
+) : BaseObservable(), Checkable {
+
+    @Ignore
+    override var _name: String = name
+
+    @Ignore
+    override var _checked: Boolean = true
 
     @Bindable
     @Ignore
@@ -78,4 +84,17 @@ data class ItemVO(
                 "$amount $unit"
             }
         }
+}
+
+data class ItemJoinVO(
+        var itemId: Long,
+        var name: String,
+        private var joinedId: Int?
+): Checkable {
+
+    @Ignore
+    override var _name: String = name
+
+    @Ignore
+    override var _checked: Boolean = (joinedId != null)
 }

@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
+import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.databinding.EditTaxBinding
 
@@ -26,6 +27,7 @@ class EditTaxActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
 
         viewModel.apply {
@@ -41,6 +43,20 @@ class EditTaxActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_save, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            R.id.action_save -> {
+                viewModel.save()
+                onBackPressed()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

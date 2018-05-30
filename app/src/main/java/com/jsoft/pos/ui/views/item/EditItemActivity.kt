@@ -31,6 +31,7 @@ class EditItemActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
         edChooseCategory.onTouchDelegate = { showSelectDialog(DialogCategories())}
         edChooseUnit.onTouchDelegate = { showSelectDialog(DialogUnits()) }

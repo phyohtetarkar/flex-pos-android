@@ -4,7 +4,7 @@ import android.databinding.ViewDataBinding
 import android.view.View
 import android.view.ViewGroup
 
-abstract class SimpleViewAdapter<VH: SimpleViewAdapter.SimpleViewHolder>(private val parent: ViewGroup) {
+abstract class CustomViewAdapter<VH: CustomViewAdapter.SimpleViewHolder>(private val parent: ViewGroup) {
 
     protected abstract fun onCreateView(parent: ViewGroup): VH
     protected abstract fun onBindView(holder: VH, position: Int)

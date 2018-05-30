@@ -23,16 +23,17 @@
             android:padding="16dp"
             android:text="@{obj._name}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/switchCompat"
+            app:layout_constraintEnd_toStartOf="@+id/check"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Name" />
 
-        <Switch
-            android:id="@+id/switchCompat"
+        <CheckBox
+            android:id="@+id/check"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:padding="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:checked="@={obj._checked, default=true}"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/simple_list_item"
