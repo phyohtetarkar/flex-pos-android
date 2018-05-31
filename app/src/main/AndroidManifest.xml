@@ -22,6 +22,7 @@
         <activity android:name=".ui.views.item.EditItemActivity" />
         <activity android:name=".ui.views.tax.EditTaxActivity" />
         <activity android:name=".ui.views.discount.EditDiscountActivity" />
+        <activity android:name=".ui.views.tax.AssignItemTaxActivity" />
     </application>
 
 </manifest>

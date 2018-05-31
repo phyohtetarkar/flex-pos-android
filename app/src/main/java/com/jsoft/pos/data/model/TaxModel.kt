@@ -13,9 +13,6 @@ abstract class TaxDao : BaseDao<Tax> {
     @Query("SELECT * FROM tax")
     abstract fun findAllTaxes(): LiveData<List<Tax>>
 
-    @Query("SELECT i.id as itemId, i.name, it.id as joinedId FROM item i LEFT JOIN item_tax it ON it.item_id = i.id ")
-    abstract fun findItemTaxAssociations(): LiveData<List<ItemJoinVO>>
-
     @Query("SELECT * FROM tax WHERE id IN (SELECT tax_id FROM item_tax WHERE item_id = :itemId)")
     abstract fun findByItemSync(itemId: Long): List<Tax>
 

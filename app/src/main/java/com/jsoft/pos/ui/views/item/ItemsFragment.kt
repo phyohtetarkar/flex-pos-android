@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.ItemVO
-import com.jsoft.pos.data.model.ItemSearch
+import com.jsoft.pos.data.model.ItemVOSearch
 import com.jsoft.pos.ui.views.AbstractListFragment
 import com.jsoft.pos.ui.views.PagedListViewModel
 import com.jsoft.pos.ui.views.SimplePagedListAdapter
@@ -53,7 +53,7 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.searchModel.value = ItemSearch()
+        viewModel.searchModel.value = ItemVOSearch()
     }
 
     override fun onAttach(context: Context?) {

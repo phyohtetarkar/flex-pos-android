@@ -50,13 +50,14 @@ open class SimpleListAdapter<T>(DIFF_CALLBACK: DiffUtil.ItemCallback<T>) : ListA
         return super.getItem(position)
     }
 
-    fun checkAll() {
+    fun toggleCheck(isChecked: Boolean) {
         for (i in 0..itemCount) {
             val t = getItemAt(i)
             if (t is Checkable) {
-                t._checked = true
+                t._checked = isChecked
             }
         }
+        notifyDataSetChanged()
     }
 
     fun getCheckedItems(): MutableList<ItemJoinVO> {

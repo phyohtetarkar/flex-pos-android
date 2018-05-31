@@ -9,15 +9,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/checkableListTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/choose"
+            android:layout_weight="1"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"/>
+
+        <CheckBox
+            android:id="@+id/checkboxAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -32,7 +40,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/checkableListRecyclerView"
+            android:id="@+id/recyclerViewCheckableList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/layout_checkable_item" />
