@@ -8,9 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jsoft.pos.BR
 import com.jsoft.pos.R
-import com.jsoft.pos.data.entity.Category
-import com.jsoft.pos.data.entity.Discount
-import com.jsoft.pos.data.entity.Tax
+import com.jsoft.pos.data.entity.*
 import com.jsoft.pos.data.entity.Unit
 
 open class SimpleListAdapter<T>(DIFF_CALLBACK: DiffUtil.ItemCallback<T>) : ListAdapter<T, BindingViewHolder>(DIFF_CALLBACK) {
@@ -50,6 +48,27 @@ open class SimpleListAdapter<T>(DIFF_CALLBACK: DiffUtil.ItemCallback<T>) : ListA
 
     fun getItemAt(position: Int): T {
         return super.getItem(position)
+    }
+
+    fun checkAll() {
+        for (i in 0..itemCount) {
+            val t = getItemAt(i)
+            if (t is Checkable) {
+                t._checked = true
+            }
+        }
+    }
+
+    fun getCheckedItems(): MutableList<ItemJoinVO> {
+        val list = mutableListOf<ItemJoinVO>()
+        for (i in 0..itemCount) {
+            val t = getItemAt(i)
+            if (t is ItemJoinVO && t._checked) {
+                list.add(t)
+            }
+        }
+
+        return list
     }
 
 }

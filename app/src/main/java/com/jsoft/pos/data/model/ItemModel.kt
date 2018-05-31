@@ -129,62 +129,6 @@ class ItemSearch : BaseObservable(), Searchable {
 }
 
 @Dao
-interface ItemAssociationDao {
-
-    @Query("SELECT i.id as itemId, i.name, it.id as joinedId FROM item i LEFT JOIN item_tax it ON it.item_id = i.id ")
-    fun findItemTaxAssociations(): LiveData<List<ItemJoinVO>>
-
-    @Query("SELECT i.id as itemId, i.name, it.id as joinedId FROM item i LEFT JOIN item_discount it ON it.item_id = i.id ")
-    fun findItemDiscountAssociations(): LiveData<List<ItemJoinVO>>
-
-    @Query("SELECT * FROM item_tax WHERE item_id = :itemId AND tax_id = :taxId LIMIT 1")
-    fun findItemTaxSync(itemId: Long, taxId: Int): ItemTax?
-
-    @Query("SELECT * FROM item_discount WHERE item_id = :itemId AND discount_id = :discountId LIMIT 1")
-    fun findItemDiscountSync(itemId: Long, discountId: Int): ItemDiscount?
-
-    @Insert
-    fun saveItemTax(itemTax: ItemTax)
-
-    @Insert
-    fun saveItemDiscount(itemDiscount: ItemDiscount)
-
-    @Delete
-    fun deleteItemTax(itemTax: ItemTax)
-
-    @Delete
-    fun deleteItemDiscount(itemDiscount: ItemDiscount)
-
-    @Transaction
-    open fun assignTax(tax: Tax, items: MutableList<ItemJoinVO>) {
-        items.forEach {
-            if (it._checked) {
-                if (findItemTaxSync(it.itemId, tax.id) == null) {
-                    saveItemTax(ItemTax(itemId = it.itemId, taxId = tax.id))
-                }
-            } else {
-                findItemTaxSync(it.itemId, tax.id)?.also { deleteItemTax(it) }
-            }
-
-        }
-    }
-
-    @Transaction
-    open fun assignDiscount(discount: Discount, items: MutableList<ItemJoinVO>) {
-        items.forEach {
-            if (it._checked) {
-                if (findItemDiscountSync(it.itemId, discount.id) == null) {
-                    saveItemDiscount(ItemDiscount(itemId = it.itemId, discountId = discount.id))
-                }
-            } else {
-                findItemDiscountSync(it.itemId, discount.id)?.also { deleteItemDiscount(it) }
-            }
-
-        }
-    }
-}
-
-@Dao
 abstract class ItemDao : BaseDao<Item> {
 
     @RawQuery(observedEntities = [Item::class, Category::class, Unit::class])

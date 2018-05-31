@@ -35,7 +35,6 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:checked="@={obj._checked, default=true}"
-            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/simple_list_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/simple_list_item" />

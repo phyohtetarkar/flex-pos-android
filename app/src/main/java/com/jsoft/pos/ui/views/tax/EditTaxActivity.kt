@@ -29,7 +29,6 @@ class EditTaxActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
-
         viewModel.apply {
             if (tax.value != null) {
                 return
