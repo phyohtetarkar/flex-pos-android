@@ -3,6 +3,7 @@
     android:color="@color/darkLighter">
     <item>
         <selector>
+
             <item android:state_enabled="false">
                 <shape android:shape="rectangle">
                     <corners android:radius="3dp"/>
@@ -15,11 +16,13 @@
             <item>
                 <shape android:shape="rectangle">
                     <corners android:radius="3dp"/>
-                    <stroke android:color="@color/colorAccent"
+                    <stroke android:color="@color/colorImportant"
                         android:width="1dp"/>
                     <solid android:color="@color/whitePrimary"/>
                 </shape>
             </item>
+
         </selector>
+
     </item>
 </ripple>

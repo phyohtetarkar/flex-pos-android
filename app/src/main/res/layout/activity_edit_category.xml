@@ -5,17 +5,17 @@
 
     <data class="EditCategoryBinding">
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <import type="com.jsoft.pos.data.entity.Category" />
 
         <variable
             name="vm"
-            type="com.jsoft.pos.ui.views.category.EditCategoryViewModel"/>
+            type="com.jsoft.pos.ui.views.category.EditCategoryViewModel" />
 
         <variable
             name="colorSelectHandler"
-            type="com.jsoft.pos.func.KConsumer2&lt;View, Category&gt;"/>
+            type="com.jsoft.pos.func.KConsumer2&lt;View, Category&gt;" />
 
         <variable
             name="isValidCategoryName"
@@ -26,7 +26,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBack">
+        android:background="@color/whitePrimary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,195 +34,202 @@
             android:clipToPadding="false"
             android:orientation="vertical">
 
-                <android.support.design.widget.TextInputLayout
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/whitePrimary"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:checkResult="@{safeUnbox(isValidCategoryName)}"
+                app:errorMessage='@{@string/error_empty_input_format("Category name")}'
+                app:errorTextAppearance="@style/ErrorText">
+
+                <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:background="@color/whitePrimary"
-                    app:checkResult="@{safeUnbox(isValidCategoryName)}"
-                    app:errorMessage='@{@string/error_empty_input_format("Category name")}'
-                    app:errorTextAppearance="@style/ErrorText">
+                    android:hint="@string/hint_category_name"
+                    android:text="@={vm.category.name}"
+                    app:checkResult="@{safeUnbox(isValidCategoryName)}" />
 
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_category_name"
-                        android:text="@={vm.category.name}"
-                        app:checkResult="@{safeUnbox(isValidCategoryName)}" />
+            </android.support.design.widget.TextInputLayout>
 
-                </android.support.design.widget.TextInputLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/whitePrimary"
+                android:orientation="vertical">
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    style="@style/HeaderText.Colored"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/whitePrimary"
-                    android:layout_marginTop="8dp"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/select_color" />
 
-                    <TextView
-                        style="@style/HeaderText.Colored"
-                        android:layout_width="wrap_content"
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayoutColorGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.jsoft.pos.ui.custom.SquareRadioButton
+                        android:id="@+id/radioButton"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
-                        android:text="@string/select_color" />
+                        android:background="@drawable/layer_gray_color_state"
+                        android:checked="@{vm.category.color}"
+                        android:contentDescription="@color/colorGray"
+                        android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                        app:buttonTint="@android:color/transparent"
+                        app:layout_constraintBottom_toTopOf="@+id/radioButton5"
+                        app:layout_constraintEnd_toStartOf="@+id/radioButton2"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:checked="true"
+                        tools:ignore="HardcodedText" />
 
-                    <View
-                        android:id="@+id/view12"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/darkDivider" />
+                    <com.jsoft.pos.ui.custom.SquareRadioButton
+                        android:id="@+id/radioButton2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/layer_red_color_state"
+                        android:checked="@{vm.category.color}"
+                        android:contentDescription="@color/colorRed"
+                        android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                        app:buttonTint="@android:color/transparent"
+                        app:layout_constraintEnd_toStartOf="@+id/radioButton3"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/radioButton"
+                        app:layout_constraintTop_toTopOf="@+id/radioButton"
+                        tools:ignore="HardcodedText" />
 
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/constraintLayoutColorGroup"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <com.jsoft.pos.ui.custom.SquareRadioButton
+                        android:id="@+id/radioButton3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/layer_pink_color_state"
+                        android:checked="@{vm.category.color}"
+                        android:contentDescription="@color/colorPink"
+                        android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                        app:buttonTint="@android:color/transparent"
+                        app:layout_constraintEnd_toStartOf="@+id/radioButton4"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/radioButton2"
+                        app:layout_constraintTop_toTopOf="@+id/radioButton2"
+                        tools:ignore="HardcodedText" />
 
-                        <com.jsoft.pos.ui.custom.SquareRadioButton
-                            android:id="@+id/radioButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/layer_gray_color_state"
-                            android:contentDescription="@color/colorGray"
-                            android:checked="@{vm.category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
-                            app:buttonTint="@android:color/transparent"
-                            app:layout_constraintBottom_toTopOf="@+id/radioButton5"
-                            app:layout_constraintEnd_toStartOf="@+id/radioButton2"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="HardcodedText"
-                            tools:checked="true"/>
+                    <com.jsoft.pos.ui.custom.SquareRadioButton
+                        android:id="@+id/radioButton4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/layer_purple_color_state"
+                        android:checked="@{vm.category.color}"
+                        android:contentDescription="@color/colorPurple"
+                        android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                        app:buttonTint="@android:color/transparent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/radioButton3"
+                        app:layout_constraintTop_toTopOf="@+id/radioButton3"
+                        tools:ignore="HardcodedText" />
 
-                        <com.jsoft.pos.ui.custom.SquareRadioButton
-                            android:id="@+id/radioButton2"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            android:background="@drawable/layer_red_color_state"
-                            android:contentDescription="@color/colorRed"
-                            android:checked="@{vm.category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
-                            app:buttonTint="@android:color/transparent"
-                            app:layout_constraintEnd_toStartOf="@+id/radioButton3"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/radioButton"
-                            app:layout_constraintTop_toTopOf="@+id/radioButton"
-                            tools:ignore="HardcodedText" />
+                    <com.jsoft.pos.ui.custom.SquareRadioButton
+                        android:id="@+id/radioButton5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/layer_deep_purple_color_state"
+                        android:checked="@{vm.category.color}"
+                        android:contentDescription="@color/colorDeepPurple"
+                        android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                        app:buttonTint="@android:color/transparent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/radioButton6"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/radioButton"
+                        app:layout_constraintTop_toBottomOf="@+id/radioButton"
+                        tools:ignore="HardcodedText" />
 
-                        <com.jsoft.pos.ui.custom.SquareRadioButton
-                            android:id="@+id/radioButton3"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            android:background="@drawable/layer_pink_color_state"
-                            android:contentDescription="@color/colorPink"
-                            android:checked="@{vm.category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
-                            app:buttonTint="@android:color/transparent"
-                            app:layout_constraintEnd_toStartOf="@+id/radioButton4"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/radioButton2"
-                            app:layout_constraintTop_toTopOf="@+id/radioButton2"
-                            tools:ignore="HardcodedText" />
+                    <com.jsoft.pos.ui.custom.SquareRadioButton
+                        android:id="@+id/radioButton6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/layer_blue_color_state"
+                        android:checked="@{vm.category.color}"
+                        android:contentDescription="@color/colorBlue"
+                        android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                        app:buttonTint="@android:color/transparent"
+                        app:layout_constraintEnd_toStartOf="@+id/radioButton7"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/radioButton5"
+                        app:layout_constraintTop_toTopOf="@+id/radioButton5"
+                        tools:ignore="HardcodedText" />
 
-                        <com.jsoft.pos.ui.custom.SquareRadioButton
-                            android:id="@+id/radioButton4"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            android:background="@drawable/layer_purple_color_state"
-                            android:contentDescription="@color/colorPurple"
-                            android:checked="@{vm.category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
-                            app:buttonTint="@android:color/transparent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/radioButton3"
-                            app:layout_constraintTop_toTopOf="@+id/radioButton3"
-                            tools:ignore="HardcodedText" />
+                    <com.jsoft.pos.ui.custom.SquareRadioButton
+                        android:id="@+id/radioButton7"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/layer_green_color_state"
+                        android:checked="@{vm.category.color}"
+                        android:contentDescription="@color/colorGreen"
+                        android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                        app:buttonTint="@android:color/transparent"
+                        app:layout_constraintEnd_toStartOf="@+id/radioButton8"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/radioButton6"
+                        app:layout_constraintTop_toTopOf="@+id/radioButton6"
+                        tools:ignore="HardcodedText" />
 
-                        <com.jsoft.pos.ui.custom.SquareRadioButton
-                            android:id="@+id/radioButton5"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/layer_deep_purple_color_state"
-                            android:contentDescription="@color/colorDeepPurple"
-                            android:checked="@{vm.category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
-                            app:buttonTint="@android:color/transparent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/radioButton6"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="@+id/radioButton"
-                            app:layout_constraintTop_toBottomOf="@+id/radioButton"
-                            tools:ignore="HardcodedText" />
+                    <com.jsoft.pos.ui.custom.SquareRadioButton
+                        android:id="@+id/radioButton8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/layer_lime_color_state"
+                        android:checked="@{vm.category.color}"
+                        android:contentDescription="@color/colorLime"
+                        android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                        app:buttonTint="@android:color/transparent"
+                        app:layout_constraintEnd_toEndOf="@+id/radioButton4"
+                        app:layout_constraintStart_toEndOf="@+id/radioButton7"
+                        app:layout_constraintTop_toTopOf="@+id/radioButton7"
+                        tools:ignore="HardcodedText" />
 
-                        <com.jsoft.pos.ui.custom.SquareRadioButton
-                            android:id="@+id/radioButton6"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            android:background="@drawable/layer_blue_color_state"
-                            android:contentDescription="@color/colorBlue"
-                            android:checked="@{vm.category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
-                            app:buttonTint="@android:color/transparent"
-                            app:layout_constraintEnd_toStartOf="@+id/radioButton7"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/radioButton5"
-                            app:layout_constraintTop_toTopOf="@+id/radioButton5"
-                            tools:ignore="HardcodedText" />
+                </android.support.constraint.ConstraintLayout>
 
-                        <com.jsoft.pos.ui.custom.SquareRadioButton
-                            android:id="@+id/radioButton7"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            android:background="@drawable/layer_green_color_state"
-                            android:contentDescription="@color/colorGreen"
-                            android:checked="@{vm.category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
-                            app:buttonTint="@android:color/transparent"
-                            app:layout_constraintEnd_toStartOf="@+id/radioButton8"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/radioButton6"
-                            app:layout_constraintTop_toTopOf="@+id/radioButton6"
-                            tools:ignore="HardcodedText" />
+            </LinearLayout>
 
-                        <com.jsoft.pos.ui.custom.SquareRadioButton
-                            android:id="@+id/radioButton8"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/layer_lime_color_state"
-                            android:contentDescription="@color/colorLime"
-                            android:checked="@{vm.category.color}"
-                            android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
-                            app:buttonTint="@android:color/transparent"
-                            app:layout_constraintEnd_toEndOf="@+id/radioButton4"
-                            app:layout_constraintStart_toEndOf="@+id/radioButton7"
-                            app:layout_constraintTop_toTopOf="@+id/radioButton7"
-                            tools:ignore="HardcodedText" />
-
-                    </android.support.constraint.ConstraintLayout>
-
-                </LinearLayout>
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:visibility="@{safeUnbox(vm.category.id > 0) ? View.VISIBLE : View.INVISIBLE}"
+                android:background="@drawable/selectable_important_bordered_background"
+                android:text="Delete"
+                android:textColor="@color/colorImportant"
+                tools:text="Delete" />
 
         </LinearLayout>
 

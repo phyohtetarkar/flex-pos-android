@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data class="EditTaxBinding">
+        <import type="android.view.View"/>
         <variable
             name="vm"
             type="com.jsoft.pos.ui.views.tax.EditTaxViewModel"/>
@@ -62,12 +63,43 @@
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="24dp"
-            android:text="Included in item price"
             android:checked="@={vm.tax.included, default=true}"
+            android:text="Included in item price"
+            app:layout_constraintBottom_toTopOf="@+id/button4"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/textInputLayout9"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout9"
             tools:checked="true" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/selectable_accent_bordered_background"
+            android:textColor="@color/accent_text_color_state"
+            app:layout_constraintBottom_toTopOf="@+id/button5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch1"
+            tools:text="Assign Item" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:visibility="@{safeUnbox(vm.tax.id > 0) ? View.VISIBLE : View.INVISIBLE}"
+            android:background="@drawable/selectable_important_bordered_background"
+            android:textColor="@color/colorImportant"
+            app:layout_constraintEnd_toEndOf="@+id/button4"
+            app:layout_constraintStart_toStartOf="@+id/button4"
+            app:layout_constraintTop_toBottomOf="@+id/button4"
+            tools:text="Delete" />
     </android.support.constraint.ConstraintLayout>
 </layout>
