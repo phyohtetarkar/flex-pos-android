@@ -3,7 +3,6 @@ package com.jsoft.pos.data.model
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import com.jsoft.pos.data.BaseDao
-import com.jsoft.pos.data.entity.ItemJoinVO
 import com.jsoft.pos.data.entity.ItemTax
 import com.jsoft.pos.data.entity.Tax
 
@@ -44,7 +43,7 @@ abstract class TaxDao : BaseDao<Tax> {
     }
 
     @Transaction
-    open fun save(tax: Tax, items: MutableList<ItemJoinVO>?) {
+    open fun save(tax: Tax, items: Collection<Long>?) {
         var id = tax.id
         if (tax.id > 0) {
             update(tax)
@@ -57,9 +56,9 @@ abstract class TaxDao : BaseDao<Tax> {
     }
 
     @Transaction
-    protected open fun assignTax(tax: Tax, items: MutableList<ItemJoinVO>) {
+    protected open fun assignTax(tax: Tax, items: Collection<Long>) {
         deleteItemTaxes(findItemTaxesSync(tax.id))
-        val itemTaxes = items.map { ItemTax(itemId = it.itemId, taxId = tax.id) }
+        val itemTaxes = items.map { ItemTax(itemId = it, taxId = tax.id) }
         saveItemTaxes(itemTaxes)
     }
 

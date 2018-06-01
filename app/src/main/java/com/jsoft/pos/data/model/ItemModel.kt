@@ -1,7 +1,11 @@
 package com.jsoft.pos.data.model
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.DataSource
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
+import android.arch.persistence.db.SimpleSQLiteQuery
 import android.arch.persistence.db.SupportSQLiteQuery
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
@@ -10,38 +14,104 @@ import android.arch.persistence.room.Transaction
 import android.databinding.BaseObservable
 import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.Searchable
-import com.jsoft.pos.data.entity.Category
-import com.jsoft.pos.data.entity.Item
-import com.jsoft.pos.data.entity.ItemVO
+import com.jsoft.pos.data.entity.*
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.utils.DaoWorkerAsync
 
-class ItemService(
+class ItemRepository(
         private val dao: ItemDao,
-        private val unitDao: UnitDao,
-        private val categoryDao: CategoryDao,
-        private val taxDao: TaxDao,
-        private val discountDao: DiscountDao
+        private val unitDao: UnitDao? = null,
+        private val categoryDao: CategoryDao? = null
 ) {
 
-    fun getItem(id: Long): Item {
-        return if (id > 0) {
-            val item = dao.findByIdSync(id)
-            item.categoryId?.apply {
-                item.category = categoryDao.findByIdSync(this)
+    fun findItemsCheckedWithTax(search: ItemSearch, taxId: Int): LiveData<List<Item>> {
+        val liveItems = MutableLiveData<List<Item>>()
+
+        DaoWorkerAsync<Int>({
+            val items = dao.findItems(SimpleSQLiteQuery(search.name, search.objects.toTypedArray()))
+            val itemsFiltered: List<Item>? = taxId.let {
+                if (it > 0) {
+                    dao.findItemTaxAssociations(it)
+                } else {
+                    null
+                }
+
             }
 
-            item.unitId?.apply {
-                item.unit = unitDao.findByIdSync(this)
+            itemsFiltered?.apply {
+                items.forEach {
+                    if (contains(it)) {
+                        it._checked = true
+                    }
+                }
             }
 
-            item.taxes = taxDao.findByItemSync(id).toMutableList()
-            item.discounts = discountDao.findByItemSync(id).toMutableList()
+            liveItems.postValue(items)
 
-            item
-        } else {
-            Item()
-        }
+        }, {
+
+        }).execute(taxId)
+
+        return liveItems
+    }
+
+    fun findItemsCheckedWithDiscount(search: ItemSearch, discountId: Int): LiveData<List<Item>> {
+        val liveItems = MutableLiveData<List<Item>>()
+
+        DaoWorkerAsync<Int>({
+            val items = dao.findItems(SimpleSQLiteQuery(search.name, search.objects.toTypedArray()))
+            val itemsFiltered: List<Item>? = discountId.let {
+                if (it > 0) {
+                    dao.findItemDiscountAssociations(discountId)
+                } else {
+                    null
+                }
+            }
+
+            itemsFiltered?.apply {
+                items.forEach {
+                    if (contains(it)) {
+                        it._checked = true
+                    }
+                }
+            }
+
+            liveItems.postValue(items)
+
+        }, {
+
+        }).execute(discountId)
+
+        return liveItems
+    }
+
+    fun findItemVOs(search: ItemVOSearch): LiveData<PagedList<ItemVO>> {
+        return LivePagedListBuilder(dao.findItemVOs(SimpleSQLiteQuery(search.query, search.objects.toTypedArray())), 20).build()
+    }
+
+    fun getItem(id: Long): LiveData<Item> {
+        val liveItem = MutableLiveData<Item>()
+
+        DaoWorkerAsync<Long>({
+            if (it > 0) {
+                val item = dao.findByIdSync(id)
+                item.categoryId?.apply {
+                    item.category = categoryDao?.findByIdSync(this)
+                }
+
+                item.unitId?.apply {
+                    item.unit = unitDao?.findByIdSync(this)
+                }
+
+                liveItem.postValue(item)
+            } else {
+                liveItem.postValue(Item())
+            }
+        }, {
+
+        }).execute(id)
+
+        return liveItem
     }
 
     fun save(item: Item?) {
@@ -67,9 +137,13 @@ class ItemService(
 
 }
 
-class ItemSearch : Searchable {
+class ItemSearch : BaseObservable(), Searchable {
 
     var name: String? = null
+        set(name) {
+            field = name
+            notifyChange()
+        }
 
     override val query: String
         get() {
@@ -159,20 +233,20 @@ class ItemVOSearch : BaseObservable(), Searchable {
 abstract class ItemDao : BaseDao<Item> {
 
     @RawQuery(observedEntities = [Item::class, Category::class, Unit::class])
-    abstract fun findItems(query: SupportSQLiteQuery): DataSource.Factory<Int, ItemVO>
+    abstract fun findItemVOs(query: SupportSQLiteQuery): DataSource.Factory<Int, ItemVO>
 
-    @RawQuery(observedEntities = [Item::class, Category::class, Unit::class])
-    abstract fun findItemsByName(query: SupportSQLiteQuery): LiveData<List<Item>>
+    @RawQuery
+    abstract fun findItems(query: SupportSQLiteQuery): List<Item>
 
     @Query("SELECT * FROM item i " +
             "INNER JOIN item_tax it ON it.item_id = i.id " +
             "WHERE it.tax_id = :taxId ")
-    abstract fun findItemTaxAssociations(taxId: Int): LiveData<List<Item>>
+    abstract fun findItemTaxAssociations(taxId: Int): List<Item>
 
     @Query("SELECT * FROM item i " +
             "INNER JOIN item_discount it ON it.discount_id = i.id " +
             "WHERE it.discount_id = :discountId ")
-    abstract fun findItemDiscountAssociations(discountId: Int): LiveData<List<Item>>
+    abstract fun findItemDiscountAssociations(discountId: Int): List<Item>
 
     @Query("SELECT * FROM item WHERE id = :id LIMIT 1")
     abstract fun findById(id: Long): LiveData<Item>
