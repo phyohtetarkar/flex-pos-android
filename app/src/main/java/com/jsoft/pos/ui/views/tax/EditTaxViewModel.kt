@@ -13,6 +13,7 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 class EditTaxViewModel(application: Application) : AndroidViewModel(application) {
 
     val taxInput = MutableLiveData<Int>()
+    var checkedItemIds: Collection<Long>? = null
 
     val tax: LiveData<Tax> = Transformations.switchMap(taxInput) {
         if (it > 0) {
@@ -35,7 +36,7 @@ class EditTaxViewModel(application: Application) : AndroidViewModel(application)
     fun save() {
         tax.value?.apply {
             DaoWorkerAsync<Tax>({
-                dao.save(it)
+                dao.save(it, checkedItemIds)
             }, {
 
             }).execute(this)

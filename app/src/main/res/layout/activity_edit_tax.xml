@@ -65,7 +65,7 @@
             android:layout_marginTop="24dp"
             android:checked="@={vm.tax.included, default=true}"
             android:text="Included in item price"
-            app:layout_constraintBottom_toTopOf="@+id/button4"
+            app:layout_constraintBottom_toTopOf="@+id/btnAssignTax"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/textInputLayout9"
@@ -73,7 +73,7 @@
             tools:checked="true" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btnAssignTax"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -82,7 +82,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/selectable_accent_bordered_background"
-            android:textColor="@color/accent_text_color_state"
+            android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toTopOf="@+id/button5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,9 +97,9 @@
             android:visibility="@{safeUnbox(vm.tax.id > 0) ? View.VISIBLE : View.INVISIBLE}"
             android:background="@drawable/selectable_important_bordered_background"
             android:textColor="@color/colorImportant"
-            app:layout_constraintEnd_toEndOf="@+id/button4"
-            app:layout_constraintStart_toStartOf="@+id/button4"
-            app:layout_constraintTop_toBottomOf="@+id/button4"
+            app:layout_constraintEnd_toEndOf="@+id/btnAssignTax"
+            app:layout_constraintStart_toStartOf="@+id/btnAssignTax"
+            app:layout_constraintTop_toBottomOf="@+id/btnAssignTax"
             tools:text="Delete" />
     </android.support.constraint.ConstraintLayout>
 </layout>
