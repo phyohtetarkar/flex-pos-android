@@ -10,13 +10,22 @@ import com.jsoft.pos.data.model.ItemRepository
 import com.jsoft.pos.data.model.ItemSearch
 import com.jsoft.pos.data.utils.SearchMutableLiveData
 
-class AssignItemTaxViewModel(application: Application) : AndroidViewModel(application) {
+class AssignItemViewModel(application: Application) : AndroidViewModel(application) {
 
     val search = SearchMutableLiveData<ItemSearch>()
-    var taxId = 0
+    var id = 0
+    lateinit var type: AssignItemActivity.AssignType
 
     val items: LiveData<List<Item>> = Transformations.switchMap(search) {
-        repository.findItemsCheckedWithTax(it, taxId)
+        when (type) {
+            AssignItemActivity.AssignType.TAX -> {
+                repository.findItemsCheckedWithTax(it, id)
+            }
+            AssignItemActivity.AssignType.DISCOUNT -> {
+                repository.findItemsCheckedWithDiscount(it, id)
+            }
+        }
+
     }
 
     private val repository: ItemRepository

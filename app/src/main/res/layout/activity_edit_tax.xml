@@ -81,6 +81,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
+            android:enabled="@{vm.tax.name.length > 0}"
             android:background="@drawable/selectable_accent_bordered_background"
             android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toTopOf="@+id/button5"

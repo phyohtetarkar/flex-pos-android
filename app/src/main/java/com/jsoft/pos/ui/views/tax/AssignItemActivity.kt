@@ -18,11 +18,16 @@ import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import kotlinx.android.synthetic.main.activity_checkable_list.*
 
-class AssignItemTaxActivity : AppCompatActivity() {
+class AssignItemActivity : AppCompatActivity() {
+
+    enum class AssignType {
+        TAX, DISCOUNT
+    }
 
     private var taxId: Int = 0
+    private lateinit var type: AssignType
 
-    private lateinit var viewModel: AssignItemTaxViewModel
+    private lateinit var viewModel: AssignItemViewModel
     private lateinit var adapter: SimpleListAdapter<Item>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +35,11 @@ class AssignItemTaxActivity : AppCompatActivity() {
         setContentView(R.layout.activity_checkable_list)
 
         taxId = intent.getIntExtra("id", 0)
+        type = intent.getSerializableExtra("type") as AssignType
 
-        viewModel = ViewModelProviders.of(this).get(AssignItemTaxViewModel::class.java)
-        viewModel.taxId = taxId
+        viewModel = ViewModelProviders.of(this).get(AssignItemViewModel::class.java)
+        viewModel.id = taxId
+        viewModel.type = type
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -48,9 +55,9 @@ class AssignItemTaxActivity : AppCompatActivity() {
         }, R.layout.layout_checkable_item)
 
         recyclerViewCheckableList.apply {
-            layoutManager = LinearLayoutManager(this@AssignItemTaxActivity)
+            layoutManager = LinearLayoutManager(this@AssignItemActivity)
             setHasFixedSize(true)
-            addItemDecoration(SimpleDividerItemDecoration(this@AssignItemTaxActivity, DividerItemDecoration.VERTICAL))
+            addItemDecoration(SimpleDividerItemDecoration(this@AssignItemActivity, DividerItemDecoration.VERTICAL))
 
         }
 

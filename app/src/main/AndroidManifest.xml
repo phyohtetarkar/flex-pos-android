@@ -9,10 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_pos"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme"
-        android:name=".FlexPosApplication">
+        android:name=".FlexPosApplication"
+        android:fullBackupContent="true">
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,7 +24,7 @@
         <activity android:name=".ui.views.item.EditItemActivity" />
         <activity android:name=".ui.views.tax.EditTaxActivity" />
         <activity android:name=".ui.views.discount.EditDiscountActivity" />
-        <activity android:name=".ui.views.tax.AssignItemTaxActivity" />
+        <activity android:name=".ui.views.tax.AssignItemActivity" />
     </application>
 
 </manifest>
