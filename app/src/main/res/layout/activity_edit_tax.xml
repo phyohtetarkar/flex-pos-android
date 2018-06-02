@@ -43,6 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_name"
+                    android:inputType="text"
                     android:text="@={vm.tax.name}" />
             </android.support.design.widget.TextInputLayout>
 
@@ -69,7 +70,6 @@
                 android:id="@+id/switch1"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
-                android:layout_marginLeft="4dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="24dp"
                 android:checked="@={vm.tax.included, default=true}"

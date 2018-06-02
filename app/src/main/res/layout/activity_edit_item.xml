@@ -58,11 +58,11 @@
                     android:layout_width="0dp"
                     android:layout_height="31dp"
                     android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="24dp"
                     android:checked="@={vm.item.available, default=true}"
                     android:text="@string/available_for_sale"
+                    style="@style/AppTextNormal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
@@ -105,7 +105,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_arrow_drop_dark"
-                        android:drawableRight="@drawable/ic_arrow_drop_dark"
                         android:hint="@string/hint_category"
                         android:inputType="none"
                         android:text="@{vm.item.category.name}"
@@ -127,7 +126,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_barcode"
-                        android:inputType="number|numberDecimal"
+                        android:inputType="number"
                         android:text="@={vm.item.barcode}" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -160,6 +159,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_amount"
+                        android:inputType="numberDecimal"
                         android:text="@={vm.item.amount}" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -208,6 +208,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textInputLayout4"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout1"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toTopOf="@+id/textInputLayout4">

@@ -90,4 +90,11 @@ public class BindingUtil {
         }
     }
 
+    @BindingAdapter({"checkResult"})
+    public static void errorCheck(EditText editText, boolean valid) {
+        if (!valid) {
+            editText.setHintTextColor(Color.parseColor("#D13638"));
+        }
+    }
+
 }

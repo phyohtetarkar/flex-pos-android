@@ -28,7 +28,6 @@
             style="@style/HeaderText.Normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:text='@{vm.unit.id > 0 ? "Edit Unit" : "Create Unit"}'
@@ -42,7 +41,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
             android:layout_marginTop="20dp"
             app:checkResult="@{safeUnbox(isValidUnitName)}"
             app:errorMessage='@{@string/error_empty_input_format("Unit name")}'
@@ -56,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_unit_name"
-                android:lines="1"
+                android:inputType="text"
                 android:text="@={vm.unit.name}"
                 app:checkResult="@{safeUnbox(isValidUnitName)}" />
 
@@ -69,7 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
             android:text="@string/save"
             android:textAllCaps="true"
@@ -84,7 +81,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:text="@string/cancel"
             android:textAllCaps="true"
             android:onClick="@{v -> delegate.onCancelClick()}"

@@ -8,6 +8,9 @@
     <string name="units">Units</string>
     <string name="resources">Resources</string>
 
+    <string name="taxes">Taxes</string>
+    <string name="discounts">Discounts</string>
+
     <string name="app_name">Flex POS</string>
     <string name="save">Save</string>
     <string name="ok">OK</string>
@@ -44,5 +47,9 @@
     <string name="add_new">Add new</string>
 
     <string name="price">Price</string>
-    <string name="taxes">Taxes</string>
+    <string name="basic_info">Basic Info</string>
+    <string name="extra">Other</string>
+
+    <string name="delete">Delete</string>
+    <string name="assign_items">Assign Items</string>
 </resources>
