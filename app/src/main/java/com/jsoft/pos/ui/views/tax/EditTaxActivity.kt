@@ -1,15 +1,22 @@
 package com.jsoft.pos.ui.views.tax
 
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.databinding.EditTaxBinding
+import kotlinx.android.synthetic.main.activity_edit_tax.*
 
 class EditTaxActivity : AppCompatActivity() {
+
+    private val ASSIGN_REQ = 1
 
     private var taxId = 0
 
@@ -21,6 +28,7 @@ class EditTaxActivity : AppCompatActivity() {
 
         taxId = intent.getIntExtra("id", 0)
         viewModel = ViewModelProviders.of(this).get(EditTaxViewModel::class.java)
+        viewModel.assignBtnEnable.value = taxId > 0
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_tax)
         binding.setLifecycleOwner(this)
@@ -35,6 +43,27 @@ class EditTaxActivity : AppCompatActivity() {
             }
 
             taxInput.value = taxId
+        }
+
+        edTaxName.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.assignBtnEnable.value = !s.isNullOrBlank()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        })
+
+        btnAssignTax.setOnClickListener {
+            val intent = Intent(this, AssignItemActivity::class.java)
+            intent.putExtra("id", taxId)
+            intent.putExtra("type", AssignItemActivity.AssignType.TAX)
+            intent.putExtra("checked", viewModel.checkedItemIds?.toLongArray())
+            startActivityForResult(intent, ASSIGN_REQ)
         }
 
     }
@@ -56,6 +85,20 @@ class EditTaxActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            ASSIGN_REQ -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    data?.getLongArrayExtra("items")?.apply {
+                        viewModel.checkedItemIds = asList()
+                    }
+                }
+            }
+        }
     }
 
 }

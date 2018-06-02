@@ -37,6 +37,8 @@ class UnitsViewModel(application: Application) : AndroidViewModel(application), 
             dao.delete(it)
         }, {
 
+        }, {
+
         }).execute(unit)
     }
 

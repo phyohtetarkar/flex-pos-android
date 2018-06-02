@@ -12,6 +12,7 @@ import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.CategoryDao
 import com.jsoft.pos.data.model.ItemRepository
 import com.jsoft.pos.data.model.UnitDao
+import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class EditItemViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -20,7 +21,13 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val itemInput = MutableLiveData<Long>()
 
     val item: LiveData<Item> = Transformations.switchMap(itemInput) {
-        repository.getItem(it)
+        val liveItem = MutableLiveData<Item>()
+
+        DaoWorkerAsync<Long>({
+            liveItem.postValue(repository.getItem(it))
+        },{},{}).execute(it)
+
+        return@switchMap liveItem
     }
 
     val categories: LiveData<List<Category>> by lazy { categoryDao.findAllCategories() }
@@ -38,11 +45,23 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun save() {
-        repository.save(item.value)
+        DaoWorkerAsync<Item>({
+            repository.save(it)
+        },{
+
+        },{
+
+        }).execute(item.value)
     }
 
     fun delete() {
-        repository.delete(item.value)
+        DaoWorkerAsync<Item>({
+            repository.delete(it)
+        },{
+
+        },{
+
+        }).execute(item.value)
     }
 
 }

@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:padding="16dp"
-                    android:text="@string/title_items"
+                    android:text="@string/items"
                     app:layout_constraintBottom_toTopOf="@+id/view4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:padding="16dp"
-                    android:text="@string/title_categories"
+                    android:text="@string/categories"
                     app:layout_constraintBottom_toTopOf="@+id/tv_res_units"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:padding="16dp"
-                    android:text="@string/title_units"
+                    android:text="@string/units"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +116,7 @@
                     android:text="@{safeUnbox(vm.itemCount)}"
                     android:textColor="@color/whitePrimary"
                     android:textSize="12sp"
-                    android:visibility='@{safeUnbox(vm.itemCount > 0) ? View.VISIBLE : View.GONE}'
+                    android:visibility='@{safeUnbox(vm.itemCount) > 0 ? View.VISIBLE : View.GONE}'
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_res_products"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="10" />
@@ -135,7 +135,7 @@
                     android:text="@{safeUnbox(vm.categoryCount)}"
                     android:textColor="@color/whitePrimary"
                     android:textSize="12sp"
-                    android:visibility='@{safeUnbox(vm.categoryCount > 0) ? View.VISIBLE : View.GONE}'
+                    android:visibility='@{safeUnbox(vm.categoryCount) > 0 ? View.VISIBLE : View.GONE}'
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_res_categories"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="5" />
@@ -154,7 +154,7 @@
                     android:text="@{safeUnbox(vm.unitCount)}"
                     android:textColor="@color/whitePrimary"
                     android:textSize="12sp"
-                    android:visibility='@{safeUnbox(vm.unitCount > 0) ? View.VISIBLE : View.GONE}'
+                    android:visibility='@{safeUnbox(vm.unitCount) > 0 ? View.VISIBLE : View.GONE}'
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_res_units"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="8" />
@@ -196,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:padding="16dp"
-                    android:text="@string/title_discounts"
+                    android:text="@string/discounts"
                     app:layout_constraintBottom_toTopOf="@+id/view13"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -217,7 +217,7 @@
                     android:text="@{safeUnbox(vm.discountCount)}"
                     android:textColor="@color/whitePrimary"
                     android:textSize="12sp"
-                    android:visibility='@{safeUnbox(vm.discountCount > 0) ? View.VISIBLE : View.GONE}'
+                    android:visibility='@{safeUnbox(vm.discountCount) > 0 ? View.VISIBLE : View.GONE}'
                     app:layout_constraintBaseline_toBaselineOf="@+id/tvResDiscounts"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="2" />
@@ -239,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:padding="16dp"
-                    android:text="@string/title_taxes"
+                    android:text="@string/taxes"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -259,7 +259,7 @@
                     android:text="@{safeUnbox(vm.taxCount)}"
                     android:textColor="@color/whitePrimary"
                     android:textSize="12sp"
-                    android:visibility='@{safeUnbox(vm.taxCount > 0) ? View.VISIBLE : View.GONE}'
+                    android:visibility='@{safeUnbox(vm.taxCount) > 0 ? View.VISIBLE : View.GONE}'
                     app:layout_constraintBaseline_toBaselineOf="@+id/tvResTaxes"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="2" />

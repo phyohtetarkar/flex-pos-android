@@ -1,7 +1,6 @@
 package com.jsoft.pos.ui.views
 
 import android.arch.lifecycle.Observer
-import android.arch.paging.PagedList
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -34,12 +33,6 @@ abstract class AbstractListFragment<T> : Fragment() {
     @Suppress("UNCHECKED_CAST")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        if (_viewModel is SimpleListViewModel<T>) {
-
-        } else if (_viewModel is PagedListViewModel<T>) {
-
-        }
 
         when (_viewModel) {
             is SimpleListViewModel<T> -> {

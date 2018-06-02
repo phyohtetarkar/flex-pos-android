@@ -6,7 +6,7 @@ import android.arch.persistence.room.*
     ForeignKey(entity = Item::class,
             parentColumns = ["id"],
             childColumns = ["item_id"]),
-    ForeignKey(entity = Tax::class,
+    ForeignKey(entity = Discount::class,
             parentColumns = ["id"],
             childColumns = ["discount_id"])
 ], indices = [

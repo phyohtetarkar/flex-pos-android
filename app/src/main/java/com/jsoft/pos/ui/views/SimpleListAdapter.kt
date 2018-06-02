@@ -51,7 +51,7 @@ open class SimpleListAdapter<T>(DIFF_CALLBACK: DiffUtil.ItemCallback<T>) : ListA
     }
 
     fun toggleCheck(isChecked: Boolean) {
-        for (i in 0..itemCount) {
+        for (i in 0 until itemCount) {
             val t = getItemAt(i)
             if (t is Checkable) {
                 t._checked = isChecked
@@ -62,7 +62,7 @@ open class SimpleListAdapter<T>(DIFF_CALLBACK: DiffUtil.ItemCallback<T>) : ListA
 
     fun getCheckedItemIds(): MutableList<Long> {
         val list = mutableListOf<Long>()
-        for (i in 0..itemCount) {
+        for (i in 0 until itemCount) {
             val t = getItemAt(i)
             if (t is Item && t._checked) {
                 list.add(t.id)

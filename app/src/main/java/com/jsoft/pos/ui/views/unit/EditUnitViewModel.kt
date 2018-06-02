@@ -34,13 +34,13 @@ class EditUnitViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun save() {
-        unit.value?.apply {
-            DaoWorkerAsync<Unit>({
-                dao.save(it)
-            }, {
+        DaoWorkerAsync<Unit>({
+            dao.save(it)
+        }, {
 
-            }).execute(this)
-        }
+        }, {
+
+        }).execute(unit.value)
     }
 
 }

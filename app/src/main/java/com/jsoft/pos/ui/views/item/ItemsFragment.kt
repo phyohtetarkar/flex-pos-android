@@ -59,7 +59,7 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val activity = context as MainActivity
-        activity.setTitle(R.string.title_items)
+        activity.setTitle(R.string.items)
     }
 
     override val recyclerView: RecyclerView

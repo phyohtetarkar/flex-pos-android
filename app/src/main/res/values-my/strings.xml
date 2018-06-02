@@ -3,10 +3,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="title_items">Items</string>
-    <string name="title_categories">Categories</string>
-    <string name="title_units">Units</string>
-    <string name="title_Resources">Resources</string>
+    <string name="items">Items</string>
+    <string name="categories">Categories</string>
+    <string name="units">Units</string>
+    <string name="resources">Resources</string>
 
     <string name="app_name">Flex POS</string>
     <string name="save">Save</string>
@@ -32,7 +32,6 @@
     <string name="app_mail">phyohtetarkar@gmail.com</string>
     <string name="no_data">No Data</string>
     <string name="pos">POS</string>
-    <string name="resources">Resources</string>
     <string name="receipts">Receipts</string>
     <string name="statistic">Statistic</string>
     <string name="select_format">Select %s</string>
@@ -40,7 +39,6 @@
     <string name="confirm_message_delete">Are you sure to delete?</string>
 
     <string name="error_empty_input_format">%s must not empty</string>
-    <string name="items">items</string>
     <string name="hint_remark">Remark</string>
     <string name="hint_size">Size *</string>
     <string name="add_new">Add new</string>

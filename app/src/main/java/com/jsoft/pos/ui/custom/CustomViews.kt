@@ -35,13 +35,15 @@ class RoundedView : View {
 
         paint.color = Color.parseColor(hex.toString())
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            canvas.drawRoundRect(0f, 0f, width.toFloat(), width.toFloat(), 10f, 10f, paint)
-        } else {
-            canvas.drawRoundRect(rectF, 10f, 10f, paint)
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            canvas.drawRoundRect(0f, 0f, width.toFloat(), width.toFloat(), 10f, 10f, paint)
+//        } else {
+//            canvas.drawRoundRect(rectF, 10f, 10f, paint)
+//        }
 
-        //canvas.drawCircle(radius.toFloat(), radius.toFloat(), radius.toFloat(), paint)
+        val radius = width / 2
+
+        canvas.drawCircle(radius.toFloat(), radius.toFloat(), radius.toFloat(), paint)
 
     }
 

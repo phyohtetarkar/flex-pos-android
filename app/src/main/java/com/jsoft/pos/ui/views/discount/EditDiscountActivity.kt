@@ -1,15 +1,23 @@
 package com.jsoft.pos.ui.views.discount
 
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.databinding.EditDiscountBinding
+import com.jsoft.pos.ui.views.tax.AssignItemActivity
+import kotlinx.android.synthetic.main.activity_edit_discount.*
 
 class EditDiscountActivity : AppCompatActivity() {
+
+    private val ASSIGN_REQ = 1
 
     private var discountId = 0
     private lateinit var viewModel: EditDiscountViewModel
@@ -20,6 +28,7 @@ class EditDiscountActivity : AppCompatActivity() {
 
         discountId = intent.getIntExtra("id", 0)
         viewModel = ViewModelProviders.of(this).get(EditDiscountViewModel::class.java)
+        viewModel.assignBtnEnable.value = discountId > 0
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_discount)
         binding.setLifecycleOwner(this)
@@ -34,6 +43,27 @@ class EditDiscountActivity : AppCompatActivity() {
             }
 
             discountInput.value = discountId
+        }
+
+        edDiscountName.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.assignBtnEnable.value = !s.isNullOrBlank()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        })
+
+        btnAssignDiscount.setOnClickListener {
+            val intent = Intent(this, AssignItemActivity::class.java)
+            intent.putExtra("id", discountId)
+            intent.putExtra("type", AssignItemActivity.AssignType.DISCOUNT)
+            intent.putExtra("checked", viewModel.checkedItemIds?.toLongArray())
+            startActivityForResult(intent, ASSIGN_REQ)
         }
 
     }
@@ -55,6 +85,22 @@ class EditDiscountActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            ASSIGN_REQ -> {
+                if (resultCode == Activity.RESULT_OK) {
+
+                    data?.getLongArrayExtra("items")?.apply {
+                        viewModel.checkedItemIds = asList()
+                    }
+
+                }
+            }
+        }
     }
 
 }

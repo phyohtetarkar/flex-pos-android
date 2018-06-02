@@ -1,5 +1,6 @@
 package com.jsoft.pos.ui.views.tax
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -24,9 +25,6 @@ class AssignItemActivity : AppCompatActivity() {
         TAX, DISCOUNT
     }
 
-    private var taxId: Int = 0
-    private lateinit var type: AssignType
-
     private lateinit var viewModel: AssignItemViewModel
     private lateinit var adapter: SimpleListAdapter<Item>
 
@@ -34,12 +32,10 @@ class AssignItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkable_list)
 
-        taxId = intent.getIntExtra("id", 0)
-        type = intent.getSerializableExtra("type") as AssignType
-
         viewModel = ViewModelProviders.of(this).get(AssignItemViewModel::class.java)
-        viewModel.id = taxId
-        viewModel.type = type
+        viewModel.id = intent.getIntExtra("id", 0)
+        viewModel.type = intent.getSerializableExtra("type") as AssignType
+        viewModel.checkedIds = intent.getLongArrayExtra("checked").asList()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -62,6 +58,7 @@ class AssignItemActivity : AppCompatActivity() {
         }
 
         recyclerViewCheckableList.adapter = adapter
+
         checkboxAll.setOnCheckedChangeListener { _, isChecked ->
             adapter.toggleCheck(isChecked)
         }
@@ -74,7 +71,7 @@ class AssignItemActivity : AppCompatActivity() {
                 if (isEmpty()) {
                     stub.visibility = View.VISIBLE
                 } else {
-                    stub.visibility = View.INVISIBLE
+                    stub.visibility = View.GONE
                 }
             }
         })
@@ -82,13 +79,24 @@ class AssignItemActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu_save, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        val result = Intent()
-        result.putExtra("items", adapter.getCheckedItemIds().toLongArray())
+        when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            R.id.action_save -> {
+                val data = Intent()
+                data.putExtra("items", adapter.getCheckedItemIds().toLongArray())
+                setResult(Activity.RESULT_OK, data)
+                onBackPressed()
+            }
+        }
 
         return true
     }

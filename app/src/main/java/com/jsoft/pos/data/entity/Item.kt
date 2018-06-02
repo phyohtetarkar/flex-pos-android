@@ -34,10 +34,11 @@ data class Item(
 ) : BaseObservable(), Checkable {
 
     @Ignore
-    override var _name: String = name
+    override var _name: String = ""
+        get() = name
 
     @Ignore
-    override var _checked: Boolean = true
+    override var _checked: Boolean = false
 
     @Bindable
     @Ignore
@@ -57,10 +58,6 @@ data class Item(
             notifyPropertyChanged(BR.category)
         }
 
-    @Ignore
-    var taxes: MutableList<Tax>? = null
-    @Ignore
-    var discounts: MutableList<Discount>? = null
 }
 
 data class ItemVO(
@@ -84,17 +81,4 @@ data class ItemVO(
                 "$amount $unit"
             }
         }
-}
-
-data class ItemJoinVO(
-        var itemId: Long,
-        var name: String,
-        private var joinedId: Int?
-): Checkable {
-
-    @Ignore
-    override var _name: String = name
-
-    @Ignore
-    override var _checked: Boolean = (joinedId != null)
 }

@@ -13,6 +13,7 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 class EditDiscountViewModel(application: Application) : AndroidViewModel(application) {
 
     val discountInput = MutableLiveData<Int>()
+    var checkedItemIds: Collection<Long> = listOf()
 
     val discount: LiveData<Discount> = Transformations.switchMap(discountInput) {
         if (it > 0) {
@@ -25,6 +26,8 @@ class EditDiscountViewModel(application: Application) : AndroidViewModel(applica
         return@switchMap data
     }
 
+    val assignBtnEnable = MutableLiveData<Boolean>()
+
     private val dao: DiscountDao
 
     init {
@@ -33,13 +36,13 @@ class EditDiscountViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun save() {
-        discount.value?.apply {
-            DaoWorkerAsync<Discount>({
-                dao.save(it)
-            }, {
+        DaoWorkerAsync<Discount>({
+            dao.save(it, checkedItemIds)
+        }, {
 
-            }).execute(this)
-        }
+        }, {
+
+        }).execute(discount.value)
     }
 
     fun updateDiscountMode(isPercent: Boolean) {

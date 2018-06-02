@@ -207,7 +207,6 @@
                     android:id="@+id/textInputLayout6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout1"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -218,7 +217,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="42.2dp"
                         android:drawableEnd="@drawable/ic_arrow_drop_dark"
-                        android:drawableRight="@drawable/ic_arrow_drop_dark"
                         android:hint="@string/hint_unit"
                         android:inputType="none"
                         android:text="@{vm.item.unit.name}"
@@ -233,6 +231,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+
                 android:background="@color/whitePrimary">
 
                 <TextView
@@ -240,7 +239,6 @@
                     style="@style/HeaderText.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/taxes"
@@ -274,7 +272,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
                     android:text="@string/add_new"
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp"
@@ -288,18 +285,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:visibility="@{safeUnbox(vm.item.id) > 0 ? View.VISIBLE : View.GONE}"
                 android:background="@color/whitePrimary">
-
 
                 <TextView
                     android:id="@+id/textView21"
                     style="@style/HeaderText.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="@string/discount"
+                    android:text="@string/discounts"
                     app:layout_constraintBottom_toTopOf="@+id/view11"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -333,7 +329,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
                     android:text="@string/add_new"
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp"
@@ -354,7 +349,6 @@
                         style="@style/HeaderText.Colored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/textView_title_product_image"

@@ -1,7 +1,6 @@
 package com.jsoft.pos.data.model
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.DataSource
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
@@ -14,9 +13,10 @@ import android.arch.persistence.room.Transaction
 import android.databinding.BaseObservable
 import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.Searchable
-import com.jsoft.pos.data.entity.*
+import com.jsoft.pos.data.entity.Category
+import com.jsoft.pos.data.entity.Item
+import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.entity.Unit
-import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class ItemRepository(
         private val dao: ItemDao,
@@ -24,115 +24,79 @@ class ItemRepository(
         private val categoryDao: CategoryDao? = null
 ) {
 
-    fun findItemsCheckedWithTax(search: ItemSearch, taxId: Int): LiveData<List<Item>> {
-        val liveItems = MutableLiveData<List<Item>>()
+    fun findItemsCheckedWithTax(search: ItemSearch, taxId: Int, checkedIds: Collection<Long>?): List<Item> {
 
-        DaoWorkerAsync<Int>({
-            val items = dao.findItems(SimpleSQLiteQuery(search.name, search.objects.toTypedArray()))
-            val itemsFiltered: List<Item>? = taxId.let {
-                if (it > 0) {
-                    dao.findItemTaxAssociations(it)
-                } else {
-                    null
-                }
-
+        val items = dao.findItems(SimpleSQLiteQuery(search.query, search.objects.toTypedArray()))
+        val itemsFiltered: List<Item>? = taxId.let {
+            if (it > 0) {
+                dao.findItemTaxAssociations(it)
+            } else {
+                null
             }
 
-            itemsFiltered?.apply {
-                items.forEach {
-                    if (contains(it)) {
-                        it._checked = true
-                    }
-                }
+        }
+
+        items.forEach {
+            if (!checkedIds.orEmpty().isEmpty()) {
+                it._checked = checkedIds.orEmpty().contains(it.id)
+            } else {
+                it._checked = itemsFiltered.orEmpty().contains(it)
             }
+        }
 
-            liveItems.postValue(items)
 
-        }, {
-
-        }).execute(taxId)
-
-        return liveItems
+        return items
     }
 
-    fun findItemsCheckedWithDiscount(search: ItemSearch, discountId: Int): LiveData<List<Item>> {
-        val liveItems = MutableLiveData<List<Item>>()
+    fun findItemsCheckedWithDiscount(search: ItemSearch, discountId: Int, checkedIds: Collection<Long>?): List<Item> {
 
-        DaoWorkerAsync<Int>({
-            val items = dao.findItems(SimpleSQLiteQuery(search.name, search.objects.toTypedArray()))
-            val itemsFiltered: List<Item>? = discountId.let {
-                if (it > 0) {
-                    dao.findItemDiscountAssociations(discountId)
-                } else {
-                    null
-                }
+        val items = dao.findItems(SimpleSQLiteQuery(search.query, search.objects.toTypedArray()))
+        val itemsFiltered: List<Item>? = discountId.let {
+            if (it > 0) {
+                dao.findItemDiscountAssociations(discountId)
+            } else {
+                null
             }
+        }
 
-            itemsFiltered?.apply {
-                items.forEach {
-                    if (contains(it)) {
-                        it._checked = true
-                    }
-                }
+        items.forEach {
+            if (!checkedIds.orEmpty().isEmpty()) {
+                it._checked = checkedIds.orEmpty().contains(it.id)
+            } else {
+                it._checked = itemsFiltered.orEmpty().contains(it)
             }
+        }
 
-            liveItems.postValue(items)
-
-        }, {
-
-        }).execute(discountId)
-
-        return liveItems
+        return items
     }
 
     fun findItemVOs(search: ItemVOSearch): LiveData<PagedList<ItemVO>> {
         return LivePagedListBuilder(dao.findItemVOs(SimpleSQLiteQuery(search.query, search.objects.toTypedArray())), 20).build()
     }
 
-    fun getItem(id: Long): LiveData<Item> {
-        val liveItem = MutableLiveData<Item>()
-
-        DaoWorkerAsync<Long>({
-            if (it > 0) {
-                val item = dao.findByIdSync(id)
-                item.categoryId?.apply {
-                    item.category = categoryDao?.findByIdSync(this)
-                }
-
-                item.unitId?.apply {
-                    item.unit = unitDao?.findByIdSync(this)
-                }
-
-                liveItem.postValue(item)
-            } else {
-                liveItem.postValue(Item())
+    fun getItem(id: Long): Item {
+        if (id > 0) {
+            val item = dao.findByIdSync(id)
+            item.categoryId?.apply {
+                item.category = categoryDao?.findByIdSync(this)
             }
-        }, {
 
-        }).execute(id)
+            item.unitId?.apply {
+                item.unit = unitDao?.findByIdSync(this)
+            }
 
-        return liveItem
-    }
-
-    fun save(item: Item?) {
-        item?.apply {
-            DaoWorkerAsync<Item>({
-                dao.save(it)
-            }, {
-
-            }).execute(this)
+            return item
         }
 
+        return Item()
     }
 
-    fun delete(item: Item?) {
-        item?.apply {
-            DaoWorkerAsync<Item>({
-                dao.delete(it)
-            }, {
+    fun save(item: Item) {
+        dao.save(item)
+    }
 
-            }).execute(this)
-        }
+    fun delete(item: Item) {
+        dao.delete(item)
     }
 
 }
@@ -238,14 +202,14 @@ abstract class ItemDao : BaseDao<Item> {
     @RawQuery
     abstract fun findItems(query: SupportSQLiteQuery): List<Item>
 
-    @Query("SELECT * FROM item i " +
+    @Query("SELECT i.* FROM item i " +
             "INNER JOIN item_tax it ON it.item_id = i.id " +
             "WHERE it.tax_id = :taxId ")
     abstract fun findItemTaxAssociations(taxId: Int): List<Item>
 
-    @Query("SELECT * FROM item i " +
-            "INNER JOIN item_discount it ON it.discount_id = i.id " +
-            "WHERE it.discount_id = :discountId ")
+    @Query("SELECT i.* FROM item i " +
+            "INNER JOIN item_discount id ON id.item_id = i.id " +
+            "WHERE id.discount_id = :discountId ")
     abstract fun findItemDiscountAssociations(discountId: Int): List<Item>
 
     @Query("SELECT * FROM item WHERE id = :id LIMIT 1")

@@ -34,13 +34,13 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun save() {
-        category.value?.apply {
-            DaoWorkerAsync<Category>({
-                dao.save(it)
-            }, {
+        DaoWorkerAsync<Category>({
+            dao.save(it)
+        }, {
 
-            }).execute(this)
-        }
+        }, {
+
+        }).execute(category.value)
     }
 
 }

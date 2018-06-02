@@ -43,7 +43,7 @@ abstract class TaxDao : BaseDao<Tax> {
     }
 
     @Transaction
-    open fun save(tax: Tax, items: Collection<Long>?) {
+    open fun save(tax: Tax, itemIds: Collection<Long>?) {
         var id = tax.id
         if (tax.id > 0) {
             update(tax)
@@ -52,13 +52,12 @@ abstract class TaxDao : BaseDao<Tax> {
         }
 
         val t = findByIdSync(id)
-        items?.apply { assignTax(t, this) }
+        itemIds?.apply { assignTax(t, this) }
     }
 
-    @Transaction
-    protected open fun assignTax(tax: Tax, items: Collection<Long>) {
+    protected open fun assignTax(tax: Tax, itemIds: Collection<Long>) {
         deleteItemTaxes(findItemTaxesSync(tax.id))
-        val itemTaxes = items.map { ItemTax(itemId = it, taxId = tax.id) }
+        val itemTaxes = itemIds.map { ItemTax(itemId = it, taxId = tax.id) }
         saveItemTaxes(itemTaxes)
     }
 
