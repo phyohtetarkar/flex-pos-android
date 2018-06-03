@@ -116,6 +116,7 @@
                 android:background="@drawable/selectable_accent_bordered_background"
                 android:enabled="@{vm.assignBtnEnable}"
                 android:text="@string/assign_item"
+                android:textColor="@color/text_color_state"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -15,6 +15,7 @@
     <color name="colorImportant">#D13638</color>
     <color name="colorBack">#EEEEEE</color>
     <color name="colorGrayNormal">#e0e0e0</color>
+    <color name="colorDisabled">#BBBBBB</color>
 
     <color name="darkPrimary">#DE000000</color>
     <color name="darkSecondary">#8a000000</color>
