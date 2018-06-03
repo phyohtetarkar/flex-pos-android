@@ -26,13 +26,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBack"
+        android:background="@color/colorSecondary"
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/whitePrimary"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="24dp"
@@ -50,10 +49,15 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="16dp"
+            android:background="@color/darkDivider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/whitePrimary"
             android:orientation="vertical">
 
             <TextView
@@ -61,7 +65,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:text="@string/select_color" />
 
             <android.support.constraint.ConstraintLayout
@@ -205,6 +208,13 @@
             </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/darkDivider"/>
 
         <Button
             android:id="@+id/btnDeleteCategory"

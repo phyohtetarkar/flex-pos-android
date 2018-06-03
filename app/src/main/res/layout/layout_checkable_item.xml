@@ -35,7 +35,6 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="16dp"
-            android:checked="@={obj._checked}"
             app:layout_constraintBottom_toBottomOf="@+id/simple_list_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/simple_list_item" />

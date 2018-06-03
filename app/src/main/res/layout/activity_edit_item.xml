@@ -15,7 +15,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBack"
+        android:background="@color/colorSecondary"
         android:clipChildren="false"
         android:scrollbars="none">
 
@@ -27,15 +27,13 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/whitePrimary">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/textView5"
                     style="@style/HeaderText.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/textView_title_product_info"
@@ -61,8 +59,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="24dp"
                     android:checked="@={vm.item.available, default=true}"
-                    android:text="@string/available_for_sale"
-                    style="@style/AppTextNormal"
+
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
@@ -140,7 +137,7 @@
                     android:padding="4dp"
                     android:text="@string/add_new"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorTextPrimary"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout1"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout1" />
@@ -180,7 +177,7 @@
                     android:padding="4dp"
                     android:text="@string/add_new"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorTextPrimary"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout6"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
@@ -230,10 +227,7 @@
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/containerTaxes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-
-                android:background="@color/whitePrimary">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/textView17"
@@ -243,20 +237,22 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/taxes"
-                    app:layout_constraintBottom_toTopOf="@+id/view6"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayoutTaxes"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/view6" />
 
                 <View
                     android:id="@+id/view6"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/darkDivider"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayoutTaxes"
+                    app:layout_constraintBottom_toTopOf="@+id/textView17"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:id="@+id/linearLayoutTaxes"
@@ -266,7 +262,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view6" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
                 <TextView
                     android:id="@+id/textView22"
@@ -285,9 +281,7 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:visibility="@{safeUnbox(vm.item.id) > 0 ? View.VISIBLE : View.GONE}"
-                android:background="@color/whitePrimary">
+                android:visibility="@{safeUnbox(vm.item.id) > 0 ? View.VISIBLE : View.GONE}">
 
                 <TextView
                     android:id="@+id/textView21"
@@ -297,31 +291,33 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/discounts"
-                    app:layout_constraintBottom_toTopOf="@+id/view11"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayoutDiscounts"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/view11" />
 
                 <View
                     android:id="@+id/view11"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/darkDivider"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayoutDiscounts"
+                    app:layout_constraintBottom_toTopOf="@+id/textView21"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView21" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:id="@+id/linearLayoutDiscounts"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="105dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view11">
+                    app:layout_constraintTop_toBottomOf="@+id/textView21">
 
                 </LinearLayout>
 
@@ -340,88 +336,88 @@
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/HeaderText.Colored"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/textView_title_product_image"
+                    app:layout_constraintBottom_toTopOf="@+id/roundedImageView_edit_itemImage"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:background="@color/whitePrimary">
+                    android:background="@color/darkDivider"
+                    app:layout_constraintBottom_toTopOf="@+id/textView6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView6"
-                        style="@style/HeaderText.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/textView_title_product_image"
-                        app:layout_constraintBottom_toTopOf="@+id/view2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <com.jsoft.pos.ui.custom.RoundedImageView
+                    android:id="@+id/roundedImageView_edit_itemImage"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_placeholder"
+                    app:layout_constraintBottom_toTopOf="@+id/view3"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-                    <View
-                        android:id="@+id/view2"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/darkDivider"
-                        app:layout_constraintBottom_toTopOf="@+id/roundedImageView_edit_itemImage"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/darkDivider"
+                    app:layout_constraintBottom_toTopOf="@+id/button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/roundedImageView_edit_itemImage" />
 
-                    <com.jsoft.pos.ui.custom.RoundedImageView
-                        android:id="@+id/roundedImageView_edit_itemImage"
-                        android:layout_width="0dp"
-                        android:layout_height="150dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_placeholder"
-                        app:layout_constraintBottom_toTopOf="@+id/view3"
-                        app:layout_constraintDimensionRatio="w,1:1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view2" />
+                <Button
+                    android:id="@+id/button"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/choose"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view3" />
 
-                    <View
-                        android:id="@+id/view3"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/darkDivider"
-                        app:layout_constraintBottom_toTopOf="@+id/button"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/roundedImageView_edit_itemImage" />
+                <ImageButton
+                    android:id="@+id/btnRemoveImage"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@color/darkTransparent"
+                    android:src="@drawable/ic_clear_white"
+                    android:visibility='@{vm.item.image.isEmpty() ? View.GONE : View.VISIBLE}'
+                    app:layout_constraintEnd_toEndOf="@+id/roundedImageView_edit_itemImage"
+                    app:layout_constraintTop_toTopOf="@+id/roundedImageView_edit_itemImage"
+                    tools:ignore="ContentDescription" />
 
-                    <Button
-                        android:id="@+id/button"
-                        style="@style/Base.Widget.AppCompat.Button.Colored"
-                        android:layout_width="0dp"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/choose"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.4"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view3" />
-
-                    <ImageButton
-                        android:id="@+id/btnRemoveImage"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@color/darkTransparent"
-                        android:src="@drawable/ic_clear_white"
-                        android:visibility='@{vm.item.image.isEmpty() ? View.GONE : View.VISIBLE}'
-                        app:layout_constraintEnd_toEndOf="@+id/roundedImageView_edit_itemImage"
-                        app:layout_constraintTop_toTopOf="@+id/roundedImageView_edit_itemImage"
-                        tools:ignore="ContentDescription" />
-
-                </android.support.constraint.ConstraintLayout>
+            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
 
