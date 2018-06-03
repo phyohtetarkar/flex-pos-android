@@ -52,7 +52,7 @@ abstract class TaxDao : BaseDao<Tax> {
         }
 
         val t = findByIdSync(id)
-        itemIds?.apply { assignTax(t, this) }
+        itemIds?.takeUnless { it.isEmpty() }?.apply { assignTax(t, this) }
     }
 
     protected open fun assignTax(tax: Tax, itemIds: Collection<Long>) {

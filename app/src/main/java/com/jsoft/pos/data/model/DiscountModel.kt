@@ -51,7 +51,8 @@ abstract class DiscountDao : BaseDao<Discount> {
             id = insertAndGet(discount).toInt()
         }
         val t = findByIdSync(id)
-        itemIds?.apply { assignDiscount(t, this) }
+
+        itemIds?.takeUnless { it.isEmpty() }?.apply { assignDiscount(t, this) }
     }
 
     protected open fun assignDiscount(discount: Discount, itemIds: Collection<Long>) {

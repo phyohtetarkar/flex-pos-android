@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorSecondary">
+        android:background="@color/whitePrimary">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -95,6 +95,7 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="-1.5dp"
+                    android:checked="@{vm.discount.percentage == false}"
                     android:background="@drawable/toggle_state_right_drawable"
                     android:button="@android:color/transparent"
                     android:fontFamily="@font/app_font_bold"
@@ -113,7 +114,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/selectable_accent_bordered_background"
+                android:background="@drawable/selectable_outline_bordered_background"
                 android:enabled="@{vm.assignBtnEnable}"
                 android:text="@string/assign_item"
                 android:textColor="@color/text_color_state"

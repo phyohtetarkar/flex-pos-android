@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBack">
+    android:background="@color/colorSecondary">
 
     <ViewStub
         android:id="@+id/viewStubSimpleList"
@@ -27,6 +27,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_white"
+        android:tint="@color/colorTextPrimary"
         app:fabSize="normal" />
 
 </android.support.design.widget.CoordinatorLayout>

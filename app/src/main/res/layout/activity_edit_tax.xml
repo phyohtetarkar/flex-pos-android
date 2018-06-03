@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorSecondary">
+        android:background="@color/whitePrimary">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -73,6 +73,8 @@
                 android:layout_marginTop="24dp"
                 android:checked="@={vm.tax.included, default=true}"
                 android:text="Included in item price"
+                android:textColor="@color/colorTextPrimary"
+                android:fontFamily="@font/app_font_medium"
                 app:layout_constraintBottom_toTopOf="@+id/btnAssignTax"
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -88,7 +90,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/selectable_accent_bordered_background"
+                android:background="@drawable/selectable_outline_bordered_background"
                 android:enabled="@{vm.assignBtnEnable}"
                 android:text="@string/assign_item"
                 android:textColor="@color/text_color_state"

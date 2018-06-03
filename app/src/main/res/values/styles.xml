@@ -1,11 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/colorTextPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
         <item name="buttonBarNegativeButtonStyle">@style/BorderLessButton</item>
         <item name="buttonBarPositiveButtonStyle">@style/BorderLessButton</item>
         <item name="android:textViewStyle">@style/AppTextNormal</item>
@@ -24,7 +24,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
@@ -34,7 +34,7 @@
     </style>
 
     <style name="AppTheme.ActionBar.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColor">@color/whitePrimary</item>
         <item name="android:fontFamily">@font/app_font_bold</item>
     </style>
     
@@ -59,6 +59,7 @@
     </style>
 
     <style name="ButtonTextColored" parent="@style/Base.Widget.AppCompat.Button.Borderless">
+        <item name="fontFamily">@font/app_font_medium</item>
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
