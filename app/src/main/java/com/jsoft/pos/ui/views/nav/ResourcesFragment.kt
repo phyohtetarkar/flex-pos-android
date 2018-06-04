@@ -1,7 +1,6 @@
 package com.jsoft.pos.ui.views.nav
 
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -45,9 +44,9 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
         tvResTaxes.setOnClickListener(this)
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        val activity = context as MainActivity
+    override fun onStart() {
+        super.onStart()
+        val activity = activity as MainActivity
         activity.setTitle(R.string.resources)
     }
 
