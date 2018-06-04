@@ -2,6 +2,7 @@ package com.jsoft.pos.ui.views.tax
 
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.databinding.EditTaxBinding
+import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import kotlinx.android.synthetic.main.activity_edit_tax.*
 
 class EditTaxActivity : AppCompatActivity() {
@@ -23,6 +25,10 @@ class EditTaxActivity : AppCompatActivity() {
 
     private lateinit var viewModel: EditTaxViewModel
     private lateinit var binding: EditTaxBinding
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(ContextWrapperUtil.create(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +69,7 @@ class EditTaxActivity : AppCompatActivity() {
             val intent = Intent(this, AssignItemActivity::class.java)
             intent.putExtra("id", taxId)
             intent.putExtra("type", Item.AssignType.TAX)
-            intent.putExtra("checked", viewModel.checkedItemIds?.toLongArray())
+            intent.putExtra("checked", viewModel.checkedItemIds.toLongArray())
             startActivityForResult(intent, ASSIGN_REQ)
         }
 

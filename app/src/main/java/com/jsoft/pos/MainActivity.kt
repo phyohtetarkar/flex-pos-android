@@ -12,10 +12,10 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
+import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.views.nav.ResourcesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
-import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,12 +42,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        val locale = Locale("my")
-        Locale.setDefault(locale)
-        val config = newBase?.resources?.configuration
-        config?.setLocale(locale)
-
-        super.attachBaseContext(newBase?.createConfigurationContext(config))
+        super.attachBaseContext(ContextWrapperUtil.create(newBase))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

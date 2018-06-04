@@ -15,7 +15,7 @@
             android:id="@+id/checkableListTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/choose"
+            android:text="@string/select_all"
             android:layout_weight="1"
             android:textSize="18sp"
             android:textStyle="bold"

@@ -1,6 +1,7 @@
 package com.jsoft.pos.ui.views.category
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.databinding.EditCategoryBinding
 import com.jsoft.pos.func.KConsumer2
+import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.utils.ValidatorUtils
 import kotlinx.android.synthetic.main.activity_edit_category.*
 import java.util.*
@@ -23,6 +25,10 @@ class EditCategoryActivity : AppCompatActivity() {
 
     private lateinit var viewModel: EditCategoryViewModel
     private lateinit var binding: EditCategoryBinding
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(ContextWrapperUtil.create(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -20,8 +20,6 @@
     <string name="hint_category_name">Category Name *</string>
     <string name="select_color">Select Color</string>
     <string name="choose">Choose</string>
-    <string name="choose_category">Choose Category *</string>
-    <string name="choose_unit">Choose Unit *</string>
     <string name="hint_unit">Unit *</string>
     <string name="hint_name">Name *</string>
     <string name="hint_amount">Amount *</string>
@@ -54,5 +52,6 @@
     <string name="delete">Delete</string>
     <string name="assign_items">Assign Items</string>
 
-    <string name="items_for_count">Items</string>
+    <string name="items_for_count">items</string>
+    <string name="select_all">Select all</string>
 </resources>

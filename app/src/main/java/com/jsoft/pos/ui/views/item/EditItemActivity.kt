@@ -2,6 +2,7 @@ package com.jsoft.pos.ui.views.item
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.jsoft.pos.data.entity.Discount
 import com.jsoft.pos.data.entity.Tax
 import com.jsoft.pos.databinding.EditItemBinding
 import com.jsoft.pos.ui.custom.CustomViewAdapter
+import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.views.SimpleListDialogFragment
 import kotlinx.android.synthetic.main.activity_edit_item.*
 
@@ -21,6 +23,10 @@ class EditItemActivity : AppCompatActivity() {
 
     private lateinit var viewModel: EditItemViewModel
     private lateinit var binding: EditItemBinding
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(ContextWrapperUtil.create(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

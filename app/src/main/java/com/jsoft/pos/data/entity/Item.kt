@@ -46,7 +46,7 @@ data class Item(
 
     @Bindable
     @Ignore
-    var unit: Unit? = Unit(name = "choose")
+    var unit: Unit? = Unit()
         set(value) {
             field = value
             unitId = value?.id ?: 0
@@ -55,7 +55,7 @@ data class Item(
 
     @Bindable
     @Ignore
-    var category: Category? = Category(name = "choose")
+    var category: Category? = Category()
         set(value) {
             field = value
             categoryId = value?.id ?: 0

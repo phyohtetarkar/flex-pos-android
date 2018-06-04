@@ -19,8 +19,6 @@
     <string name="hint_category_name">အမျိုးအစား *</string>
     <string name="select_color">အရောင်ရွေးပါ</string>
     <string name="choose">ရွေးပါ</string>
-    <string name="choose_category">အမျိုးအစား *</string>
-    <string name="choose_unit">ယူနစ် *</string>
     <string name="hint_unit">ယူနစ် *</string>
     <string name="hint_name">အမည် *</string>
     <string name="hint_amount">အရေအတွက် *</string>
@@ -39,7 +37,7 @@
     <string name="statistic">Statistic</string>
     <string name="select_format">Select %s</string>
 
-    <string name="confirm_message_delete">ဖျက်မှာသေချာလား</string>
+    <string name="confirm_message_delete">ဖျက်မှာသေချာလား?</string>
 
     <string name="error_empty_input_format">%s must not empty</string>
     <string name="hint_remark">မှတ်ချက်</string>
@@ -53,5 +51,6 @@
     <string name="delete">Delete</string>
     <string name="assign_item">Assign Item</string>
 
-    <string name="items_for_count">Items</string>
+    <string name="items_for_count">items</string>
+    <string name="select_all">Select all</string>
 </resources>

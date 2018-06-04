@@ -2,6 +2,7 @@ package com.jsoft.pos.ui.views.discount
 
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.databinding.EditDiscountBinding
+import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.views.tax.AssignItemActivity
 import kotlinx.android.synthetic.main.activity_edit_discount.*
 
@@ -23,6 +25,10 @@ class EditDiscountActivity : AppCompatActivity() {
     private var discountId = 0
     private lateinit var viewModel: EditDiscountViewModel
     private lateinit var binding: EditDiscountBinding
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(ContextWrapperUtil.create(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
