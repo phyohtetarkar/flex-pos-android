@@ -1,5 +1,6 @@
 package com.jsoft.pos.ui.views
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
@@ -7,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jsoft.pos.R
-import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
 import kotlinx.android.synthetic.main.fragment_simple_list.*
 
 abstract class SimpleListFragment<T> : AbstractListFragment<T>() {
@@ -19,7 +19,14 @@ abstract class SimpleListFragment<T> : AbstractListFragment<T>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerViewSimpleList.addItemDecoration(SimpleDividerItemDecoration(context, DividerItemDecoration.VERTICAL, 82))
+        recyclerViewSimpleList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                it.setDrawable(resources.getDrawable(R.drawable.simple_divider_drawable, resources.newTheme()))
+            } else {
+                it.setDrawable(resources.getDrawable(R.drawable.simple_divider_drawable))
+            }
+        })
+        
 
         fabSimpleList.setOnClickListener { showEdit(0) }
 

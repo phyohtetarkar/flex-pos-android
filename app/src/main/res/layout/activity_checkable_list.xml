@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/whitePrimary">
 
         <TextView
             android:id="@+id/checkableListTitle"
@@ -37,7 +38,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/colorSecondary">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewCheckableList"

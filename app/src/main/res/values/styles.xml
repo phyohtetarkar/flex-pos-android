@@ -84,7 +84,7 @@
     </style>
 
     <style name="HeaderText.Normal" parent="HeaderText">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/darkPrimary</item>
     </style>
 
     <style name="HeaderText.Colored" parent="HeaderText">
