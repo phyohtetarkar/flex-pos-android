@@ -15,15 +15,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/whitePrimary">
+        android:background="@color/whitePrimary"
+        android:orientation="vertical">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayout9"
+            <com.jsoft.pos.ui.custom.CustomEditText
+                android:id="@+id/edDiscountName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -31,39 +31,28 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/textInputLayout10"
+                android:hint="@string/hint_name"
+                android:inputType="text"
+                android:text="@={vm.discount.name}"
+                app:layout_constraintBottom_toTopOf="@+id/edDiscountValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edDiscountName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_name"
-                    android:inputType="text"
-                    android:text="@={vm.discount.name}" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayout10"
+            <com.jsoft.pos.ui.custom.CustomEditText
+                android:id="@+id/edDiscountValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="24dp"
+                android:hint="value"
+                android:inputType="numberDecimal"
+                android:text="@={vm.discount.amount}"
                 app:layout_constraintBottom_toTopOf="@+id/btnAssignDiscount"
                 app:layout_constraintEnd_toStartOf="@+id/radioGroup"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayout9"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
-
-                <android.support.design.widget.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="value"
-                    android:inputType="numberDecimal"
-                    android:text="@={vm.discount.amount}" />
-            </android.support.design.widget.TextInputLayout>
+                app:layout_constraintStart_toStartOf="@+id/edDiscountName"
+                app:layout_constraintTop_toBottomOf="@+id/edDiscountName" />
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -71,8 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout10"
-                app:layout_constraintEnd_toEndOf="@+id/textInputLayout9">
+                app:layout_constraintBottom_toBottomOf="@+id/edDiscountValue"
+                app:layout_constraintEnd_toEndOf="@+id/edDiscountName">
 
                 <RadioButton
                     android:id="@+id/radioBtnPercent"
@@ -121,7 +110,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout10"
+                app:layout_constraintTop_toBottomOf="@+id/edDiscountValue"
                 tools:text="Assign Item" />
 
         </android.support.constraint.ConstraintLayout>
@@ -129,9 +118,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/darkDivider"/>
+            android:layout_marginStart="16dp"
+            android:background="@color/darkDivider" />
 
         <Button
             android:id="@+id/button3"

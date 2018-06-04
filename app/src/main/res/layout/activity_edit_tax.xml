@@ -15,15 +15,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/whitePrimary">
+        android:background="@color/whitePrimary"
+        android:orientation="vertical">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayout7"
+            <com.jsoft.pos.ui.custom.CustomEditText
+                android:id="@+id/edTaxName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -31,39 +31,29 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/textInputLayout9"
+                android:hint="@string/hint_name"
+                android:inputType="text"
+                android:text="@={vm.tax.name}"
+                app:layout_constraintBottom_toTopOf="@+id/edTaxValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edTaxName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_name"
-                    android:inputType="text"
-                    android:text="@={vm.tax.name}" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayout9"
+            <com.jsoft.pos.ui.custom.CustomEditText
+                android:id="@+id/edTaxValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:hint="percentage"
+                android:inputType="numberDecimal"
+                android:text="@={vm.tax.amount}"
+                android:drawableEnd="@drawable/ic_percantage_dark"
                 app:layout_constraintBottom_toTopOf="@+id/switch1"
-                app:layout_constraintEnd_toEndOf="@+id/textInputLayout7"
+                app:layout_constraintEnd_toEndOf="@+id/edTaxName"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
-
-                <android.support.design.widget.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="percentage"
-                    android:inputType="numberDecimal"
-                    android:text="@={vm.tax.amount}" />
-            </android.support.design.widget.TextInputLayout>
+                app:layout_constraintStart_toStartOf="@+id/edTaxName"
+                app:layout_constraintTop_toBottomOf="@+id/edTaxName" />
 
             <Switch
                 android:id="@+id/switch1"
@@ -72,14 +62,14 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="24dp"
                 android:checked="@={vm.tax.included, default=true}"
+                android:fontFamily="@font/app_font_medium"
                 android:text="Included in item price"
                 android:textColor="@color/colorTextPrimary"
-                android:fontFamily="@font/app_font_medium"
                 app:layout_constraintBottom_toTopOf="@+id/btnAssignTax"
-                app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
+                app:layout_constraintEnd_toEndOf="@+id/edTaxValue"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayout9"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout9"
+                app:layout_constraintStart_toStartOf="@+id/edTaxValue"
+                app:layout_constraintTop_toBottomOf="@+id/edTaxValue"
                 tools:checked="true" />
 
             <Button
@@ -106,9 +96,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/darkDivider"/>
+            android:layout_marginStart="16dp"
+            android:background="@color/darkDivider" />
 
         <Button
             android:id="@+id/button5"

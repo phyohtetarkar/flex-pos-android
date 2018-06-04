@@ -1,10 +1,13 @@
 package com.jsoft.pos.ui.views.unit
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
+import com.jsoft.pos.MainActivity
+import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.UnitSearch
 import com.jsoft.pos.ui.utils.SwipeGestureCallback
@@ -54,6 +57,12 @@ class UnitsFragment : SimpleListFragment<Unit>() {
     override fun onResume() {
         super.onResume()
         viewModel.searchModel.value = UnitSearch()
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val app = context as MainActivity
+        app.setTitle(R.string.units)
     }
 
     override val _adapter: SimpleListAdapter<Unit>

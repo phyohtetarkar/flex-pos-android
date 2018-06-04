@@ -1,10 +1,12 @@
 package com.jsoft.pos.ui.views.tax
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
+import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Tax
 import com.jsoft.pos.ui.views.SimpleListAdapter
@@ -31,6 +33,12 @@ class TaxesFragment : SimpleListFragment<Tax>() {
             }
 
         }, R.layout.layout_simple_list_item_2)
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val app = context as MainActivity
+        app.setTitle(R.string.taxes)
     }
 
     override val _adapter: SimpleListAdapter<Tax>

@@ -75,7 +75,7 @@ class AssignItemActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_save, menu)
+        menuInflater.inflate(R.menu.menu_done, menu)
         return true
     }
 
@@ -86,7 +86,7 @@ class AssignItemActivity : AppCompatActivity() {
                 onBackPressed()
                 return true
             }
-            R.id.action_save -> {
+            R.id.action_done -> {
                 val data = Intent()
                 data.putExtra("items", viewModel.getCheckedItems())
                 setResult(Activity.RESULT_OK, data)

@@ -14,6 +14,7 @@
     <string name="save">သိမ်းမည်</string>
     <string name="ok">လုပ်မည်</string>
     <string name="cancel">မလုပ်ပါ</string>
+    <string name="done">done</string>
     <string name="hint_unit_name">ယူနစ် *</string>
     <string name="hint_category_name">အမျိုးအစား *</string>
     <string name="select_color">အရောင်ရွေးပါ</string>

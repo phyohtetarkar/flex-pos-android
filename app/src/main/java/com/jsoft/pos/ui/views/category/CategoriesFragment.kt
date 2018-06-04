@@ -1,10 +1,12 @@
 package com.jsoft.pos.ui.views.category
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
+import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.CategoryVO
 import com.jsoft.pos.data.model.CategorySearch
@@ -36,6 +38,12 @@ class CategoriesFragment : SimpleListFragment<CategoryVO>() {
     override fun onResume() {
         super.onResume()
         viewModel.searchModel.value = CategorySearch()
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val app = context as MainActivity
+        app.setTitle(R.string.categories)
     }
 
     override val _adapter: SimpleListAdapter<CategoryVO>
