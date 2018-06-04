@@ -6,23 +6,6 @@ import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.entity.ItemTax
 import com.jsoft.pos.data.entity.Tax
 
-class TaxRepository(private val dao: TaxDao) {
-
-    fun findItemTaxAssociations(itemId: Long): List<Tax> {
-        val taxes = dao.findAllTaxesSync()
-
-        if (itemId > 0) {
-            val ts = dao.findTaxAssociations(itemId)
-            taxes.forEach {
-                it._checked = ts.contains(it)
-            }
-        }
-
-        return taxes
-    }
-
-}
-
 @Dao
 abstract class TaxDao : BaseDao<Tax> {
 
@@ -75,6 +58,19 @@ abstract class TaxDao : BaseDao<Tax> {
 
         val t = findByIdSync(id)
         itemIds?.takeUnless { it.isEmpty() }?.apply { assignTax(t, this) }
+    }
+
+    fun findItemTaxAssociations(itemId: Long): List<Tax> {
+        val taxes = findAllTaxesSync()
+
+        if (itemId > 0) {
+            val ts = findTaxAssociations(itemId)
+            taxes.forEach {
+                it._checked = ts.contains(it)
+            }
+        }
+
+        return taxes
     }
 
     private fun assignTax(tax: Tax, itemIds: Collection<Long>) {

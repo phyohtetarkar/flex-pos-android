@@ -31,7 +31,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val taxes: LiveData<List<Tax>> = Transformations.switchMap(itemInput) {
         val liveTaxes = MutableLiveData<List<Tax>>()
         DaoWorkerAsync<Long>({
-            liveTaxes.postValue(taxRepository.findItemTaxAssociations(it))
+            liveTaxes.postValue(taxDao.findItemTaxAssociations(it))
         },{},{}).execute(it)
         return@switchMap liveTaxes
     }
@@ -39,25 +39,25 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val discounts: LiveData<List<Discount>> = Transformations.switchMap(itemInput) {
         val liveDiscounts = MutableLiveData<List<Discount>>()
         DaoWorkerAsync<Long>({
-            liveDiscounts.postValue(discountRepository.findItemDiscountAssociations(it))
+            liveDiscounts.postValue(discountDao.findItemDiscountAssociations(it))
         },{},{}).execute(it)
         return@switchMap liveDiscounts
     }
 
     private val repository: ItemRepository
-    private val taxRepository: TaxRepository
-    private val discountRepository: DiscountRepository
 
     private val categoryDao: CategoryDao
     private val unitDao: UnitDao
+    private val taxDao: TaxDao
+    private val discountDao: DiscountDao
 
     init {
         val app = application as FlexPosApplication
         categoryDao = app.db.categoryDao()
         unitDao = app.db.unitDao()
         repository = ItemRepository(app.db.itemDao(), unitDao, categoryDao)
-        taxRepository = TaxRepository(app.db.taxDao())
-        discountRepository = DiscountRepository((app.db.discountDao()))
+        taxDao = app.db.taxDao()
+        discountDao = app.db.discountDao()
     }
 
     fun save() {

@@ -74,6 +74,8 @@
 
     <style name="EditTextNormal" parent="@android:style/Widget.EditText">
         <item name="fontFamily">@font/app_font_normal</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:background">@drawable/custom_edittext_drawable</item>
     </style>
 
     <style name="HeaderText">

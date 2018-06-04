@@ -6,23 +6,6 @@ import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.entity.Discount
 import com.jsoft.pos.data.entity.ItemDiscount
 
-class DiscountRepository(private val dao: DiscountDao) {
-
-    fun findItemDiscountAssociations(itemId: Long): List<Discount> {
-        val discounts = dao.findAllDiscountsSync()
-
-        if (itemId > 0) {
-            val ts = dao.findDiscountAssociations(itemId)
-            discounts.forEach {
-                it._checked = ts.contains(it)
-            }
-        }
-
-        return discounts
-    }
-
-}
-
 @Dao
 abstract class DiscountDao : BaseDao<Discount> {
 
@@ -75,6 +58,19 @@ abstract class DiscountDao : BaseDao<Discount> {
         val t = findByIdSync(id)
 
         itemIds?.takeUnless { it.isEmpty() }?.apply { assignDiscount(t, this) }
+    }
+
+    fun findItemDiscountAssociations(itemId: Long): List<Discount> {
+        val discounts = findAllDiscountsSync()
+
+        if (itemId > 0) {
+            val ts = findDiscountAssociations(itemId)
+            discounts.forEach {
+                it._checked = ts.contains(it)
+            }
+        }
+
+        return discounts
     }
 
     private fun assignDiscount(discount: Discount, itemIds: Collection<Long>) {

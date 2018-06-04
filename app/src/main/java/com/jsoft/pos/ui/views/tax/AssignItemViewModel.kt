@@ -37,4 +37,8 @@ class AssignItemViewModel(application: Application) : AndroidViewModel(applicati
         repository = ItemRepository(app.db.itemDao())
     }
 
+    fun getCheckedItems(): LongArray {
+        return items.value?.filter { it._checked }?.map { it.id }.orEmpty().toLongArray()
+    }
+
 }

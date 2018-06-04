@@ -60,16 +60,4 @@ open class SimpleListAdapter<T>(DIFF_CALLBACK: DiffUtil.ItemCallback<T>) : ListA
         notifyDataSetChanged()
     }
 
-    fun getCheckedItemIds(): MutableList<Long> {
-        val list = mutableListOf<Long>()
-        for (i in 0 until itemCount) {
-            val t = getItemAt(i)
-            if (t is Item && t._checked) {
-                list.add(t.id)
-            }
-        }
-
-        return list
-    }
-
 }

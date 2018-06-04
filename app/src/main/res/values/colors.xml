@@ -9,6 +9,7 @@
 
     <color name="colorTextPrimary">#1b1b1b</color>
     <color name="colorOutlinePrimary">#689F38</color>
+    <color name="colorOutlineNormal">#BdBdBd</color>
     <color name="colorControlPrimary">#689F38</color>
 
     <color name="colorError">#D13638</color>

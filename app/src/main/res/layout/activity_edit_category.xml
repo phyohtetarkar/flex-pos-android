@@ -29,31 +29,23 @@
         android:background="@color/whitePrimary"
         android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
+        <com.jsoft.pos.ui.custom.CustomEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:hint="@string/hint_name"
+            android:inputType="text"
+            android:text="@={vm.category.name}"
             app:checkResult="@{safeUnbox(isValidCategoryName)}"
-            app:errorMessage='@{@string/error_empty_input_format("Category name")}'
-            app:errorTextAppearance="@style/ErrorText">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_name"
-                android:inputType="text"
-                android:text="@={vm.category.name}"
-                app:checkResult="@{safeUnbox(isValidCategoryName)}" />
-
-        </android.support.design.widget.TextInputLayout>
+            app:errorMessage='@{@string/error_empty_input_format("Category name")}' />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="16dp"
-            android:background="@color/darkDivider"/>
+            android:background="@color/darkDivider" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -212,9 +204,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/darkDivider"/>
+            android:layout_marginStart="16dp"
+            android:background="@color/darkDivider" />
 
         <Button
             android:id="@+id/btnDeleteCategory"

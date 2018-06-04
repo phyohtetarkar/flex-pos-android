@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.jsoft.pos.ui.views.unit.EditUnitViewModel"/>
+            type="com.jsoft.pos.ui.views.unit.EditUnitViewModel" />
 
         <variable
             name="delegate"
@@ -36,29 +36,21 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Edit Unit" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout"
+        <com.jsoft.pos.ui.custom.CustomEditText
+            android:id="@+id/editTextUnit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:layout_marginTop="20dp"
+            android:hint="@string/hint_unit_name"
+            android:inputType="text"
+            android:text="@={vm.unit.name}"
             app:checkResult="@{safeUnbox(isValidUnitName)}"
             app:errorMessage='@{@string/error_empty_input_format("Unit name")}'
-            app:errorTextAppearance="@style/ErrorText"
-            app:hintAnimationEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textViewEditPrice"
-            app:layout_constraintTop_toBottomOf="@+id/textViewEditPrice">
+            app:layout_constraintTop_toBottomOf="@+id/textViewEditPrice" />
 
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_unit_name"
-                android:inputType="text"
-                android:text="@={vm.unit.name}"
-                app:checkResult="@{safeUnbox(isValidUnitName)}" />
-
-        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btnSaveUnit"
@@ -68,12 +60,12 @@
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="16dp"
+            android:onClick="@{v -> delegate.onSaveClick()}"
             android:text="@string/save"
             android:textAllCaps="true"
-            android:onClick="@{v -> delegate.onSaveClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextUnit" />
 
         <Button
             android:id="@+id/btnCancelUnit"
@@ -81,9 +73,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:onClick="@{v -> delegate.onCancelClick()}"
             android:text="@string/cancel"
             android:textAllCaps="true"
-            android:onClick="@{v -> delegate.onCancelClick()}"
             app:layout_constraintBottom_toBottomOf="@+id/btnSaveUnit"
             app:layout_constraintEnd_toStartOf="@+id/btnSaveUnit"
             app:layout_constraintTop_toTopOf="@+id/btnSaveUnit" />
