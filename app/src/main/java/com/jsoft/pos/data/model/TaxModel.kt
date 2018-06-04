@@ -6,14 +6,36 @@ import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.entity.ItemTax
 import com.jsoft.pos.data.entity.Tax
 
+class TaxRepository(private val dao: TaxDao) {
+
+    fun findItemTaxAssociations(itemId: Long): List<Tax> {
+        val taxes = dao.findAllTaxesSync()
+
+        if (itemId > 0) {
+            val ts = dao.findTaxAssociations(itemId)
+            taxes.forEach {
+                it._checked = ts.contains(it)
+            }
+        }
+
+        return taxes
+    }
+
+}
+
 @Dao
 abstract class TaxDao : BaseDao<Tax> {
 
     @Query("SELECT * FROM tax")
     abstract fun findAllTaxes(): LiveData<List<Tax>>
 
-    @Query("SELECT * FROM tax WHERE id IN (SELECT tax_id FROM item_tax WHERE item_id = :itemId)")
-    abstract fun findByItemSync(itemId: Long): List<Tax>
+    @Query("SELECT * FROM tax")
+    abstract fun findAllTaxesSync(): List<Tax>
+
+    @Query("SELECT t.* FROM tax t " +
+            "INNER JOIN item_tax it ON it.tax_id = t.id " +
+            "WHERE it.item_id = :itemId ")
+    abstract fun findTaxAssociations(itemId: Long): List<Tax>
 
     @Query("SELECT * FROM tax WHERE id = :id LIMIT 1")
     abstract fun findById(id: Int): LiveData<Tax>
@@ -55,7 +77,7 @@ abstract class TaxDao : BaseDao<Tax> {
         itemIds?.takeUnless { it.isEmpty() }?.apply { assignTax(t, this) }
     }
 
-    protected open fun assignTax(tax: Tax, itemIds: Collection<Long>) {
+    private fun assignTax(tax: Tax, itemIds: Collection<Long>) {
         deleteItemTaxes(findItemTaxesSync(tax.id))
         val itemTaxes = itemIds.map { ItemTax(itemId = it, taxId = tax.id) }
         saveItemTaxes(itemTaxes)

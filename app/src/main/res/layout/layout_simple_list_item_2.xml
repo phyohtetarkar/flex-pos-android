@@ -22,7 +22,7 @@
         android:focusable="true">
 
         <TextView
-            android:id="@+id/simple_list_item"
+            android:id="@+id/switch_list_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -50,9 +50,9 @@
             android:padding="16dp"
             android:text="@{second}"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/simple_list_item"
+            app:layout_constraintBottom_toBottomOf="@+id/switch_list_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/simple_list_item"
+            app:layout_constraintTop_toTopOf="@+id/switch_list_item"
             tools:text="00" />
 
     </android.support.constraint.ConstraintLayout>

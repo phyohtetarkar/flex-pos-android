@@ -1,15 +1,17 @@
 package com.jsoft.pos.ui.views.item
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import com.jsoft.pos.R
+import com.jsoft.pos.data.entity.Discount
+import com.jsoft.pos.data.entity.Tax
 import com.jsoft.pos.databinding.EditItemBinding
+import com.jsoft.pos.ui.custom.CustomViewAdapter
 import com.jsoft.pos.ui.views.SimpleListDialogFragment
 import kotlinx.android.synthetic.main.activity_edit_item.*
 
@@ -31,10 +33,30 @@ class EditItemActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_white)
 
         edChooseCategory.onTouchDelegate = { showSelectDialog(DialogCategories())}
         edChooseUnit.onTouchDelegate = { showSelectDialog(DialogUnits()) }
+
+        val taxAdapter = object : CustomViewAdapter<Tax>(linearLayoutTaxes, R.layout.layout_switch_item) {
+            override fun onBindView(holder: SimpleViewHolder, position: Int) {
+                holder.bind(list[position])
+            }
+        }
+
+        val discountAdapter = object : CustomViewAdapter<Discount>(linearLayoutDiscounts, R.layout.layout_switch_item) {
+            override fun onBindView(holder: SimpleViewHolder, position: Int) {
+                holder.bind(list[position])
+            }
+        }
+
+        viewModel.taxes.observe(this, Observer {
+            taxAdapter.submitList(it)
+        })
+
+        viewModel.discounts.observe(this, Observer {
+            discountAdapter.submitList(it)
+        })
 
         viewModel.apply {
 
@@ -49,11 +71,7 @@ class EditItemActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (itemId > 0) {
-            menuInflater.inflate(R.menu.menu_save_delete, menu)
-        } else {
-            menuInflater.inflate(R.menu.menu_save, menu)
-        }
+        menuInflater.inflate(R.menu.menu_save, menu)
         return true
     }
 

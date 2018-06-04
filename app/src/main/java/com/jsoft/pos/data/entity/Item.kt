@@ -33,6 +33,10 @@ data class Item(
         var categoryId: Int? = null
 ) : BaseObservable(), Checkable {
 
+    enum class AssignType {
+        TAX, DISCOUNT
+    }
+
     @Ignore
     override var _name: String = ""
         get() = name

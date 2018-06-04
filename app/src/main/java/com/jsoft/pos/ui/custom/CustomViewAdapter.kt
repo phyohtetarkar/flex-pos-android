@@ -1,39 +1,59 @@
 package com.jsoft.pos.ui.custom
 
+import android.databinding.DataBindingUtil
+import android.databinding.ObservableArrayList
 import android.databinding.ViewDataBinding
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jsoft.pos.BR
 
-abstract class CustomViewAdapter<VH: CustomViewAdapter.SimpleViewHolder>(private val parent: ViewGroup) {
+abstract class CustomViewAdapter<T>(
+        private var parent: ViewGroup?,
+        private var itemViewId: Int
+) {
 
-    protected abstract fun onCreateView(parent: ViewGroup): VH
-    protected abstract fun onBindView(holder: VH, position: Int)
-    protected abstract fun getViewCount(): Int
+    protected val list = ObservableArrayList<T>()
 
-    protected fun notifyChange() {
-        for (i in 0..getViewCount()) {
-            val holder = onCreateView(parent)
-            onBindView(holder, i)
-            parent.addView(holder.itemView)
+    protected abstract fun onBindView(holder: SimpleViewHolder, position: Int)
+
+    open fun onCreateView(parent: ViewGroup?): SimpleViewHolder {
+        val inflater = LayoutInflater.from(parent?.context)
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, itemViewId, parent, false)
+        return SimpleViewHolder(binding)
+    }
+
+    fun submitList(data: List<T>?) {
+        data?.apply {
+            list.clear()
+            list.addAll(this)
+            notifyChange()
         }
     }
 
-    protected fun notifyInserted(position: Int) {
-        val holder = onCreateView(parent)
-        onBindView(holder, position)
-        parent.addView(holder.itemView, position)
+    fun destroyView() {
+        parent = null
     }
 
-    protected fun notifyDelete(position: Int) {
-        parent.removeViewAt(position)
+    private fun notifyChange() {
+        for (i in 0 until list.size) {
+            val holder = onCreateView(parent)
+            onBindView(holder, i)
+            parent?.addView(holder.itemView)
+        }
     }
 
-    open class SimpleViewHolder(val itemView: View) {
+    class SimpleViewHolder(val itemView: View) {
 
         private lateinit var binding: ViewDataBinding
 
         constructor(binding: ViewDataBinding) : this(binding.root) {
             this.binding = binding
+        }
+
+        fun bind(obj: Any) {
+            binding.setVariable(BR.obj, obj)
+            binding.executePendingBindings()
         }
 
     }

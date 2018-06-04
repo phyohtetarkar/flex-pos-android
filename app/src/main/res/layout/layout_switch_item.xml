@@ -6,7 +6,7 @@
     <data>
         <variable
             name="obj"
-            type="com.jsoft.pos.data.entity.Item"/>
+            type="com.jsoft.pos.data.entity.Checkable"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -15,7 +15,7 @@
         android:background="@color/whitePrimary">
 
         <TextView
-            android:id="@+id/simple_list_item"
+            android:id="@+id/switch_list_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -25,20 +25,20 @@
             android:lines="1"
             android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/check"
+            app:layout_constraintEnd_toStartOf="@+id/switch2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Name" />
 
-        <CheckBox
-            android:id="@+id/check"
+        <Switch
+            android:id="@+id/switch2"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="16dp"
             android:checked="@={obj._checked}"
-            app:layout_constraintBottom_toBottomOf="@+id/simple_list_item"
+            app:layout_constraintBottom_toBottomOf="@+id/switch_list_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/simple_list_item" />
+            app:layout_constraintTop_toTopOf="@+id/switch_list_item" />
 
     </android.support.constraint.ConstraintLayout>
 

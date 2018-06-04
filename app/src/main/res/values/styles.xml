@@ -55,17 +55,16 @@
 
     <style name="ButtonTextNormal" parent="@style/Base.Widget.AppCompat.Button">
         <item name="fontFamily">@font/app_font_medium</item>
-        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColor">@color/whitePrimary</item>
     </style>
 
     <style name="ButtonTextColored" parent="@style/Base.Widget.AppCompat.Button.Borderless">
         <item name="fontFamily">@font/app_font_medium</item>
-        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTextNormal" parent="@android:style/TextAppearance">
         <item name="fontFamily">@font/app_font_normal</item>
-        <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
     <style name="MenuTextNormal" parent="@android:style/TextAppearance">
@@ -83,11 +82,11 @@
     </style>
 
     <style name="HeaderText.Normal" parent="HeaderText">
-        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="HeaderText.Colored" parent="HeaderText">
-        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="ErrorText" parent="@android:style/TextAppearance">

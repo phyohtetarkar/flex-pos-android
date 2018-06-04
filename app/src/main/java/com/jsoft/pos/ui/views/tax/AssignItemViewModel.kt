@@ -17,20 +17,13 @@ class AssignItemViewModel(application: Application) : AndroidViewModel(applicati
     val search = SearchMutableLiveData<ItemSearch>()
     var id = 0
     var checkedIds: Collection<Long>? = null
-    lateinit var type: AssignItemActivity.AssignType
+    lateinit var type: Item.AssignType
 
     val items: LiveData<List<Item>> = Transformations.switchMap(search) {
         val liveItems = MutableLiveData<List<Item>>()
 
         DaoWorkerAsync<ItemSearch>({
-            when (type) {
-                AssignItemActivity.AssignType.TAX -> {
-                    liveItems.postValue(repository.findItemsCheckedWithTax(it, id, checkedIds))
-                }
-                AssignItemActivity.AssignType.DISCOUNT -> {
-                    liveItems.postValue(repository.findItemsCheckedWithDiscount(it, id, checkedIds))
-                }
-            }
+            liveItems.postValue(repository.findItemsChecked(it, id, checkedIds, type))
         }, {}, {}).execute(it)
 
         return@switchMap liveItems

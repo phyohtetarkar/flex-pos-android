@@ -43,7 +43,7 @@
             android:id="@+id/recyclerViewCheckableList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/layout_checkable_item" />
+            tools:listitem="@layout/layout_check_item" />
 
         <ViewStub
             android:id="@+id/viewStubList"

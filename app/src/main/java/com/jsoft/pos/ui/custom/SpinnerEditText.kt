@@ -27,6 +27,7 @@ class SpinnerEditText : TextInputEditText {
         setOnTouchListener { _, me ->
             if (me.action == MotionEvent.ACTION_DOWN) {
                 onTouchDelegate?.invoke()
+                requestFocus()
             }
             return@setOnTouchListener true
         }

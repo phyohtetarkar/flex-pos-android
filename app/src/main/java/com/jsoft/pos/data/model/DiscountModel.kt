@@ -6,14 +6,36 @@ import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.entity.Discount
 import com.jsoft.pos.data.entity.ItemDiscount
 
+class DiscountRepository(private val dao: DiscountDao) {
+
+    fun findItemDiscountAssociations(itemId: Long): List<Discount> {
+        val discounts = dao.findAllDiscountsSync()
+
+        if (itemId > 0) {
+            val ts = dao.findDiscountAssociations(itemId)
+            discounts.forEach {
+                it._checked = ts.contains(it)
+            }
+        }
+
+        return discounts
+    }
+
+}
+
 @Dao
 abstract class DiscountDao : BaseDao<Discount> {
 
     @Query("SELECT * FROM discount")
     abstract fun findAllDiscounts(): LiveData<List<Discount>>
 
-    @Query("SELECT * FROM discount WHERE id IN (SELECT discount_id FROM item_discount WHERE item_id = :itemId)")
-    abstract fun findByItemSync(itemId: Long): List<Discount>
+    @Query("SELECT * FROM discount")
+    abstract fun findAllDiscountsSync(): List<Discount>
+
+    @Query("SELECT d.* FROM discount d " +
+            "INNER JOIN item_discount id ON id.discount_id = d.id " +
+            "WHERE id.item_id = :itemId ")
+    abstract fun findDiscountAssociations(itemId: Long): List<Discount>
 
     @Query("SELECT * FROM discount WHERE id = :id LIMIT 1")
     abstract fun findById(id: Int): LiveData<Discount>
@@ -55,7 +77,7 @@ abstract class DiscountDao : BaseDao<Discount> {
         itemIds?.takeUnless { it.isEmpty() }?.apply { assignDiscount(t, this) }
     }
 
-    protected open fun assignDiscount(discount: Discount, itemIds: Collection<Long>) {
+    private fun assignDiscount(discount: Discount, itemIds: Collection<Long>) {
         deleteItemDiscounts(findItemDiscountsSync(discount.id))
         val itemDiscounts = itemIds.map { ItemDiscount(itemId = it, discountId = discount.id) }
         saveItemDiscounts(itemDiscounts)

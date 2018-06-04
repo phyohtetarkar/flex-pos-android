@@ -11,6 +11,7 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import com.jsoft.pos.R
+import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.databinding.EditTaxBinding
 import kotlinx.android.synthetic.main.activity_edit_tax.*
 
@@ -35,7 +36,7 @@ class EditTaxActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_white)
 
         viewModel.apply {
             if (tax.value != null) {
@@ -61,7 +62,7 @@ class EditTaxActivity : AppCompatActivity() {
         btnAssignTax.setOnClickListener {
             val intent = Intent(this, AssignItemActivity::class.java)
             intent.putExtra("id", taxId)
-            intent.putExtra("type", AssignItemActivity.AssignType.TAX)
+            intent.putExtra("type", Item.AssignType.TAX)
             intent.putExtra("checked", viewModel.checkedItemIds?.toLongArray())
             startActivityForResult(intent, ASSIGN_REQ)
         }

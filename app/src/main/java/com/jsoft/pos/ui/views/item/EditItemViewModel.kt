@@ -6,17 +6,12 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import com.jsoft.pos.FlexPosApplication
-import com.jsoft.pos.data.entity.Category
-import com.jsoft.pos.data.entity.Item
+import com.jsoft.pos.data.entity.*
 import com.jsoft.pos.data.entity.Unit
-import com.jsoft.pos.data.model.CategoryDao
-import com.jsoft.pos.data.model.ItemRepository
-import com.jsoft.pos.data.model.UnitDao
+import com.jsoft.pos.data.model.*
 import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class EditItemViewModel(application: Application) : AndroidViewModel(application) {
-
-    //val item = ObservableField<Item>()
 
     val itemInput = MutableLiveData<Long>()
 
@@ -33,7 +28,26 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val categories: LiveData<List<Category>> by lazy { categoryDao.findAllCategories() }
     val units: LiveData<List<Unit>> by lazy { unitDao.findAllUnits() }
 
+    val taxes: LiveData<List<Tax>> = Transformations.switchMap(itemInput) {
+        val liveTaxes = MutableLiveData<List<Tax>>()
+        DaoWorkerAsync<Long>({
+            liveTaxes.postValue(taxRepository.findItemTaxAssociations(it))
+        },{},{}).execute(it)
+        return@switchMap liveTaxes
+    }
+
+    val discounts: LiveData<List<Discount>> = Transformations.switchMap(itemInput) {
+        val liveDiscounts = MutableLiveData<List<Discount>>()
+        DaoWorkerAsync<Long>({
+            liveDiscounts.postValue(discountRepository.findItemDiscountAssociations(it))
+        },{},{}).execute(it)
+        return@switchMap liveDiscounts
+    }
+
     private val repository: ItemRepository
+    private val taxRepository: TaxRepository
+    private val discountRepository: DiscountRepository
+
     private val categoryDao: CategoryDao
     private val unitDao: UnitDao
 
@@ -42,11 +56,13 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         categoryDao = app.db.categoryDao()
         unitDao = app.db.unitDao()
         repository = ItemRepository(app.db.itemDao(), unitDao, categoryDao)
+        taxRepository = TaxRepository(app.db.taxDao())
+        discountRepository = DiscountRepository((app.db.discountDao()))
     }
 
     fun save() {
         DaoWorkerAsync<Item>({
-            repository.save(it)
+            repository.save(it, taxes.value, discounts.value)
         },{
 
         },{

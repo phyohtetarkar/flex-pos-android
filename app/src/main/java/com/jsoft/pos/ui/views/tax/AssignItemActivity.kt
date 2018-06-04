@@ -21,10 +21,6 @@ import kotlinx.android.synthetic.main.activity_checkable_list.*
 
 class AssignItemActivity : AppCompatActivity() {
 
-    enum class AssignType {
-        TAX, DISCOUNT
-    }
-
     private lateinit var viewModel: AssignItemViewModel
     private lateinit var adapter: SimpleListAdapter<Item>
 
@@ -34,7 +30,7 @@ class AssignItemActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(AssignItemViewModel::class.java)
         viewModel.id = intent.getIntExtra("id", 0)
-        viewModel.type = intent.getSerializableExtra("type") as AssignType
+        viewModel.type = intent.getSerializableExtra("type") as Item.AssignType
         viewModel.checkedIds = intent.getLongArrayExtra("checked").asList()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -48,7 +44,7 @@ class AssignItemActivity : AppCompatActivity() {
                 return oldItem == newItem
             }
 
-        }, R.layout.layout_checkable_item)
+        }, R.layout.layout_check_item)
 
         recyclerViewCheckableList.apply {
             layoutManager = LinearLayoutManager(this@AssignItemActivity)

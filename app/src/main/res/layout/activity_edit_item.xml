@@ -219,7 +219,8 @@
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/containerTaxes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="@{safeUnbox(vm.taxes.size) > 0 ? View.VISIBLE : View.GONE}">
 
                 <TextView
                     android:id="@+id/textView17"
@@ -249,23 +250,12 @@
                 <LinearLayout
                     android:id="@+id/linearLayoutTaxes"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
-                <TextView
-                    android:id="@+id/textView22"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/add_new"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView17"
-                    app:layout_constraintEnd_toEndOf="parent" />
 
 
             </android.support.constraint.ConstraintLayout>
@@ -273,7 +263,7 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{safeUnbox(vm.item.id) > 0 ? View.VISIBLE : View.GONE}">
+                android:visibility="@{safeUnbox(vm.discounts.size) > 0 ? View.VISIBLE : View.GONE}">
 
                 <TextView
                     android:id="@+id/textView21"
@@ -304,7 +294,7 @@
                 <LinearLayout
                     android:id="@+id/linearLayoutDiscounts"
                     android:layout_width="match_parent"
-                    android:layout_height="105dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -312,17 +302,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView21">
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textView23"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/add_new"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView21"
-                    app:layout_constraintEnd_toEndOf="parent" />
 
 
             </android.support.constraint.ConstraintLayout>
