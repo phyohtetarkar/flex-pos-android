@@ -3,21 +3,30 @@ package com.jsoft.pos.ui.views.sale
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.util.DiffUtil
+import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.util.DisplayMetrics
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.widget.ArrayAdapter
+import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
+import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.model.ItemVOSearch
+import com.jsoft.pos.ui.custom.BadgeDrawable
 import com.jsoft.pos.ui.custom.RoundedImageView
 import com.jsoft.pos.ui.views.BindingViewHolder
 import com.jsoft.pos.ui.views.ListViewModel
@@ -27,6 +36,7 @@ import kotlinx.android.synthetic.main.fragment_simple_list.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import kotlinx.android.synthetic.main.layout_item_compact.view.*
 
+
 class SaleFragment : SimpleListFragment<ItemVO>() {
 
     private var mPendingAnimStart: (() -> Unit)? = null
@@ -34,7 +44,10 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     private lateinit var animSet: AnimatorSet
     private lateinit var adapter: SimplePagedListAdapter<ItemVO>
+    private lateinit var spinnerAdapter: ArrayAdapter<Category>
     private lateinit var viewModel: SaleViewModel
+    private var mSpinner: AppCompatSpinner? = null
+    private var icon: LayerDrawable? = null
 
     private val receiptPosition = IntArray(2)
 
@@ -43,6 +56,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         }
 
         override fun onAnimationEnd(animation: Animator?) {
+            setBadgeCount(1.toString())
             mPendingAnimEnd?.invoke()
             mPendingAnimStart = null
             mPendingAnimEnd = null
@@ -77,6 +91,26 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         animSet = AnimatorSet()
         animSet.duration = 600
         animSet.addListener(animatorListener)
+
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val app = context as MainActivity
+        app.toolbarMain.title = null
+
+        mSpinner = LayoutInflater.from(context).inflate(R.layout.layout_toolbar_spinner, app.toolbarMain, false) as AppCompatSpinner?
+        spinnerAdapter = ArrayAdapter(mSpinner?.context, android.R.layout.simple_list_item_1)
+        mSpinner?.adapter = spinnerAdapter
+
+        app.toolbarMain.addView(mSpinner)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        activity?.toolbarMain?.removeView(mSpinner)
+        mSpinner = null
+        icon = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -90,10 +124,25 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
                 it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82))
             }
         })
+
+        fabSimpleList.visibility = View.GONE
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.categories.observe(this, Observer {
+            spinnerAdapter.clear()
+            spinnerAdapter.add(Category(name = "All Item"))
+            spinnerAdapter.addAll(it)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_sale, menu)
+
+        icon = menu?.findItem(R.id.action_receipt)?.icon as LayerDrawable?
 
         Handler().post {
             val v = activity?.findViewById<View>(R.id.action_receipt)
@@ -164,6 +213,23 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
         animSet.playTogether(ax, ay, asx, asy)
         animSet.start()
+    }
+
+    fun setBadgeCount(count: String) {
+
+        val badge: BadgeDrawable
+
+        // Reuse drawable if possible
+        val reuse = icon?.findDrawableByLayerId(R.id.ic_badge)
+        if (reuse != null && reuse is BadgeDrawable) {
+            badge = reuse
+        } else {
+            badge = BadgeDrawable(activity!!)
+        }
+
+        badge.setCount(count)
+        icon?.mutate()
+        icon?.setDrawableByLayerId(R.id.ic_badge, badge)
     }
 
     companion object {

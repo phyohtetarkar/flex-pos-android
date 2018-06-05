@@ -4,16 +4,16 @@
 
     <item
         android:id="@+id/action_search"
-        android:title="@string/save"
+        android:title="Search"
         android:orderInCategory="100"
         android:icon="@drawable/ic_search_white"
         app:showAsAction="ifRoom|collapseActionView"/>
 
     <item
         android:id="@+id/action_receipt"
-        android:title="@string/save"
+        android:title="Receipt"
         android:orderInCategory="200"
-        android:icon="@drawable/ic_receipt_white"
+        android:icon="@drawable/layer_receipt_drawable"
         app:showAsAction="ifRoom|collapseActionView"/>
 
 </menu>

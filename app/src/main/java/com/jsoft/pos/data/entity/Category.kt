@@ -13,7 +13,11 @@ data class Category(
         @ColumnInfo(name = "unique_name")
         var uniqueName: String = "",
         var color: String = "#FFBDBDBD"
-)
+) {
+    override fun toString(): String {
+        return name
+    }
+}
 
 data class CategoryVO(
         var id: Int,

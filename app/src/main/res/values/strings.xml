@@ -55,4 +55,11 @@
     <string name="items_for_count">items</string>
     <string name="select_all">Select all</string>
     <string name="hint_quantity">Quantity *</string>
+
+    <string-array name="toolbar_spinner_entries">
+        <item>All Items</item>
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+    </string-array>
 </resources>
