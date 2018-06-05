@@ -62,6 +62,11 @@ data class Item(
             notifyPropertyChanged(BR.category)
         }
 
+    @Ignore
+    var taxes: List<Tax>? = null
+    @Ignore
+    var discounts: List<Discount>? = null
+
 }
 
 data class ItemVO(
@@ -79,10 +84,14 @@ data class ItemVO(
     var amountDesc: String? = ""
         private set
         get() {
-            return if ((amount - amount.toInt()) % 10 == 0.0) {
-                "${amount.toInt()} $unit"
-            } else {
-                "$amount $unit"
-            }
+            return "${amount.toSimplifyString()} $unit"
         }
+}
+
+fun Double.toSimplifyString(): String {
+    return if ((this - this.toInt()) % 10 == 0.0) {
+        "${this.toInt()}"
+    } else {
+        "$this"
+    }
 }

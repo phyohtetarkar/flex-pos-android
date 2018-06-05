@@ -8,7 +8,6 @@ import android.arch.persistence.db.SimpleSQLiteQuery
 import android.arch.persistence.db.SupportSQLiteQuery
 import android.arch.persistence.room.*
 import android.databinding.BaseObservable
-import android.util.Log
 import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.Searchable
 import com.jsoft.pos.data.entity.*
@@ -17,7 +16,9 @@ import com.jsoft.pos.data.entity.Unit
 class ItemRepository(
         private val dao: ItemDao,
         private val unitDao: UnitDao? = null,
-        private val categoryDao: CategoryDao? = null
+        private val categoryDao: CategoryDao? = null,
+        private val taxDao: TaxDao? = null,
+        private val discountDao: DiscountDao? = null
 ) {
 
     fun findItemsChecked(search: ItemSearch, taxId: Int, checkedIds: Collection<Long>?, with: Item.AssignType): List<Item> {
@@ -61,6 +62,9 @@ class ItemRepository(
             item.unitId?.apply {
                 item.unit = unitDao?.findByIdSync(this)
             }
+
+            item.taxes = taxDao?.findItemTaxAssociations(id)
+            item.discounts = discountDao?.findDiscountAssociations(id)
 
             return item
         }

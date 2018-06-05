@@ -27,4 +27,14 @@ data class SaleItem(
 ) {
     @Ignore
     var item: Item? = Item()
+
+    @Ignore
+    var total: Double = 0.00
+        get() = quantity * price
+
+    @Ignore
+    var quantityDesc: String = ""
+        get() {
+            return "(${item?.amount?.toSimplifyString()} \u00D7 $quantity) ${item?.unit?.name}"
+        }
 }

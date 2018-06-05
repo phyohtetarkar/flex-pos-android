@@ -1,11 +1,36 @@
 package com.jsoft.pos.data.model
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.persistence.db.SimpleSQLiteQuery
 import android.arch.persistence.room.*
 import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.entity.Sale
 import com.jsoft.pos.data.entity.SaleItem
+import com.jsoft.pos.data.utils.DaoWorkerAsync
+
+class SaleRepository(
+        private val saleDao: SaleDao,
+        private val itemRepo: ItemRepository
+) {
+    fun createSaleItemFromItemIds(itemIds: LongArray, writeTo: MutableLiveData<List<SaleItem>>) {
+
+        DaoWorkerAsync<LongArray>({
+            val saleItems = it
+                    .groupBy { it }
+                    .map { en ->
+                        val item = itemRepo.getItem(en.key)
+                        val saleItem = SaleItem(quantity = en.value.size, price = item.price, itemId = item.id)
+                        saleItem.item = item
+
+                        return@map saleItem
+                    }
+
+            writeTo.postValue(saleItems)
+        }, {}, {}).execute(itemIds)
+
+    }
+}
 
 @Dao
 abstract class SaleDao : BaseDao<Sale> {

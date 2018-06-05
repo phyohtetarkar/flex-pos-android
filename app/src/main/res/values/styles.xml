@@ -73,6 +73,9 @@
     <style name="AppTextNormal" parent="@android:style/TextAppearance">
         <item name="fontFamily">@font/app_font_normal</item>
     </style>
+    <style name="AppTextSecondary" parent="AppTextNormal">
+        <item name="android:textColor">@color/darkSecondary</item>
+    </style>
 
     <style name="MenuTextNormal" parent="@android:style/TextAppearance">
         <item name="fontFamily">@font/app_font_normal</item>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data class="CheckoutBinding">
+        <variable
+            name="vm"
+            type="com.jsoft.pos.ui.views.sale.CheckoutViewModel"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBack">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:layout_marginBottom="56dp"
+            tools:listitem="@layout/layout_sale_item">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <include layout="@layout/layout_checkout_sheet"
+            bind:vm="@{vm}"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

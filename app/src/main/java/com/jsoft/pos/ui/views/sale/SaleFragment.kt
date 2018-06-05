@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
@@ -13,13 +14,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.AppCompatSpinner
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.util.DisplayMetrics
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.jsoft.pos.MainActivity
@@ -40,10 +37,6 @@ import kotlinx.android.synthetic.main.layout_item_compact.view.*
 
 class SaleFragment : SimpleListFragment<ItemVO>() {
 
-    private var mPendingAnimStart: (() -> Unit)? = null
-    private var mPendingAnimEnd: (() -> Unit)? = null
-
-    private lateinit var animSet: AnimatorSet
     private lateinit var adapter: SimplePagedListAdapter<ItemVO>
     private lateinit var spinnerAdapter: ArrayAdapter<Category>
     private lateinit var viewModel: SaleViewModel
@@ -51,26 +44,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     private var icon: LayerDrawable? = null
 
     private val receiptPosition = IntArray(2)
-
-    private val animatorListener = object : Animator.AnimatorListener {
-        override fun onAnimationRepeat(animation: Animator?) {
-        }
-
-        override fun onAnimationEnd(animation: Animator?) {
-            setBadgeCount(1.toString())
-            mPendingAnimEnd?.invoke()
-            mPendingAnimStart = null
-            mPendingAnimEnd = null
-        }
-
-        override fun onAnimationCancel(animation: Animator?) {
-        }
-
-        override fun onAnimationStart(animation: Animator?) {
-            mPendingAnimStart?.invoke()
-        }
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,10 +61,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         }, R.layout.layout_item_compact)
 
         setHasOptionsMenu(true)
-
-        animSet = AnimatorSet()
-        animSet.duration = 600
-        animSet.addListener(animatorListener)
 
     }
 
@@ -126,14 +95,14 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerViewSimpleList.removeItemDecorationAt(0)
-        recyclerViewSimpleList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82, resources.newTheme()))
-            } else {
-                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82))
-            }
-        })
+//        recyclerViewSimpleList.removeItemDecorationAt(0)
+//        recyclerViewSimpleList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82, resources.newTheme()))
+//            } else {
+//                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82))
+//            }
+//        })
 
         fabSimpleList.visibility = View.GONE
 
@@ -159,6 +128,21 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             v?.getLocationOnScreen(receiptPosition)
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+
+            R.id.action_receipt -> {
+                val intent = Intent(context, CheckoutActivity::class.java)
+                intent.putExtra("itemIds", viewModel.checkedItemIds.toLongArray())
+                startActivity(intent)
+            }
+
+        }
+
+        return true
     }
 
     override fun onResume() {
@@ -213,19 +197,32 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         val asx = ObjectAnimator.ofFloat(copy, "scaleX", 0.2f)
         val asy = ObjectAnimator.ofFloat(copy, "scaleY", 0.2f)
 
-        mPendingAnimStart = {
-            activity!!.layoutMain.addView(copy)
-        }
+        val animSet = AnimatorSet()
+        animSet.duration = 600
+        animSet.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
 
-        mPendingAnimEnd = {
-            activity!!.layoutMain.removeView(copy)
-        }
+            override fun onAnimationEnd(animation: Animator?) {
+                viewModel.checkedItemIds.add(itemVO.id)
+                updateBadgeCount()
+                activity!!.layoutMain.removeView(copy)
+            }
 
+            override fun onAnimationCancel(animation: Animator?) {
+            }
+
+            override fun onAnimationStart(animation: Animator?) {
+                activity!!.layoutMain.addView(copy)
+            }
+
+        })
         animSet.playTogether(ax, ay, asx, asy)
         animSet.start()
+
     }
 
-    fun setBadgeCount(count: String) {
+    fun updateBadgeCount() {
 
         val badge: BadgeDrawable
 
@@ -237,7 +234,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             badge = BadgeDrawable(activity!!)
         }
 
-        badge.setCount(count)
+        badge.setCount(viewModel.checkedItemIds.size.toString())
         icon?.mutate()
         icon?.setDrawableByLayerId(R.id.ic_badge, badge)
     }

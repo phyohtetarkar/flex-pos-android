@@ -21,9 +21,9 @@ abstract class SimpleListFragment<T> : AbstractListFragment<T>() {
 
         recyclerViewSimpleList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                it.setDrawable(resources.getDrawable(R.drawable.simple_divider_drawable, resources.newTheme()))
+                it.setDrawable(resources.getDrawable(R.drawable.divider_simple, resources.newTheme()))
             } else {
-                it.setDrawable(resources.getDrawable(R.drawable.simple_divider_drawable))
+                it.setDrawable(resources.getDrawable(R.drawable.divider_simple))
             }
         })
         

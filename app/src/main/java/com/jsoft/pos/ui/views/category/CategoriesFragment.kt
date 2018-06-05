@@ -41,14 +41,14 @@ class CategoriesFragment : SimpleListFragment<CategoryVO>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerViewSimpleList.removeItemDecorationAt(0)
-        recyclerViewSimpleList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82, resources.newTheme()))
-            } else {
-                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82))
-            }
-        })
+//        recyclerViewSimpleList.removeItemDecorationAt(0)
+//        recyclerViewSimpleList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82, resources.newTheme()))
+//            } else {
+//                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82))
+//            }
+//        })
     }
 
     override fun onResume() {

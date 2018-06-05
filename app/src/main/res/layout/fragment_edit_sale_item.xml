@@ -46,15 +46,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:hint="@string/hint_quantity"
+                android:inputType="number"
                 app:layout_constraintBottom_toTopOf="@+id/edSaleItemRemark"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddQty"
+                app:layout_constraintStart_toEndOf="@+id/btnSubQty"
                 app:layout_constraintTop_toBottomOf="@+id/view10" />
 
             <TextView
@@ -70,21 +68,74 @@
                 android:id="@+id/edSaleItemRemark"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:hint="@string/hint_remark"
                 android:gravity="top"
+                android:hint="@string/hint_remark"
                 android:lines="3"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/edSaleItemAmount"
-                app:layout_constraintStart_toStartOf="@+id/edSaleItemAmount"
+                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edSaleItemAmount" />
+
+            <ImageButton
+                android:id="@+id/btnSubQty"
+                android:layout_width="64dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/selectable_outline_bordered_background"
+                android:src="@drawable/ic_remove_primary_dark"
+                app:layout_constraintBottom_toBottomOf="@+id/edSaleItemAmount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edSaleItemAmount"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/btnAddQty"
+                android:layout_width="64dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/selectable_outline_bordered_background"
+                android:src="@drawable/ic_add_primary_dark"
+                app:layout_constraintBottom_toBottomOf="@+id/edSaleItemAmount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edSaleItemAmount"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/button6"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="58dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="13dp"
+                android:text="@string/save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/darkDivider"
+                app:layout_constraintBottom_toTopOf="@+id/button6"
+                app:layout_constraintEnd_toEndOf="@+id/edSaleItemRemark"
+                app:layout_constraintStart_toStartOf="@+id/edSaleItemRemark"
+                app:layout_constraintTop_toBottomOf="@+id/edSaleItemRemark" />
 
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/textView18"
@@ -125,6 +176,7 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginBottom="16dp">
 
             <TextView
