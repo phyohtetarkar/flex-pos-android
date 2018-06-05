@@ -8,6 +8,7 @@ import android.arch.persistence.db.SimpleSQLiteQuery
 import android.arch.persistence.db.SupportSQLiteQuery
 import android.arch.persistence.room.*
 import android.databinding.BaseObservable
+import android.util.Log
 import com.jsoft.pos.data.BaseDao
 import com.jsoft.pos.data.Searchable
 import com.jsoft.pos.data.entity.*
@@ -47,7 +48,7 @@ class ItemRepository(
     }
 
     fun findItemVOs(search: ItemVOSearch): LiveData<PagedList<ItemVO>> {
-        return LivePagedListBuilder(dao.findItemVOs(SimpleSQLiteQuery(search.query, search.objects.toTypedArray())), 50).build()
+        return LivePagedListBuilder(dao.findItemVOs(SimpleSQLiteQuery(search.query, search.objects.toTypedArray())), 20).build()
     }
 
     fun getItem(id: Long): Item {
@@ -88,7 +89,7 @@ class ItemSearch : BaseObservable(), Searchable {
     override val query: String
         get() {
             val sb = StringBuilder()
-
+            objects.clear()
             sb.append("SELECT * FROM item WHERE 1 = 1 ")
 
             name?.apply {
@@ -112,6 +113,10 @@ class ItemVOSearch : BaseObservable(), Searchable {
         }
 
     var categoryId: Int = 0
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
     var isNotAvailable: Boolean = false
         set(notAvailable) {
@@ -129,6 +134,7 @@ class ItemVOSearch : BaseObservable(), Searchable {
 
     override val query: String
         get() {
+            objects.clear()
             val sb = StringBuilder()
             sb.append("SELECT i.id, " +
                     "i.name, " +
@@ -144,12 +150,12 @@ class ItemVOSearch : BaseObservable(), Searchable {
                     "LEFT OUTER JOIN category c ON c.id = i.category_id " +
                     "WHERE 1 = 1 ")
 
-            name?.apply {
+            name?.takeUnless { it.isEmpty() }?.apply {
                 sb.append("and UPPER(c.name) LIKE ? ")
                 objects.add("${toUpperCase()}%")
             }
 
-            categoryId.takeUnless { it == 0 }?.apply {
+            categoryId.takeIf { it > 0 }?.apply {
                 sb.append("and i.category_id = ? ")
                 objects.add(this)
             }

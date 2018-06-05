@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
@@ -100,8 +101,17 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         app.toolbarMain.title = null
 
         mSpinner = LayoutInflater.from(context).inflate(R.layout.layout_toolbar_spinner, app.toolbarMain, false) as AppCompatSpinner?
-        spinnerAdapter = ArrayAdapter(mSpinner?.context, android.R.layout.simple_list_item_1)
+        spinnerAdapter = ArrayAdapter(app.appbar_main.context, R.layout.extended_simple_list_item_1)
         mSpinner?.adapter = spinnerAdapter
+        mSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.itemSearch.value?.categoryId = spinnerAdapter.getItem(position).id
+            }
+
+        }
 
         app.toolbarMain.addView(mSpinner)
     }

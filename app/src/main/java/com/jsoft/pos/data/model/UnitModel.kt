@@ -24,7 +24,7 @@ class UnitSearch : BaseObservable(), Searchable {
     override val query: String
         get() {
             val sb = StringBuilder(String.format(Searchable.BASE_QUERY, Unit::class.java.simpleName))
-
+            objects.clear()
             name.takeUnless { it.isNullOrBlank() }?.apply {
                 sb.append("and UPPER(name) LIKE ? ")
                 objects.add(this.toUpperCase())

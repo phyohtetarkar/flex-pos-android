@@ -24,6 +24,7 @@ class CategorySearch : BaseObservable(), Searchable {
 
     override val query: String
         get() {
+            objects.clear()
             val sb = StringBuilder()
             sb.append("SELECT c.id, " +
                     "c.name, " +
