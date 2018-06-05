@@ -19,6 +19,7 @@ abstract class AbstractListFragment<T> : Fragment() {
             addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
                 override fun onTouch(view: View, position: Int) {
                     onItemTouch(position)
+                    onItemTouch(view, position)
                 }
 
                 override fun onLongTouch(view: View, position: Int) {
@@ -62,6 +63,10 @@ abstract class AbstractListFragment<T> : Fragment() {
                 })
             }
         }
+    }
+
+    open fun onItemTouch(view: View, position: Int) {
+        // optional implementation
     }
 
     protected abstract val recyclerView: RecyclerView

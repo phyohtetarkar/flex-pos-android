@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.views.nav.ResourcesFragment
+import com.jsoft.pos.ui.views.sale.SaleFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 
@@ -86,9 +87,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             var fragment: Fragment? = null
 
             when (id) {
-                R.id.action_pos -> {
-                }
-                R.id.action_resources -> fragment = ResourcesFragment()
+                R.id.action_pos -> fragment = SaleFragment.INSTANCE
+                R.id.action_resources -> fragment = ResourcesFragment.INSTANCE
                 R.id.action_receipts -> {
                 }
                 R.id.action_statistics -> {
@@ -114,13 +114,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onBackPressed() {
         if (drawerLayoutMain.isDrawerOpen(GravityCompat.START)) {
-            drawerLayoutMain.closeDrawer(GravityCompat.START);
+            drawerLayoutMain.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }
 
         if (drawerLayoutMain.getDrawerLockMode(GravityCompat.START) == DrawerLayout.LOCK_MODE_LOCKED_CLOSED) {
-            animateToBurger();
+            animateToBurger()
         }
     }
 
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun animateToBurger() {
-        toggle.setDrawerIndicatorEnabled(true)
+        toggle.isDrawerIndicatorEnabled = true
         drawerLayoutMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         val drawable = toggle.drawerArrowDrawable
         val animator = ObjectAnimator.ofFloat(drawable, "progress", 0f)

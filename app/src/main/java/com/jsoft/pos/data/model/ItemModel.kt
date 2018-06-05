@@ -21,7 +21,7 @@ class ItemRepository(
 
     fun findItemsChecked(search: ItemSearch, taxId: Int, checkedIds: Collection<Long>?, with: Item.AssignType): List<Item> {
 
-        val items = dao.findItems(SimpleSQLiteQuery(search.query, search.objects.toTypedArray()))
+        val items = dao.findItemsSync(SimpleSQLiteQuery(search.query, search.objects.toTypedArray()))
         val itemsFiltered: List<Item>? = taxId.let {
             if (it > 0) {
                 when(with) {
@@ -47,7 +47,7 @@ class ItemRepository(
     }
 
     fun findItemVOs(search: ItemVOSearch): LiveData<PagedList<ItemVO>> {
-        return LivePagedListBuilder(dao.findItemVOs(SimpleSQLiteQuery(search.query, search.objects.toTypedArray())), 20).build()
+        return LivePagedListBuilder(dao.findItemVOs(SimpleSQLiteQuery(search.query, search.objects.toTypedArray())), 50).build()
     }
 
     fun getItem(id: Long): Item {
@@ -176,7 +176,7 @@ abstract class ItemDao : BaseDao<Item> {
     abstract fun findItemVOs(query: SupportSQLiteQuery): DataSource.Factory<Int, ItemVO>
 
     @RawQuery
-    abstract fun findItems(query: SupportSQLiteQuery): List<Item>
+    abstract fun findItemsSync(query: SupportSQLiteQuery): List<Item>
 
     @Query("SELECT i.* FROM item i " +
             "INNER JOIN item_tax it ON it.item_id = i.id " +

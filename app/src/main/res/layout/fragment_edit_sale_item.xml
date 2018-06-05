@@ -50,7 +50,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:hint="@string/hint_amount"
+                android:hint="@string/hint_quantity"
                 app:layout_constraintBottom_toTopOf="@+id/edSaleItemRemark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

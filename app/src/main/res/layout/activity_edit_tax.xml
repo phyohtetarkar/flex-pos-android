@@ -82,7 +82,7 @@
                 android:layout_marginTop="24dp"
                 android:background="@drawable/selectable_outline_bordered_background"
                 android:enabled="@{vm.assignBtnEnable}"
-                android:text="@string/assign_item"
+                android:text="@string/assign_items"
                 android:textColor="@color/text_color_state"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

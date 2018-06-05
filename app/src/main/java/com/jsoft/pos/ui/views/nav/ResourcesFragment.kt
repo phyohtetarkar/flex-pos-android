@@ -70,4 +70,11 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
 
     }
 
+    companion object {
+        val INSTANCE: ResourcesFragment
+            get() {
+                return ResourcesFragment()
+            }
+    }
+
 }

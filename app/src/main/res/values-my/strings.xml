@@ -49,8 +49,9 @@
     <string name="extra">အခြား</string>
 
     <string name="delete">Delete</string>
-    <string name="assign_item">Assign Item</string>
+    <string name="assign_items">Assign Item</string>
 
     <string name="items_for_count">items</string>
     <string name="select_all">Select all</string>
+    <string name="hint_quantity">Quantiry *</string>
 </resources>
