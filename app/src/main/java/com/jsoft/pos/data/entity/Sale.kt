@@ -48,15 +48,7 @@ data class Sale(
         }
 
         private fun calculateDiscount(list: List<SaleItem>?): Double {
-            return list?.map {
-                it.item?.discounts?.map {
-                    if (it.percentage) {
-                        it.amount.div(100)
-                    } else {
-                        it.amount
-                    }
-                }?.sum()?.times(it.quantity)?.times(it.price) ?: 0.00
-            }?.sum() ?: 0.00
+            return list?.sumByDouble { it.computedDiscount } ?: 0.00
         }
 
         private fun calculateTax(list: List<SaleItem>?, discount: Double): Double {

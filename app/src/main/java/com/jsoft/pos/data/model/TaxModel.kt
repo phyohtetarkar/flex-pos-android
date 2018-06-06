@@ -57,7 +57,12 @@ abstract class TaxDao : BaseDao<Tax> {
         }
 
         val t = findByIdSync(id)
-        itemIds?.takeUnless { it.isEmpty() }?.apply { assignTax(t, this) }
+        itemIds?.takeUnless {
+            deleteItemTaxes(findItemTaxesSync(tax.id))
+            return@takeUnless it.isEmpty()
+        }?.apply {
+            assignTax(t, this)
+        }
     }
 
     fun findItemTaxAssociations(itemId: Long): List<Tax> {
@@ -74,7 +79,6 @@ abstract class TaxDao : BaseDao<Tax> {
     }
 
     private fun assignTax(tax: Tax, itemIds: Collection<Long>) {
-        deleteItemTaxes(findItemTaxesSync(tax.id))
         val itemTaxes = itemIds.map { ItemTax(itemId = it, taxId = tax.id) }
         saveItemTaxes(itemTaxes)
     }

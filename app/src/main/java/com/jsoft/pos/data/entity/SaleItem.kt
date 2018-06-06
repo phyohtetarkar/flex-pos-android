@@ -33,6 +33,16 @@ data class SaleItem(
         get() = quantity * price
 
     @Ignore
+    var computedDiscount: Double = 0.00
+        get() = item?.discounts?.sumByDouble {
+                if (it.percentage) {
+                    it.amount.div(100)
+                } else {
+                    it.amount.times(100).div(price).div(100)
+                }
+            }?.times(total) ?: 0.00
+
+    @Ignore
     var priceDesc: String = ""
         get() {
             return "$quantity \u00D7 ${item?.price?.toSimplifyString()}"

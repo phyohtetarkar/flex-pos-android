@@ -37,8 +37,8 @@ class ItemRepository(
         }
 
         items.forEach {
-            if (!checkedIds.orEmpty().isEmpty()) {
-                it._checked = checkedIds?.contains(it.id) ?: false
+            if (checkedIds != null) {
+                it._checked = checkedIds.contains(it.id)
             } else {
                 it._checked = itemsFiltered?.contains(it) ?: false
             }

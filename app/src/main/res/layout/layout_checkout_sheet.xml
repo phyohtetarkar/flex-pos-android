@@ -14,53 +14,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:behavior_hideable="false"
-        app:behavior_peekHeight="72dp"
+        app:behavior_peekHeight="@dimen/checkout_sheet_peek_height"
         android:background="@color/whitePrimary"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
 
         <TextView
-            android:id="@+id/textView22"
-            style="@style/TitleTextMedium"
-            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/textView24"
+            style="@style/AppTextSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:text="Total Price"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Total Price" />
-
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@{vm.sale.totalPrice}"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView22"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="920" />
-
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            style="@style/AppTextSecondary"
             android:text="Subtotal"
-            app:layout_constraintStart_toStartOf="@+id/textView22"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view12"
             tools:text="Subtotal" />
 
         <TextView
             android:id="@+id/textView25"
+            style="@style/AppTextSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/AppTextSecondary"
+            android:layout_marginEnd="16dp"
             android:text="@{vm.sale.subTotalPrice}"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView24"
-            app:layout_constraintEnd_toEndOf="@+id/textView23"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="1000" />
 
         <TextView
@@ -89,11 +68,11 @@
             android:layout_height="1dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
             android:background="@color/darkDivider"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
         <TextView
             android:id="@+id/textView30"
@@ -120,7 +99,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="58dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="13dp"
             android:layout_marginEnd="13dp"
             android:layout_marginStart="13dp"
             android:layout_marginTop="13dp"
@@ -151,5 +130,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view14">
+
+            <TextView
+                style="@style/TitleTextMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Price"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                style="@style/TitleTextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{vm.sale.totalPrice}"
+                tools:text="920" />
+
+        </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>

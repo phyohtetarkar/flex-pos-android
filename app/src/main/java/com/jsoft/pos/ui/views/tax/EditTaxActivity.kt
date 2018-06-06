@@ -69,7 +69,9 @@ class EditTaxActivity : AppCompatActivity() {
             val intent = Intent(this, AssignItemActivity::class.java)
             intent.putExtra("id", taxId)
             intent.putExtra("type", Item.AssignType.TAX)
-            intent.putExtra("checked", viewModel.checkedItemIds.toLongArray())
+            viewModel.checkedItemIds?.also {
+                intent.putExtra("checked", it.toLongArray())
+            }
             startActivityForResult(intent, ASSIGN_REQ)
         }
 

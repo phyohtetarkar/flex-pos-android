@@ -57,7 +57,12 @@ abstract class DiscountDao : BaseDao<Discount> {
         }
         val t = findByIdSync(id)
 
-        itemIds?.takeUnless { it.isEmpty() }?.apply { assignDiscount(t, this) }
+        itemIds?.takeUnless {
+            deleteItemDiscounts(findItemDiscountsSync(discount.id))
+            return@takeUnless it.isEmpty()
+        }?.apply {
+            assignDiscount(t, this)
+        }
     }
 
     fun findItemDiscountAssociations(itemId: Long): List<Discount> {
@@ -74,7 +79,6 @@ abstract class DiscountDao : BaseDao<Discount> {
     }
 
     private fun assignDiscount(discount: Discount, itemIds: Collection<Long>) {
-        deleteItemDiscounts(findItemDiscountsSync(discount.id))
         val itemDiscounts = itemIds.map { ItemDiscount(itemId = it, discountId = discount.id) }
         saveItemDiscounts(itemDiscounts)
     }

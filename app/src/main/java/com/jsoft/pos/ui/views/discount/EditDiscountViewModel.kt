@@ -13,7 +13,7 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 class EditDiscountViewModel(application: Application) : AndroidViewModel(application) {
 
     val discountInput = MutableLiveData<Int>()
-    var checkedItemIds: Collection<Long> = listOf()
+    var checkedItemIds: Collection<Long>? = null
 
     val discount: LiveData<Discount> = Transformations.switchMap(discountInput) {
         if (it > 0) {

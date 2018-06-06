@@ -31,7 +31,7 @@ class AssignItemActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(AssignItemViewModel::class.java)
         viewModel.id = intent.getIntExtra("id", 0)
         viewModel.type = intent.getSerializableExtra("type") as Item.AssignType
-        viewModel.checkedIds = intent.getLongArrayExtra("checked").asList()
+        viewModel.checkedIds = intent.getLongArrayExtra("checked")?.asList()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -87,9 +87,11 @@ class AssignItemActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_done -> {
+
                 val data = Intent()
                 data.putExtra("checkedIds", adapter.getCheckedItemIds())
                 setResult(Activity.RESULT_OK, data)
+
                 onBackPressed()
             }
         }

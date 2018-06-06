@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:layout_marginBottom="72dp"
+            android:layout_marginBottom="@dimen/checkout_sheet_peek_height"
             tools:listitem="@layout/layout_sale_item">
 
         </android.support.v7.widget.RecyclerView>
