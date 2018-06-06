@@ -21,10 +21,10 @@ class ItemRepository(
         private val discountDao: DiscountDao? = null
 ) {
 
-    fun findItemsChecked(search: ItemSearch, taxId: Int, checkedIds: Collection<Long>?, with: Item.AssignType): List<Item> {
+    fun findItemsChecked(search: ItemSearch, id: Int, checkedIds: Collection<Long>?, with: Item.AssignType): List<Item> {
 
         val items = dao.findItemsSync(SimpleSQLiteQuery(search.query, search.objects.toTypedArray()))
-        val itemsFiltered: List<Item>? = taxId.let {
+        val itemsFiltered: List<Item>? = id.let {
             if (it > 0) {
                 when(with) {
                     Item.AssignType.TAX -> dao.findAssociationsByTax(it)
@@ -63,7 +63,7 @@ class ItemRepository(
                 item.unit = unitDao?.findByIdSync(this)
             }
 
-            item.taxes = taxDao?.findItemTaxAssociations(id)
+            item.taxes = taxDao?.findTaxAssociations(id)
             item.discounts = discountDao?.findDiscountAssociations(id)
 
             return item

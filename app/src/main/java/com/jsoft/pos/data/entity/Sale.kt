@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.util.*
 
 @Entity(indices = [(Index(value = ["receipt_code"], unique = true))])
@@ -30,27 +32,42 @@ data class Sale(
 ) {
     companion object {
         fun create(list: List<SaleItem>?): Sale {
-            return Sale(totalItem = list?.size ?: 0).also {
-                it.discount = calculateDiscount(list)
-                it.taxAmount = calculateTax(list)
-                it.subTotalPrice = list?.map { it.total }?.sum() ?: 0.00
-                it.totalPrice = it.subTotalPrice * it.discount * it.taxAmount
-            }
+            val df = DecimalFormat("#.####")
+            df.roundingMode = RoundingMode.HALF_UP
+
+            val sale = Sale(totalItem = list?.size ?: 0,
+                    discount = calculateDiscount(list).round("#.####"),
+                    subTotalPrice = list?.map { it.total }?.sum()?.round("#.####") ?: 0.00)
+
+            sale.taxAmount = calculateTax(list, sale.discount).round("#.####")
+            sale.totalPrice = sale.subTotalPrice.minus(sale.discount)
+                    .plus(sale.taxAmount)
+                    .round("#.####")
+
+            return sale
         }
 
         private fun calculateDiscount(list: List<SaleItem>?): Double {
             return list?.map {
                 it.item?.discounts?.map {
-                    if (it.percentage) it.amount / 100 else it.amount
-                }?.sum() ?: 0.00
+                    if (it.percentage) {
+                        it.amount.div(100)
+                    } else {
+                        it.amount
+                    }
+                }?.sum()?.times(it.quantity)?.times(it.price) ?: 0.00
             }?.sum() ?: 0.00
         }
 
-        private fun calculateTax(list: List<SaleItem>?): Double {
+        private fun calculateTax(list: List<SaleItem>?, discount: Double): Double {
             return list?.map {
                 it.item?.taxes?.map {
-                    if (it.included) it.amount / 100 else 0.00
-                }?.sum() ?: 0.00
+                    if (it.included) {
+                        it.amount.div(100)
+                    } else {
+                        0.00
+                    }
+                }?.sum()?.times(it.total.minus(discount)) ?: 0.00
             }?.sum() ?: 0.00
         }
 

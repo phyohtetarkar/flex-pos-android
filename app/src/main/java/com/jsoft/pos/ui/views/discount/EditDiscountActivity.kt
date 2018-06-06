@@ -69,7 +69,7 @@ class EditDiscountActivity : AppCompatActivity() {
             val intent = Intent(this, AssignItemActivity::class.java)
             intent.putExtra("id", discountId)
             intent.putExtra("type", Item.AssignType.DISCOUNT)
-            intent.putExtra("checked", viewModel.checkedItemIds?.toLongArray())
+            intent.putExtra("checked", viewModel.checkedItemIds.toLongArray())
             startActivityForResult(intent, ASSIGN_REQ)
         }
 
@@ -101,7 +101,7 @@ class EditDiscountActivity : AppCompatActivity() {
             ASSIGN_REQ -> {
                 if (resultCode == Activity.RESULT_OK) {
 
-                    data?.getLongArrayExtra("items")?.apply {
+                    data?.getLongArrayExtra("checkedIds")?.apply {
                         viewModel.checkedItemIds = asList()
                     }
 

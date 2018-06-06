@@ -88,7 +88,7 @@ class AssignItemActivity : AppCompatActivity() {
             }
             R.id.action_done -> {
                 val data = Intent()
-                data.putExtra("items", viewModel.getCheckedItems())
+                data.putExtra("checkedIds", adapter.getCheckedItemIds())
                 setResult(Activity.RESULT_OK, data)
                 onBackPressed()
             }

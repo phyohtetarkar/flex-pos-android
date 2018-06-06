@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.SaleItem
 import com.jsoft.pos.databinding.CheckoutBinding
-import com.jsoft.pos.databinding.CheckoutSheetBinding
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import kotlinx.android.synthetic.main.fragment_sale_detail.*
 
@@ -39,8 +38,8 @@ class SaleDetailFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = CheckoutBinding.inflate(inflater, container, false)
-        binding.setLifecycleOwner(this)
-        binding.vm = viewModel
+        binding.checkoutSheet?.setLifecycleOwner(this)
+        binding.checkoutSheet?.vm = viewModel
         return binding.root
     }
 
@@ -61,6 +60,10 @@ class SaleDetailFragment : Fragment() {
         viewModel?.saleItems?.observe(this, Observer {
             adapter.submitList(it)
         })
+
+        activity?.intent?.getLongArrayExtra("itemIds")?.apply {
+            viewModel?.createFromItemIds(this)
+        }
     }
 
     companion object {

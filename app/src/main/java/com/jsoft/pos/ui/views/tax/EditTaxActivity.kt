@@ -100,7 +100,7 @@ class EditTaxActivity : AppCompatActivity() {
         when (requestCode) {
             ASSIGN_REQ -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    data?.getLongArrayExtra("items")?.apply {
+                    data?.getLongArrayExtra("checkedIds")?.apply {
                         viewModel.checkedItemIds = asList()
                     }
                 }

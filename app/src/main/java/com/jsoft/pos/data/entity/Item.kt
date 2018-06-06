@@ -4,6 +4,9 @@ import android.arch.persistence.room.*
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.jsoft.pos.BR
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.util.*
 
 @Entity(foreignKeys = [
     ForeignKey(entity = Unit::class,
@@ -94,4 +97,11 @@ fun Double.toSimplifyString(): String {
     } else {
         "$this"
     }
+}
+
+fun Double.round(pattern: String): Double {
+    val df = DecimalFormat.getInstance(Locale.ENGLISH) as DecimalFormat
+    df.applyPattern(pattern)
+    df.roundingMode = RoundingMode.HALF_UP
+    return df.format(this).toDouble()
 }

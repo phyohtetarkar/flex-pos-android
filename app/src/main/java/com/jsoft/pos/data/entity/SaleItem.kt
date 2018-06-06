@@ -33,8 +33,14 @@ data class SaleItem(
         get() = quantity * price
 
     @Ignore
-    var quantityDesc: String = ""
+    var priceDesc: String = ""
         get() {
-            return "(${item?.amount?.toSimplifyString()} \u00D7 $quantity) ${item?.unit?.name}"
+            return "$quantity \u00D7 ${item?.price?.toSimplifyString()}"
+        }
+
+    @Ignore
+    var sizeDesc: String = ""
+        get() {
+            return "${item?.amount?.toSimplifyString()} ${item?.unit?.name}"
         }
 }

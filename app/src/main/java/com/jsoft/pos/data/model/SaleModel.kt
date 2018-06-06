@@ -13,7 +13,7 @@ class SaleRepository(
         private val saleDao: SaleDao,
         private val itemRepo: ItemRepository
 ) {
-    fun createSaleItemFromItemIds(itemIds: LongArray, writeTo: MutableLiveData<List<SaleItem>>) {
+    fun createSaleFromItemIds(itemIds: LongArray, updateField: MutableLiveData<Sale>, updateList: MutableLiveData<List<SaleItem>>) {
 
         DaoWorkerAsync<LongArray>({
             val saleItems = it
@@ -26,7 +26,8 @@ class SaleRepository(
                         return@map saleItem
                     }
 
-            writeTo.postValue(saleItems)
+            updateList.postValue(saleItems)
+            updateField.postValue(Sale.create(saleItems))
         }, {}, {}).execute(itemIds)
 
     }

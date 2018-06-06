@@ -37,8 +37,7 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun createFromItemIds(itemIds: LongArray) {
-        repository.createSaleItemFromItemIds(itemIds, saleItems)
-        sale.value = Sale.create(saleItems.value)
+        repository.createSaleFromItemIds(itemIds, sale, saleItems)
     }
 
 }

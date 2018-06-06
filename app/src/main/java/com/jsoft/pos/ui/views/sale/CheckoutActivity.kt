@@ -17,10 +17,6 @@ class CheckoutActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        intent.getLongArrayExtra("itemIds")?.apply {
-            viewModel.createFromItemIds(this)
-        }
-
         supportFragmentManager.beginTransaction()
                 .replace(R.id.checkout_main, SaleDetailFragment.INSTANCE)
                 .commit()

@@ -14,18 +14,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:behavior_hideable="false"
-        app:behavior_peekHeight="56dp"
+        app:behavior_peekHeight="72dp"
         android:background="@color/whitePrimary"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
 
         <TextView
             android:id="@+id/textView22"
+            style="@style/TitleTextMedium"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            style="@style/TitleTextMedium"
+            android:layout_marginTop="24dp"
             android:text="Total Price"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +40,7 @@
             android:text="@{vm.sale.totalPrice}"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView22"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="2500" />
+            tools:text="920" />
 
         <TextView
             android:id="@+id/textView24"
@@ -47,40 +48,40 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             style="@style/AppTextSecondary"
-            android:text="Discount"
+            android:text="Subtotal"
             app:layout_constraintStart_toStartOf="@+id/textView22"
             app:layout_constraintTop_toBottomOf="@+id/view12"
-            tools:text="Discount" />
+            tools:text="Subtotal" />
 
         <TextView
             android:id="@+id/textView25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/AppTextSecondary"
-            android:text="@{vm.sale.discount}"
+            android:text="@{vm.sale.subTotalPrice}"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView24"
             app:layout_constraintEnd_toEndOf="@+id/textView23"
-            tools:text="50" />
+            tools:text="1000" />
 
         <TextView
             android:id="@+id/textView26"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/AppTextSecondary"
-            android:text="Tax (%)"
+            android:text="Discount"
             app:layout_constraintStart_toStartOf="@+id/textView24"
             app:layout_constraintTop_toBottomOf="@+id/textView24"
-            tools:text="Tax (%)" />
+            tools:text="Discount" />
 
         <TextView
             android:id="@+id/textView28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/AppTextSecondary"
-            android:text="@{vm.sale.taxAmount}"
+            android:text="@{vm.sale.discount}"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView26"
             app:layout_constraintEnd_toEndOf="@+id/textView25"
-            tools:text="5" />
+            tools:text="100" />
 
         <View
             android:id="@+id/view12"
@@ -88,7 +89,7 @@
             android:layout_height="1dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:background="@color/darkDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,23 +100,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/AppTextSecondary"
-            android:text="Subtotal"
+            android:text="Tax"
             app:layout_constraintStart_toStartOf="@+id/textView26"
             app:layout_constraintTop_toBottomOf="@+id/textView26"
-            tools:text="Subtotal" />
+            tools:text="Tax" />
 
         <TextView
             android:id="@+id/textView31"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/AppTextSecondary"
-            android:text="@{vm.sale.subTotalPrice}"
+            android:text="@{vm.sale.taxAmount}"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView30"
             app:layout_constraintEnd_toEndOf="@+id/textView28"
-            tools:text="2000" />
+            tools:text="20" />
 
         <Button
             android:id="@+id/button2"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="58dp"
             android:layout_marginBottom="16dp"
@@ -123,11 +125,11 @@
             android:layout_marginStart="13dp"
             android:layout_marginTop="13dp"
             android:text="Checkout"
-            style="@style/Widget.AppCompat.Button.Colored"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView30" />
+            app:layout_constraintTop_toBottomOf="@+id/view15" />
 
         <View
             android:id="@+id/view14"
@@ -137,5 +139,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view15"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/darkDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView30" />
     </android.support.constraint.ConstraintLayout>
 </layout>

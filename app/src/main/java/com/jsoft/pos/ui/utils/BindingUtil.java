@@ -14,6 +14,11 @@ import android.widget.TextView;
 
 import com.jsoft.pos.ui.custom.CustomEditText;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class BindingUtil {
 
     @BindingAdapter({"cardBackgroundColor"})
@@ -51,15 +56,19 @@ public class BindingUtil {
 
     @BindingAdapter({"android:text"})
     public static void setDouble(TextView textView, double value) {
-        if (value > 0) {
+        //if (value > 0) {
 
             if ((value - (int) value) % 10 == 0) {
                 textView.setText(String.valueOf((int) value));
             } else {
-                textView.setText(String.valueOf(value));
+                DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.ENGLISH);
+                df.applyPattern("#.##");
+                df.setRoundingMode(RoundingMode.HALF_UP);
+                df.setMinimumFractionDigits(2);
+                textView.setText(df.format(value));
             }
 
-        }
+        //}
     }
 
     @InverseBindingAdapter(attribute = "android:text")

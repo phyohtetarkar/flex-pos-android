@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="obj"
-            type="com.jsoft.pos.data.entity.SaleItem"/>
+            type="com.jsoft.pos.data.entity.SaleItem" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -16,43 +17,36 @@
         android:clickable="true"
         android:focusable="true">
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout"
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/HeaderText.Normal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@{obj.item.name}"
             app:layout_constraintEnd_toStartOf="@+id/textView15"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tvName"
-                style="@style/HeaderText.Normal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:lines="1"
-                android:text="@{obj.item.name}"
-                tools:text="Name"/>
-
-        </RelativeLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Name" />
 
         <TextView
             android:id="@+id/textView10"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="2dp"
+            android:text='@{obj.sizeDesc}'
             android:textSize="12sp"
-            android:text='@{obj.quantityDesc}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView15"
-            app:layout_constraintStart_toStartOf="@+id/relativeLayout"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-            tools:text="(120 &#215; 1) ml" />
+            app:layout_constraintStart_toStartOf="@+id/tvName"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            tools:text="120 ml" />
 
         <TextView
             android:id="@+id/textView15"
@@ -61,12 +55,12 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
+            android:text="@{obj.priceDesc}"
             android:textStyle="bold"
-            android:text="@{obj.price}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="1000 Ks" />
+            tools:text="2 &#215; 1000" />
 
     </android.support.constraint.ConstraintLayout>
 
