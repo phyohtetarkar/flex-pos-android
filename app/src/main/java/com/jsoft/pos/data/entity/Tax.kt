@@ -15,17 +15,11 @@ data class Tax(
 
     @Ignore
     override var _name: String = ""
-        get() = name
+        get() = "$name (${amount.toSimplifyString()}%)"
 
     @Ignore
     override var _checked: Boolean = false
 
     val taxDesc: String
-        get() {
-            return if ((amount - amount.toInt()) % 10 == 0.0) {
-                "${amount.toInt()} %"
-            } else {
-                "$amount %"
-            }
-        }
+        get() = "${amount.toSimplifyString()} %"
 }

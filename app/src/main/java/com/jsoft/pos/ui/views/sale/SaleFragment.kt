@@ -147,7 +147,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.itemSearch.value = ItemVOSearch()
+        viewModel.itemSearch.value = ItemVOSearch().also { it.isAvailable = true }
     }
 
     override val _viewModel: ListViewModel<ItemVO>

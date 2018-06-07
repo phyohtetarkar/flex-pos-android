@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.MotionEvent
 import android.view.View
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
@@ -20,6 +21,7 @@ class UnitsFragment : SimpleListFragment<Unit>() {
 
     private lateinit var adapter: SimpleListAdapter<Unit>
     private lateinit var viewModel: UnitsViewModel
+    private var swipeCallback: SwipeGestureCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,7 @@ class UnitsFragment : SimpleListFragment<Unit>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val callback = SwipeGestureCallback(object : SwipeGestureCallback.OnSwipeDeleteListener {
+        swipeCallback = SwipeGestureCallback(context!!, object : SwipeGestureCallback.OnSwipeDeleteListener {
             override fun onDelete(position: Int) {
                 adapter.getItemAt(position).apply { viewModel.delete(this) }
             }
@@ -49,7 +51,7 @@ class UnitsFragment : SimpleListFragment<Unit>() {
                 adapter.notifyItemChanged(position)
             }
         })
-        val helper = ItemTouchHelper(callback)
+        val helper = ItemTouchHelper(swipeCallback)
         helper.attachToRecyclerView(recyclerViewSimpleList)
 
     }
@@ -73,6 +75,10 @@ class UnitsFragment : SimpleListFragment<Unit>() {
 
     override fun onItemTouch(position: Int) {
         showEdit(adapter.getItemAt(position).id)
+    }
+
+    override fun onItemTouch(event: MotionEvent) {
+        swipeCallback?.gestureDetector?.onTouchEvent(event)
     }
 
     override fun showEdit(id: Any) {

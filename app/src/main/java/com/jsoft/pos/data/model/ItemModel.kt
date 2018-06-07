@@ -122,15 +122,9 @@ class ItemVOSearch : BaseObservable(), Searchable {
             notifyChange()
         }
 
-    var isNotAvailable: Boolean = false
-        set(notAvailable) {
-            field = notAvailable
-            notifyChange()
-        }
-
-    var isAvailable: Boolean = false
-        set(notAvailable) {
-            field = notAvailable
+    var isAvailable: Boolean? = null
+        set(available) {
+            field = available
             notifyChange()
         }
 
@@ -164,14 +158,9 @@ class ItemVOSearch : BaseObservable(), Searchable {
                 objects.add(this)
             }
 
-            if (isNotAvailable) {
+            isAvailable?.also {
                 sb.append("and i.available = ? ")
-                objects.add(false)
-            }
-
-            if (isAvailable) {
-                sb.append("and i.available = ? ")
-                objects.add(true)
+                objects.add(it)
             }
 
             return sb.toString()

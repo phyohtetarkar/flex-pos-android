@@ -15,7 +15,10 @@ data class Discount(
 
     @Ignore
     override var _name: String = ""
-        get() = name
+        get() {
+            val u = if (percentage) "%" else ""
+            return "$name (${amount.toSimplifyString()}$u)"
+        }
 
     @Ignore
     override var _checked: Boolean = false
@@ -24,10 +27,6 @@ data class Discount(
         get() {
             val u = if (percentage) "%" else ""
 
-            return if ((amount - amount.toInt()) % 10 == 0.0) {
-                "${amount.toInt()} $u"
-            } else {
-                "$amount $u"
-            }
+            return "${amount.toSimplifyString()} $u"
         }
 }

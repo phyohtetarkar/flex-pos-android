@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.MotionEvent
 import android.view.View
-import com.jsoft.pos.ui.utils.RecyclerViewItemTouchListener
 
 abstract class AbstractListFragment<T> : Fragment() {
 
@@ -16,16 +16,25 @@ abstract class AbstractListFragment<T> : Fragment() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
-                override fun onTouch(view: View, position: Int) {
+            addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+                override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
+                    val v = rv!!.findChildViewUnder(e!!.x, e.y)
+                    val position = rv.getChildAdapterPosition(v)
+
                     onItemTouch(position)
                     onItemTouch(view, position)
                 }
 
-                override fun onLongTouch(view: View, position: Int) {
-
+                override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
+                    onItemTouch(e!!)
+                    return false
                 }
-            }))
+
+                override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+                }
+
+            })
+
         }
 
         recyclerView.adapter = _adapter
@@ -66,6 +75,10 @@ abstract class AbstractListFragment<T> : Fragment() {
     }
 
     open fun onItemTouch(view: View, position: Int) {
+        // optional implementation
+    }
+
+    open fun onItemTouch(event: MotionEvent) {
         // optional implementation
     }
 

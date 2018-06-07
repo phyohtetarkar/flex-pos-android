@@ -14,6 +14,8 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 class EditItemViewModel(application: Application) : AndroidViewModel(application) {
 
     val itemInput = MutableLiveData<Long>()
+    val itemSaved = MutableLiveData<Boolean>()
+    val itemDeleted = MutableLiveData<Boolean>()
 
     val item: LiveData<Item> = Transformations.switchMap(itemInput) {
         val liveItem = MutableLiveData<Item>()
@@ -66,7 +68,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         },{
 
         },{
-
+            itemSaved.value = true
         }).execute(item.value)
     }
 
@@ -76,7 +78,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         },{
 
         },{
-
+            itemDeleted.value = true
         }).execute(item.value)
     }
 
