@@ -12,8 +12,10 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
+import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.views.nav.ResourcesFragment
+import com.jsoft.pos.ui.views.sale.CheckOutItemsHolder
 import com.jsoft.pos.ui.views.sale.SaleFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
@@ -57,17 +59,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle = ActionBarDrawerToggle(
                 this, drawerLayoutMain, toolbarMain, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
 
-        toggle.setToolbarNavigationClickListener {
-            animateToBurger()
-            super.onBackPressed()
+        toolbarMain.setNavigationOnClickListener {
+            when {
+                CheckOutItemsHolder.onSale -> AlertUtil.showBigToast(this, "Active Sale!")
+                drawerLayoutMain.getDrawerLockMode(GravityCompat.START) == DrawerLayout.LOCK_MODE_LOCKED_CLOSED -> {
+                    animateToBurger()
+                    super.onBackPressed()
+                }
+                else -> toggle()
+            }
         }
 
         drawerLayoutMain.addDrawerListener(toggle)
         drawerLayoutMain.addDrawerListener(drawerDelegate)
         toggle.syncState()
 
-        val nav = findViewById<NavigationView>(R.id.navigationViewMain)
-        nav.setNavigationItemSelectedListener(this)
+        navigationViewMain.setNavigationItemSelectedListener(this)
 
     }
 
@@ -132,7 +139,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             override fun onAnimationEnd(animator: Animator) {
                 toggle.isDrawerIndicatorEnabled = false
-                drawerLayoutMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                lockDrawer()
             }
 
             override fun onAnimationCancel(animator: Animator) {}
@@ -145,10 +152,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun animateToBurger() {
         toggle.isDrawerIndicatorEnabled = true
-        drawerLayoutMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        unlockDrawer()
         val drawable = toggle.drawerArrowDrawable
         val animator = ObjectAnimator.ofFloat(drawable, "progress", 0f)
         animator.start()
+    }
+
+    fun unlockDrawer() {
+        drawerLayoutMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+
+    fun lockDrawer() {
+        drawerLayoutMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+    private fun toggle() {
+        val drawerLockMode = drawerLayoutMain.getDrawerLockMode(GravityCompat.START)
+        if (drawerLayoutMain.isDrawerVisible(GravityCompat.START) && drawerLockMode != DrawerLayout.LOCK_MODE_LOCKED_OPEN) {
+            drawerLayoutMain.closeDrawer(GravityCompat.START)
+        } else if (drawerLockMode != DrawerLayout.LOCK_MODE_LOCKED_CLOSED) {
+            drawerLayoutMain.openDrawer(GravityCompat.START)
+        }
     }
 
 }

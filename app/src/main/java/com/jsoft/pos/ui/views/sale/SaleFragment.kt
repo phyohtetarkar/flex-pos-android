@@ -154,7 +154,13 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     override fun onResume() {
         super.onResume()
         viewModel.itemSearch.value = ItemVOSearch().also { it.isAvailable = true }
-        updateBadgeCount()
+
+        val app = activity as MainActivity
+        if (!CheckOutItemsHolder.onSale) {
+            app.unlockDrawer()
+        } else {
+            updateBadgeCount()
+        }
     }
 
     override fun onDestroyView() {
@@ -252,6 +258,8 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             badge = reuse
         } else {
             badge = BadgeDrawable(activity!!)
+            val app = activity as MainActivity
+            app.lockDrawer()
         }
 
         badge.setCount(CheckOutItemsHolder.itemCount.toString())

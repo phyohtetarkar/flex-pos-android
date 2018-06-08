@@ -15,6 +15,9 @@ object CheckOutItemsHolder {
     val list: List<SaleItem>
         get() = saleItems.values.toList()
 
+    val onSale: Boolean
+        get() = saleItems.values.isNotEmpty()
+
     fun add(vo: ItemVO) {
         val saleItem = SaleItem(quantity = 1, price = vo.price, itemId = vo.id)
 
