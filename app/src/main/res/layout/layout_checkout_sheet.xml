@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/AppTextSecondary"
-            android:text="@{vm.sale.discount}"
+            android:text="@{vm.sale.discount, default=0}"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView26"
             app:layout_constraintEnd_toEndOf="@+id/textView25"
             tools:text="100" />
@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/AppTextSecondary"
-            android:text="@{vm.sale.taxAmount}"
+            android:text="@{vm.sale.taxAmount, default=0}"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView30"
             app:layout_constraintEnd_toEndOf="@+id/textView28"
             tools:text="20" />
@@ -134,7 +134,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
-            android:layout_height="58dp"
+            android:layout_height="@dimen/checkout_sheet_peek_height"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingEnd="16dp"

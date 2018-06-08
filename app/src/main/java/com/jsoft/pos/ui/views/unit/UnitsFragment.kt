@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.MotionEvent
 import android.view.View
@@ -51,9 +52,32 @@ class UnitsFragment : SimpleListFragment<Unit>() {
                 adapter.notifyItemChanged(position)
             }
         })
+
         val helper = ItemTouchHelper(swipeCallback)
         helper.attachToRecyclerView(recyclerViewSimpleList)
 
+    }
+
+    override fun getItemTouchListener(context: Context, recyclerView: RecyclerView): RecyclerView.OnItemTouchListener {
+        return object : RecyclerView.SimpleOnItemTouchListener() {
+
+            override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
+
+                if (swipeCallback?.gestureDetector?.onTouchEvent(e) == true) {
+                    return true
+                }
+
+                val v = rv!!.findChildViewUnder(e!!.x, e.y)
+                val position = rv.getChildAdapterPosition(v)
+
+                if (v != null && e.action == MotionEvent.ACTION_UP) {
+                    onItemTouch(position)
+                }
+
+                return false
+            }
+
+        }
     }
 
     override fun onResume() {
@@ -75,10 +99,6 @@ class UnitsFragment : SimpleListFragment<Unit>() {
 
     override fun onItemTouch(position: Int) {
         showEdit(adapter.getItemAt(position).id)
-    }
-
-    override fun onItemTouch(event: MotionEvent) {
-        swipeCallback?.gestureDetector?.onTouchEvent(event)
     }
 
     override fun showEdit(id: Any) {

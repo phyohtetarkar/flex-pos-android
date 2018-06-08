@@ -3,11 +3,12 @@ package com.jsoft.pos.ui.views
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.jsoft.pos.R
-import com.jsoft.pos.ui.utils.RecyclerViewItemTouchListener
 import kotlinx.android.synthetic.main.fragment_simple_list_dialog.*
 
 abstract class SimpleListDialogFragment<T> : DialogFragment() {
@@ -22,15 +23,18 @@ abstract class SimpleListDialogFragment<T> : DialogFragment() {
         simpleListRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            addOnItemTouchListener(RecyclerViewItemTouchListener(this, object : RecyclerViewItemTouchListener.OnTouchListener {
-                override fun onTouch(view: View, position: Int) {
-                    onTouch(position)
+            addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener(){
+
+                override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
+                    val v = rv?.findChildViewUnder(e!!.x, e.y)
+                    rv?.getChildAdapterPosition(v)?.apply {
+                        onTouch(this)
+                    }
+
+                    return false
                 }
 
-                override fun onLongTouch(view: View, position: Int) {
-                }
-
-            }))
+            })
         }
 
         simpleListRecyclerView.adapter = getAdapter()

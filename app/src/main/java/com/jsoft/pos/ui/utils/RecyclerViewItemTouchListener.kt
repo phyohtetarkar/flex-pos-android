@@ -1,11 +1,16 @@
 package com.jsoft.pos.ui.utils
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-class RecyclerViewItemTouchListener(rv: RecyclerView, private val listener: OnTouchListener?) : RecyclerView.OnItemTouchListener {
+class RecyclerViewItemTouchListener(
+        context: Context,
+        private val recyclerView: RecyclerView,
+        private val listener: OnTouchListener?
+) : RecyclerView.OnItemTouchListener {
 
     private val detector: GestureDetector
 
@@ -19,11 +24,11 @@ class RecyclerViewItemTouchListener(rv: RecyclerView, private val listener: OnTo
 
     init {
 
-        detector = GestureDetector(rv.context, object : GestureDetector.SimpleOnGestureListener() {
+        detector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
             override fun onLongPress(e: MotionEvent) {
-                val view = rv.findChildViewUnder(e.x, e.y)
+                val view = recyclerView.findChildViewUnder(e.x, e.y)
                 if (view != null) {
-                    listener?.onLongTouch(view, rv.getChildAdapterPosition(view))
+                    listener?.onLongTouch(view, recyclerView.getChildAdapterPosition(view))
                 }
             }
 

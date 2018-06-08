@@ -1,12 +1,13 @@
 package com.jsoft.pos.ui.views
 
 import android.arch.lifecycle.Observer
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.MotionEvent
 import android.view.View
+import com.jsoft.pos.ui.utils.RecyclerViewItemTouchListener
 
 abstract class AbstractListFragment<T> : Fragment() {
 
@@ -16,24 +17,7 @@ abstract class AbstractListFragment<T> : Fragment() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
-                override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
-                    val v = rv!!.findChildViewUnder(e!!.x, e.y)
-                    val position = rv.getChildAdapterPosition(v)
-
-                    onItemTouch(position)
-                    onItemTouch(view, position)
-                }
-
-                override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
-                    onItemTouch(e!!)
-                    return false
-                }
-
-                override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-                }
-
-            })
+            addOnItemTouchListener(getItemTouchListener(context, recyclerView))
 
         }
 
@@ -74,11 +58,21 @@ abstract class AbstractListFragment<T> : Fragment() {
         }
     }
 
-    open fun onItemTouch(view: View, position: Int) {
-        // optional implementation
+    open fun getItemTouchListener(context: Context, recyclerView: RecyclerView): RecyclerView.OnItemTouchListener {
+        return RecyclerViewItemTouchListener(context, recyclerView, object : RecyclerViewItemTouchListener.OnTouchListener {
+            override fun onTouch(view: View, position: Int) {
+                onItemTouch(position)
+                onItemTouch(view, position)
+            }
+
+            override fun onLongTouch(view: View, position: Int) {
+                onLongTouch(view, position)
+            }
+
+        })
     }
 
-    open fun onItemTouch(event: MotionEvent) {
+    open fun onItemTouch(view: View, position: Int) {
         // optional implementation
     }
 

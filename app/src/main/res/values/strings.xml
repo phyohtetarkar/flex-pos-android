@@ -25,8 +25,6 @@
     <string name="hint_amount">Amount *</string>
     <string name="hint_barcode">Barcode</string>
     <string name="hint_price">Price *</string>
-    <string name="hint_discount">Discount(%)</string>
-    <string name="discount">Discount</string>
     <string name="available_for_sale">Available For Sale</string>
     <string name="textView_title_product_image">Product Image</string>
     <string name="hint_category">Category *</string>
@@ -36,13 +34,11 @@
     <string name="pos">POS</string>
     <string name="receipts">Receipts</string>
     <string name="statistic">Statistic</string>
-    <string name="select_format">Select %s</string>
 
     <string name="confirm_message_delete">Are you sure to delete?</string>
 
     <string name="error_empty_input_format">%s must not empty</string>
     <string name="hint_remark">Remark</string>
-    <string name="hint_size">Size *</string>
     <string name="add_new">Add new</string>
 
     <string name="price">Price</string>
@@ -56,10 +52,10 @@
     <string name="select_all">Select all</string>
     <string name="hint_quantity">Quantity *</string>
 
-    <string-array name="toolbar_spinner_entries">
-        <item>All Items</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-    </string-array>
+    <string name="confirm_yes">Yes</string>
+
+    <string name="percent_symbol">%</string>
+    <string name="_00">00</string>
+
+    <string name="hint_value">value *</string>
 </resources>

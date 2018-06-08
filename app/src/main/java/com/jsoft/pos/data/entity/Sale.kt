@@ -18,16 +18,16 @@ data class Sale(
         var issueDate: Date = Date(),
         @ColumnInfo(name = "total_item")
         var totalItem: Int = 0,
-        var discount: Double = 0.00,
+        var discount: Double = 0.0,
         @ColumnInfo(name = "tax_amount")
-        var taxAmount: Double = 0.00,
+        var taxAmount: Double = 0.0,
         @ColumnInfo(name = "sub_total_price")
-        var subTotalPrice: Double = 0.00,
+        var subTotalPrice: Double = 0.0,
         @ColumnInfo(name = "total_price")
-        var totalPrice: Double = 0.00,
+        var totalPrice: Double = 0.0,
         @ColumnInfo(name = "pay_price")
-        var payPrice: Double = 0.00,
-        var change: Double = 0.00,
+        var payPrice: Double = 0.0,
+        var change: Double = 0.0,
         var receipt: String = ""
 ) {
     companion object {
@@ -48,7 +48,7 @@ data class Sale(
         }
 
         private fun calculateDiscount(list: List<SaleItem>?): Double {
-            return list?.sumByDouble { it.computedDiscount } ?: 0.00
+            return list?.sumByDouble { it.computedDiscount } ?: 0.0
         }
 
         private fun calculateTax(list: List<SaleItem>?, discount: Double): Double {
@@ -57,10 +57,10 @@ data class Sale(
                     if (it.included) {
                         it.amount.div(100)
                     } else {
-                        0.00
+                        0.0
                     }
-                }?.sum()?.times(it.total.minus(discount)) ?: 0.00
-            }?.sum() ?: 0.00
+                }?.sum()?.times(it.total.minus(it.computedDiscount)) ?: 0.0
+            }?.sum() ?: 0.0
         }
 
     }

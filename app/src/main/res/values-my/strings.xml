@@ -24,8 +24,6 @@
     <string name="hint_amount">အရေအတွက် *</string>
     <string name="hint_barcode">ဘားကုဒ်</string>
     <string name="hint_price">စျေးနှုန်း *</string>
-    <string name="hint_discount">Discount(%)</string>
-    <string name="discount">ရှော့စျေး</string>
     <string name="available_for_sale">ရောင်းနိုင်ပြီ</string>
     <string name="textView_title_product_image">ပစ္စည်းပုံ</string>
     <string name="hint_category">အမျိုးအစား *</string>
@@ -35,13 +33,11 @@
     <string name="pos">POS</string>
     <string name="receipts">Receipts</string>
     <string name="statistic">Statistic</string>
-    <string name="select_format">Select %s</string>
 
     <string name="confirm_message_delete">ဖျက်မှာသေချာလား?</string>
 
     <string name="error_empty_input_format">%s must not empty</string>
     <string name="hint_remark">မှတ်ချက်</string>
-    <string name="hint_size">Size *</string>
     <string name="add_new">အသစ်</string>
 
     <string name="price">စျေးနှုန်း</string>
@@ -52,6 +48,13 @@
     <string name="assign_items">Assign Item</string>
 
     <string name="items_for_count">items</string>
-    <string name="select_all">Select all</string>
-    <string name="hint_quantity">Quantiry *</string>
+    <string name="select_all">အားလံုးရေွးမည်</string>
+    <string name="hint_quantity">အရေအတွက် *</string>
+
+    <string name="confirm_yes">သေချာပါသည်</string>
+
+    <string name="percent_symbol">%</string>
+    <string name="_00">00</string>
+
+    <string name="hint_value">တန်ဖိုး *</string>
 </resources>

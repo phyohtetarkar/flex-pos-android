@@ -56,7 +56,7 @@ public class BindingUtil {
 
     @BindingAdapter({"android:text"})
     public static void setDouble(TextView textView, double value) {
-        //if (value > 0) {
+        if (value > 0) {
 
             if ((value - (int) value) % 10 == 0) {
                 textView.setText(String.valueOf((int) value));
@@ -68,7 +68,7 @@ public class BindingUtil {
                 textView.setText(df.format(value));
             }
 
-        //}
+        }
     }
 
     @InverseBindingAdapter(attribute = "android:text")

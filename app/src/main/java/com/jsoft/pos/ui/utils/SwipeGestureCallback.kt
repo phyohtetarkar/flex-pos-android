@@ -17,8 +17,6 @@ class SwipeGestureCallback(
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
     private val p = Paint()
-    private lateinit var iconDest: RectF
-    private var swpPosition: Int? = null
     private val swpItems = mutableListOf<SwipeItem>()
 
     var gestureDetector: GestureDetector? = null
@@ -34,20 +32,19 @@ class SwipeGestureCallback(
     private val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
 
         override fun onSingleTapUp(e: MotionEvent?): Boolean {
-                if (iconDest.contains(e!!.x, e.y)) {
-                    Log.v("TAG", "tapped!")
-                   /* AlertUtil.showConfirmDelete(context, {
-                        swpPosition?.also {
-                            listener.onDelete(it)
-                        }
+            for (s in swpItems) {
+                if (s.rectF.contains(e!!.x, e.y)) {
+                    Log.v("TAG", "${s.position} tapped!")
+                    AlertUtil.showConfirmDelete(context, {
+                        listener.onDelete(s.position)
                     }, {
-                        swpPosition?.also {
-                            listener.onCancel(it)
-                        }
-                    })*/
+                        listener.onCancel(s.position)
+                    })
+                    return true
+                }
             }
 
-            return true
+            return false
         }
 
     }
@@ -68,15 +65,11 @@ class SwipeGestureCallback(
         val position = viewHolder.adapterPosition
         val v = viewHolder.itemView
 
-        /*AlertUtil.showConfirmDelete(viewHolder.itemView.context, {
+        val rect = RectF(v.right.toFloat().minus(150), v.top.toFloat(), v.right.toFloat(), v.bottom.toFloat())
+
+        swpItems.add(SwipeItem(position, rect) {
             listener.onDelete(position)
-        }, {
-            listener.onCancel(position)
-        })*/
-
-        swpItems.clear()
-
-        swpItems.add(SwipeItem(position, RectF(150f, v.top.toFloat(), v.right.toFloat(), v.bottom.toFloat())))
+        })
     }
 
     override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
@@ -88,34 +81,31 @@ class SwipeGestureCallback(
             val itemView = viewHolder.itemView
             val position = viewHolder.adapterPosition
 
-            val height = itemView.bottom.toFloat() - itemView.top.toFloat()
-            val width = height / 3
-            val ctx = recyclerView.context
+            val width = itemView.height / 3
+            val tX = dX.times(150).div(itemView.width)
 
             p.color = Color.parseColor("#D13638")
-            val background = RectF(itemView.right.toFloat() + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
+            val background = RectF(itemView.right.toFloat() + tX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
             c.drawRect(background, p)
             icon = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getBitmapFromVector(ctx.resources.getDrawable(R.drawable.ic_delete_white, null))
+                getBitmapFromVector(context.resources.getDrawable(R.drawable.ic_delete_white, null))
             } else {
-                getBitmapFromVector(ctx.resources.getDrawable(R.drawable.ic_delete_white_compat))
+                getBitmapFromVector(context.resources.getDrawable(R.drawable.ic_delete_white_compat))
             }
 
-            iconDest = RectF(itemView.right.toFloat() - 2 * width, itemView.top.toFloat() + width, itemView.right.toFloat() - width, itemView.bottom.toFloat() - width)
+            val iconDest = RectF(itemView.right.toFloat() - 2 * width, itemView.top.toFloat() + width, itemView.right.toFloat() - width, itemView.bottom.toFloat() - width)
             c.drawBitmap(icon, null, iconDest, p)
 
-            val translateX = dX.times(150).div(itemView.width)
-
             if (dX == 0.0f) {
-                IntArray(swpItems.size) { it }.forEach {
-                    val swipeItem = swpItems[it]
-                    if (swipeItem.position == position) {
-                        swpItems.removeAt(it)
+                for (s in swpItems) {
+                    if (s.position == position) {
+                        swpItems.remove(s)
+                        break
                     }
                 }
             }
 
-            super.onChildDraw(c, recyclerView, viewHolder, translateX, dY, actionState, isCurrentlyActive)
+            super.onChildDraw(c, recyclerView, viewHolder, tX, dY, actionState, isCurrentlyActive)
 
         }
     }
@@ -132,7 +122,8 @@ class SwipeGestureCallback(
 
     data class SwipeItem(
             var position: Int,
-            var rectF: RectF
+            var rectF: RectF,
+            var handler: (Int) -> Unit
     ) {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true

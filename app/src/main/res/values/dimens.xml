@@ -7,5 +7,5 @@
     <dimen name="card_custom_elevation">1dp</dimen>
     <dimen name="card_custom_margin">2dp</dimen>
 
-    <dimen name="checkout_sheet_peek_height">58dp</dimen>
+    <dimen name="checkout_sheet_peek_height">64dp</dimen>
 </resources>
