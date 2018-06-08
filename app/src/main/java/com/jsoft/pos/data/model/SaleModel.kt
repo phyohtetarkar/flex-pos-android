@@ -13,22 +13,18 @@ class SaleRepository(
         private val saleDao: SaleDao,
         private val itemRepo: ItemRepository
 ) {
-    fun createSaleFromItemIds(itemIds: LongArray, updateField: MutableLiveData<Sale>, updateList: MutableLiveData<List<SaleItem>>) {
+    fun createSale(saleItems: List<SaleItem>, updateField: MutableLiveData<Sale>, updateList: MutableLiveData<List<SaleItem>>) {
 
-        DaoWorkerAsync<LongArray>({
-            val saleItems = it
-                    .groupBy { it }
-                    .map { en ->
-                        val item = itemRepo.getItem(en.key)
-                        val saleItem = SaleItem(quantity = en.value.size, price = item.price, itemId = item.id)
-                        saleItem.item = item
-
-                        return@map saleItem
+        DaoWorkerAsync<List<SaleItem>>({
+            saleItems.forEach { si ->
+                        if (si.item == null) {
+                            si.item = itemRepo.getItem(si.itemId!!)
+                        }
                     }
 
             updateList.postValue(saleItems)
             updateField.postValue(Sale.create(saleItems))
-        }, {}, {}).execute(itemIds)
+        }, {}, {}).execute(saleItems)
 
     }
 }

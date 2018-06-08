@@ -66,7 +66,6 @@ abstract class AbstractListFragment<T> : Fragment() {
             }
 
             override fun onLongTouch(view: View, position: Int) {
-                onLongTouch(view, position)
             }
 
         })

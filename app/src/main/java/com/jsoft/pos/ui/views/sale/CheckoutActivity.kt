@@ -19,7 +19,7 @@ class CheckoutActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.checkout_main, SaleDetailFragment.INSTANCE)
+                .replace(R.id.contentCheckout, SaleDetailFragment.INSTANCE)
                 .commit()
 
     }

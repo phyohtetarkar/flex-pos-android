@@ -13,7 +13,7 @@ class AlertUtil {
         fun showConfirmDelete(context: Context, ok: () -> Unit, cancel: () -> Unit) {
             val builder = AlertDialog.Builder(context)
             builder.setMessage(R.string.confirm_message_delete)
-            builder.setPositiveButton(R.string.confirm_yes) { _, _ -> ok() }
+            builder.setPositiveButton(R.string.delete) { _, _ -> ok() }
             builder.setNegativeButton(R.string.cancel) { _, _ -> cancel() }
             builder.setCancelable(false)
             builder.show()

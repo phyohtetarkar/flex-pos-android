@@ -7,6 +7,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.databinding.ObservableArrayMap
+import android.databinding.ObservableMap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
@@ -23,6 +25,7 @@ import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.entity.ItemVO
+import com.jsoft.pos.data.entity.SaleItem
 import com.jsoft.pos.data.model.ItemVOSearch
 import com.jsoft.pos.ui.custom.BadgeDrawable
 import com.jsoft.pos.ui.custom.RoundedImageView
@@ -44,6 +47,13 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     private var icon: LayerDrawable? = null
 
     private val receiptPosition = IntArray(2)
+
+    private val mapChangeListener = object : ObservableMap.OnMapChangedCallback<ObservableArrayMap<Long, SaleItem>, Long, SaleItem>() {
+        override fun onMapChanged(sender: ObservableArrayMap<Long, SaleItem>?, key: Long?) {
+            updateBadgeCount()
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,13 +95,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         app.toolbarMain.addView(mSpinner)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        activity?.toolbarMain?.removeView(mSpinner)
-        mSpinner = null
-        icon = null
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -116,6 +119,8 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             spinnerAdapter.add(Category(name = "All Item"))
             spinnerAdapter.addAll(it)
         })
+
+        CheckOutItemsHolder.addOnMapChangeListener(mapChangeListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -135,9 +140,10 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         when (item?.itemId) {
 
             R.id.action_receipt -> {
-                val intent = Intent(context, CheckoutActivity::class.java)
-                intent.putExtra("itemIds", viewModel.checkedItemIds.toLongArray())
-                startActivity(intent)
+                if (CheckOutItemsHolder.itemCount > 0) {
+                    val intent = Intent(context, CheckoutActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
         }
@@ -148,6 +154,21 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     override fun onResume() {
         super.onResume()
         viewModel.itemSearch.value = ItemVOSearch().also { it.isAvailable = true }
+        updateBadgeCount()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        activity?.toolbarMain?.removeView(mSpinner)
+        CheckOutItemsHolder.removeOnMapChangeListener(mapChangeListener)
+        mSpinner = null
+        icon = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        CheckOutItemsHolder.clear()
     }
 
     override val _viewModel: ListViewModel<ItemVO>
@@ -204,8 +225,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                viewModel.checkedItemIds.add(itemVO.id)
-                updateBadgeCount()
+                CheckOutItemsHolder.add(itemVO.copy())
                 activity!!.layoutMain.removeView(copy)
             }
 
@@ -234,7 +254,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             badge = BadgeDrawable(activity!!)
         }
 
-        badge.setCount(viewModel.checkedItemIds.size.toString())
+        badge.setCount(CheckOutItemsHolder.itemCount.toString())
         icon?.mutate()
         icon?.setDrawableByLayerId(R.id.ic_badge, badge)
     }

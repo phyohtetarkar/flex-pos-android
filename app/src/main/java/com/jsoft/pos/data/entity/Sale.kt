@@ -32,6 +32,11 @@ data class Sale(
 ) {
     companion object {
         fun create(list: List<SaleItem>?): Sale {
+
+            if (list.orEmpty().isEmpty()) {
+                return Sale()
+            }
+
             val df = DecimalFormat("#.####")
             df.roundingMode = RoundingMode.HALF_UP
 
@@ -39,7 +44,7 @@ data class Sale(
                     discount = calculateDiscount(list).round("#.####"),
                     subTotalPrice = list?.map { it.total }?.sum()?.round("#.####") ?: 0.00)
 
-            sale.taxAmount = calculateTax(list, sale.discount).round("#.####")
+            sale.taxAmount = calculateTax(list).round("#.####")
             sale.totalPrice = sale.subTotalPrice.minus(sale.discount)
                     .plus(sale.taxAmount)
                     .round("#.####")
@@ -51,7 +56,7 @@ data class Sale(
             return list?.sumByDouble { it.computedDiscount } ?: 0.0
         }
 
-        private fun calculateTax(list: List<SaleItem>?, discount: Double): Double {
+        private fun calculateTax(list: List<SaleItem>?): Double {
             return list?.map {
                 it.item?.taxes?.map {
                     if (it.included) {

@@ -6,12 +6,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.*
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.SaleItem
 import com.jsoft.pos.databinding.CheckoutBinding
+import com.jsoft.pos.ui.utils.SwipeGestureCallback
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import kotlinx.android.synthetic.main.fragment_sale_detail.*
 
@@ -34,6 +35,8 @@ class SaleDetailFragment : Fragment() {
             }
 
         }, R.layout.layout_sale_item)
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,12 +49,51 @@ class SaleDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val swipeCallback = SwipeGestureCallback(context!!, object : SwipeGestureCallback.OnSwipeDeleteListener {
+            override fun onDelete(position: Int) {
+                adapter.getItemAt(position).apply {
+                    CheckOutItemsHolder.remove(this)
+                    if (CheckOutItemsHolder.itemCount == 0) {
+                        activity?.onBackPressed()
+                    } else {
+                        viewModel?.populateSale(CheckOutItemsHolder.list)
+                    }
+                }
+            }
+
+            override fun onCancel(position: Int) {
+                adapter.notifyItemChanged(position)
+            }
+        })
+
         recyclerViewCheckout.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
+            addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+
+                override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
+
+                    if (swipeCallback.gestureDetector?.onTouchEvent(e) == true) {
+                        return true
+                    }
+
+                    val v = rv!!.findChildViewUnder(e!!.x, e.y)
+                    val position = rv.getChildAdapterPosition(v)
+
+                    if (v != null && e.action == MotionEvent.ACTION_UP) {
+                        onItemTouch(position)
+                    }
+
+                    return false
+                }
+
+            })
         }
 
         recyclerViewCheckout.adapter = adapter
+
+        val helper = ItemTouchHelper(swipeCallback)
+        helper.attachToRecyclerView(recyclerViewCheckout)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -61,9 +103,34 @@ class SaleDetailFragment : Fragment() {
             adapter.submitList(it)
         })
 
-        activity?.intent?.getLongArrayExtra("itemIds")?.apply {
-            viewModel?.createFromItemIds(this)
+        viewModel?.populateSale(CheckOutItemsHolder.list)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_clear, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+            R.id.action_clear -> {
+                CheckOutItemsHolder.clear()
+                activity?.onBackPressed()
+                return true
+            }
         }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun onItemTouch(position: Int) {
+        viewModel?.saleItem?.value = adapter.getItemAt(position)
+
+        fragmentManager?.beginTransaction()
+                ?.replace(R.id.contentCheckout, EditSaleItemFragment.INSTANCE)
+                ?.addToBackStack(null)
+                ?.commit()
     }
 
     companion object {

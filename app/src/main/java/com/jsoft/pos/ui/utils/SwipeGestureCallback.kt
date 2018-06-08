@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import com.jsoft.pos.R
@@ -34,7 +33,6 @@ class SwipeGestureCallback(
         override fun onSingleTapUp(e: MotionEvent?): Boolean {
             for (s in swpItems) {
                 if (s.rectF.contains(e!!.x, e.y)) {
-                    Log.v("TAG", "${s.position} tapped!")
                     AlertUtil.showConfirmDelete(context, {
                         listener.onDelete(s.position)
                     }, {
@@ -65,7 +63,7 @@ class SwipeGestureCallback(
         val position = viewHolder.adapterPosition
         val v = viewHolder.itemView
 
-        val rect = RectF(v.right.toFloat().minus(150), v.top.toFloat(), v.right.toFloat(), v.bottom.toFloat())
+        val rect = RectF(v.right.toFloat().minus(v.height), v.top.toFloat(), v.right.toFloat(), v.bottom.toFloat())
 
         swpItems.add(SwipeItem(position, rect) {
             listener.onDelete(position)
@@ -82,9 +80,11 @@ class SwipeGestureCallback(
             val position = viewHolder.adapterPosition
 
             val width = itemView.height / 3
-            val tX = dX.times(150).div(itemView.width)
+            val tX = dX.times(itemView.height).div(itemView.width)
 
             p.color = Color.parseColor("#D13638")
+            p.maskFilter = BlurMaskFilter(5f, BlurMaskFilter.Blur.INNER)
+
             val background = RectF(itemView.right.toFloat() + tX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
             c.drawRect(background, p)
             icon = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

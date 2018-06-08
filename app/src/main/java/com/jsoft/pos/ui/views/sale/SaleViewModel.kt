@@ -17,7 +17,6 @@ import com.jsoft.pos.ui.views.PagedListViewModel
 class SaleViewModel(application: Application): AndroidViewModel(application), PagedListViewModel<ItemVO> {
 
     val itemSearch = SearchMutableLiveData<ItemVOSearch>()
-    val checkedItemIds = mutableListOf<Long>()
 
     override val list: LiveData<PagedList<ItemVO>> = Transformations.switchMap(itemSearch) {
         repository.findItemVOs(it)

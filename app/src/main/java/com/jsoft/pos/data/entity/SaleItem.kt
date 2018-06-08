@@ -26,7 +26,7 @@ data class SaleItem(
         var saleId: Long? = null
 ) {
     @Ignore
-    var item: Item? = Item()
+    var item: Item? = null
 
     @Ignore
     var total: Double = 0.00
