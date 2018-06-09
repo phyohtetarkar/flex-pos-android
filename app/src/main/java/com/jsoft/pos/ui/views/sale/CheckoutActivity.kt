@@ -1,14 +1,20 @@
 package com.jsoft.pos.ui.views.sale
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.jsoft.pos.R
+import com.jsoft.pos.ui.utils.ContextWrapperUtil
 
 class CheckoutActivity : AppCompatActivity() {
 
     private lateinit var viewModel: CheckoutViewModel
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(ContextWrapperUtil.create(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

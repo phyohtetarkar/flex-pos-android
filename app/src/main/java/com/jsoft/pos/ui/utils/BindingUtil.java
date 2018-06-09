@@ -13,11 +13,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.jsoft.pos.ui.custom.CustomEditText;
+import com.jsoft.pos.ui.custom.RoundedFractionTextView;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Locale;
 
 public class BindingUtil {
 
@@ -38,9 +38,33 @@ public class BindingUtil {
     }
 
     @BindingAdapter({"android:text"})
+    public static void setString(TextView textView, String value) {
+        if (value == null || value.isEmpty()) {
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (char c : value.toCharArray()) {
+            if (Character.isDigit(c)) {
+                sb.append((char)(c + 4112));
+            } else {
+                sb.append(c);
+            }
+        }
+        textView.setText(sb.toString());
+    }
+
+    @BindingAdapter({"android:text"})
     public static void setInt(TextView textView, int value) {
+        DecimalFormat df = (DecimalFormat) NumberFormat.getInstance();
+        df.applyPattern("#,###");
+        textView.setText(df.format(value));
+    }
+
+    @BindingAdapter({"android:text"})
+    public static void setInt(EditText ed, int value) {
         if (value > 0) {
-            textView.setText(String.valueOf(value));
+            ed.setText(String.valueOf(value));
         }
     }
 
@@ -55,17 +79,34 @@ public class BindingUtil {
     }
 
     @BindingAdapter({"android:text"})
-    public static void setDouble(TextView textView, double value) {
-        if (value > 0) {
+    public static void setRoundedDouble(RoundedFractionTextView textView, double value) {
+        DecimalFormat df = (DecimalFormat) NumberFormat.getInstance();
+        df.applyPattern("#,###");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        df.setMinimumFractionDigits(0);
 
+        textView.setText(df.format(value));
+    }
+
+    @BindingAdapter({"android:text"})
+    public static void setDouble(TextView textView, double value) {
+        DecimalFormat df = (DecimalFormat) NumberFormat.getInstance();
+        df.applyPattern("#,###.##");
+
+        if ((value - (int) value) % 10 == 0) {
+            df.setMinimumFractionDigits(0);
+        }
+
+        textView.setText(df.format(value));
+    }
+
+    @BindingAdapter({"android:text"})
+    public static void setDouble(EditText ed, double value) {
+        if (value > 0) {
             if ((value - (int) value) % 10 == 0) {
-                textView.setText(String.valueOf((int) value));
+                ed.setText(String.valueOf((int) value));
             } else {
-                DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.ENGLISH);
-                df.applyPattern("#.##");
-                df.setRoundingMode(RoundingMode.HALF_UP);
-                df.setMinimumFractionDigits(2);
-                textView.setText(df.format(value));
+                ed.setText(String.valueOf(value));
             }
 
         }

@@ -4,9 +4,8 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import java.util.*
+import kotlin.math.absoluteValue
 
 @Entity(indices = [(Index(value = ["receipt_code"], unique = true))])
 data class Sale(
@@ -37,17 +36,17 @@ data class Sale(
                 return Sale()
             }
 
-            val df = DecimalFormat("#.####")
-            df.roundingMode = RoundingMode.HALF_UP
-
             val sale = Sale(totalItem = list?.size ?: 0,
-                    discount = calculateDiscount(list).round("#.####"),
-                    subTotalPrice = list?.map { it.total }?.sum()?.round("#.####") ?: 0.00)
+                    discount = calculateDiscount(list).round(),
+                    subTotalPrice = list?.map { it.total }?.sum()?.round() ?: 0.00)
 
-            sale.taxAmount = calculateTax(list).round("#.####")
+            val taxIn = calculateInclusiveTax(list)
+            val taxEx = calculateExclusiveTax(list)
+
+            sale.taxAmount = taxIn.plus(taxEx).round()
             sale.totalPrice = sale.subTotalPrice.minus(sale.discount)
-                    .plus(sale.taxAmount)
-                    .round("#.####")
+                    .plus(taxEx)
+                    .round()
 
             return sale
         }
@@ -56,15 +55,23 @@ data class Sale(
             return list?.sumByDouble { it.computedDiscount } ?: 0.0
         }
 
-        private fun calculateTax(list: List<SaleItem>?): Double {
+        private fun calculateInclusiveTax(list: List<SaleItem>?): Double {
             return list?.map {
-                it.item?.taxes?.map {
-                    if (it.included) {
-                        it.amount.div(100)
-                    } else {
-                        0.0
-                    }
-                }?.sum()?.times(it.total.minus(it.computedDiscount)) ?: 0.0
+                val amount = it.total.minus(it.computedDiscount)
+
+                amount.div(
+                it.item?.taxes?.filter { it.included }
+                        ?.map { it.amount.div(100) }
+                        ?.sum()?.plus(1) ?: 0.0
+                ).minus(amount).absoluteValue
+            }?.sum() ?: 0.0
+        }
+
+        private fun calculateExclusiveTax(list: List<SaleItem>?): Double {
+            return list?.map {
+                it.item?.taxes?.filter { !it.included }
+                        ?.map { it.amount.div(100) }
+                        ?.sum()?.times(it.total.minus(it.computedDiscount)) ?: 0.0
             }?.sum() ?: 0.0
         }
 

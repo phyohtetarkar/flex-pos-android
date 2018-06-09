@@ -31,7 +31,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view12"
             tools:text="Subtotal" />
 
-        <TextView
+        <com.jsoft.pos.ui.custom.RoundedFractionTextView
             android:id="@+id/textView25"
             style="@style/AppTextSecondary"
             android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView24"
             tools:text="Discount" />
 
-        <TextView
+        <com.jsoft.pos.ui.custom.RoundedFractionTextView
             android:id="@+id/textView28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView26"
             tools:text="Tax" />
 
-        <TextView
+        <com.jsoft.pos.ui.custom.RoundedFractionTextView
             android:id="@+id/textView31"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             tools:text="20" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnCheckout"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="58dp"
@@ -151,8 +151,9 @@
                 android:text="Total Price"
                 android:textColor="@color/colorPrimaryDark" />
 
-            <TextView
+            <com.jsoft.pos.ui.custom.RoundedFractionTextView
                 style="@style/TitleTextMedium"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{vm.sale.totalPrice}"

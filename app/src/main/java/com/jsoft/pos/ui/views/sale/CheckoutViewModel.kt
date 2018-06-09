@@ -16,6 +16,8 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
     val saleItem = MutableLiveData<SaleItem>()
     val saleItems = MutableLiveData<List<SaleItem>>()
 
+    var totalSaleItemPrice = MutableLiveData<Double>()
+
     private val saleDao: SaleDao
 
     private val repository: SaleRepository
@@ -45,24 +47,6 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
 
     fun populateSale(list: List<SaleItem>) {
         repository.createSale(list, sale, saleItems)
-    }
-
-    fun plusQty() {
-        val si = saleItem.value
-        si?.quantity = si?.quantity?.inc() ?: 0
-        saleItem.value = si
-    }
-
-    fun minusQty() {
-        val si = saleItem.value
-
-        val qty = si?.quantity?.minus(1) ?: 0
-
-        if (qty > 0) {
-            si?.quantity = qty
-            saleItem.value = si
-        }
-
     }
 
 }

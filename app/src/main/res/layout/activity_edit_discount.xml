@@ -110,8 +110,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edDiscountValue"
-                tools:text="Assign Item" />
+                app:layout_constraintTop_toBottomOf="@+id/edDiscountValue" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -130,8 +129,7 @@
             android:background="@drawable/selectable_important_background"
             android:text="@string/delete"
             android:textColor="@color/whitePrimary"
-            android:visibility="@{safeUnbox(vm.discount.id) > 0 ? View.VISIBLE : View.INVISIBLE}"
-            tools:text="Delete" />
+            android:visibility="@{safeUnbox(vm.discount.id) > 0 ? View.VISIBLE : View.INVISIBLE}" />
 
     </LinearLayout>
 </layout>

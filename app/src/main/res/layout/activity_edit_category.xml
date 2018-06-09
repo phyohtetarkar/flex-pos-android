@@ -219,8 +219,7 @@
             android:background="@drawable/selectable_important_background"
             android:text="@string/delete"
             android:textColor="@color/whitePrimary"
-            android:visibility="@{safeUnbox(vm.category.id) > 0 ? View.VISIBLE : View.INVISIBLE}"
-            tools:text="Delete" />
+            android:visibility="@{safeUnbox(vm.category.id) > 0 ? View.VISIBLE : View.INVISIBLE}" />
 
     </LinearLayout>
 

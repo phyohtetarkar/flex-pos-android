@@ -16,8 +16,6 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="done">done</string>
-    <string name="hint_unit_name">Unit Name *</string>
-    <string name="hint_category_name">Category Name *</string>
     <string name="select_color">Select Color</string>
     <string name="choose">Choose</string>
     <string name="hint_unit">Unit *</string>
@@ -48,7 +46,7 @@
     <string name="delete">Delete</string>
     <string name="assign_items">Assign Items</string>
 
-    <string name="items_for_count">items</string>
+    <string name="items_for_count">%s items</string>
     <string name="select_all">Select all</string>
     <string name="hint_quantity">Quantity *</string>
 

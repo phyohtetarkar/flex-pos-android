@@ -99,9 +99,10 @@ fun Double.toSimplifyString(): String {
     }
 }
 
-fun Double.round(pattern: String): Double {
+fun Double.round(): Double {
     val df = DecimalFormat.getInstance(Locale.ENGLISH) as DecimalFormat
-    df.applyPattern(pattern)
+    df.applyPattern("###.##")
     df.roundingMode = RoundingMode.HALF_UP
+    df.maximumFractionDigits = 2
     return df.format(this).toDouble()
 }
