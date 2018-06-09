@@ -8,8 +8,7 @@ import android.support.design.widget.Snackbar.LENGTH_SHORT
 import android.support.v7.app.AlertDialog
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.jsoft.pos.R
@@ -37,19 +36,22 @@ class AlertUtil {
 
         fun showBigToast(context: Context, msg: String) {
             val toast = Toast(context)
-            val tv = TextView(context)
-            tv.layoutParams = ViewGroup.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
-            tv.textSize = 24f
+            val layout = LinearLayout(context)
+            layout.setPadding(16, 16, 16, 16)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                tv.setBackgroundColor(context.resources.getColor(R.color.darkSecondary, null))
+                layout.background = context.resources.getDrawable(R.drawable.dark_rounded_back, null)
             } else {
-                tv.setBackgroundColor(context.resources.getColor(R.color.darkSecondary))
+                layout.background = context.resources.getDrawable(R.drawable.dark_rounded_back)
             }
-            tv.setPadding(24, 24, 24, 24)
 
+            val tv = TextView(context)
+            tv.textSize = 24f
             tv.text = msg
             tv.setTextColor(Color.WHITE)
-            toast.view = tv
+
+            layout.addView(tv)
+
+            toast.view = layout
             toast.setGravity(Gravity.CENTER, 0, 0)
             toast.duration = Toast.LENGTH_SHORT
             toast.show()
