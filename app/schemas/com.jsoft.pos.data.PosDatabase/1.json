@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2eb0ba6adfd3b26d9fcaf24b57b2f32f",
+    "identityHash": "ff4a053db872e61d675a083b9dc91e23",
     "entities": [
       {
         "tableName": "Item",
@@ -428,7 +428,7 @@
       },
       {
         "tableName": "Sale",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `receipt_code` TEXT NOT NULL, `issue_date` INTEGER NOT NULL, `total_item` INTEGER NOT NULL, `discount` REAL NOT NULL, `tax_amount` REAL NOT NULL, `sub_total_price` REAL NOT NULL, `total_price` REAL NOT NULL, `pay_price` REAL NOT NULL, `change` REAL NOT NULL, `receipt` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `receipt_code` TEXT NOT NULL, `issue_date` INTEGER, `total_item` INTEGER NOT NULL, `discount` REAL NOT NULL, `tax_amount` REAL NOT NULL, `sub_total_price` REAL NOT NULL, `total_price` REAL NOT NULL, `pay_price` REAL NOT NULL, `change` REAL NOT NULL, `receipt` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -446,7 +446,7 @@
             "fieldPath": "issueDate",
             "columnName": "issue_date",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "totalItem",
@@ -608,7 +608,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2eb0ba6adfd3b26d9fcaf24b57b2f32f\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ff4a053db872e61d675a083b9dc91e23\")"
     ]
   }
 }

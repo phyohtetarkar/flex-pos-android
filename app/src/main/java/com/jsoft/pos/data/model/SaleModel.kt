@@ -13,7 +13,7 @@ class SaleRepository(
         private val saleDao: SaleDao,
         private val itemRepo: ItemRepository
 ) {
-    fun createSale(saleItems: List<SaleItem>, updateField: MutableLiveData<Sale>, updateList: MutableLiveData<List<SaleItem>>) {
+    fun initializeSale(saleItems: List<SaleItem>, updateField: MutableLiveData<Sale>, updateList: MutableLiveData<List<SaleItem>>) {
 
         DaoWorkerAsync<List<SaleItem>>({
             saleItems.forEach { si ->

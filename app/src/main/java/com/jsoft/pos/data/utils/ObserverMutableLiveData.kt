@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.databinding.BaseObservable
 import android.databinding.Observable
 
-class SearchMutableLiveData<T : BaseObservable> : MutableLiveData<T>() {
+class ObserverMutableLiveData<T : BaseObservable> : MutableLiveData<T>() {
 
     private val callback = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable, propertyId: Int) {

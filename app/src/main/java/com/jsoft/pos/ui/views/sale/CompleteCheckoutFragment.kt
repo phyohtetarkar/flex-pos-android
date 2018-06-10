@@ -8,10 +8,10 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jsoft.pos.databinding.EditSaleItemBinding
-import kotlinx.android.synthetic.main.fragment_edit_sale_item.*
+import com.jsoft.pos.databinding.CompleteCheckoutBinding
+import kotlinx.android.synthetic.main.fragment_complete_checkout.*
 
-class EditSaleItemFragment : Fragment() {
+class CompleteCheckoutFragment : Fragment() {
 
     private var viewModel: CheckoutViewModel? = null
 
@@ -22,8 +22,7 @@ class EditSaleItemFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = EditSaleItemBinding.inflate(inflater, container, false)
-        binding.setLifecycleOwner(this)
+        val binding = CompleteCheckoutBinding.inflate(inflater, container, false)
         binding.vm = viewModel
         return binding.root
     }
@@ -31,26 +30,7 @@ class EditSaleItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btnUpdateSaleItem.setOnClickListener {
-            viewModel?.updateSaleItem()
-            activity?.onBackPressed()
-        }
-
-        btnAddQty.setOnClickListener {
-            viewModel?.saleItem?.value?.apply {
-                edSaleItemAmount.setText(quantity.inc().toString())
-            }
-        }
-
-        btnSubQty.setOnClickListener {
-            viewModel?.saleItem?.value?.apply {
-                if (quantity > 1) {
-                    edSaleItemAmount.setText(quantity.dec().toString())
-                }
-            }
-        }
-
-        edSaleItemAmount.addTextChangedListener(object : TextWatcher {
+        edPayPrice.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -59,26 +39,26 @@ class EditSaleItemFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                viewModel?.saleItem?.value?.also {
-                    if (!s.isNullOrEmpty() && s.toString().toInt() > 0) {
-                        it.quantity = s.toString().toInt()
+                viewModel?.sale?.value?.also {
+                    if (!s.isNullOrEmpty() && s.toString().toDouble() > 0) {
+                        it.payPrice = s.toString().toDouble()
+                        it.change = it.payPrice - it.totalPrice
                     } else {
-                        it.quantity = 1
+                        it.payPrice = 0.0
                     }
-                    viewModel?.totalSaleItemPrice?.value = it.total
+                    viewModel?.change?.value = it.change
                 }
 
             }
 
         })
 
-
     }
 
     companion object {
-        val INSTANCE: EditSaleItemFragment
+        val INSTANCE: CompleteCheckoutFragment
             get() {
-                return EditSaleItemFragment()
+                return CompleteCheckoutFragment()
             }
     }
 

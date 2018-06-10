@@ -10,11 +10,11 @@ import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.data.model.ItemRepository
 import com.jsoft.pos.data.model.ItemSearch
 import com.jsoft.pos.data.utils.DaoWorkerAsync
-import com.jsoft.pos.data.utils.SearchMutableLiveData
+import com.jsoft.pos.data.utils.ObserverMutableLiveData
 
 class AssignItemViewModel(application: Application) : AndroidViewModel(application) {
 
-    val search = SearchMutableLiveData<ItemSearch>()
+    val search = ObserverMutableLiveData<ItemSearch>()
     var id = 0
     var checkedIds: Collection<Long>? = null
     lateinit var type: Item.AssignType
