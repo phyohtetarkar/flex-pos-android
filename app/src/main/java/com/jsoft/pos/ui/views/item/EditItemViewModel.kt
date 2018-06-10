@@ -14,6 +14,7 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 class EditItemViewModel(application: Application) : AndroidViewModel(application) {
 
     val itemInput = MutableLiveData<Long>()
+
     val itemSaved = MutableLiveData<Boolean>()
     val itemDeleted = MutableLiveData<Boolean>()
 

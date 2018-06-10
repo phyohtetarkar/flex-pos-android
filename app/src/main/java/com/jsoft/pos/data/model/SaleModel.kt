@@ -18,7 +18,7 @@ class SaleRepository(
         DaoWorkerAsync<List<SaleItem>>({
             saleItems.forEach { si ->
                         if (si.item == null) {
-                            si.item = itemRepo.getItem(si.itemId!!)
+                            si.item = itemRepo.getItem(si.itemId)
                         }
                     }
 
@@ -26,6 +26,28 @@ class SaleRepository(
             updateField.postValue(Sale.create(saleItems))
         }, {}, {}).execute(saleItems)
 
+    }
+
+    fun getSale(id: Long): LiveData<Sale> {
+        val liveSale = MutableLiveData<Sale>()
+
+        DaoWorkerAsync<Long>({
+
+            if (it > 0) {
+                val sale = saleDao.findByIdSync(id)
+                val saleItems = saleDao.findSaleItemsSync(id)
+                saleItems.forEach {
+                    it.item = itemRepo.getItem(it.itemId)
+                }
+
+                sale.saleItems = saleItems
+
+                liveSale.postValue(sale)
+            }
+
+        }, {}, {}).execute(id)
+
+        return liveSale
     }
 }
 
@@ -37,6 +59,9 @@ abstract class SaleDao : BaseDao<Sale> {
 
     @Query("SELECT * FROM sale WHERE id = :id LIMIT 1")
     abstract fun findById(id: Long): LiveData<Sale>
+
+    @Query("SELECT * FROM sale WHERE id = :id LIMIT 1")
+    abstract fun findByIdSync(id: Long): Sale
 
     @Query("SELECT * FROM sale_item WHERE sale_id = :saleId")
     abstract fun findSaleItemsSync(saleId: Long): List<SaleItem>

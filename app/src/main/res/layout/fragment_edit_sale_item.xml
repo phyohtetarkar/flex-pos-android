@@ -38,13 +38,13 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@color/darkDivider"
-                app:layout_constraintBottom_toTopOf="@+id/edSaleItemAmount"
+                app:layout_constraintBottom_toTopOf="@+id/edSaleItemQty"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
             <com.jsoft.pos.ui.custom.CustomEditText
-                android:id="@+id/edSaleItemAmount"
+                android:id="@+id/edSaleItemQty"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -52,7 +52,7 @@
                 android:layout_marginTop="24dp"
                 android:hint="@string/hint_quantity"
                 android:inputType="number"
-                android:text="@={vm.saleItem.quantity}"
+                android:text="@={vm.saleItem._quantity}"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toTopOf="@+id/edSaleItemRemark"
                 app:layout_constraintEnd_toStartOf="@+id/btnAddQty"
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="@{vm.totalSaleItemPrice}"
+                android:text="@{vm.saleItem.total}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView1"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="300" />
@@ -83,7 +83,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edSaleItemAmount" />
+                app:layout_constraintTop_toBottomOf="@+id/edSaleItemQty" />
 
             <ImageButton
                 android:id="@+id/btnSubQty"
@@ -92,9 +92,9 @@
                 android:layout_marginStart="16dp"
                 android:background="@drawable/selectable_outline_bordered_background"
                 android:src="@drawable/ic_remove_primary_dark"
-                app:layout_constraintBottom_toBottomOf="@+id/edSaleItemAmount"
+                app:layout_constraintBottom_toBottomOf="@+id/edSaleItemQty"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edSaleItemAmount"
+                app:layout_constraintTop_toTopOf="@+id/edSaleItemQty"
                 tools:ignore="ContentDescription" />
 
             <ImageButton
@@ -104,9 +104,9 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/selectable_outline_bordered_background"
                 android:src="@drawable/ic_add_primary_dark"
-                app:layout_constraintBottom_toBottomOf="@+id/edSaleItemAmount"
+                app:layout_constraintBottom_toBottomOf="@+id/edSaleItemQty"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edSaleItemAmount"
+                app:layout_constraintTop_toTopOf="@+id/edSaleItemQty"
                 tools:ignore="ContentDescription" />
 
             <Button

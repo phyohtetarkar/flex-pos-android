@@ -15,6 +15,7 @@ import com.jsoft.pos.databinding.CheckoutBinding
 import com.jsoft.pos.ui.utils.SwipeGestureCallback
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import kotlinx.android.synthetic.main.fragment_sale_detail.*
+import kotlinx.android.synthetic.main.layout_checkout_sheet.*
 
 class SaleDetailFragment : Fragment() {
 
@@ -48,6 +49,13 @@ class SaleDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        btnCheckout.setOnClickListener {
+            fragmentManager?.beginTransaction()
+                    ?.replace(R.id.contentCheckout, CompleteCheckoutFragment.INSTANCE)
+                    ?.addToBackStack(null)
+                    ?.commit()
+        }
 
         val swipeCallback = SwipeGestureCallback(context!!, object : SwipeGestureCallback.OnSwipeDeleteListener {
             override fun onDelete(position: Int) {
@@ -125,7 +133,10 @@ class SaleDetailFragment : Fragment() {
     }
 
     private fun onItemTouch(position: Int) {
-        viewModel?.saleItem?.value = adapter.getItemAt(position)
+        val origin = adapter.getItemAt(position)
+        val copy = origin.copy()
+        copy.item = origin.item
+        viewModel?.saleItem?.value = copy
 
         fragmentManager?.beginTransaction()
                 ?.replace(R.id.contentCheckout, EditSaleItemFragment.INSTANCE)

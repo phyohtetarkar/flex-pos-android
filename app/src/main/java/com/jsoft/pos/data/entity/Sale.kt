@@ -1,9 +1,10 @@
 package com.jsoft.pos.data.entity
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Index
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
+import android.databinding.BaseObservable
+import android.databinding.Bindable
+import com.jsoft.pos.BR
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.absoluteValue
 
@@ -26,9 +27,35 @@ data class Sale(
         var totalPrice: Double = 0.0,
         @ColumnInfo(name = "pay_price")
         var payPrice: Double = 0.0,
+        @Bindable
         var change: Double = 0.0,
         var receipt: String = ""
-) {
+) : BaseObservable() {
+
+    @Ignore
+    var _payPrice = payPrice
+        set(value) {
+            val v = value - totalPrice
+            if (v > 0) {
+                payPrice = value
+                change = v
+            } else {
+                change = 0.0
+            }
+
+            notifyPropertyChanged(BR.change)
+
+        }
+
+    val _issueDate: String
+        get() {
+            val format = SimpleDateFormat("yyyy/MM/dd hh:mm a", Locale.ENGLISH)
+            return format.format(issueDate)
+        }
+
+    @Ignore
+    var saleItems: List<SaleItem> = mutableListOf()
+
     companion object {
         fun create(list: List<SaleItem>?): Sale {
 
@@ -60,9 +87,9 @@ data class Sale(
                 val amount = it.total.minus(it.computedDiscount)
 
                 amount.div(
-                it.item?.taxes?.filter { it.included }
-                        ?.map { it.amount.div(100) }
-                        ?.sum()?.plus(1) ?: 0.0
+                        it.item?.taxes?.filter { it.included }
+                                ?.map { it.amount.div(100) }
+                                ?.sum()?.plus(1) ?: 0.0
                 ).minus(amount).absoluteValue
             }?.sum() ?: 0.0
         }

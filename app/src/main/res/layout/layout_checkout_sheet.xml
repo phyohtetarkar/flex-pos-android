@@ -148,7 +148,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Total Price"
+                android:textStyle="bold"
+                android:text="@string/total_price"
                 android:textColor="@color/colorPrimaryDark" />
 
             <com.jsoft.pos.ui.custom.RoundedFractionTextView

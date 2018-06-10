@@ -56,4 +56,7 @@
     <string name="_00">00</string>
 
     <string name="hint_value">value *</string>
+
+    <string name="total_price">Total Price</string>
+    <string name="change">Change</string>
 </resources>

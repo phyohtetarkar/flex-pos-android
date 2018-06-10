@@ -3,11 +3,8 @@ package com.jsoft.pos.ui.utils
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.support.design.widget.Snackbar
-import android.support.design.widget.Snackbar.LENGTH_SHORT
 import android.support.v7.app.AlertDialog
 import android.view.Gravity
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -25,13 +22,8 @@ class AlertUtil {
             builder.show()
         }
 
-        fun showMessage(view: View, idRes: Int) {
-            showMessage(view, view.context.resources.getString(idRes))
-        }
+        fun showImageSelectAction(context: Context, handler: (Int) -> Unit) {
 
-        fun showMessage(view: View, msg: String) {
-            val snackBar = Snackbar.make(view, msg, LENGTH_SHORT)
-            snackBar.show()
         }
 
         fun showBigToast(context: Context, msg: String) {
@@ -45,7 +37,7 @@ class AlertUtil {
             }
 
             val tv = TextView(context)
-            tv.textSize = 24f
+            tv.textSize = 16f
             tv.text = msg
             tv.setTextColor(Color.WHITE)
 

@@ -196,13 +196,9 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         val itemVO = adapter.getItemAt(position)
 
         val origin = view.roundedImageView
-        val bitmapDrawable: BitmapDrawable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            resources.getDrawable(R.drawable.ic_placeholder, null) as BitmapDrawable
-        } else {
-            resources.getDrawable(R.drawable.ic_placeholder) as BitmapDrawable
-        }
+
         val copy = RoundedImageView(activity!!)
-        copy.setImageBitmap(bitmapDrawable.bitmap)
+        copy.setImageBitmap((origin.drawable as BitmapDrawable).bitmap)
         copy.layoutParams = origin.layoutParams
 
         val dm = DisplayMetrics()

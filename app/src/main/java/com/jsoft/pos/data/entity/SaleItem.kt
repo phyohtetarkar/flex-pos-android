@@ -1,6 +1,9 @@
 package com.jsoft.pos.data.entity
 
 import android.arch.persistence.room.*
+import android.databinding.BaseObservable
+import android.databinding.Bindable
+import com.jsoft.pos.BR
 
 @Entity(foreignKeys = [
     ForeignKey(entity = Item::class,
@@ -21,26 +24,34 @@ data class SaleItem(
         var remark: String = "",
 
         @ColumnInfo(name = "item_id")
-        var itemId: Long? = null,
+        var itemId: Long = 0,
         @ColumnInfo(name = "sale_id")
-        var saleId: Long? = null
-) {
+        var saleId: Long = 0
+) : BaseObservable() {
     @Ignore
     var item: Item? = null
 
+    @Bindable
     @Ignore
     var total: Double = 0.00
         get() = quantity * price
 
     @Ignore
+    var _quantity = quantity
+        set(value) {
+            quantity = if (value > 0) value else 1
+            notifyPropertyChanged(BR.total)
+        }
+
+    @Ignore
     var computedDiscount: Double = 0.00
         get() = item?.discounts?.sumByDouble {
-                if (it.percentage) {
-                    it.amount.div(100)
-                } else {
-                    it.amount.times(100).div(price).div(100)
-                }
-            }?.times(total) ?: 0.00
+            if (it.percentage) {
+                it.amount.div(100)
+            } else {
+                it.amount.times(100).div(price).div(100)
+            }
+        }?.times(total) ?: 0.00
 
     @Ignore
     var priceDesc: String = ""

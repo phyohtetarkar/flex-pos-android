@@ -14,12 +14,24 @@ import android.widget.TextView;
 
 import com.jsoft.pos.ui.custom.CustomEditText;
 import com.jsoft.pos.ui.custom.RoundedFractionTextView;
+import com.jsoft.pos.ui.custom.RoundedImageView;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 public class BindingUtil {
+
+    @BindingAdapter({"image"})
+    public static void setImage(RoundedImageView imageView, String image) {
+        imageView.setImageBitmap(ImageUtil.INSTANCE.readImage(imageView.getContext(), image));
+    }
+
+    @BindingAdapter({"engText"})
+    public static void setEngString(TextView textView, String value) {
+        textView.setText(String.format(Locale.ENGLISH, "%s", value));
+    }
 
     @BindingAdapter({"cardBackgroundColor"})
     public static void cardBackgroundColor(CardView cardView, String colorValue) {
