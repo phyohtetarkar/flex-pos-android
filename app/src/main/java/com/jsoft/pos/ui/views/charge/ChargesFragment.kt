@@ -38,7 +38,7 @@ class ChargesFragment : SimpleListFragment<Charge>() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val app = context as MainActivity
-        app.setTitle(R.string.taxes)
+        app.setTitle(R.string.charges)
     }
 
     override val _adapter: SimpleListAdapter<Charge>

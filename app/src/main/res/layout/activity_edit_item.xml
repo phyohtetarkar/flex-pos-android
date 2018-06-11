@@ -196,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="@string/taxes"
+                    android:text="@string/charges"
                     app:layout_constraintBottom_toTopOf="@+id/linearLayoutCharges"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view6" />

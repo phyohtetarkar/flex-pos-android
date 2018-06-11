@@ -34,7 +34,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val charges: LiveData<List<Charge>> = Transformations.switchMap(itemInput) {
         val liveCharges = MutableLiveData<List<Charge>>()
         DaoWorkerAsync<Long>({
-            liveCharges.postValue(chargeDao.findChargeAssociations(it))
+            liveCharges.postValue(chargeDao.findItemChargeAssociations(it))
         },{},{}).execute(it)
         return@switchMap liveCharges
     }

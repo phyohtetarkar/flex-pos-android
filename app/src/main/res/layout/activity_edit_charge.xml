@@ -44,14 +44,13 @@
                 android:id="@+id/edTaxValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginTop="24dp"
                 android:hint="@string/hint_value"
                 android:inputType="numberDecimal"
                 android:text="@={vm.charge.amount}"
-                android:drawableEnd="@drawable/ic_percantage_dark"
                 app:layout_constraintBottom_toTopOf="@+id/switch1"
-                app:layout_constraintEnd_toEndOf="@+id/edTaxName"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/radioGroup2"
                 app:layout_constraintStart_toStartOf="@+id/edTaxName"
                 app:layout_constraintTop_toBottomOf="@+id/edTaxName" />
 
@@ -59,15 +58,15 @@
                 android:id="@+id/switch1"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
-                android:layout_marginStart="4dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="2dp"
                 android:layout_marginTop="24dp"
                 android:checked="@={vm.charge.included, default=true}"
                 android:fontFamily="@font/app_font_medium"
                 android:text="Included in item price"
                 android:textColor="@color/colorTextPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/btnAssignCharge"
-                app:layout_constraintEnd_toEndOf="@+id/edTaxValue"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/edTaxValue"
                 app:layout_constraintTop_toBottomOf="@+id/edTaxValue"
                 tools:checked="true" />
@@ -88,6 +87,49 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switch1" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/edTaxValue"
+                app:layout_constraintEnd_toEndOf="@+id/edTaxName">
+
+                <RadioButton
+                    android:id="@+id/radioButton9"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="-1.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_state_left_drawable"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/app_font_bold"
+                    android:checked="@{vm.charge.percentage, default=true}"
+                    android:onCheckedChanged="@{(rb, isChecked) -> vm.updateChargeMode(isChecked)}"
+                    android:padding="12dp"
+                    android:text="@string/percent_symbol"
+                    android:textAlignment="center"
+                    android:textColor="@drawable/toggle_text_drawable"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/radioButton10"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-1.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_state_right_drawable"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/app_font_bold"
+                    android:checked="@{vm.charge.percentage == false}"
+                    android:padding="12dp"
+                    android:text="@string/_00"
+                    android:textAlignment="center"
+                    android:textColor="@drawable/toggle_text_drawable"
+                    android:textSize="18sp" />
+            </RadioGroup>
 
 
         </android.support.constraint.ConstraintLayout>

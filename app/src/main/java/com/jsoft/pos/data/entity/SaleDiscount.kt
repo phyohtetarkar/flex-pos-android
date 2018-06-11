@@ -1,0 +1,25 @@
+package com.jsoft.pos.data.entity
+
+import android.arch.persistence.room.*
+
+@Entity(foreignKeys = [
+    ForeignKey(entity = Sale::class,
+            parentColumns = ["id"],
+            childColumns = ["sale_id"]),
+    ForeignKey(entity = Discount::class,
+            parentColumns = ["id"],
+            childColumns = ["discount_id"])
+], indices = [
+    Index(value = ["sale_id"]),
+    Index(value = ["discount_id"])
+], tableName = "sale_discount")
+data class SaleDiscount(
+        @PrimaryKey(autoGenerate = true)
+        var id: Long = 0,
+        @ColumnInfo(name = "sale_id")
+        var saleId: Long = 0,
+        @ColumnInfo(name = "discount_id")
+        var discountId: Int = 0,
+        var amount: Double = 0.0,
+        var percentage: Boolean = true
+)

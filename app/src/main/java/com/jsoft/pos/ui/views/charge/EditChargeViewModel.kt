@@ -44,4 +44,10 @@ class EditChargeViewModel(application: Application) : AndroidViewModel(applicati
 
         }).execute(charge.value)
     }
+
+    fun updateChargeMode(isPercent: Boolean) {
+        charge.value?.apply {
+            percentage = isPercent
+        }
+    }
 }
