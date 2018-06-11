@@ -1,4 +1,4 @@
-package com.jsoft.pos.ui.views.tax
+package com.jsoft.pos.ui.views.charge
 
 import android.app.Activity
 import android.arch.lifecycle.Observer

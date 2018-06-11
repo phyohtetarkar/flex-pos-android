@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayoutTaxes"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayoutCharges"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view7"
                 tools:text="Discounts" />
@@ -169,7 +169,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/linearLayoutTaxes"
+                android:id="@+id/linearLayoutCharges"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:orientation="vertical"

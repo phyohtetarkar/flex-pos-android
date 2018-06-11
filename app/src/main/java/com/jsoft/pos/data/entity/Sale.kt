@@ -19,8 +19,8 @@ data class Sale(
         @ColumnInfo(name = "total_item")
         var totalItem: Int = 0,
         var discount: Double = 0.0,
-        @ColumnInfo(name = "tax_amount")
-        var taxAmount: Double = 0.0,
+        @ColumnInfo(name = "charge_amount")
+        var chargeAmount: Double = 0.0,
         @ColumnInfo(name = "sub_total_price")
         var subTotalPrice: Double = 0.0,
         @ColumnInfo(name = "total_price")
@@ -67,12 +67,12 @@ data class Sale(
                     discount = calculateDiscount(list).round(),
                     subTotalPrice = list?.map { it.total }?.sum()?.round() ?: 0.00)
 
-            val taxIn = calculateInclusiveTax(list)
-            val taxEx = calculateExclusiveTax(list)
+            val chargeIn = calculateInclusiveCharge(list)
+            val chargeEx = calculateExclusiveCharge(list)
 
-            sale.taxAmount = taxIn.plus(taxEx).round()
+            sale.chargeAmount = chargeIn.plus(chargeEx).round()
             sale.totalPrice = sale.subTotalPrice.minus(sale.discount)
-                    .plus(taxEx)
+                    .plus(chargeEx)
                     .round()
 
             return sale
@@ -82,21 +82,21 @@ data class Sale(
             return list?.sumByDouble { it.computedDiscount } ?: 0.0
         }
 
-        private fun calculateInclusiveTax(list: List<SaleItem>?): Double {
+        private fun calculateInclusiveCharge(list: List<SaleItem>?): Double {
             return list?.map {
                 val amount = it.total.minus(it.computedDiscount)
 
                 amount.div(
-                        it.item?.taxes?.filter { it.included }
+                        it.item?.charges?.filter { it.included }
                                 ?.map { it.amount.div(100) }
                                 ?.sum()?.plus(1) ?: 0.0
                 ).minus(amount).absoluteValue
             }?.sum() ?: 0.0
         }
 
-        private fun calculateExclusiveTax(list: List<SaleItem>?): Double {
+        private fun calculateExclusiveCharge(list: List<SaleItem>?): Double {
             return list?.map {
-                it.item?.taxes?.filter { !it.included }
+                it.item?.charges?.filter { !it.included }
                         ?.map { it.amount.div(100) }
                         ?.sum()?.times(it.total.minus(it.computedDiscount)) ?: 0.0
             }?.sum() ?: 0.0

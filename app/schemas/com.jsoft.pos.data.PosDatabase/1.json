@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "91e4672ba66efcafc9a105a4e5edf937",
+    "identityHash": "43ea3c1badd7cb0c933a3d7f9a535ca0",
     "entities": [
       {
         "tableName": "Item",
@@ -119,8 +119,8 @@
         ]
       },
       {
-        "tableName": "Tax",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `amount` REAL NOT NULL, `included` INTEGER NOT NULL)",
+        "tableName": "Charge",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `amount` REAL NOT NULL, `included` INTEGER NOT NULL, `percentage` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -145,6 +145,12 @@
             "columnName": "included",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "percentage",
+            "columnName": "percentage",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -157,8 +163,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "item_tax",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `item_id` INTEGER NOT NULL, `tax_id` INTEGER NOT NULL, FOREIGN KEY(`item_id`) REFERENCES `Item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`tax_id`) REFERENCES `Tax`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "tableName": "item_charge",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `item_id` INTEGER NOT NULL, `charge_id` INTEGER NOT NULL, FOREIGN KEY(`item_id`) REFERENCES `Item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`charge_id`) REFERENCES `Charge`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -173,8 +179,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "taxId",
-            "columnName": "tax_id",
+            "fieldPath": "chargeId",
+            "columnName": "charge_id",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -187,20 +193,20 @@
         },
         "indices": [
           {
-            "name": "index_item_tax_item_id",
+            "name": "index_item_charge_item_id",
             "unique": false,
             "columnNames": [
               "item_id"
             ],
-            "createSql": "CREATE  INDEX `index_item_tax_item_id` ON `${TABLE_NAME}` (`item_id`)"
+            "createSql": "CREATE  INDEX `index_item_charge_item_id` ON `${TABLE_NAME}` (`item_id`)"
           },
           {
-            "name": "index_item_tax_tax_id",
+            "name": "index_item_charge_charge_id",
             "unique": false,
             "columnNames": [
-              "tax_id"
+              "charge_id"
             ],
-            "createSql": "CREATE  INDEX `index_item_tax_tax_id` ON `${TABLE_NAME}` (`tax_id`)"
+            "createSql": "CREATE  INDEX `index_item_charge_charge_id` ON `${TABLE_NAME}` (`charge_id`)"
           }
         ],
         "foreignKeys": [
@@ -216,11 +222,11 @@
             ]
           },
           {
-            "table": "Tax",
+            "table": "Charge",
             "onDelete": "NO ACTION",
             "onUpdate": "NO ACTION",
             "columns": [
-              "tax_id"
+              "charge_id"
             ],
             "referencedColumns": [
               "id"
@@ -428,7 +434,7 @@
       },
       {
         "tableName": "Sale",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `receipt_code` TEXT NOT NULL, `issue_date` INTEGER NOT NULL, `total_item` INTEGER NOT NULL, `discount` REAL NOT NULL, `tax_amount` REAL NOT NULL, `sub_total_price` REAL NOT NULL, `total_price` REAL NOT NULL, `pay_price` REAL NOT NULL, `change` REAL NOT NULL, `receipt` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `receipt_code` TEXT NOT NULL, `issue_date` INTEGER NOT NULL, `total_item` INTEGER NOT NULL, `discount` REAL NOT NULL, `charge_amount` REAL NOT NULL, `sub_total_price` REAL NOT NULL, `total_price` REAL NOT NULL, `pay_price` REAL NOT NULL, `change` REAL NOT NULL, `receipt` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -461,8 +467,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "taxAmount",
-            "columnName": "tax_amount",
+            "fieldPath": "chargeAmount",
+            "columnName": "charge_amount",
             "affinity": "REAL",
             "notNull": true
           },
@@ -608,7 +614,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"91e4672ba66efcafc9a105a4e5edf937\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"43ea3c1badd7cb0c933a3d7f9a535ca0\")"
     ]
   }
 }

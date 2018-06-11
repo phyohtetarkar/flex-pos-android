@@ -213,14 +213,14 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/darkDivider"
-                    app:layout_constraintBottom_toTopOf="@+id/tvResTaxes"
+                    app:layout_constraintBottom_toTopOf="@+id/tvResCharges"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvResDiscounts" />
 
                 <TextView
-                    android:id="@+id/tvResTaxes"
+                    android:id="@+id/tvResCharges"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
@@ -236,16 +236,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
                     android:background="@drawable/chip_gray"
                     android:paddingBottom="2dp"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:paddingTop="2dp"
-                    android:text="@{safeUnbox(vm.taxCount)}"
+                    android:text="@{safeUnbox(vm.chargeCount)}"
                     android:textSize="12sp"
-                    android:visibility='@{safeUnbox(vm.taxCount) > 0 ? View.VISIBLE : View.GONE}'
-                    app:layout_constraintBaseline_toBaselineOf="@+id/tvResTaxes"
+                    android:visibility='@{safeUnbox(vm.chargeCount) > 0 ? View.VISIBLE : View.GONE}'
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tvResCharges"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="2" />
             </android.support.constraint.ConstraintLayout>

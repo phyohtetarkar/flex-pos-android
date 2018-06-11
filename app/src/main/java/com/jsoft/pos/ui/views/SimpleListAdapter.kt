@@ -32,9 +32,9 @@ open class SimpleListAdapter<T>(DIFF_CALLBACK: DiffUtil.ItemCallback<T>) : ListA
             is Unit -> holder.bind(t.name)
             is Category -> holder.bind(t.name)
 
-            is Tax -> {
+            is Charge -> {
                 holder.bind(BR.first, t.name)
-                holder.bind(BR.second, t.taxDesc)
+                holder.bind(BR.second, t.chargeDesc)
             }
 
             is Discount -> {

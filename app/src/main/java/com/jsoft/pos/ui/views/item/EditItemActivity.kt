@@ -11,8 +11,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.jsoft.pos.R
+import com.jsoft.pos.data.entity.Charge
 import com.jsoft.pos.data.entity.Discount
-import com.jsoft.pos.data.entity.Tax
 import com.jsoft.pos.databinding.EditItemBinding
 import com.jsoft.pos.ui.custom.CustomViewAdapter
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
@@ -50,7 +50,7 @@ class EditItemActivity : AppCompatActivity() {
         edChooseCategory.onTouchDelegate = { showSelectDialog(DialogCategories())}
         edChooseUnit.onTouchDelegate = { showSelectDialog(DialogUnits()) }
 
-        val taxAdapter = object : CustomViewAdapter<Tax>(linearLayoutTaxes, R.layout.layout_switch_item) {
+        val chargeAdapter = object : CustomViewAdapter<Charge>(linearLayoutCharges, R.layout.layout_switch_item) {
             override fun onBindView(holder: SimpleViewHolder, position: Int) {
                 holder.bind(list[position])
             }
@@ -62,8 +62,8 @@ class EditItemActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.taxes.observe(this, Observer {
-            taxAdapter.submitList(it)
+        viewModel.charges.observe(this, Observer {
+            chargeAdapter.submitList(it)
         })
 
         viewModel.discounts.observe(this, Observer {

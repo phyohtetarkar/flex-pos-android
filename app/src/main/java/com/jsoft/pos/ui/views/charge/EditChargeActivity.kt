@@ -1,4 +1,4 @@
-package com.jsoft.pos.ui.views.discount
+package com.jsoft.pos.ui.views.charge
 
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
@@ -13,18 +13,18 @@ import android.view.Menu
 import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Item
-import com.jsoft.pos.databinding.EditDiscountBinding
+import com.jsoft.pos.databinding.EditChargeBinding
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
-import com.jsoft.pos.ui.views.charge.AssignItemActivity
-import kotlinx.android.synthetic.main.activity_edit_discount.*
+import kotlinx.android.synthetic.main.activity_edit_charge.*
 
-class EditDiscountActivity : AppCompatActivity() {
+class EditChargeActivity : AppCompatActivity() {
 
     private val ASSIGN_REQ = 1
 
-    private var discountId = 0
-    private lateinit var viewModel: EditDiscountViewModel
-    private lateinit var binding: EditDiscountBinding
+    private var chargeId = 0
+
+    private lateinit var viewModel: EditChargeViewModel
+    private lateinit var binding: EditChargeBinding
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(ContextWrapperUtil.create(newBase))
@@ -33,11 +33,11 @@ class EditDiscountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        discountId = intent.getIntExtra("id", 0)
-        viewModel = ViewModelProviders.of(this).get(EditDiscountViewModel::class.java)
-        viewModel.assignBtnEnable.value = discountId > 0
+        chargeId = intent.getIntExtra("id", 0)
+        viewModel = ViewModelProviders.of(this).get(EditChargeViewModel::class.java)
+        viewModel.assignBtnEnable.value = chargeId > 0
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_discount)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_charge)
         binding.setLifecycleOwner(this)
         binding.vm = viewModel
 
@@ -45,14 +45,14 @@ class EditDiscountActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_white)
 
         viewModel.apply {
-            if (discount.value != null) {
+            if (charge.value != null) {
                 return
             }
 
-            discountInput.value = discountId
+            chargeInput.value = chargeId
         }
 
-        edDiscountName.addTextChangedListener(object : TextWatcher {
+        edTaxName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.assignBtnEnable.value = !s.isNullOrBlank()
             }
@@ -65,10 +65,10 @@ class EditDiscountActivity : AppCompatActivity() {
 
         })
 
-        btnAssignDiscount.setOnClickListener {
+        btnAssignCharge.setOnClickListener {
             val intent = Intent(this, AssignItemActivity::class.java)
-            intent.putExtra("id", discountId)
-            intent.putExtra("type", Item.AssignType.DISCOUNT)
+            intent.putExtra("id", chargeId)
+            intent.putExtra("type", Item.AssignType.CHARGE)
             viewModel.checkedItemIds?.also {
                 intent.putExtra("checked", it.toLongArray())
             }
@@ -102,11 +102,9 @@ class EditDiscountActivity : AppCompatActivity() {
         when (requestCode) {
             ASSIGN_REQ -> {
                 if (resultCode == Activity.RESULT_OK) {
-
                     data?.getLongArrayExtra("checkedIds")?.apply {
                         viewModel.checkedItemIds = asList()
                     }
-
                 }
             }
         }

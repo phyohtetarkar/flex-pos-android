@@ -17,7 +17,7 @@ class ItemRepository(
         private val dao: ItemDao,
         private val unitDao: UnitDao? = null,
         private val categoryDao: CategoryDao? = null,
-        private val taxDao: TaxDao? = null,
+        private val chargeDao: ChargeDao? = null,
         private val discountDao: DiscountDao? = null
 ) {
 
@@ -27,7 +27,7 @@ class ItemRepository(
         val itemsFiltered: List<Item>? = id.let {
             if (it > 0) {
                 when(with) {
-                    Item.AssignType.TAX -> dao.findAssociationsByTax(it)
+                    Item.AssignType.CHARGE -> dao.findAssociationsByCharge(it)
                     Item.AssignType.DISCOUNT -> dao.findAssociationsByDiscount(it)
                 }
             } else {
@@ -63,7 +63,7 @@ class ItemRepository(
                 item.unit = unitDao?.findByIdSync(this)
             }
 
-            item.taxes = taxDao?.findTaxAssociations(id)
+            item.charges = chargeDao?.findChargeAssociations(id)
             item.discounts = discountDao?.findDiscountAssociations(id)
 
             return item
@@ -72,7 +72,7 @@ class ItemRepository(
         return Item()
     }
 
-    fun save(item: Item, taxes: List<Tax>?, discounts: List<Discount>?) {
+    fun save(item: Item, taxes: List<Charge>?, discounts: List<Discount>?) {
         dao.save(item, taxes.orEmpty(), discounts.orEmpty())
     }
 
@@ -178,9 +178,9 @@ abstract class ItemDao : BaseDao<Item> {
     abstract fun findItemsSync(query: SupportSQLiteQuery): List<Item>
 
     @Query("SELECT i.* FROM item i " +
-            "INNER JOIN item_tax it ON it.item_id = i.id " +
-            "WHERE it.tax_id = :taxId ")
-    abstract fun findAssociationsByTax(taxId: Int): List<Item>
+            "INNER JOIN item_charge it ON it.item_id = i.id " +
+            "WHERE it.charge_id = :chargeId ")
+    abstract fun findAssociationsByCharge(chargeId: Int): List<Item>
 
     @Query("SELECT i.* FROM item i " +
             "INNER JOIN item_discount id ON id.item_id = i.id " +
@@ -196,23 +196,23 @@ abstract class ItemDao : BaseDao<Item> {
     @Query("SELECT COUNT(*) FROM item")
     abstract fun findCount(): LiveData<Long>
 
-    @Query("SELECT * FROM item_tax WHERE item_id = :itemId")
-    protected abstract fun findItemTaxesSync(itemId: Long): List<ItemTax>
+    @Query("SELECT * FROM item_charge WHERE item_id = :itemId")
+    protected abstract fun findItemChargesSync(itemId: Long): List<ItemCharge>
     @Query("SELECT * FROM item_discount WHERE item_id = :itemId")
     protected abstract fun findItemDiscountsSync(itemId: Long): List<ItemDiscount>
 
     @Insert
-    protected abstract fun saveItemTaxes(itemTaxes: List<ItemTax>)
+    protected abstract fun saveItemCharges(itemTaxes: List<ItemCharge>)
     @Insert
     protected abstract fun saveItemDiscounts(itemDiscounts: List<ItemDiscount>)
 
     @Delete
-    protected abstract fun deleteItemTaxes(itemTaxes: List<ItemTax>)
+    protected abstract fun deleteItemCharges(itemTaxes: List<ItemCharge>)
     @Delete
     protected abstract fun deleteItemDiscounts(itemDiscounts: List<ItemDiscount>)
 
     @Transaction
-    open fun save(item: Item, taxes: List<Tax>, discounts: List<Discount>) {
+    open fun save(item: Item, charges: List<Charge>, discounts: List<Discount>) {
         var itemId = item.id
         if (item.id > 0) {
             update(item)
@@ -220,15 +220,15 @@ abstract class ItemDao : BaseDao<Item> {
             itemId = insertAndGet(item)
         }
 
-        taxes.takeUnless { it.isEmpty() }?.apply { assignTaxes(itemId, this) }
+        charges.takeUnless { it.isEmpty() }?.apply { assignCharges(itemId, this) }
         discounts.takeUnless { it.isEmpty() }?.apply { assignDiscounts(itemId, this) }
 
     }
 
-    private fun assignTaxes(itemId: Long, taxes: List<Tax>) {
-        deleteItemTaxes(findItemTaxesSync(itemId))
-        val itemTaxes = taxes.filter { it._checked }.map { ItemTax(itemId = itemId, taxId = it.id) }
-        saveItemTaxes(itemTaxes)
+    private fun assignCharges(itemId: Long, charges: List<Charge>) {
+        deleteItemCharges(findItemChargesSync(itemId))
+        val itemCharges = charges.filter { it._checked }.map { ItemCharge(itemId = itemId, chargeId = it.id) }
+        saveItemCharges(itemCharges)
     }
 
     private fun assignDiscounts(itemId: Long, discounts: List<Discount>) {

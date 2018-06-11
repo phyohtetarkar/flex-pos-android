@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/AppTextSecondary"
-            android:text="@{vm.sale.taxAmount, default=0}"
+            android:text="@{vm.sale.chargeAmount, default=0}"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView30"
             app:layout_constraintEnd_toEndOf="@+id/textView28"
             tools:text="20" />

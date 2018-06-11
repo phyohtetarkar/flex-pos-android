@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="EditTaxBinding">
+    <data class="EditChargeBinding">
 
         <import type="android.view.View" />
 
         <variable
             name="vm"
-            type="com.jsoft.pos.ui.views.tax.EditTaxViewModel" />
+            type="com.jsoft.pos.ui.views.charge.EditChargeViewModel" />
     </data>
 
     <LinearLayout
@@ -33,7 +33,7 @@
                 android:layout_marginTop="24dp"
                 android:hint="@string/hint_name"
                 android:inputType="text"
-                android:text="@={vm.tax.name}"
+                android:text="@={vm.charge.name}"
                 app:layout_constraintBottom_toTopOf="@+id/edTaxValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -47,7 +47,7 @@
                 android:layout_marginTop="24dp"
                 android:hint="@string/hint_value"
                 android:inputType="numberDecimal"
-                android:text="@={vm.tax.amount}"
+                android:text="@={vm.charge.amount}"
                 android:drawableEnd="@drawable/ic_percantage_dark"
                 app:layout_constraintBottom_toTopOf="@+id/switch1"
                 app:layout_constraintEnd_toEndOf="@+id/edTaxName"
@@ -61,11 +61,11 @@
                 android:layout_height="2dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="24dp"
-                android:checked="@={vm.tax.included, default=true}"
+                android:checked="@={vm.charge.included, default=true}"
                 android:fontFamily="@font/app_font_medium"
                 android:text="Included in item price"
                 android:textColor="@color/colorTextPrimary"
-                app:layout_constraintBottom_toTopOf="@+id/btnAssignTax"
+                app:layout_constraintBottom_toTopOf="@+id/btnAssignCharge"
                 app:layout_constraintEnd_toEndOf="@+id/edTaxValue"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/edTaxValue"
@@ -73,7 +73,7 @@
                 tools:checked="true" />
 
             <Button
-                android:id="@+id/btnAssignTax"
+                android:id="@+id/btnAssignCharge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -107,7 +107,7 @@
             android:background="@drawable/selectable_important_background"
             android:text="@string/delete"
             android:textColor="@color/whitePrimary"
-            android:visibility="@{safeUnbox(vm.tax.id) > 0 ? View.VISIBLE : View.INVISIBLE}" />
+            android:visibility="@{safeUnbox(vm.charge.id) > 0 ? View.VISIBLE : View.INVISIBLE}" />
 
     </LinearLayout>
 </layout>
