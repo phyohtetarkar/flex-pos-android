@@ -43,8 +43,7 @@ data class SaleItem(
             notifyPropertyChanged(BR.total)
         }
 
-    @Ignore
-    var computedDiscount: Double = 0.00
+    val computedDiscount: Double
         get() = item?.discounts?.sumByDouble {
             if (it.percentage) {
                 it.amount.div(100)
@@ -53,15 +52,18 @@ data class SaleItem(
             }
         }?.times(total) ?: 0.00
 
-    @Ignore
-    var priceDesc: String = ""
+    val priceDesc: String
         get() {
             return "$quantity \u00D7 ${item?.price?.toSimplifyString()}"
         }
 
-    @Ignore
-    var sizeDesc: String = ""
+    val sizeDesc: String
         get() {
             return "${item?.amount?.toSimplifyString()} ${item?.unit?.name}"
+        }
+
+    val itemDesc: String
+        get() {
+            return "${item?.name} $sizeDesc @${price.toSimplifyString()}"
         }
 }

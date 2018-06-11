@@ -86,11 +86,6 @@ class EditItemActivity : AppCompatActivity() {
 
         tvAddUnit.setOnClickListener {
             val ft = supportFragmentManager?.beginTransaction()
-            val prev = supportFragmentManager?.findFragmentByTag("dialog")
-            if (prev != null) {
-                ft?.remove(prev)
-            }
-
             val frag = EditUnitFragment.getInstance(0)
             frag.show(ft, "dialog")
         }
@@ -153,11 +148,6 @@ class EditItemActivity : AppCompatActivity() {
 
     private fun <T> showSelectDialog(fragment: SimpleListDialogFragment<T>) {
         val ft = supportFragmentManager.beginTransaction()
-        val prev = supportFragmentManager.findFragmentByTag("dialog")
-        if (prev != null) {
-            ft?.remove(prev)
-        }
-
         fragment.show(ft, "dialog")
     }
 

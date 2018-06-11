@@ -57,14 +57,14 @@
                         android:id="@+id/view16"
                         android:layout_width="0dp"
                         android:layout_height="2dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
                         android:background="@drawable/divider_dotted_drawable"
                         android:layerType="software"
                         app:layout_constraintBottom_toTopOf="@+id/linearLayoutReceiptItems"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
                     <LinearLayout
                         android:id="@+id/linearLayoutReceiptItems"
@@ -114,7 +114,7 @@
                         app:layout_constraintStart_toStartOf="@+id/textView37"
                         app:layout_constraintTop_toBottomOf="@+id/view18" />
 
-                    <TextView
+                    <com.jsoft.pos.ui.custom.RoundedFractionTextView
                         android:id="@+id/textView32"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                         app:layout_constraintStart_toStartOf="@+id/textView23"
                         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
-                    <TextView
+                    <com.jsoft.pos.ui.custom.RoundedFractionTextView
                         android:id="@+id/textView34"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
                         app:layout_constraintStart_toStartOf="@+id/textView33"
                         app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
-                    <TextView
+                    <com.jsoft.pos.ui.custom.RoundedFractionTextView
                         android:id="@+id/textView36"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
                         app:layout_constraintStart_toStartOf="@+id/textView48"
                         app:layout_constraintTop_toBottomOf="@+id/view17" />
 
-                    <TextView
+                    <com.jsoft.pos.ui.custom.RoundedFractionTextView
                         android:id="@+id/textView38"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -286,6 +286,51 @@
                         app:layout_constraintBaseline_toBaselineOf="@+id/textView22"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:text="2018/06/09 7:30 AM" />
+
+                    <View
+                        android:id="@+id/view23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="8dp"
+                        android:layerType="software"
+                        android:background="@drawable/divider_dotted_drawable"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView48" />
+
+                    <TextView
+                        android:id="@+id/textView49"
+                        android:layout_width="22dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Qty"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view23" />
+
+                    <TextView
+                        android:id="@+id/textView51"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="Amount"
+                        android:textAlignment="textEnd"
+                        android:textSize="14sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/textView49"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView52"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Description"
+                        android:textSize="14sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/textView49"
+                        app:layout_constraintEnd_toStartOf="@+id/textView51"
+                        app:layout_constraintStart_toEndOf="@+id/textView49" />
 
 
                 </android.support.constraint.ConstraintLayout>

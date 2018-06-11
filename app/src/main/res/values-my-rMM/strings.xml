@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -46,7 +47,7 @@
     <string name="assign_items">ပစ္စည်းနှင့်တွဲမည်</string>
 
     <string name="items_for_count">%s items</string>
-    <string name="select_all">အားလံုးရေွးမည်</string>
+    <string name="select_all">အားလုံးရွေးမည်</string>
     <string name="hint_quantity">အရေအတွက် *</string>
 
     <string name="confirm_yes">သေချာပါသည်</string>

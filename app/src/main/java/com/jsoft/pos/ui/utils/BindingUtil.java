@@ -59,6 +59,7 @@ public class BindingUtil {
         for (char c : value.toCharArray()) {
             if (Character.isDigit(c)) {
                 sb.append((char)(c + 4112));
+                //sb.append(c);
             } else {
                 sb.append(c);
             }
