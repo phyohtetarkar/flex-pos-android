@@ -12,6 +12,7 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.SaleItem
+import com.jsoft.pos.data.entity.TaxAmount
 import com.jsoft.pos.databinding.ReceiptSlipBinding
 import com.jsoft.pos.ui.custom.CustomViewAdapter
 import com.jsoft.pos.ui.utils.ImageUtil
@@ -35,9 +36,17 @@ class EmailReceiptActivity : AppCompatActivity() {
 
         }
 
+        val groupTaxAdapter = object : CustomViewAdapter<TaxAmount>(linearLayoutGroupTaxes, R.layout.layout_receipt_tax_small) {
+            override fun onBindView(holder: SimpleViewHolder, position: Int) {
+                holder.bind(list[position])
+            }
+
+        }
+
         viewModel.sale.observe(this, Observer {
             binding.sale = it
             receiptItemAdapter.submitList(it?.saleItems)
+            groupTaxAdapter.submitList(it?.groupTaxes)
 
             binding.executePendingBindings()
 

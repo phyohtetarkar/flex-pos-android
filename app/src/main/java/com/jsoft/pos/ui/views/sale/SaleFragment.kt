@@ -77,7 +77,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val app = context as MainActivity
-        app.toolbarMain.title = null
+        app.toolbarMain.title = ""
 
         mSpinner = LayoutInflater.from(context).inflate(R.layout.layout_toolbar_spinner, app.toolbarMain, false) as AppCompatSpinner?
         spinnerAdapter = ArrayAdapter(app.appbar_main.context, R.layout.extended_simple_list_item_1)

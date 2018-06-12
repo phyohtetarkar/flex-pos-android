@@ -4,11 +4,11 @@
     <item
         android:id="@+id/action_clear"
         android:title="Remove All"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_delete_white"
+        app:showAsAction="ifRoom|collapseActionView" />
 
     <item
         android:id="@+id/action_detail"
-        android:icon="@drawable/ic_info_outline_white"
-        android:title="Detail"
-        app:showAsAction="ifRoom|collapseActionView" />
+        android:title="Apply Discount"
+        app:showAsAction="never" />
 </menu>

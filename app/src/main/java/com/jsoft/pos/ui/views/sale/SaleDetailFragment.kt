@@ -2,16 +2,20 @@ package com.jsoft.pos.ui.views.sale
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.util.DiffUtil
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.*
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.SaleItem
+import com.jsoft.pos.data.entity.TaxAmount
 import com.jsoft.pos.databinding.CheckoutBinding
+import com.jsoft.pos.ui.custom.CustomViewAdapter
 import com.jsoft.pos.ui.utils.SwipeGestureCallback
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import kotlinx.android.synthetic.main.fragment_sale_detail.*
@@ -21,6 +25,7 @@ class SaleDetailFragment : Fragment() {
 
     private var viewModel: CheckoutViewModel? = null
     private lateinit var adapter: SimpleListAdapter<SaleItem>
+    private var groupTaxAdapter: CustomViewAdapter<TaxAmount>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +42,19 @@ class SaleDetailFragment : Fragment() {
 
         }, R.layout.layout_sale_item)
 
+        groupTaxAdapter = object : CustomViewAdapter<TaxAmount>(linearLayoutGroupTaxes, R.layout.layout_receipt_tax) {
+            override fun onBindView(holder: SimpleViewHolder, position: Int) {
+                holder.bind(list[position])
+            }
+        }
+
         setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = CheckoutBinding.inflate(inflater, container, false)
-        binding.checkoutSheet?.setLifecycleOwner(this)
-        binding.checkoutSheet?.vm = viewModel
+        binding.checkoutSheet.setLifecycleOwner(this)
+        binding.checkoutSheet.vm = viewModel
         return binding.root
     }
 
@@ -61,11 +72,13 @@ class SaleDetailFragment : Fragment() {
             override fun onDelete(position: Int) {
                 adapter.getItemAt(position).apply {
                     CheckOutItemsHolder.remove(this)
-                    if (CheckOutItemsHolder.itemCount == 0) {
-                        activity?.onBackPressed()
-                    } else {
-                        viewModel?.populateSale(CheckOutItemsHolder.list)
-                    }
+//                    if (CheckOutItemsHolder.itemCount == 0) {
+//                        activity?.onBackPressed()
+//                    } else {
+//                        viewModel?.populateSale(CheckOutItemsHolder.list)
+//                    }
+
+                    viewModel?.populateSale(CheckOutItemsHolder.list)
                 }
             }
 
@@ -98,6 +111,14 @@ class SaleDetailFragment : Fragment() {
             })
         }
 
+        recyclerViewCheckout.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                it.setDrawable(resources.getDrawable(R.drawable.divider_simple, resources.newTheme()))
+            } else {
+                it.setDrawable(resources.getDrawable(R.drawable.divider_simple))
+            }
+        })
+
         recyclerViewCheckout.adapter = adapter
 
         val helper = ItemTouchHelper(swipeCallback)
@@ -109,6 +130,10 @@ class SaleDetailFragment : Fragment() {
 
         viewModel?.saleItems?.observe(this, Observer {
             adapter.submitList(it)
+        })
+
+        viewModel?.sale?.observe(this, Observer {
+            groupTaxAdapter?.submitList(it?.groupTaxes)
         })
 
         viewModel?.populateSale(CheckOutItemsHolder.list)
@@ -124,7 +149,8 @@ class SaleDetailFragment : Fragment() {
         when (item?.itemId) {
             R.id.action_clear -> {
                 CheckOutItemsHolder.clear()
-                activity?.onBackPressed()
+                //activity?.onBackPressed()
+                viewModel?.populateSale(CheckOutItemsHolder.list)
                 return true
             }
         }

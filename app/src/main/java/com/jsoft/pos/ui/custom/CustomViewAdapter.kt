@@ -26,6 +26,7 @@ abstract class CustomViewAdapter<T>(
     fun submitList(data: List<T>?) {
         data?.apply {
             list.clear()
+            parent?.removeAllViews()
             list.addAll(this)
             notifyChange()
         }

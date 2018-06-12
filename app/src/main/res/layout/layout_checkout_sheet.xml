@@ -44,9 +44,10 @@
 
         <TextView
             android:id="@+id/textView26"
+            style="@style/AppTextSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/AppTextSecondary"
+            android:layout_marginTop="8dp"
             android:text="Discount"
             app:layout_constraintStart_toStartOf="@+id/textView24"
             app:layout_constraintTop_toBottomOf="@+id/textView24"
@@ -74,36 +75,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-        <TextView
-            android:id="@+id/textView30"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTextSecondary"
-            android:text="Tax"
-            app:layout_constraintStart_toStartOf="@+id/textView26"
-            app:layout_constraintTop_toBottomOf="@+id/textView26"
-            tools:text="Tax" />
-
-        <com.jsoft.pos.ui.custom.RoundedFractionTextView
-            android:id="@+id/textView31"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTextSecondary"
-            android:text="@{vm.sale.taxAmount, default=0}"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView30"
-            app:layout_constraintEnd_toEndOf="@+id/textView28"
-            tools:text="20" />
-
         <Button
             android:id="@+id/btnCheckout"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
-            android:layout_height="58dp"
-            android:layout_marginBottom="13dp"
-            android:layout_marginEnd="13dp"
-            android:layout_marginStart="13dp"
-            android:layout_marginTop="13dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/selectable_outline_bordered_background"
+            android:enabled="@{vm.saleItems.size() > 0}"
             android:text="Checkout"
+            android:textColor="@color/text_color_state"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -125,11 +108,11 @@
             android:layout_height="1dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@color/darkDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView30" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutGroupTaxes" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -161,5 +144,16 @@
                 tools:text="920" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutGroupTaxes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView26"/>
+
     </android.support.constraint.ConstraintLayout>
 </layout>

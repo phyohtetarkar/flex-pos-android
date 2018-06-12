@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="obj"
             type="com.jsoft.pos.data.entity.SaleItem" />
@@ -28,6 +30,7 @@
             android:ellipsize="end"
             android:lines="1"
             android:text="@{obj.item.name}"
+            android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/textView15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,12 +41,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginTop="2dp"
             android:text='@{obj.sizeDesc}'
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView15"
             app:layout_constraintStart_toStartOf="@+id/tvName"
             app:layout_constraintTop_toBottomOf="@+id/tvName"
             tools:text="120 ml" />
@@ -60,6 +61,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2 &#215; 1000" />
+
+        <ImageView
+            android:id="@+id/view25"
+            android:layout_width="0dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="3dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_local_offer_dark"
+            android:visibility="@{obj.item.discounts.size() > 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView10"
+            app:layout_constraintTop_toTopOf="@+id/textView10"
+            tools:ignore="ContentDescription" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -29,7 +29,7 @@ class AlertUtil {
         fun showBigToast(context: Context, msg: String) {
             val toast = Toast(context)
             val layout = LinearLayout(context)
-            layout.setPadding(16, 16, 16, 16)
+            layout.setPadding(24, 24, 24, 24)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 layout.background = context.resources.getDrawable(R.drawable.dark_rounded_back, null)
             } else {
@@ -37,7 +37,7 @@ class AlertUtil {
             }
 
             val tv = TextView(context)
-            tv.textSize = 16f
+            tv.textSize = 18f
             tv.text = msg
             tv.setTextColor(Color.WHITE)
 

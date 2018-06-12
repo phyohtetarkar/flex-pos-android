@@ -13,7 +13,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorSecondary"
         android:clipToPadding="false"
         android:orientation="vertical"
         android:scrollbars="none">
@@ -57,7 +57,7 @@
                         android:id="@+id/view16"
                         android:layout_width="0dp"
                         android:layout_height="2dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/divider_dotted_drawable"
                         android:layerType="software"
                         app:layout_constraintBottom_toTopOf="@+id/linearLayoutReceiptItems"
@@ -71,7 +71,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="5dp"
+                        android:padding="4dp"
                         app:layout_constraintBottom_toTopOf="@+id/view17"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -129,7 +129,7 @@
                         android:id="@+id/textView33"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="8dp"
                         android:text="Discount"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@+id/textView23"
@@ -145,26 +145,6 @@
                         app:layout_constraintBaseline_toBaselineOf="@+id/textView33"
                         app:layout_constraintEnd_toEndOf="@+id/textView32"
                         tools:text="100" />
-
-                    <TextView
-                        android:id="@+id/textView35"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Tax"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="@+id/textView33"
-                        app:layout_constraintTop_toBottomOf="@+id/textView33" />
-
-                    <com.jsoft.pos.ui.custom.RoundedFractionTextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{sale.taxAmount}"
-                        android:textSize="14sp"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/textView35"
-                        app:layout_constraintEnd_toEndOf="@+id/textView34"
-                        tools:text="48" />
 
                     <View
                         android:id="@+id/view18"
@@ -202,12 +182,11 @@
                         android:id="@+id/view20"
                         android:layout_width="0dp"
                         android:layout_height="2dp"
-                        android:layout_marginTop="10dp"
                         android:background="@drawable/divider_dotted_drawable"
                         android:layerType="software"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView35" />
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayoutGroupTaxes" />
 
                     <TextView
                         android:id="@+id/textView43"
@@ -216,7 +195,7 @@
                         android:layout_marginTop="10dp"
                         android:text="Pay"
                         android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="@+id/textView35"
+                        app:layout_constraintStart_toStartOf="@+id/textView33"
                         app:layout_constraintTop_toBottomOf="@+id/view20" />
 
                     <TextView
@@ -226,14 +205,14 @@
                         android:text="@{sale.payPrice}"
                         android:textSize="14sp"
                         app:layout_constraintBaseline_toBaselineOf="@+id/textView43"
-                        app:layout_constraintEnd_toEndOf="@+id/textView36"
+                        app:layout_constraintEnd_toEndOf="@+id/textView34"
                         tools:text="1000" />
 
                     <TextView
                         android:id="@+id/textView45"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="8dp"
                         android:text="Change"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@+id/textView43"
@@ -303,7 +282,7 @@
                         android:layout_width="22dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="10dp"
                         android:text="Qty"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -332,6 +311,15 @@
                         app:layout_constraintEnd_toStartOf="@+id/textView51"
                         app:layout_constraintStart_toEndOf="@+id/textView49" />
 
+                    <LinearLayout
+                        android:id="@+id/linearLayoutGroupTaxes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView33"/>
 
                 </android.support.constraint.ConstraintLayout>
 
