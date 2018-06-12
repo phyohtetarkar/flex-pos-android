@@ -15,7 +15,7 @@ import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.databinding.EditDiscountBinding
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
-import com.jsoft.pos.ui.views.charge.AssignItemActivity
+import com.jsoft.pos.ui.views.tax.AssignItemActivity
 import kotlinx.android.synthetic.main.activity_edit_discount.*
 
 class EditDiscountActivity : AppCompatActivity() {

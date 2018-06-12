@@ -31,12 +31,12 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val categories: LiveData<List<Category>> by lazy { categoryDao.findAllCategories() }
     val units: LiveData<List<Unit>> by lazy { unitDao.findAllUnits() }
 
-    val charges: LiveData<List<Charge>> = Transformations.switchMap(itemInput) {
-        val liveCharges = MutableLiveData<List<Charge>>()
+    val taxes: LiveData<List<Tax>> = Transformations.switchMap(itemInput) {
+        val liveTaxes = MutableLiveData<List<Tax>>()
         DaoWorkerAsync<Long>({
-            liveCharges.postValue(chargeDao.findItemChargeAssociations(it))
+            liveTaxes.postValue(taxDao.findItemTaxAssociations(it))
         },{},{}).execute(it)
-        return@switchMap liveCharges
+        return@switchMap liveTaxes
     }
 
     val discounts: LiveData<List<Discount>> = Transformations.switchMap(itemInput) {
@@ -51,7 +51,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     private val categoryDao: CategoryDao
     private val unitDao: UnitDao
-    private val chargeDao: ChargeDao
+    private val taxDao: TaxDao
     private val discountDao: DiscountDao
 
     init {
@@ -59,13 +59,13 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         categoryDao = app.db.categoryDao()
         unitDao = app.db.unitDao()
         repository = ItemRepository(app.db.itemDao(), unitDao, categoryDao)
-        chargeDao = app.db.chargeDao()
+        taxDao = app.db.taxDao()
         discountDao = app.db.discountDao()
     }
 
     fun save() {
         DaoWorkerAsync<Item>({
-            repository.save(it, charges.value, discounts.value)
+            repository.save(it, taxes.value, discounts.value)
         },{
 
         },{

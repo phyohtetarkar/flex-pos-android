@@ -6,6 +6,7 @@ import android.databinding.Bindable
 import com.jsoft.pos.BR
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.absoluteValue
 
 @Entity(indices = [(Index(value = ["receipt_code"], unique = true))])
 data class Sale(
@@ -18,8 +19,8 @@ data class Sale(
         @ColumnInfo(name = "total_item")
         var totalItem: Int = 0,
         var discount: Double = 0.0,
-        @ColumnInfo(name = "charge_amount")
-        var chargeAmount: Double = 0.0,
+        @ColumnInfo(name = "tax_amount")
+        var taxAmount: Double = 0.0,
         @ColumnInfo(name = "sub_total_price")
         var subTotalPrice: Double = 0.0,
         @ColumnInfo(name = "total_price")
@@ -55,11 +56,6 @@ data class Sale(
     @Ignore
     var saleItems: List<SaleItem> = mutableListOf()
 
-    @Ignore
-    var saleCharges: List<SaleCharge>? = null
-    @Ignore
-    var saleDiscounts: List<SaleDiscount>? = null
-
     companion object {
         fun create(list: List<SaleItem>?): Sale {
 
@@ -71,19 +67,13 @@ data class Sale(
                     discount = calculateDiscount(list).round(),
                     subTotalPrice = list?.map { it.total }?.sum()?.round() ?: 0.00)
 
-            val chargeIn = calculateInclusiveCharge(list)
-            val chargeEx = calculateExclusiveCharge(list)
+            val taxIn = calculateInclusiveTax(list)
+            val taxEx = calculateExclusiveTax(list)
 
+            sale.taxAmount = taxIn.plus(taxEx).round()
             sale.totalPrice = sale.subTotalPrice.minus(sale.discount)
-
-            val sDiscount = calculateSaleDiscount(sale.saleDiscounts, sale.totalPrice)
-            sale.totalPrice -= sDiscount
-
-            val sCharge = calculateSaleCharge(sale.saleCharges, sale.totalPrice)
-
-            sale.chargeAmount = chargeIn.plus(chargeEx).plus(sCharge).round()
-
-            sale.totalPrice = sale.totalPrice.plus(chargeEx).plus(sCharge).round()
+                    .plus(taxEx)
+                    .round()
 
             return sale
         }
@@ -92,32 +82,24 @@ data class Sale(
             return list?.sumByDouble { it.computedDiscount } ?: 0.0
         }
 
-        private fun calculateSaleDiscount(list: List<SaleDiscount>?, totalPrice: Double): Double {
-            return list?.sumByDouble {
-                if (it.percentage) {
-                    it.amount.div(100)
-                } else {
-                    it.amount.times(100).div(totalPrice).div(100)
-                }
-            }?.times(totalPrice) ?: 0.0
+        private fun calculateInclusiveTax(list: List<SaleItem>?): Double {
+            return list?.map {
+                val amount = it.total.minus(it.computedDiscount)
+
+                amount.div(
+                        it.item?.taxes?.filter { it.included }
+                                ?.map { it.amount.div(100) }
+                                ?.sum()?.plus(1) ?: 0.0
+                ).minus(amount).absoluteValue
+            }?.sum() ?: 0.0
         }
 
-        private fun calculateSaleCharge(list: List<SaleCharge>?, totalPrice: Double): Double {
-            return list?.sumByDouble {
-                if (it.percentage) {
-                    it.amount.div(100)
-                } else {
-                    it.amount.times(100).div(totalPrice).div(100)
-                }
-            }?.times(totalPrice) ?: 0.0
-        }
-
-        private fun calculateInclusiveCharge(list: List<SaleItem>?): Double {
-            return list?.sumByDouble { it.computedInclusiveCharge } ?: 0.0
-        }
-
-        private fun calculateExclusiveCharge(list: List<SaleItem>?): Double {
-            return list?.sumByDouble { it.computedExclusiveCharge } ?: 0.0
+        private fun calculateExclusiveTax(list: List<SaleItem>?): Double {
+            return list?.map {
+                it.item?.taxes?.filter { !it.included }
+                        ?.map { it.amount.div(100) }
+                        ?.sum()?.times(it.total.minus(it.computedDiscount)) ?: 0.0
+            }?.sum() ?: 0.0
         }
 
     }

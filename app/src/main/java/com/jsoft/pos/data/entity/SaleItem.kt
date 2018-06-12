@@ -4,7 +4,6 @@ import android.arch.persistence.room.*
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.jsoft.pos.BR
-import kotlin.math.absoluteValue
 
 @Entity(foreignKeys = [
     ForeignKey(entity = Item::class,
@@ -52,35 +51,6 @@ data class SaleItem(
                 it.amount.times(100).div(price).div(100)
             }
         }?.times(total) ?: 0.00
-
-    val computedInclusiveCharge: Double
-        get() {
-            val amount = total.minus(computedDiscount)
-
-            return amount.div(item?.charges?.filter { it.included }
-                    ?.map {
-                        if (it.percentage) {
-                            it.amount.div(100)
-                        } else {
-                            it.amount.times(100).div(amount).div(100)
-                        }
-                    }?.sum()?.plus(1) ?: 0.0
-            ).minus(amount).absoluteValue
-        }
-
-    val computedExclusiveCharge: Double
-        get() {
-            val amount = total.minus(computedDiscount)
-
-            return item?.charges?.filter { !it.included }
-                    ?.map {
-                        if (it.percentage) {
-                            it.amount.div(100)
-                        } else {
-                            it.amount.times(100).div(amount).div(100)
-                        }
-                    }?.sum()?.times(amount) ?: 0.0
-        }
 
     val priceDesc: String
         get() {

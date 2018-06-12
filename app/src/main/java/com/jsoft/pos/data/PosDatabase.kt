@@ -11,8 +11,8 @@ import java.util.*
 
 @Database(version = 1, entities = [
     Item::class,
-    Charge::class,
-    ItemCharge::class,
+    Tax::class,
+    ItemTax::class,
     ItemDiscount::class,
     Discount::class,
     Category::class,
@@ -30,7 +30,7 @@ abstract class PosDatabase : RoomDatabase() {
 
     abstract fun saleDao(): SaleDao
 
-    abstract fun chargeDao(): ChargeDao
+    abstract fun taxDao(): TaxDao
 
     abstract fun discountDao(): DiscountDao
 

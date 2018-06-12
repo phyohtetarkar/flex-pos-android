@@ -1,4 +1,4 @@
-package com.jsoft.pos.ui.views.charge
+package com.jsoft.pos.ui.views.tax
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
@@ -6,48 +6,42 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import com.jsoft.pos.FlexPosApplication
-import com.jsoft.pos.data.entity.Charge
-import com.jsoft.pos.data.model.ChargeDao
+import com.jsoft.pos.data.entity.Tax
+import com.jsoft.pos.data.model.TaxDao
 import com.jsoft.pos.data.utils.DaoWorkerAsync
 
-class EditChargeViewModel(application: Application) : AndroidViewModel(application) {
+class EditTaxViewModel(application: Application) : AndroidViewModel(application) {
 
-    val chargeInput = MutableLiveData<Int>()
+    val taxInput = MutableLiveData<Int>()
     var checkedItemIds: Collection<Long>? = null
 
-    val charge: LiveData<Charge> = Transformations.switchMap(chargeInput) {
+    val tax: LiveData<Tax> = Transformations.switchMap(taxInput) {
         if (it > 0) {
             return@switchMap dao.findById(it)
         }
 
-        val data = MutableLiveData<Charge>()
-        data.value = Charge()
+        val data = MutableLiveData<Tax>()
+        data.value = Tax()
 
         return@switchMap data
     }
 
     val assignBtnEnable = MutableLiveData<Boolean>()
 
-    private val dao: ChargeDao
+    private val dao: TaxDao
 
     init {
         val app = application as FlexPosApplication
-        dao = app.db.chargeDao()
+        dao = app.db.taxDao()
     }
 
     fun save() {
-        DaoWorkerAsync<Charge>({
+        DaoWorkerAsync<Tax>({
             dao.save(it, checkedItemIds)
         }, {
 
         }, {
 
-        }).execute(charge.value)
-    }
-
-    fun updateChargeMode(isPercent: Boolean) {
-        charge.value?.apply {
-            percentage = isPercent
-        }
+        }).execute(tax.value)
     }
 }

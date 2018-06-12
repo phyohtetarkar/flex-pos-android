@@ -37,7 +37,7 @@ data class Item(
 ) : BaseObservable(), Checkable {
 
     enum class AssignType {
-        CHARGE, DISCOUNT
+        TAX, DISCOUNT
     }
 
     @Ignore
@@ -66,7 +66,7 @@ data class Item(
         }
 
     @Ignore
-    var charges: List<Charge>? = null
+    var taxes: List<Tax>? = null
     @Ignore
     var discounts: List<Discount>? = null
 

@@ -184,10 +184,10 @@
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/containerCharges"
+                android:id="@+id/containerTaxes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{safeUnbox(vm.charges.size) > 0 ? View.VISIBLE : View.GONE}">
+                android:visibility="@{safeUnbox(vm.taxes.size) > 0 ? View.VISIBLE : View.GONE}">
 
                 <TextView
                     android:id="@+id/textView17"
@@ -196,8 +196,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="@string/charges"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayoutCharges"
+                    android:text="@string/taxes"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayoutTaxes"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view6" />
 
@@ -215,7 +215,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutCharges"
+                    android:id="@+id/linearLayoutTaxes"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"

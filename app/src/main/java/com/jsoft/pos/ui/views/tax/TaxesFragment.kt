@@ -1,4 +1,4 @@
-package com.jsoft.pos.ui.views.charge
+package com.jsoft.pos.ui.views.tax
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -8,27 +8,27 @@ import android.os.Bundle
 import android.support.v7.util.DiffUtil
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
-import com.jsoft.pos.data.entity.Charge
+import com.jsoft.pos.data.entity.Tax
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimpleListViewModel
 
-class ChargesFragment : SimpleListFragment<Charge>() {
+class TaxesFragment : SimpleListFragment<Tax>() {
 
-    private lateinit var viewModel: ChargesViewModel
-    private lateinit var adapter: SimpleListAdapter<Charge>
+    private lateinit var viewModel: TaxesViewModel
+    private lateinit var adapter: SimpleListAdapter<Tax>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(ChargesViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(TaxesViewModel::class.java)
 
-        adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<Charge>() {
-            override fun areItemsTheSame(oldItem: Charge?, newItem: Charge?): Boolean {
+        adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<Tax>() {
+            override fun areItemsTheSame(oldItem: Tax?, newItem: Tax?): Boolean {
                 return oldItem?.id == newItem?.id
             }
 
-            override fun areContentsTheSame(oldItem: Charge?, newItem: Charge?): Boolean {
+            override fun areContentsTheSame(oldItem: Tax?, newItem: Tax?): Boolean {
                 return oldItem == newItem
             }
 
@@ -38,13 +38,13 @@ class ChargesFragment : SimpleListFragment<Charge>() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val app = context as MainActivity
-        app.setTitle(R.string.charges)
+        app.setTitle(R.string.taxes)
     }
 
-    override val _adapter: SimpleListAdapter<Charge>
+    override val _adapter: SimpleListAdapter<Tax>
         get() = adapter
 
-    override val _viewModel: SimpleListViewModel<Charge>
+    override val _viewModel: SimpleListViewModel<Tax>
         get() = viewModel
 
     override fun onItemTouch(position: Int) {
@@ -52,7 +52,7 @@ class ChargesFragment : SimpleListFragment<Charge>() {
     }
 
     override fun showEdit(id: Any) {
-        val i = Intent(context, EditChargeActivity::class.java)
+        val i = Intent(context, EditTaxActivity::class.java)
         i.putExtra("id", id as Int)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -64,9 +64,9 @@ class ChargesFragment : SimpleListFragment<Charge>() {
     }
 
     companion object {
-        val INSTANCE: ChargesFragment
+        val INSTANCE: TaxesFragment
             get() {
-                return ChargesFragment()
+                return TaxesFragment()
             }
     }
 

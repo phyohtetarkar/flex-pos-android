@@ -23,11 +23,11 @@
         </activity>
         <activity android:name=".ui.views.category.EditCategoryActivity" />
         <activity android:name=".ui.views.item.EditItemActivity" />
+        <activity android:name=".ui.views.tax.EditTaxActivity" />
         <activity android:name=".ui.views.discount.EditDiscountActivity" />
-        <activity android:name=".ui.views.charge.AssignItemActivity" />
+        <activity android:name=".ui.views.tax.AssignItemActivity" />
         <activity android:name=".ui.views.sale.CheckoutActivity" />
         <activity android:name=".ui.views.sale.EmailReceiptActivity" />
-        <activity android:name=".ui.views.charge.EditChargeActivity" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.jsoft.pos.ui.views.charge
+package com.jsoft.pos.ui.views.tax
 
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
@@ -13,18 +13,18 @@ import android.view.Menu
 import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Item
-import com.jsoft.pos.databinding.EditChargeBinding
+import com.jsoft.pos.databinding.EditTaxBinding
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
-import kotlinx.android.synthetic.main.activity_edit_charge.*
+import kotlinx.android.synthetic.main.activity_edit_tax.*
 
-class EditChargeActivity : AppCompatActivity() {
+class EditTaxActivity : AppCompatActivity() {
 
     private val ASSIGN_REQ = 1
 
-    private var chargeId = 0
+    private var taxId = 0
 
-    private lateinit var viewModel: EditChargeViewModel
-    private lateinit var binding: EditChargeBinding
+    private lateinit var viewModel: EditTaxViewModel
+    private lateinit var binding: EditTaxBinding
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(ContextWrapperUtil.create(newBase))
@@ -33,11 +33,11 @@ class EditChargeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        chargeId = intent.getIntExtra("id", 0)
-        viewModel = ViewModelProviders.of(this).get(EditChargeViewModel::class.java)
-        viewModel.assignBtnEnable.value = chargeId > 0
+        taxId = intent.getIntExtra("id", 0)
+        viewModel = ViewModelProviders.of(this).get(EditTaxViewModel::class.java)
+        viewModel.assignBtnEnable.value = taxId > 0
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_charge)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_tax)
         binding.setLifecycleOwner(this)
         binding.vm = viewModel
 
@@ -45,11 +45,11 @@ class EditChargeActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_white)
 
         viewModel.apply {
-            if (charge.value != null) {
+            if (tax.value != null) {
                 return
             }
 
-            chargeInput.value = chargeId
+            taxInput.value = taxId
         }
 
         edTaxName.addTextChangedListener(object : TextWatcher {
@@ -65,10 +65,10 @@ class EditChargeActivity : AppCompatActivity() {
 
         })
 
-        btnAssignCharge.setOnClickListener {
+        btnAssignTax.setOnClickListener {
             val intent = Intent(this, AssignItemActivity::class.java)
-            intent.putExtra("id", chargeId)
-            intent.putExtra("type", Item.AssignType.CHARGE)
+            intent.putExtra("id", taxId)
+            intent.putExtra("type", Item.AssignType.TAX)
             viewModel.checkedItemIds?.also {
                 intent.putExtra("checked", it.toLongArray())
             }

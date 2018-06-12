@@ -31,7 +31,7 @@ class EmailReceiptViewModel(application: Application) : AndroidViewModel(applica
                         app.db.itemDao(),
                         app.db.unitDao(),
                         app.db.categoryDao(),
-                        app.db.chargeDao(),
+                        app.db.taxDao(),
                         app.db.discountDao())
         )
     }

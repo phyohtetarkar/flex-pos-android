@@ -1,4 +1,4 @@
-package com.jsoft.pos.ui.views.charge
+package com.jsoft.pos.ui.views.tax
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
