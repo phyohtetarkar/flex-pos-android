@@ -56,7 +56,7 @@ object ImageUtil {
 
     }
 
-    fun generateReceipt(context: Context, bitmap: Bitmap): Uri? {
+    fun writeImage(context: Context, bitmap: Bitmap): String? {
 
         var fos: FileOutputStream? = null
 
@@ -71,7 +71,7 @@ object ImageUtil {
 
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
 
-            return Uri.fromFile(file)
+            return file.name
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -85,6 +85,7 @@ object ImageUtil {
     }
 
     fun readImage(context: Context, name: String?): Bitmap? {
+
 
         if (!name.isNullOrEmpty()) {
 

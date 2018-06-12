@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
-import android.view.View
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListDialogFragment
@@ -14,8 +13,6 @@ class DialogUnits : SimpleListDialogFragment<Unit>() {
 
     private lateinit var viewModel: EditItemViewModel
     private lateinit var adapter: SimpleListAdapter<Unit>
-
-    private var stub: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,17 +35,9 @@ class DialogUnits : SimpleListDialogFragment<Unit>() {
             adapter.submitList(it)
             it?.apply {
                 if (isEmpty()) {
-                    if (stub == null) {
-                        stub = viewStubList.inflate()
-                    } else {
-                        stub?.visibility = View.VISIBLE
-                    }
-                } else {
-                    stub?.visibility = View.GONE
+                    viewStubList.inflate()
                 }
             }
-
-            view?.invalidate()
         })
     }
 

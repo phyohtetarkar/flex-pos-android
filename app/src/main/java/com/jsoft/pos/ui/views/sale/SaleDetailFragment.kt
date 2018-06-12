@@ -116,7 +116,7 @@ class SaleDetailFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_sale_detail, menu)
+        inflater?.inflate(R.menu.menu_clear, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

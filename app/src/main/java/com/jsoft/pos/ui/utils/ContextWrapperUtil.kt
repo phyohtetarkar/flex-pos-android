@@ -7,7 +7,7 @@ class ContextWrapperUtil {
 
     companion object {
         fun create(newBase: Context?): Context? {
-            val locale = Locale("my", "MM")
+            val locale = Locale("my")
             Locale.setDefault(locale)
             val config = newBase?.resources?.configuration
             config?.setLocale(locale)
