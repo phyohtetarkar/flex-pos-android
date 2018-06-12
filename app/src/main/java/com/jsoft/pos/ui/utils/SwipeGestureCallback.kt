@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import com.jsoft.pos.R
@@ -96,7 +97,7 @@ class SwipeGestureCallback(
             val iconDest = RectF(itemView.right.toFloat() - 2 * width, itemView.top.toFloat() + width, itemView.right.toFloat() - width, itemView.bottom.toFloat() - width)
             c.drawBitmap(icon, null, iconDest, p)
 
-            if (dX == 0.0f) {
+            if (!isCurrentlyActive) {
                 for (s in swpItems) {
                     if (s.position == position) {
                         swpItems.remove(s)

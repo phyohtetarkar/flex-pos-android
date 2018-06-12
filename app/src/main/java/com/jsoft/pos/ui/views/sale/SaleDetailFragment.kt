@@ -42,7 +42,7 @@ class SaleDetailFragment : Fragment() {
 
         }, R.layout.layout_sale_item)
 
-        groupTaxAdapter = object : CustomViewAdapter<TaxAmount>(linearLayoutGroupTaxes, R.layout.layout_receipt_tax) {
+        groupTaxAdapter = object : CustomViewAdapter<TaxAmount>(itemViewId = R.layout.layout_receipt_tax) {
             override fun onBindView(holder: SimpleViewHolder, position: Int) {
                 holder.bind(list[position])
             }
@@ -53,13 +53,15 @@ class SaleDetailFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = CheckoutBinding.inflate(inflater, container, false)
-        binding.checkoutSheet.setLifecycleOwner(this)
-        binding.checkoutSheet.vm = viewModel
+        binding.checkoutSheet?.setLifecycleOwner(this)
+        binding.checkoutSheet?.vm = viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        groupTaxAdapter?.parent = linearLayoutGroupTaxes
 
         btnCheckout.setOnClickListener {
             fragmentManager?.beginTransaction()

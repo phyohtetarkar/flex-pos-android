@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.jsoft.pos.BR
 
 abstract class CustomViewAdapter<T>(
-        private var parent: ViewGroup?,
+        var parent: ViewGroup? = null,
         private var itemViewId: Int
 ) {
 
