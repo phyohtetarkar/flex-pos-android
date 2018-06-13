@@ -1,9 +1,9 @@
 package com.jsoft.pos.ui.views.category
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
-import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -15,9 +15,7 @@ import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.databinding.EditCategoryBinding
 import com.jsoft.pos.func.KConsumer2
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
-import com.jsoft.pos.ui.utils.ValidatorUtils
 import kotlinx.android.synthetic.main.activity_edit_category.*
-import java.util.*
 
 class EditCategoryActivity : AppCompatActivity() {
 
@@ -63,6 +61,16 @@ class EditCategoryActivity : AppCompatActivity() {
             categoryInput.value = categoryId
         }
 
+        viewModel.saveSuccess.observe(this, Observer {
+            if (it == true) {
+                onBackPressed()
+            }
+        })
+
+        viewModel.nameValid.observe(this, Observer {
+            binding.isValidCategoryName = it ?: true
+        })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -77,17 +85,7 @@ class EditCategoryActivity : AppCompatActivity() {
                 supportFinishAfterTransition()
                 return true
             }
-            R.id.action_save -> {
-                val category = viewModel.category.value
-                val valid = ValidatorUtils.isValid(category?.name, ValidatorUtils.NOT_EMPTY)
-
-                if (!valid) {
-                    binding.isValidCategoryName = false
-                } else {
-                    viewModel.save()
-                    onBackPressed()
-                }
-            }
+            R.id.action_save -> viewModel.save()
         }
 
         return super.onOptionsItemSelected(item)

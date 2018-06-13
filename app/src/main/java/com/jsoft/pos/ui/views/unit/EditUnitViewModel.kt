@@ -9,8 +9,12 @@ import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.UnitDao
 import com.jsoft.pos.data.utils.DaoWorkerAsync
+import com.jsoft.pos.ui.utils.ValidatorUtils
 
 class EditUnitViewModel(application: Application) : AndroidViewModel(application) {
+
+    val nameValid = MutableLiveData<Boolean>()
+    val saveSuccess = MutableLiveData<Boolean>()
 
     val unitInput = MutableLiveData<Int>()
 
@@ -34,17 +38,29 @@ class EditUnitViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun save() {
-        DaoWorkerAsync<Unit>({
-            if (dao.findByUniqueNameSync(it.name.toUpperCase()) != null) {
 
-            } else {
-                dao.save(it)
+        var hasErrors = false
+
+        unit.value?.also {
+            if (!ValidatorUtils.isValid(it.name, ValidatorUtils.NOT_EMPTY)) {
+                nameValid.value = false
+                hasErrors = true
             }
-        }, {
+        }.takeUnless { hasErrors }?.let {
+            DaoWorkerAsync<Unit>({
+                if (dao.findByUniqueNameSync(it.name.toUpperCase()) != null) {
+                    throw RuntimeException("Duplicate name")
+                } else {
+                    dao.save(it)
+                }
+            }, {
+                saveSuccess.value = true
+            }, {
+                saveSuccess.value = false
+            }).execute(it)
+        }
 
-        }, {
 
-        }).execute(unit.value)
     }
 
 }

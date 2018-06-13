@@ -9,8 +9,12 @@ import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.model.CategoryDao
 import com.jsoft.pos.data.utils.DaoWorkerAsync
+import com.jsoft.pos.ui.utils.ValidatorUtils
 
 class EditCategoryViewModel(application: Application) : AndroidViewModel(application) {
+
+    val nameValid = MutableLiveData<Boolean>()
+    val saveSuccess = MutableLiveData<Boolean>()
 
     val categoryInput = MutableLiveData<Int>()
 
@@ -34,13 +38,24 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun save() {
-        DaoWorkerAsync<Category>({
-            dao.save(it)
-        }, {
 
-        }, {
+        var hasErrors = false
 
-        }).execute(category.value)
+        category.value?.also {
+            if (!ValidatorUtils.isValid(it.name, ValidatorUtils.NOT_EMPTY)) {
+                nameValid.value = false
+                hasErrors = true
+            }
+        }.takeUnless { hasErrors }?.let {
+            DaoWorkerAsync<Category>({
+                dao.save(it)
+            }, {
+                saveSuccess.value = true
+            }, {
+                saveSuccess.value = false
+            }).execute(it)
+        }
+
     }
 
 }

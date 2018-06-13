@@ -1,5 +1,6 @@
 package com.jsoft.pos.ui.views.unit
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -11,8 +12,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import com.jsoft.pos.BR
 import com.jsoft.pos.R
 import com.jsoft.pos.databinding.EditUnitBinding
-import com.jsoft.pos.ui.utils.ValidatorUtils
-import com.jsoft.pos.ui.utils.ValidatorUtils.NOT_EMPTY
 
 class EditUnitFragment : DialogFragment() {
 
@@ -45,15 +44,7 @@ class EditUnitFragment : DialogFragment() {
 
         binding.delegate = object : EditUnitDialogDelegate {
             override fun onSaveClick() {
-                val unit = viewModel.unit.value
-                val valid = ValidatorUtils.isValid(unit?.name, NOT_EMPTY)
-
-                if (!valid) {
-                    binding.setVariable(BR.isValidUnitName, false)
-                } else {
-                    viewModel.save()
-                    dismiss()
-                }
+                viewModel.save()
             }
 
             override fun onCancelClick() {
@@ -72,6 +63,16 @@ class EditUnitFragment : DialogFragment() {
         if (window != null) {
             window.attributes.windowAnimations = R.style.DialogAnimation
         }
+
+        viewModel.saveSuccess.observe(this, Observer {
+            if (it == true) {
+                dismiss()
+            }
+        })
+
+        viewModel.nameValid.observe(this, Observer {
+            binding.setVariable(BR.isValidUnitName, it ?: true)
+        })
     }
 
     override fun onStart() {
