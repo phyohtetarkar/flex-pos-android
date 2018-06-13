@@ -2,23 +2,29 @@ package com.jsoft.pos.data.model
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.paging.DataSource
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
 import android.arch.persistence.db.SimpleSQLiteQuery
 import android.arch.persistence.room.*
+import android.databinding.BaseObservable
 import com.jsoft.pos.data.BaseDao
+import com.jsoft.pos.data.Searchable
+import com.jsoft.pos.data.Searchable.Companion.BASE_QUERY
 import com.jsoft.pos.data.entity.Sale
 import com.jsoft.pos.data.entity.SaleItem
 import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class SaleRepository(
         private val saleDao: SaleDao,
-        private val itemRepo: ItemRepository
+        private val itemRepo: ItemRepository? = null
 ) {
     fun initializeSale(saleItems: List<SaleItem>, updateField: MutableLiveData<Sale>, updateList: MutableLiveData<List<SaleItem>>) {
 
         DaoWorkerAsync<List<SaleItem>>({
             saleItems.forEach { si ->
                         if (si.item == null) {
-                            si.item = itemRepo.getItem(si.itemId)
+                            si.item = itemRepo?.getItem(si.itemId)
                         }
                     }
 
@@ -37,7 +43,7 @@ class SaleRepository(
                 val sale = saleDao.findByIdSync(id)
                 val saleItems = saleDao.findSaleItemsSync(id)
                 saleItems.forEach {
-                    it.item = itemRepo.getItem(it.itemId)
+                    it.item = itemRepo?.getItem(it.itemId)
                 }
 
                 sale.saleItems = saleItems
@@ -49,13 +55,30 @@ class SaleRepository(
 
         return liveSale
     }
+
+    fun findSales(search: SaleSearch): LiveData<PagedList<Sale>> {
+        return LivePagedListBuilder(saleDao.findSales(SimpleSQLiteQuery(search.query, search.objects.toTypedArray())), 20).build()
+    }
+}
+
+class SaleSearch : BaseObservable(), Searchable {
+
+    override val query: String
+        get() {
+            val sb = StringBuilder(String.format(BASE_QUERY, "sale"))
+            objects.clear()
+
+            return sb.toString()
+        }
+    override val objects: MutableList<Any> = mutableListOf()
+
 }
 
 @Dao
 abstract class SaleDao : BaseDao<Sale> {
 
     @RawQuery(observedEntities = [Sale::class])
-    abstract fun findSales(query: SimpleSQLiteQuery): LiveData<List<Sale>>
+    abstract fun findSales(query: SimpleSQLiteQuery): DataSource.Factory<Int, Sale>
 
     @Query("SELECT * FROM sale WHERE id = :id LIMIT 1")
     abstract fun findById(id: Long): LiveData<Sale>

@@ -48,7 +48,7 @@ data class Sale(
 
     val _issueDate: String
         get() {
-            val format = SimpleDateFormat("yyyy/MM/dd hh:mm a", Locale.ENGLISH)
+            val format = SimpleDateFormat("MMMM dd, yyyy hh:mm a", Locale.ENGLISH)
             return format.format(issueDate)
         }
 

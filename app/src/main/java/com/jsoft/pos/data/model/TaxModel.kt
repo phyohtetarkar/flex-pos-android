@@ -38,8 +38,12 @@ abstract class TaxDao : BaseDao<Tax> {
     @Delete
     protected abstract fun deleteItemTaxes(itemTaxes: List<ItemTax>)
 
+    @Query("SELECT * FROM tax WHERE unique_name = :name LIMIT 1")
+    abstract fun findByUniqueNameSync(name: String): Tax?
+
     @Transaction
     open fun save(tax: Tax) {
+        tax.uniqueName = tax.name.toUpperCase()
         if (tax.id > 0) {
             update(tax)
         } else {

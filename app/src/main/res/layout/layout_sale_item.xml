@@ -77,6 +77,16 @@
             app:layout_constraintTop_toTopOf="@+id/textView10"
             tools:ignore="ContentDescription" />
 
+        <ImageView
+            android:id="@+id/view24"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_ribbon_off"
+            android:visibility="@{obj.item.discounts.size() > 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"/>
+
     </android.support.constraint.ConstraintLayout>
 
 </layout>

@@ -63,6 +63,9 @@ abstract class CategoryDao : BaseDao<Category> {
     @Query("SELECT COUNT(*) FROM category")
     abstract fun findCount(): LiveData<Long>
 
+    @Query("SELECT * FROM category WHERE unique_name = :name LIMIT 1")
+    abstract fun findByUniqueNameSync(name: String): Category?
+
     @Transaction
     open fun save(category: Category) {
         category.uniqueName = category.name.toUpperCase()

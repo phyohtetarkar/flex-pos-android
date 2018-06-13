@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.CardView;

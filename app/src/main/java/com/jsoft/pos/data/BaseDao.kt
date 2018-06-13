@@ -7,13 +7,13 @@ import android.arch.persistence.room.Update
 
 interface BaseDao<T> {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(t: T)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAndGet(t: T): Long
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Update(onConflict = OnConflictStrategy.FAIL)
     fun update(t: T)
 
     @Delete

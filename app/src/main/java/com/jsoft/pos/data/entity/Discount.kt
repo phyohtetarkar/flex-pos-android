@@ -1,16 +1,16 @@
 package com.jsoft.pos.data.entity
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 
-@Entity
+@Entity(indices = [(Index(value = ["unique_name"], unique = true))])
 data class Discount(
         @PrimaryKey(autoGenerate = true)
         var id: Int = 0,
         var name: String = "",
         var amount: Double = 0.00,
-        var percentage: Boolean = true
+        var percentage: Boolean = true,
+        @ColumnInfo(name = "unique_name")
+        var uniqueName: String = ""
 ) : Checkable {
 
     @Ignore

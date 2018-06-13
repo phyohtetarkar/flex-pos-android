@@ -38,8 +38,12 @@ abstract class DiscountDao : BaseDao<Discount> {
     @Delete
     protected abstract fun deleteItemDiscounts(itemDiscounts: List<ItemDiscount>)
 
+    @Query("SELECT * FROM discount WHERE unique_name = :name LIMIT 1")
+    abstract fun findByUniqueNameSync(name: String): Discount?
+
     @Transaction
     open fun save(discount: Discount) {
+        discount.uniqueName = discount.uniqueName.toUpperCase()
         if (discount.id > 0) {
             update(discount)
         } else {

@@ -1,0 +1,27 @@
+<svg width="512.019" height="512.019" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path id="svg_1" fill="#009688" d="m508.904,216.458l-213.333,-213.334c-2.004,-1.999 -4.721,-3.12 -7.552,-3.115l-277.333,0c-5.891,-0.01 -10.675,4.757 -10.686,10.648c-0.005,2.84 1.123,5.565 3.134,7.571l490.666,490.667c2.004,1.999 4.721,3.12 7.552,3.115c1.398,-0.001 2.783,-0.276 4.075,-0.811c3.989,-1.649 6.591,-5.539 6.592,-9.856l0,-277.333c0.005,-2.831 -1.115,-5.548 -3.115,-7.552z"/>
+  <g id="svg_7"/>
+  <g id="svg_8"/>
+  <g id="svg_9"/>
+  <g id="svg_10"/>
+  <g id="svg_11"/>
+  <g id="svg_12"/>
+  <g id="svg_13"/>
+  <g id="svg_14"/>
+  <g id="svg_15"/>
+  <g id="svg_16"/>
+  <g id="svg_17"/>
+  <g id="svg_18"/>
+  <g id="svg_19"/>
+  <g id="svg_20"/>
+  <g id="svg_21"/>
+  <text transform="rotate(45 330.03125,190) " font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="117" id="svg_23" y="230.51465" x="213.06321" stroke-opacity="null" stroke-width="0" stroke="null" fill="#ffffff">OFF</text>
+ </g>
+</svg>

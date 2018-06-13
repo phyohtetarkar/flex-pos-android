@@ -3,6 +3,7 @@ package com.jsoft.pos.ui.views.sale
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.paging.PagedList
 import com.jsoft.pos.FlexPosApplication
@@ -11,12 +12,11 @@ import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.model.CategoryDao
 import com.jsoft.pos.data.model.ItemRepository
 import com.jsoft.pos.data.model.ItemVOSearch
-import com.jsoft.pos.data.utils.ObserverMutableLiveData
 import com.jsoft.pos.ui.views.PagedListViewModel
 
 class SaleViewModel(application: Application): AndroidViewModel(application), PagedListViewModel<ItemVO> {
 
-    val itemSearch = ObserverMutableLiveData<ItemVOSearch>()
+    val itemSearch = MutableLiveData<ItemVOSearch>()
 
     override val list: LiveData<PagedList<ItemVO>> = Transformations.switchMap(itemSearch) {
         repository.findItemVOs(it)

@@ -15,6 +15,7 @@ import android.view.View
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.views.nav.ResourcesFragment
+import com.jsoft.pos.ui.views.receipt.ReceiptsFragment
 import com.jsoft.pos.ui.views.sale.CheckOutItemsHolder
 import com.jsoft.pos.ui.views.sale.SaleFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -96,8 +97,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             when (id) {
                 R.id.action_pos -> fragment = SaleFragment.INSTANCE
                 R.id.action_resources -> fragment = ResourcesFragment.INSTANCE
-                R.id.action_receipts -> {
-                }
+                R.id.action_receipts -> fragment = ReceiptsFragment.INSTANCE
                 R.id.action_statistics -> {
                 }
             }
