@@ -1,5 +1,6 @@
 package com.jsoft.pos.ui.views.sale
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jsoft.pos.databinding.CompleteCheckoutBinding
+import com.jsoft.pos.ui.views.receipt.ReceiptDetailActivity
 import kotlinx.android.synthetic.main.fragment_complete_checkout.*
 
 class CompleteCheckoutFragment : Fragment() {
@@ -31,14 +33,24 @@ class CompleteCheckoutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btnCompleteCheckout.setOnClickListener {
-            viewModel?.save {
-                val intent = Intent(context, EmailReceiptActivity::class.java)
-                intent.putExtra("id", viewModel?.sale?.value?.id)
-                startActivity(intent)
+            viewModel?.save()
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel?.saveObserver?.observe(this, Observer {
+
+            when (it) {
+                true -> {
+                    val intent = Intent(context, ReceiptDetailActivity::class.java)
+                    intent.putExtra("id", viewModel?.sale?.value?.id)
+                    startActivity(intent)
+                }
             }
 
-        }
-
+        })
     }
 
     companion object {

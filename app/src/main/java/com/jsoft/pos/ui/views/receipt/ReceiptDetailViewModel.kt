@@ -1,4 +1,4 @@
-package com.jsoft.pos.ui.views.sale
+package com.jsoft.pos.ui.views.receipt
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
@@ -11,7 +11,7 @@ import com.jsoft.pos.data.model.ItemRepository
 import com.jsoft.pos.data.model.SaleDao
 import com.jsoft.pos.data.model.SaleRepository
 
-class EmailReceiptViewModel(application: Application) : AndroidViewModel(application) {
+class ReceiptDetailViewModel(application: Application) : AndroidViewModel(application) {
 
     val saleId = MutableLiveData<Long>()
 

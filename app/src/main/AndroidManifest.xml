@@ -27,7 +27,7 @@
         <activity android:name=".ui.views.discount.EditDiscountActivity" />
         <activity android:name=".ui.views.tax.AssignItemActivity" />
         <activity android:name=".ui.views.sale.CheckoutActivity" />
-        <activity android:name=".ui.views.sale.EmailReceiptActivity" />
+        <activity android:name=".ui.views.receipt.ReceiptDetailActivity" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.jsoft.pos.ui.views.receipt
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
@@ -73,7 +74,10 @@ class ReceiptsFragment : AbstractListFragment<Sale>() {
     get() = adapter
 
     override fun onItemTouch(position: Int) {
-
+        val intent = Intent(context, ReceiptDetailActivity::class.java)
+        intent.putExtra("id", adapter.getItemAt(position).id)
+        intent.putExtra("showHomeUp", true)
+        startActivity(intent)
     }
 
     companion object {

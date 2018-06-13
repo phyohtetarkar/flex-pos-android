@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="p_shop_name"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="shop name"
+        android:title="Name" />
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="p_shop_mail"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="shop email"
+        android:title="Email" />
+
+</PreferenceScreen>

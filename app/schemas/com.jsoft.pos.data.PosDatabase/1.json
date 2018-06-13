@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "91e4672ba66efcafc9a105a4e5edf937",
+    "identityHash": "08e16479dfcbca4289e53deea492ca55",
     "entities": [
       {
         "tableName": "Item",
@@ -120,7 +120,7 @@
       },
       {
         "tableName": "Tax",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `amount` REAL NOT NULL, `included` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `amount` REAL NOT NULL, `included` INTEGER NOT NULL, `unique_name` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -145,6 +145,12 @@
             "columnName": "included",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "uniqueName",
+            "columnName": "unique_name",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -153,7 +159,16 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Tax_unique_name",
+            "unique": true,
+            "columnNames": [
+              "unique_name"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_Tax_unique_name` ON `${TABLE_NAME}` (`unique_name`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -302,7 +317,7 @@
       },
       {
         "tableName": "Discount",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `amount` REAL NOT NULL, `percentage` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `amount` REAL NOT NULL, `percentage` INTEGER NOT NULL, `unique_name` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -327,6 +342,12 @@
             "columnName": "percentage",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "uniqueName",
+            "columnName": "unique_name",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -335,7 +356,16 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Discount_unique_name",
+            "unique": true,
+            "columnNames": [
+              "unique_name"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_Discount_unique_name` ON `${TABLE_NAME}` (`unique_name`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -608,7 +638,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"91e4672ba66efcafc9a105a4e5edf937\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"08e16479dfcbca4289e53deea492ca55\")"
     ]
   }
 }

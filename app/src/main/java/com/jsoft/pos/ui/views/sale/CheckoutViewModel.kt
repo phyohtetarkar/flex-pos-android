@@ -3,6 +3,7 @@ package com.jsoft.pos.ui.views.sale
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.databinding.ObservableBoolean
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Sale
 import com.jsoft.pos.data.entity.SaleItem
@@ -21,6 +22,8 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
 
     private val repository: SaleRepository
 
+    val saveObserver = MutableLiveData<Boolean>()
+
     init {
         val app = application as FlexPosApplication
         saleDao = app.db.saleDao()
@@ -34,11 +37,11 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
         )
     }
 
-    fun save(success: () -> Unit) {
+    fun save() {
         DaoWorkerAsync<Sale>({
             saleDao.save(it, saleItems.value.orEmpty().toMutableList())
         }, {
-            success()
+            saveObserver.value = true
         }, {
 
         }).execute(sale.value)
