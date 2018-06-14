@@ -4,11 +4,11 @@
     <PreferenceCategory android:title="Shop Information">
 
         <EditTextPreference
+            android:dialogLayout="@layout/custom_preference_dialog_edittext"
             android:key="p_shop_name"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="shop name"
-            android:dialogLayout="@layout/custom_preference_dialog_edittext"
             android:title="Name" />
 
         <EditTextPreference

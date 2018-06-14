@@ -6,10 +6,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.WindowManager
 import com.jsoft.pos.databinding.EditUnitBinding
 
 class EditUnitFragment : DialogFragment() {
@@ -76,12 +74,7 @@ class EditUnitFragment : DialogFragment() {
         super.onStart()
 
         val window = dialog.window
-
-        val params = window.attributes
-        params.width = MATCH_PARENT
-        params.height = WRAP_CONTENT
-        params.gravity = Gravity.CENTER
-        window.attributes = params
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
     }
 

@@ -2,7 +2,6 @@ package com.jsoft.pos.ui.views.setting
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v14.preference.EditTextPreferenceDialogFragment
 import android.support.v7.preference.EditTextPreference
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat

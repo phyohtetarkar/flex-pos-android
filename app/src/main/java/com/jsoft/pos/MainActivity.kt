@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navigationViewMain.setNavigationItemSelectedListener(this)
 
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
