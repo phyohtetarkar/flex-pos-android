@@ -14,6 +14,7 @@ import com.jsoft.pos.ui.utils.ValidatorUtils
 class EditUnitViewModel(application: Application) : AndroidViewModel(application) {
 
     val nameValid = MutableLiveData<Boolean>()
+    val nameConflict = MutableLiveData<Boolean>()
     val saveSuccess = MutableLiveData<Boolean>()
 
     val unitInput = MutableLiveData<Int>()
@@ -49,9 +50,10 @@ class EditUnitViewModel(application: Application) : AndroidViewModel(application
         }.takeUnless { hasErrors }?.let {
             DaoWorkerAsync<Unit>({
                 if (dao.findByUniqueNameSync(it.name.toUpperCase()) != null) {
-                    throw RuntimeException("Duplicate name")
+                    nameConflict.value = true
+                    return@DaoWorkerAsync false
                 } else {
-                    dao.save(it)
+                    return@DaoWorkerAsync dao.save(it).let { true }
                 }
             }, {
                 saveSuccess.value = true

@@ -14,12 +14,11 @@ import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.databinding.EditCategoryBinding
 import com.jsoft.pos.func.KConsumer2
+import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import kotlinx.android.synthetic.main.activity_edit_category.*
 
 class EditCategoryActivity : AppCompatActivity() {
-
-    private var categoryId = 0
 
     private lateinit var viewModel: EditCategoryViewModel
     private lateinit var binding: EditCategoryBinding
@@ -31,7 +30,6 @@ class EditCategoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        categoryId = intent.getIntExtra("id", 0)
         viewModel = ViewModelProviders.of(this).get(EditCategoryViewModel::class.java)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_category)
@@ -58,7 +56,7 @@ class EditCategoryActivity : AppCompatActivity() {
                 return
             }
 
-            categoryInput.value = categoryId
+            categoryInput.value = intent.getIntExtra("id", 0)
         }
 
         viewModel.saveSuccess.observe(this, Observer {
@@ -69,6 +67,11 @@ class EditCategoryActivity : AppCompatActivity() {
 
         viewModel.nameValid.observe(this, Observer {
             binding.isValidCategoryName = it ?: true
+        })
+
+        viewModel.nameConflict.observe(this, Observer {
+            binding.isValidCategoryName = it?.not() ?: true
+            AlertUtil.showToast(this, "Category name already exists")
         })
 
     }

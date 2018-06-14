@@ -37,7 +37,7 @@ class EditTaxViewModel(application: Application) : AndroidViewModel(application)
 
     fun save() {
         DaoWorkerAsync<Tax>({
-            dao.save(it, checkedItemIds)
+            dao.save(it, checkedItemIds).let { true }
         }, {
 
         }, {

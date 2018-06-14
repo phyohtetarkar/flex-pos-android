@@ -10,14 +10,11 @@
             type="com.jsoft.pos.ui.views.unit.EditUnitViewModel" />
 
         <variable
-            name="delegate"
-            type="com.jsoft.pos.ui.views.unit.EditUnitDialogDelegate" />
-
-        <variable
             name="isValidUnitName"
             type="Boolean" />
 
     </data>
+
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -60,7 +57,6 @@
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="16dp"
-            android:onClick="@{v -> delegate.onSaveClick()}"
             android:text="@string/save"
             android:textAllCaps="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:onClick="@{v -> delegate.onCancelClick()}"
             android:text="@string/cancel"
             android:textAllCaps="true"
             app:layout_constraintBottom_toBottomOf="@+id/btnSaveUnit"
@@ -81,6 +76,5 @@
             app:layout_constraintTop_toTopOf="@+id/btnSaveUnit" />
 
     </android.support.constraint.ConstraintLayout>
-
 
 </layout>

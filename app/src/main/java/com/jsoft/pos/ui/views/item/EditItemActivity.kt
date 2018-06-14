@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.activity_edit_item.*
 
 class EditItemActivity : AppCompatActivity() {
 
-    private var itemId: Long = 0
     private val PICKIMAGE = 1
 
     private lateinit var viewModel: EditItemViewModel
@@ -37,7 +36,6 @@ class EditItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        itemId = intent.getLongExtra("id", 0)
         viewModel = ViewModelProviders.of(this).get(EditItemViewModel::class.java)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_item)
@@ -76,7 +74,7 @@ class EditItemActivity : AppCompatActivity() {
                 return
             }
 
-            itemInput.value = itemId
+            itemInput.value = intent.getLongExtra("id", 0)
 
         }
 

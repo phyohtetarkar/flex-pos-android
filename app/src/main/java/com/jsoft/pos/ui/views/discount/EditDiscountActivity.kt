@@ -49,7 +49,7 @@ class EditDiscountActivity : AppCompatActivity() {
                 return
             }
 
-            discountInput.value = discountId
+            discountInput.value = intent.getIntExtra("id", 0)
         }
 
         edDiscountName.addTextChangedListener(object : TextWatcher {

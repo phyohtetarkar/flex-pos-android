@@ -14,11 +14,20 @@
 
         <item
             android:id="@+id/action_receipts"
-            android:title="@string/receipts" />
+            android:title="@string/receipts"/>
 
         <item
             android:id="@+id/action_statistics"
-            android:title="@string/statistic" />
+            android:title="@string/statistic"/>
+
+    </group>
+
+    <group android:id="@+id/menu_action_extra_group"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/action_setting"
+            android:title="Setting"/>
 
     </group>
 

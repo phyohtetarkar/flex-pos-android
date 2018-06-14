@@ -39,7 +39,7 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
 
     fun save() {
         DaoWorkerAsync<Sale>({
-            saleDao.save(it, saleItems.value.orEmpty().toMutableList())
+            saleDao.save(it, saleItems.value.orEmpty().toMutableList()).let { true }
         }, {
             saveObserver.value = true
         }, {

@@ -23,7 +23,7 @@ class AssignItemViewModel(application: Application) : AndroidViewModel(applicati
         val liveItems = MutableLiveData<List<Item>>()
 
         DaoWorkerAsync<ItemSearch>({
-            liveItems.postValue(repository.findItemsChecked(it, id, checkedIds, type))
+            liveItems.postValue(repository.findItemsChecked(it, id, checkedIds, type)).let { true }
         }, {}, {}).execute(it)
 
         return@switchMap liveItems

@@ -47,7 +47,7 @@ object ImageUtil {
 
         } catch (e: Exception) {
             e.printStackTrace()
-            AlertUtil.showBigToast(context, "Error writing image")
+            AlertUtil.showToast(context, "Error writing image")
         } finally {
             fos?.close()
         }
@@ -75,7 +75,7 @@ object ImageUtil {
 
         } catch (e: Exception) {
             e.printStackTrace()
-            AlertUtil.showBigToast(context, "Error writing image")
+            AlertUtil.showToast(context, "Error writing image")
         } finally {
             fos?.close()
         }
@@ -100,7 +100,7 @@ object ImageUtil {
 
             } catch (e: Exception) {
                 e.printStackTrace()
-                AlertUtil.showBigToast(context, "Error reading image")
+                AlertUtil.showToast(context, "Error reading image")
             } finally {
                 fin?.close()
             }

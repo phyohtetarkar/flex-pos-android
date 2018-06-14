@@ -26,7 +26,7 @@ class AlertUtil {
 
         }
 
-        fun showBigToast(context: Context, msg: String) {
+        fun showToast(context: Context, msg: String) {
             val toast = Toast(context)
             val layout = LinearLayout(context)
             layout.setPadding(24, 24, 24, 24)

@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditTextPreference
-        android:defaultValue="Default value"
-        android:key="p_shop_name"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="shop name"
-        android:title="Name" />
+    <PreferenceCategory android:title="Shop Information">
 
-    <EditTextPreference
-        android:defaultValue="Default value"
-        android:key="p_shop_mail"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="shop email"
-        android:title="Email" />
+        <EditTextPreference
+            android:key="p_shop_name"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="shop name"
+            android:dialogLayout="@layout/custom_preference_dialog_edittext"
+            android:title="Name" />
+
+        <EditTextPreference
+            android:key="p_shop_mail"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="shop email"
+            android:dialogTitle="Email"
+            android:dialogLayout="@layout/custom_preference_dialog_edittext"
+            android:title="Email" />
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="App Setting">
+
+        <ListPreference
+            android:defaultValue="english"
+            android:entries="@array/lang_entries"
+            android:entryValues="@array/lang_values"
+            android:key="p_app_language"
+            android:title="Language"
+            android:dialogTitle="Language"
+            android:summary="english"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

@@ -3,15 +3,14 @@ package com.jsoft.pos.data.utils
 import android.os.AsyncTask
 
 class DaoWorkerAsync<T>(
-        private val worker: (T) -> Unit,
+        private val worker: (T) -> Boolean,
         private val onSuccess: () -> Unit,
         private val onError: () -> Unit
     ) : AsyncTask<T, Void, Boolean>() {
 
     override fun doInBackground(ts: Array<T>): Boolean {
         try {
-            worker(ts[0])
-            return true
+            return worker(ts[0])
         } catch (e: Exception) {
             e.printStackTrace()
         }

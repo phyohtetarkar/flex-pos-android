@@ -38,6 +38,7 @@ class EditDiscountViewModel(application: Application) : AndroidViewModel(applica
     fun save() {
         DaoWorkerAsync<Discount>({
             dao.save(it, checkedItemIds)
+            return@DaoWorkerAsync true
         }, {
 
         }, {

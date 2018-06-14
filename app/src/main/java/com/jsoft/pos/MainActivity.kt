@@ -14,10 +14,12 @@ import android.view.MenuItem
 import android.view.View
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
+import com.jsoft.pos.ui.utils.ServiceLocator
 import com.jsoft.pos.ui.views.nav.ResourcesFragment
 import com.jsoft.pos.ui.views.receipt.ReceiptsFragment
 import com.jsoft.pos.ui.views.sale.CheckOutItemsHolder
 import com.jsoft.pos.ui.views.sale.SaleFragment
+import com.jsoft.pos.ui.views.setting.SettingFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 
@@ -62,7 +64,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         toolbarMain.setNavigationOnClickListener {
             when {
-                CheckOutItemsHolder.onSale -> AlertUtil.showBigToast(this, "Active Sale!")
+                CheckOutItemsHolder.onSale -> AlertUtil.showToast(this, "Active Sale!")
                 drawerLayoutMain.getDrawerLockMode(GravityCompat.START) == DrawerLayout.LOCK_MODE_LOCKED_CLOSED -> {
                     animateToBurger()
                     super.onBackPressed()
@@ -99,7 +101,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 R.id.action_resources -> fragment = ResourcesFragment.INSTANCE
                 R.id.action_receipts -> fragment = ReceiptsFragment.INSTANCE
                 R.id.action_statistics -> {
+
                 }
+
+                R.id.action_setting -> fragment = ServiceLocator.locate(SettingFragment::class.java)
             }
 
             if (fragment != null) {

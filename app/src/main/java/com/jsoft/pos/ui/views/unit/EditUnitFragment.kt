@@ -1,59 +1,50 @@
 package com.jsoft.pos.ui.views.unit
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import com.jsoft.pos.BR
-import com.jsoft.pos.R
 import com.jsoft.pos.databinding.EditUnitBinding
 
 class EditUnitFragment : DialogFragment() {
 
-    private var unitId: Int = 0
-
     private lateinit var viewModel: EditUnitViewModel
-    private lateinit var binding: EditUnitBinding
+    private var binding: EditUnitBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.apply {
-            unitId = getInt("id", 0)
-        }
-
-        arguments?.getInt("id")?.apply { unitId = this }
 
         viewModel = ViewModelProviders.of(this).get(EditUnitViewModel::class.java)
 
         isCancelable = false
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = EditUnitBinding.inflate(inflater, container, false)
-        binding.setLifecycleOwner(this)
-        binding.isValidUnitName = true
-        binding.vm = viewModel
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        binding = EditUnitBinding.inflate(inflater)
 
-        viewModel.unitInput.value = unitId
+        binding?.setLifecycleOwner(this)
+        binding?.isValidUnitName = true
+        binding?.vm = viewModel
 
-        binding.delegate = object : EditUnitDialogDelegate {
-            override fun onSaveClick() {
-                viewModel.save()
-            }
-
-            override fun onCancelClick() {
-                dismiss()
-            }
-
+        binding?.btnCancelUnit?.setOnClickListener {
+            dismiss()
         }
 
-        return binding.root
+        binding?.btnSaveUnit?.setOnClickListener {
+            viewModel.save()
+        }
+
+        builder.setView(binding?.root)
+
+        return builder.create()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -61,7 +52,7 @@ class EditUnitFragment : DialogFragment() {
         val window = dialog.window
 
         if (window != null) {
-            window.attributes.windowAnimations = R.style.DialogAnimation
+            //window.attributes.windowAnimations = R.style.DialogAnimation
         }
 
         viewModel.saveSuccess.observe(this, Observer {
@@ -71,15 +62,27 @@ class EditUnitFragment : DialogFragment() {
         })
 
         viewModel.nameValid.observe(this, Observer {
-            binding.setVariable(BR.isValidUnitName, it ?: true)
+            binding?.isValidUnitName = it ?: true
         })
+
+        viewModel.nameConflict.observe(this, Observer {
+            binding?.isValidUnitName = it?.not() ?: true
+        })
+
+        viewModel.unitInput.value = arguments?.getInt("id", 0)
     }
 
     override fun onStart() {
         super.onStart()
+
         val window = dialog.window
 
-        window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+        val params = window.attributes
+        params.width = MATCH_PARENT
+        params.height = WRAP_CONTENT
+        params.gravity = Gravity.CENTER
+        window.attributes = params
+
     }
 
     companion object {
@@ -93,13 +96,5 @@ class EditUnitFragment : DialogFragment() {
             return frag
         }
     }
-
-}
-
-interface EditUnitDialogDelegate {
-
-    fun onSaveClick()
-
-    fun onCancelClick()
 
 }

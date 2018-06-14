@@ -22,7 +22,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         val liveItem = MutableLiveData<Item>()
 
         DaoWorkerAsync<Long>({
-            liveItem.postValue(repository.getItem(it))
+            liveItem.postValue(repository.getItem(it)).let { true }
         },{},{}).execute(it)
 
         return@switchMap liveItem
@@ -35,6 +35,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         val liveTaxes = MutableLiveData<List<Tax>>()
         DaoWorkerAsync<Long>({
             liveTaxes.postValue(taxDao.findItemTaxAssociations(it))
+            return@DaoWorkerAsync true
         },{},{}).execute(it)
         return@switchMap liveTaxes
     }
@@ -42,7 +43,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val discounts: LiveData<List<Discount>> = Transformations.switchMap(itemInput) {
         val liveDiscounts = MutableLiveData<List<Discount>>()
         DaoWorkerAsync<Long>({
-            liveDiscounts.postValue(discountDao.findItemDiscountAssociations(it))
+            liveDiscounts.postValue(discountDao.findItemDiscountAssociations(it)).let { true }
         },{},{}).execute(it)
         return@switchMap liveDiscounts
     }
@@ -65,7 +66,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     fun save() {
         DaoWorkerAsync<Item>({
-            repository.save(it, taxes.value, discounts.value)
+            repository.save(it, taxes.value, discounts.value).let { true }
         },{
 
         },{
@@ -75,7 +76,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     fun delete() {
         DaoWorkerAsync<Item>({
-            repository.delete(it)
+            repository.delete(it).let { true }
         },{
 
         },{

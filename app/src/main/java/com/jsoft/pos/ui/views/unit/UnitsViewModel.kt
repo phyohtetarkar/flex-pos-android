@@ -34,7 +34,7 @@ class UnitsViewModel(application: Application) : AndroidViewModel(application), 
 
     fun delete(unit: Unit) {
         DaoWorkerAsync<Unit>({
-            dao.delete(it)
+            dao.delete(it).let { true }
         }, {
 
         }, {

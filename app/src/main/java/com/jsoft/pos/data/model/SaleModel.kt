@@ -30,6 +30,8 @@ class SaleRepository(
 
             updateList.postValue(saleItems)
             updateField.postValue(Sale.create(saleItems))
+
+            return@DaoWorkerAsync true
         }, {}, {}).execute(saleItems)
 
     }
@@ -50,6 +52,8 @@ class SaleRepository(
 
                 liveSale.postValue(sale)
             }
+
+            return@DaoWorkerAsync true
 
         }, {}, {}).execute(id)
 

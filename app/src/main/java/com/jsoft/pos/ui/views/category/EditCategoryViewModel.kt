@@ -14,6 +14,7 @@ import com.jsoft.pos.ui.utils.ValidatorUtils
 class EditCategoryViewModel(application: Application) : AndroidViewModel(application) {
 
     val nameValid = MutableLiveData<Boolean>()
+    val nameConflict = MutableLiveData<Boolean>()
     val saveSuccess = MutableLiveData<Boolean>()
 
     val categoryInput = MutableLiveData<Int>()
@@ -48,7 +49,12 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
             }
         }.takeUnless { hasErrors }?.let {
             DaoWorkerAsync<Category>({
-                dao.save(it)
+                if (dao.findByUniqueNameSync(it.name) != null) {
+                    nameConflict.value = true
+                    return@DaoWorkerAsync false
+                } else {
+                    return@DaoWorkerAsync dao.save(it).let { true }
+                }
             }, {
                 saveSuccess.value = true
             }, {
