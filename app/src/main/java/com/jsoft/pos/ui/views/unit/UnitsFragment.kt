@@ -107,8 +107,6 @@ class UnitsFragment : SimpleListFragment<Unit>() {
         if (prev != null) {
             ft?.remove(prev)
         }
-        ft?.addToBackStack(null)
-
         val frag = EditUnitFragment.getInstance(id as Int)
         frag.show(ft, "dialog")
     }

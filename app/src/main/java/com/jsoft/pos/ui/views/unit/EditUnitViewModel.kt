@@ -14,7 +14,8 @@ import com.jsoft.pos.ui.utils.ValidatorUtils
 class EditUnitViewModel(application: Application) : AndroidViewModel(application) {
 
     val nameValid = MutableLiveData<Boolean>()
-    val nameConflict = MutableLiveData<Boolean>()
+    val nameNotEmpty = MutableLiveData<Boolean>()
+    val nameUnique = MutableLiveData<Boolean>()
     val saveSuccess = MutableLiveData<Boolean>()
 
     val unitInput = MutableLiveData<Int>()
@@ -43,14 +44,16 @@ class EditUnitViewModel(application: Application) : AndroidViewModel(application
         var hasErrors = false
 
         unit.value?.also {
-            if (!ValidatorUtils.isValid(it.name, ValidatorUtils.NOT_EMPTY)) {
-                nameValid.value = false
+            nameValid.value = ValidatorUtils.isValid(it.name, ValidatorUtils.NOT_EMPTY)
+            nameNotEmpty.value = nameValid.value
+            if (nameValid.value == false) {
                 hasErrors = true
             }
         }.takeUnless { hasErrors }?.let {
             DaoWorkerAsync<Unit>({
                 if (dao.findByUniqueNameSync(it.name.toUpperCase()) != null) {
-                    nameConflict.value = true
+                    nameUnique.postValue(false)
+                    nameValid.postValue(false)
                     return@DaoWorkerAsync false
                 } else {
                     return@DaoWorkerAsync dao.save(it).let { true }

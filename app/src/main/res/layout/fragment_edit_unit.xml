@@ -9,10 +9,6 @@
             name="vm"
             type="com.jsoft.pos.ui.views.unit.EditUnitViewModel" />
 
-        <variable
-            name="isValidUnitName"
-            type="Boolean" />
-
     </data>
 
     <ScrollView
@@ -42,12 +38,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="24dp"
                 android:hint="@string/hint_name"
                 android:inputType="text"
                 android:text="@={vm.unit.name}"
-                app:checkResult="@{safeUnbox(isValidUnitName)}"
-                app:errorMessage='@{@string/error_empty_input_format("Unit name")}'
+                app:checkResult='@{vm.nameValid}'
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textViewEditPrice"
                 app:layout_constraintTop_toBottomOf="@+id/textViewEditPrice" />
@@ -60,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/save"
                 android:textAllCaps="true"
                 app:layout_constraintBottom_toBottomOf="parent"

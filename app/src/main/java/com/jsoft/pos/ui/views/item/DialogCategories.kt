@@ -47,7 +47,6 @@ class DialogCategories : SimpleListDialogFragment<Category>() {
                 }
             }
 
-            view?.invalidate()
         })
     }
 

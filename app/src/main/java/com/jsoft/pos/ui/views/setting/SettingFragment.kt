@@ -2,8 +2,6 @@ package com.jsoft.pos.ui.views.setting
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.preference.EditTextPreference
-import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.support.v7.preference.PreferenceManager
 import com.jsoft.pos.R
@@ -34,14 +32,6 @@ class SettingFragment : PreferenceFragmentCompat()
         setPreferencesFromResource(R.xml.setting, rootKey)
     }
 
-    override fun onDisplayPreferenceDialog(preference: Preference?) {
-        when (preference) {
-            is EditTextPreference -> {
-            }
-        }
-        super.onDisplayPreferenceDialog(preference)
-    }
-
     override fun onResume() {
         super.onResume()
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
@@ -54,7 +44,14 @@ class SettingFragment : PreferenceFragmentCompat()
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         val pref = findPreference(key)
-        pref.summary = sharedPreferences?.getString(key, pref.summary.toString())
+        val origin = pref.summary.toString()
+        pref.summary = sharedPreferences?.getString(key, origin)?.let {
+            if (it.isEmpty()) {
+                return@let origin
+            } else {
+                return@let it
+            }
+        }
 
         when (key) {
             "p_app_language" -> {

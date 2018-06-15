@@ -10,6 +10,7 @@
         <variable
             name="vm"
             type="com.jsoft.pos.ui.views.tax.EditTaxViewModel" />
+
     </data>
 
     <LinearLayout
@@ -34,6 +35,7 @@
                 android:hint="@string/hint_name"
                 android:inputType="text"
                 android:text="@={vm.tax.name}"
+                app:checkResult="@{vm.nameValid}"
                 app:layout_constraintBottom_toTopOf="@+id/edTaxValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -48,6 +50,7 @@
                 android:hint="@string/hint_value"
                 android:inputType="numberDecimal"
                 android:text="@={vm.tax.amount}"
+                app:checkResult="@{vm.valueValid}"
                 android:drawableEnd="@drawable/ic_percantage_dark"
                 app:layout_constraintBottom_toTopOf="@+id/switch1"
                 app:layout_constraintEnd_toEndOf="@+id/edTaxName"

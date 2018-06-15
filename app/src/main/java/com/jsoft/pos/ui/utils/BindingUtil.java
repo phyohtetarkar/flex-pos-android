@@ -1,14 +1,11 @@
 package com.jsoft.pos.ui.utils;
 
-import android.content.SharedPreferences;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +19,7 @@ import com.jsoft.pos.ui.custom.RoundedImageView;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.Locale;
 
 public class BindingUtil {
@@ -154,10 +152,9 @@ public class BindingUtil {
         }
     }
 
-    @BindingAdapter({"checkResult", "errorMessage"})
-    public static void errorCheck(CustomEditText editText, boolean valid, String message) {
-        if (!valid) {
-            editText.setError(message);
+    @BindingAdapter({"checkResult"})
+    public static void errorCheck(CustomEditText editText, Boolean valid) {
+        if (valid != null && !valid) {
             editText.setHasError(true);
             //editText.setHintTextColor(Color.parseColor("#D13638"));
         }

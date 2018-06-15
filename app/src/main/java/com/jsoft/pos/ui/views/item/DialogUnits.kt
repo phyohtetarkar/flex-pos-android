@@ -48,7 +48,6 @@ class DialogUnits : SimpleListDialogFragment<Unit>() {
                 }
             }
 
-            view?.invalidate()
         })
     }
 

@@ -36,6 +36,8 @@
     <string name="confirm_message_delete">Are you sure to delete?</string>
 
     <string name="error_empty_input_format">%s must not empty</string>
+    <string name="error_name_conflict_format">%s already exists</string>
+
     <string name="hint_remark">Remark</string>
     <string name="add_new">Add new</string>
 

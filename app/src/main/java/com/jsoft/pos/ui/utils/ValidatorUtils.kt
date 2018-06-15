@@ -2,7 +2,15 @@ package com.jsoft.pos.ui.utils
 
 object ValidatorUtils {
 
-    val NOT_EMPTY: (String?) -> Boolean  = { !it.isNullOrBlank() }
+    val NOT_EMPTY: (String?) -> Boolean = { !it.isNullOrBlank() }
+
+    val VALID_PERCENTAGE: (Double?) -> Boolean = {
+        when (it) {
+            null -> false
+            in 1.0..100.0 -> true
+            else -> false
+        }
+    }
 
     fun <T> validate(t: T, validator: (T?) -> Boolean, errorHandler: () -> Unit): Boolean {
         val valid = validator(t)

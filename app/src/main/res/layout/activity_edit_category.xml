@@ -13,14 +13,6 @@
             name="vm"
             type="com.jsoft.pos.ui.views.category.EditCategoryViewModel" />
 
-        <variable
-            name="colorSelectHandler"
-            type="com.jsoft.pos.func.KConsumer2&lt;View, Category&gt;" />
-
-        <variable
-            name="isValidCategoryName"
-            type="Boolean" />
-
     </data>
 
     <LinearLayout
@@ -30,6 +22,7 @@
         android:orientation="vertical">
 
         <com.jsoft.pos.ui.custom.CustomEditText
+            android:id="@+id/edCategoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -38,8 +31,7 @@
             android:hint="@string/hint_name"
             android:inputType="text"
             android:text="@={vm.category.name}"
-            app:checkResult="@{safeUnbox(isValidCategoryName)}"
-            app:errorMessage='@{@string/error_empty_input_format("Category name")}' />
+            app:checkResult="@{vm.nameValid}" />
 
         <View
             android:layout_width="match_parent"
@@ -74,7 +66,7 @@
                     android:background="@drawable/layer_gray_color_state"
                     android:checked="@{vm.category.color}"
                     android:contentDescription="@color/colorGray"
-                    android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                    android:onClick="@{v -> vm.onColorSelect(v.getContentDescription())}"
                     app:buttonTint="@android:color/transparent"
                     app:layout_constraintBottom_toTopOf="@+id/radioButton5"
                     app:layout_constraintEnd_toStartOf="@+id/radioButton2"
@@ -92,7 +84,7 @@
                     android:background="@drawable/layer_red_color_state"
                     android:checked="@{vm.category.color}"
                     android:contentDescription="@color/colorRed"
-                    android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                    android:onClick="@{v -> vm.onColorSelect(v.getContentDescription())}"
                     app:buttonTint="@android:color/transparent"
                     app:layout_constraintEnd_toStartOf="@+id/radioButton3"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -108,7 +100,7 @@
                     android:background="@drawable/layer_pink_color_state"
                     android:checked="@{vm.category.color}"
                     android:contentDescription="@color/colorPink"
-                    android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                    android:onClick="@{v -> vm.onColorSelect(v.getContentDescription())}"
                     app:buttonTint="@android:color/transparent"
                     app:layout_constraintEnd_toStartOf="@+id/radioButton4"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -124,7 +116,7 @@
                     android:background="@drawable/layer_purple_color_state"
                     android:checked="@{vm.category.color}"
                     android:contentDescription="@color/colorPurple"
-                    android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                    android:onClick="@{v -> vm.onColorSelect(v.getContentDescription())}"
                     app:buttonTint="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -142,7 +134,7 @@
                     android:background="@drawable/layer_deep_purple_color_state"
                     android:checked="@{vm.category.color}"
                     android:contentDescription="@color/colorDeepPurple"
-                    android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                    android:onClick="@{v -> vm.onColorSelect(v.getContentDescription())}"
                     app:buttonTint="@android:color/transparent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/radioButton6"
@@ -159,7 +151,7 @@
                     android:background="@drawable/layer_blue_color_state"
                     android:checked="@{vm.category.color}"
                     android:contentDescription="@color/colorBlue"
-                    android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                    android:onClick="@{v -> vm.onColorSelect(v.getContentDescription())}"
                     app:buttonTint="@android:color/transparent"
                     app:layout_constraintEnd_toStartOf="@+id/radioButton7"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -175,7 +167,7 @@
                     android:background="@drawable/layer_green_color_state"
                     android:checked="@{vm.category.color}"
                     android:contentDescription="@color/colorGreen"
-                    android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
+                    android:onClick="@{v -> vm.onColorSelect(v.getContentDescription())}"
                     app:buttonTint="@android:color/transparent"
                     app:layout_constraintEnd_toStartOf="@+id/radioButton8"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -189,8 +181,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/layer_lime_color_state"
                     android:checked="@{vm.category.color}"
+                    android:onClick="@{v -> vm.onColorSelect(v.getContentDescription())}"
                     android:contentDescription="@color/colorLime"
-                    android:onClick="@{(v) -> colorSelectHandler.accept(v, vm.category)}"
                     app:buttonTint="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="@+id/radioButton4"
                     app:layout_constraintStart_toEndOf="@+id/radioButton7"

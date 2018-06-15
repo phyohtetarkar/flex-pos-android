@@ -9,8 +9,15 @@ import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Tax
 import com.jsoft.pos.data.model.TaxDao
 import com.jsoft.pos.data.utils.DaoWorkerAsync
+import com.jsoft.pos.ui.utils.ValidatorUtils
 
 class EditTaxViewModel(application: Application) : AndroidViewModel(application) {
+
+    val nameValid = MutableLiveData<Boolean>()
+    val valueValid = MutableLiveData<Boolean>()
+    val nameNotEmpty = MutableLiveData<Boolean>()
+    val nameUnique = MutableLiveData<Boolean>()
+    val saveSuccess = MutableLiveData<Boolean>()
 
     val taxInput = MutableLiveData<Int>()
     var checkedItemIds: Collection<Long>? = null
@@ -36,12 +43,36 @@ class EditTaxViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun save() {
-        DaoWorkerAsync<Tax>({
-            dao.save(it, checkedItemIds).let { true }
-        }, {
+        var hasErrors = false
 
-        }, {
+        tax.value?.also {
 
-        }).execute(tax.value)
+            nameValid.value = ValidatorUtils.isValid(it.name, ValidatorUtils.NOT_EMPTY)
+
+            if (nameValid.value == false) {
+                hasErrors = true
+            }
+        }?.also {
+            valueValid.value = ValidatorUtils.isValid(it.amount, ValidatorUtils.VALID_PERCENTAGE)
+            nameNotEmpty.value = valueValid.value
+
+            if (valueValid.value == false) {
+                hasErrors = true
+            }
+        }.takeUnless { hasErrors }?.let {
+            DaoWorkerAsync<Tax>({
+                if (dao.findByUniqueNameSync(it.name) != null) {
+                    nameUnique.postValue(false)
+                    nameValid.postValue(false)
+                    return@DaoWorkerAsync false
+                } else {
+                    return@DaoWorkerAsync dao.save(it, checkedItemIds).let { true }
+                }
+            }, {
+                saveSuccess.value = true
+            }, {
+                saveSuccess.value = false
+            }).execute(it)
+        }
     }
 }

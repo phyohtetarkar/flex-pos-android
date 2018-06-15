@@ -7,7 +7,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
-import android.view.WindowManager
+import com.jsoft.pos.R
 import com.jsoft.pos.databinding.EditUnitBinding
 
 class EditUnitFragment : DialogFragment() {
@@ -29,7 +29,6 @@ class EditUnitFragment : DialogFragment() {
         binding = EditUnitBinding.inflate(inflater)
 
         binding?.setLifecycleOwner(this)
-        binding?.isValidUnitName = true
         binding?.vm = viewModel
 
         binding?.btnCancelUnit?.setOnClickListener {
@@ -59,23 +58,19 @@ class EditUnitFragment : DialogFragment() {
             }
         })
 
-        viewModel.nameValid.observe(this, Observer {
-            binding?.isValidUnitName = it ?: true
+        viewModel.nameNotEmpty.observe(this, Observer {
+            if (it == false) {
+                binding?.editTextUnit?.error = resources.getString(R.string.error_empty_input_format, "Unit name")
+            }
         })
 
-        viewModel.nameConflict.observe(this, Observer {
-            binding?.isValidUnitName = it?.not() ?: true
+        viewModel.nameUnique.observe(this, Observer {
+            if (it == false) {
+                binding?.editTextUnit?.error = resources.getString(R.string.error_name_conflict_format, "Unit name")
+            }
         })
 
         viewModel.unitInput.value = arguments?.getInt("id", 0)
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        val window = dialog.window
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-
     }
 
     companion object {

@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
+import com.jsoft.pos.BR
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.model.CategoryDao
@@ -13,8 +14,11 @@ import com.jsoft.pos.ui.utils.ValidatorUtils
 
 class EditCategoryViewModel(application: Application) : AndroidViewModel(application) {
 
+    val colorChange = MutableLiveData<String>()
+
     val nameValid = MutableLiveData<Boolean>()
-    val nameConflict = MutableLiveData<Boolean>()
+    val nameNotEmpty = MutableLiveData<Boolean>()
+    val nameUnique = MutableLiveData<Boolean>()
     val saveSuccess = MutableLiveData<Boolean>()
 
     val categoryInput = MutableLiveData<Int>()
@@ -43,14 +47,16 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
         var hasErrors = false
 
         category.value?.also {
-            if (!ValidatorUtils.isValid(it.name, ValidatorUtils.NOT_EMPTY)) {
-                nameValid.value = false
+            nameValid.value = ValidatorUtils.isValid(it.name, ValidatorUtils.NOT_EMPTY)
+            nameNotEmpty.value = nameValid.value
+            if (nameValid.value == false) {
                 hasErrors = true
             }
         }.takeUnless { hasErrors }?.let {
             DaoWorkerAsync<Category>({
                 if (dao.findByUniqueNameSync(it.name) != null) {
-                    nameConflict.value = true
+                    nameUnique.postValue(false)
+                    nameValid.postValue(false)
                     return@DaoWorkerAsync false
                 } else {
                     return@DaoWorkerAsync dao.save(it).let { true }
@@ -62,6 +68,12 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
             }).execute(it)
         }
 
+    }
+
+    fun onColorSelect(cs: CharSequence) {
+        category.value?.color = cs.toString()
+        category.value?.notifyPropertyChanged(BR.color)
+        colorChange.value = cs.toString()
     }
 
 }

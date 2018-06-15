@@ -1,6 +1,7 @@
 package com.jsoft.pos.ui.views.tax
 
 import android.app.Activity
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -75,6 +76,30 @@ class EditTaxActivity : AppCompatActivity() {
             startActivityForResult(intent, ASSIGN_REQ)
         }
 
+        viewModel.saveSuccess.observe(this, Observer {
+            if (it == true) {
+                onBackPressed()
+            }
+        })
+
+        viewModel.nameNotEmpty.observe(this, Observer {
+            if (it == false) {
+                binding.edTaxName.error = resources.getString(R.string.error_empty_input_format, "Category name")
+            }
+        })
+
+        viewModel.nameUnique.observe(this, Observer {
+            if (it == false) {
+                binding.edTaxName.error = resources.getString(R.string.error_name_conflict_format, "Category name")
+            }
+        })
+
+        viewModel.valueValid.observe(this, Observer {
+            if (it == false) {
+                binding.edTaxValue.error = "Invalid percentage"
+            }
+        })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -90,7 +115,6 @@ class EditTaxActivity : AppCompatActivity() {
             }
             R.id.action_save -> {
                 viewModel.save()
-                onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)
