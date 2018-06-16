@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.databinding.ResourcesBinding
+import com.jsoft.pos.ui.utils.ServiceLocator
 import com.jsoft.pos.ui.views.category.CategoriesFragment
 import com.jsoft.pos.ui.views.discount.DiscountsFragment
 import com.jsoft.pos.ui.views.item.ItemsFragment
@@ -53,11 +54,11 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View) {
         var fragment: Fragment? = null
         when (view.id) {
-            R.id.tv_res_products -> fragment = ItemsFragment.INSTANCE
-            R.id.tv_res_categories -> fragment = CategoriesFragment.INSTANCE
-            R.id.tv_res_units -> fragment = UnitsFragment.INSTANCE
-            R.id.tvResDiscounts -> fragment = DiscountsFragment.INSTANCE
-            R.id.tvResTaxes -> fragment = TaxesFragment.INSTANCE
+            R.id.tv_res_products -> fragment = ServiceLocator.locate(ItemsFragment::class.java)
+            R.id.tv_res_categories -> fragment = ServiceLocator.locate(CategoriesFragment::class.java)
+            R.id.tv_res_units -> fragment = ServiceLocator.locate(UnitsFragment::class.java)
+            R.id.tvResDiscounts -> fragment = ServiceLocator.locate(DiscountsFragment::class.java)
+            R.id.tvResTaxes -> fragment = ServiceLocator.locate(TaxesFragment::class.java)
         }
 
         fragmentManager?.beginTransaction()

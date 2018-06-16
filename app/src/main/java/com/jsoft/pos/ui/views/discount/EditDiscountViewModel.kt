@@ -12,6 +12,8 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class EditDiscountViewModel(application: Application) : AndroidViewModel(application) {
 
+    val deleteSuccess = MutableLiveData<Boolean>()
+
     val discountInput = MutableLiveData<Int>()
     var checkedItemIds: Collection<Long>? = null
 
@@ -43,6 +45,16 @@ class EditDiscountViewModel(application: Application) : AndroidViewModel(applica
 
         }, {
 
+        }).execute(discount.value)
+    }
+
+    fun delete() {
+        DaoWorkerAsync<Discount>({
+            dao.delete(it).let { true }
+        }, {
+            deleteSuccess.value = true
+        }, {
+            deleteSuccess.value = false
         }).execute(discount.value)
     }
 

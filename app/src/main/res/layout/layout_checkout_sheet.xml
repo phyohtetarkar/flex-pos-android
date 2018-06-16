@@ -96,8 +96,8 @@
         <View
             android:id="@+id/view14"
             android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/darkDivider"
+            android:layout_height="8dp"
+            android:background="@drawable/bottom_sheet_shadow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -117,7 +117,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
-            android:layout_height="@dimen/checkout_sheet_peek_height"
+            android:layout_height="64dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingEnd="16dp"
@@ -133,7 +133,7 @@
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:text="@string/total_price"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorAccent" />
 
             <com.jsoft.pos.ui.custom.RoundedFractionTextView
                 style="@style/TitleTextMedium"

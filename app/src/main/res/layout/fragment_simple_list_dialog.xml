@@ -30,7 +30,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/simpleListRecyclerView"
+            android:id="@+id/dialogRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/layout_simple_list_item" />

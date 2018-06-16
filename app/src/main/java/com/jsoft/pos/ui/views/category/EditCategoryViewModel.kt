@@ -15,6 +15,7 @@ import com.jsoft.pos.ui.utils.ValidatorUtils
 class EditCategoryViewModel(application: Application) : AndroidViewModel(application) {
 
     val colorChange = MutableLiveData<String>()
+    val deleteSuccess = MutableLiveData<Boolean>()
 
     val nameValid = MutableLiveData<Boolean>()
     val nameNotEmpty = MutableLiveData<Boolean>()
@@ -68,6 +69,16 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
             }).execute(it)
         }
 
+    }
+
+    fun delete() {
+        DaoWorkerAsync<Category>({
+            dao.delete(it).let { true }
+        }, {
+            deleteSuccess.value = true
+        }, {
+            deleteSuccess.value = false
+        }).execute(category.value)
     }
 
     fun onColorSelect(cs: CharSequence) {

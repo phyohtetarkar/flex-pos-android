@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
+import com.jsoft.pos.BR
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.*
 import com.jsoft.pos.data.entity.Unit
@@ -15,8 +16,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     val itemInput = MutableLiveData<Long>()
 
-    val itemSaved = MutableLiveData<Boolean>()
-    val itemDeleted = MutableLiveData<Boolean>()
+    val deleteSuccess = MutableLiveData<Boolean>()
 
     val item: LiveData<Item> = Transformations.switchMap(itemInput) {
         val liveItem = MutableLiveData<Item>()
@@ -70,7 +70,6 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         },{
 
         },{
-            itemSaved.value = true
         }).execute(item.value)
     }
 
@@ -78,10 +77,15 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         DaoWorkerAsync<Item>({
             repository.delete(it).let { true }
         },{
-
+            deleteSuccess.value = true
         },{
-            itemDeleted.value = true
+            deleteSuccess.value = false
         }).execute(item.value)
+    }
+
+    fun removeImage() {
+        item.value?.image = null
+        item.value?.notifyPropertyChanged(BR.image)
     }
 
 }

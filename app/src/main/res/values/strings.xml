@@ -7,6 +7,7 @@
     <string name="categories">Categories</string>
     <string name="units">Units</string>
     <string name="resources">Resources</string>
+    <string name="setting">Setting</string>
 
     <string name="taxes">Taxes</string>
     <string name="discounts">Discounts</string>
@@ -61,4 +62,6 @@
 
     <string name="total_price">Total Price</string>
     <string name="change">Change</string>
+    <string name="fail_to_delete">Fail to delete %s</string>
+    <string name="fail_to_save">Fail to save %s</string>
 </resources>

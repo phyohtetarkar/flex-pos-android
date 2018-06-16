@@ -1,5 +1,6 @@
 package com.jsoft.pos.ui.views.unit
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Unit
 import com.jsoft.pos.data.model.UnitSearch
+import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.SwipeGestureCallback
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListFragment
@@ -56,6 +58,16 @@ class UnitsFragment : SimpleListFragment<Unit>() {
         val helper = ItemTouchHelper(swipeCallback)
         helper.attachToRecyclerView(recyclerViewSimpleList)
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.deleteSuccess.observe(this, Observer {
+            if (it == false) {
+                AlertUtil.showToast(activity!!, resources.getString(R.string.fail_to_delete, "unit"))
+            }
+        })
     }
 
     override fun getItemTouchListener(context: Context, recyclerView: RecyclerView): RecyclerView.OnItemTouchListener {

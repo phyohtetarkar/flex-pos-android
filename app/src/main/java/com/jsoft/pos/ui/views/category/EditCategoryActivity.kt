@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.widget.RadioButton
 import com.jsoft.pos.R
 import com.jsoft.pos.databinding.EditCategoryBinding
+import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import kotlinx.android.synthetic.main.activity_edit_category.*
 
@@ -33,7 +34,13 @@ class EditCategoryActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_white)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
+
+        btnDeleteCategory.setOnClickListener {
+            AlertUtil.showConfirmDelete(this, {
+                viewModel.delete()
+            }, {})
+        }
 
         viewModel.apply {
 
@@ -64,6 +71,13 @@ class EditCategoryActivity : AppCompatActivity() {
         viewModel.nameUnique.observe(this, Observer {
             if (it == false) {
                 binding.edCategoryName.error = resources.getString(R.string.error_name_conflict_format, "Category name")
+            }
+        })
+
+        viewModel.deleteSuccess.observe(this, Observer {
+            when (it) {
+                false -> AlertUtil.showToast(this, resources.getString(R.string.fail_to_delete, "category"))
+                true -> onBackPressed()
             }
         })
 

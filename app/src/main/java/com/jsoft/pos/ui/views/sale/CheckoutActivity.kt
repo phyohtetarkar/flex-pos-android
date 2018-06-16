@@ -23,6 +23,7 @@ class CheckoutActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(CheckoutViewModel::class.java)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_dark)
 
         supportFragmentManager.beginTransaction()
                 .replace(R.id.contentCheckout, SaleDetailFragment.INSTANCE)

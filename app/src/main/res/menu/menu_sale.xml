@@ -6,7 +6,7 @@
         android:id="@+id/action_search"
         android:title="Search"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_search_white"
+        android:icon="@drawable/ic_search_dark"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
 

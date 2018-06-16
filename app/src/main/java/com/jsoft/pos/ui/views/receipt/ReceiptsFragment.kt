@@ -44,8 +44,6 @@ class ReceiptsFragment : AbstractListFragment<Sale>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         recyclerViewSimpleList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 it.setDrawable(resources.getDrawable(R.drawable.divider_simple, resources.newTheme()))
@@ -55,6 +53,8 @@ class ReceiptsFragment : AbstractListFragment<Sale>() {
         })
 
         fabSimpleList.visibility = View.GONE
+
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onResume() {
@@ -76,7 +76,7 @@ class ReceiptsFragment : AbstractListFragment<Sale>() {
     override fun onItemTouch(position: Int) {
         val intent = Intent(context, ReceiptDetailActivity::class.java)
         intent.putExtra("id", adapter.getItemAt(position).id)
-        intent.putExtra("showHomeUp", true)
+        intent.putExtra("historyMode", true)
         startActivity(intent)
     }
 

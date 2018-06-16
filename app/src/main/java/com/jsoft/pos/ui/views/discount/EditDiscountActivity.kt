@@ -1,6 +1,7 @@
 package com.jsoft.pos.ui.views.discount
 
 import android.app.Activity
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -14,6 +15,7 @@ import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.databinding.EditDiscountBinding
+import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.views.tax.AssignItemActivity
 import kotlinx.android.synthetic.main.activity_edit_discount.*
@@ -42,7 +44,7 @@ class EditDiscountActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_white)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
         viewModel.apply {
             if (discount.value != null) {
@@ -74,6 +76,19 @@ class EditDiscountActivity : AppCompatActivity() {
             }
             startActivityForResult(intent, ASSIGN_REQ)
         }
+
+        btnDeleteDiscount.setOnClickListener {
+            AlertUtil.showConfirmDelete(this, {
+                viewModel.delete()
+            }, {})
+        }
+
+        viewModel.deleteSuccess.observe(this, Observer {
+            when (it) {
+                false -> AlertUtil.showToast(this, resources.getString(R.string.fail_to_delete, "discount"))
+                true -> onBackPressed()
+            }
+        })
 
     }
 

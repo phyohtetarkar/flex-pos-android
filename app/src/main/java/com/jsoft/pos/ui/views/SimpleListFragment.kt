@@ -26,9 +26,27 @@ abstract class SimpleListFragment<T> : AbstractListFragment<T>() {
                 it.setDrawable(resources.getDrawable(R.drawable.divider_simple))
             }
         })
-        
 
-        fabSimpleList.setOnClickListener { showEdit(0) }
+        if (fabSimpleList.visibility == View.VISIBLE) {
+
+            fabSimpleList.setOnClickListener { showEdit(0) }
+
+            recyclerViewSimpleList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 0) {
+                        if (fabSimpleList.isShown) {
+                            fabSimpleList.hide()
+                        }
+                    } else {
+                        if (!fabSimpleList.isShown) {
+                            fabSimpleList.show()
+                        }
+                    }
+
+                }
+            })
+        }
 
     }
 

@@ -47,6 +47,22 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        recyclerViewItems.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    if (fabItems.isShown) {
+                        fabItems.hide()
+                    }
+                } else {
+                    if (!fabItems.isShown) {
+                        fabItems.show()
+                    }
+                }
+
+            }
+        })
+
         fabItems.setOnClickListener { showEdit(0) }
 
     }

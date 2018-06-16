@@ -27,7 +27,8 @@ data class Item(
         var amount: Double = 0.0,
         var price: Double = 0.0,
         var cost: Double = 0.0,
-        var image: String = "",
+        @Bindable
+        var image: String? = null,
         var available: Boolean = true,
 
         @ColumnInfo(name = "unit_id")
@@ -76,7 +77,7 @@ data class ItemVO(
         var id: Long,
         var name: String,
         var barcode: String,
-        var image: String,
+        var image: String?,
         var unit: String,
         var category: String,
         var color: String,

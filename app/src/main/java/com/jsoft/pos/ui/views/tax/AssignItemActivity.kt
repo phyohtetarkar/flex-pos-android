@@ -3,6 +3,7 @@ package com.jsoft.pos.ui.views.tax
 import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -16,6 +17,7 @@ import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.data.model.ItemSearch
 import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
+import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import kotlinx.android.synthetic.main.activity_checkable_list.*
 
@@ -23,6 +25,10 @@ class AssignItemActivity : AppCompatActivity() {
 
     private lateinit var viewModel: AssignItemViewModel
     private lateinit var adapter: SimpleListAdapter<Item>
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(ContextWrapperUtil.create(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -198,7 +198,8 @@
             android:layout_height="1dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:background="@color/darkDivider" />
+            android:background="@color/darkDivider"
+            android:visibility="@{safeUnbox(vm.category.id) > 0 ? View.VISIBLE : View.INVISIBLE}" />
 
         <Button
             android:id="@+id/btnDeleteCategory"

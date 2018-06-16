@@ -20,7 +20,7 @@ abstract class SimpleListDialogFragment<T> : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        simpleListRecyclerView.apply {
+        dialogRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener(){
@@ -37,7 +37,7 @@ abstract class SimpleListDialogFragment<T> : DialogFragment() {
             })
         }
 
-        simpleListRecyclerView.adapter = getAdapter()
+        dialogRecyclerView.adapter = getAdapter()
     }
 
     override fun onStart() {

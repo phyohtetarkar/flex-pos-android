@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <font
-        app:font="@font/roboto_bold"
         app:fontStyle="normal"
         app:fontWeight="700" />
 
     <font
-        app:font="@font/roboto_bolditalic"
         app:fontStyle="italic"
         app:fontWeight="700" />
 

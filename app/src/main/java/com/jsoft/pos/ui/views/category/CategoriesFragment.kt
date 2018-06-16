@@ -6,8 +6,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
-import android.support.v7.widget.DividerItemDecoration
-import android.view.View
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.CategoryVO
@@ -15,7 +13,6 @@ import com.jsoft.pos.data.model.CategorySearch
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimpleListViewModel
-import kotlinx.android.synthetic.main.fragment_simple_list.*
 
 class CategoriesFragment : SimpleListFragment<CategoryVO>() {
 
@@ -36,19 +33,6 @@ class CategoriesFragment : SimpleListFragment<CategoryVO>() {
                 return oldItem == newItem
             }
         }, R.layout.layout_category)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-//        recyclerViewSimpleList.removeItemDecorationAt(0)
-//        recyclerViewSimpleList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82, resources.newTheme()))
-//            } else {
-//                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82))
-//            }
-//        })
     }
 
     override fun onResume() {

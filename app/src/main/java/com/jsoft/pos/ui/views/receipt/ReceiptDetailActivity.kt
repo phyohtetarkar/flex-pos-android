@@ -2,6 +2,7 @@ package com.jsoft.pos.ui.views.receipt
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
@@ -15,22 +16,30 @@ import com.jsoft.pos.data.entity.SaleItem
 import com.jsoft.pos.data.entity.TaxAmount
 import com.jsoft.pos.databinding.ReceiptSlipBinding
 import com.jsoft.pos.ui.custom.CustomViewAdapter
+import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.utils.ImageUtil
 import kotlinx.android.synthetic.main.activity_receipt_detail.*
 
 class ReceiptDetailActivity : AppCompatActivity() {
 
     private lateinit var viewModel: ReceiptDetailViewModel
-    private var showHomeUp = false
+    private var historyMode = false
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(ContextWrapperUtil.create(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ReceiptSlipBinding>(this, R.layout.activity_receipt_detail)
         binding.setLifecycleOwner(this)
 
-        showHomeUp = intent.getBooleanExtra("showHomeUp", false)
+        historyMode = intent.getBooleanExtra("historyMode", false)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(showHomeUp)
+        supportActionBar?.setDisplayHomeAsUpEnabled(historyMode)
+        if (historyMode) {
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_dark)
+        }
 
         viewModel = ViewModelProviders.of(this).get(ReceiptDetailViewModel::class.java)
 

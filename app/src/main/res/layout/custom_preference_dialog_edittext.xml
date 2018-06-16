@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorAccent"
             android:textSize="18sp"
             tools:text="Name" />
 

@@ -15,6 +15,8 @@ import com.jsoft.pos.ui.views.SimpleListViewModel
 
 class UnitsViewModel(application: Application) : AndroidViewModel(application), SimpleListViewModel<Unit> {
 
+    val deleteSuccess = MutableLiveData<Boolean>()
+
     val searchModel = MutableLiveData<UnitSearch>()
 
     val units: LiveData<List<Unit>> = Transformations.switchMap(searchModel) {
@@ -36,9 +38,9 @@ class UnitsViewModel(application: Application) : AndroidViewModel(application), 
         DaoWorkerAsync<Unit>({
             dao.delete(it).let { true }
         }, {
-
+            deleteSuccess.value = true
         }, {
-
+            deleteSuccess.value = false
         }).execute(unit)
     }
 

@@ -96,6 +96,8 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        fabSimpleList.visibility = View.GONE
+
         super.onViewCreated(view, savedInstanceState)
 
 //        recyclerViewSimpleList.removeItemDecorationAt(0)
@@ -107,7 +109,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 //            }
 //        })
 
-        fabSimpleList.visibility = View.GONE
+
 
     }
 

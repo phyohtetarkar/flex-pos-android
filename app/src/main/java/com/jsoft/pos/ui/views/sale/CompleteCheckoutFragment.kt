@@ -44,9 +44,12 @@ class CompleteCheckoutFragment : Fragment() {
 
             when (it) {
                 true -> {
+                    CheckOutItemsHolder.clear()
                     val intent = Intent(context, ReceiptDetailActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     intent.putExtra("id", viewModel?.sale?.value?.id)
                     startActivity(intent)
+                    activity?.finish()
                 }
             }
 

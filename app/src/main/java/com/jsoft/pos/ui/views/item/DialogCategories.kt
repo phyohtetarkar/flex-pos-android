@@ -12,13 +12,16 @@ import kotlinx.android.synthetic.main.fragment_simple_list_dialog.*
 
 class DialogCategories : SimpleListDialogFragment<Category>() {
 
-    private lateinit var viewModel: EditItemViewModel
+    private var viewModel: EditItemViewModel? = null
     private lateinit var adapter: SimpleListAdapter<Category>
 
     private var stub: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel = activity?.let { ViewModelProviders.of(it).get(EditItemViewModel::class.java) }
+
         adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<Category>() {
             override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
                 return oldItem.id == newItem.id
@@ -32,8 +35,8 @@ class DialogCategories : SimpleListDialogFragment<Category>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = activity!!.let { ViewModelProviders.of(it).get(EditItemViewModel::class.java) }
-        viewModel.categories.observe(this, Observer {
+
+        viewModel?.categories?.observe(activity!!, Observer {
             adapter.submitList(it)
             it?.apply {
                 if (isEmpty()) {
@@ -55,7 +58,7 @@ class DialogCategories : SimpleListDialogFragment<Category>() {
     }
 
     override fun onTouch(position: Int) {
-        viewModel.apply {
+        viewModel?.apply {
             item.value?.category = adapter.getItemAt(position)
         }
         dismiss()

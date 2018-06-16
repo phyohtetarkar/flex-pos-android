@@ -19,7 +19,6 @@ import com.jsoft.pos.ui.custom.RoundedImageView;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Arrays;
 import java.util.Locale;
 
 public class BindingUtil {
@@ -56,16 +55,21 @@ public class BindingUtil {
             return;
         }
 
-        StringBuilder sb = new StringBuilder();
-        for (char c : value.toCharArray()) {
-            if (Character.isDigit(c)) {
-                sb.append((char)(c + 4112));
-                //sb.append(c);
-            } else {
-                sb.append(c);
+        if (Locale.getDefault().getLanguage().equals("my")) {
+            StringBuilder sb = new StringBuilder();
+            for (char c : value.toCharArray()) {
+                if (Character.isDigit(c)) {
+                    sb.append((char)(c + 4112));
+                    //sb.append(c);
+                } else {
+                    sb.append(c);
+                }
             }
+            textView.setText(sb.toString());
+        } else {
+            textView.setText(value);
         }
-        textView.setText(sb.toString());
+
     }
 
     @BindingAdapter({"android:text"})

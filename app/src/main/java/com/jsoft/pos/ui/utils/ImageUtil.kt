@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import com.jsoft.pos.R
 import java.io.File
 import java.io.FileInputStream
@@ -56,13 +55,24 @@ object ImageUtil {
 
     }
 
+    fun deleteImage(context: Context, name: String?) {
+        name?.takeUnless { it.isEmpty() }?.also {
+            val dir = context.getDir("item_image", Context.MODE_PRIVATE)
+            val file = File(dir, name)
+
+            if (file.exists()) {
+                file.delete()
+            }
+        }
+    }
+
     fun generateReceipt(context: Context, bitmap: Bitmap): Uri? {
 
         var fos: FileOutputStream? = null
 
         try {
 
-            val dir = context.getExternalFilesDir(Environment.DIRECTORY_DCIM)
+            val dir = context.cacheDir
 
             val format = SimpleDateFormat("yyyyMMddhhmmss", Locale.ENGLISH)
             val file = File(dir, String.format(Locale.ENGLISH, "%s.png", format.format(Date())))

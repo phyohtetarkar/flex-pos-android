@@ -18,6 +18,7 @@ class EditTaxViewModel(application: Application) : AndroidViewModel(application)
     val nameNotEmpty = MutableLiveData<Boolean>()
     val nameUnique = MutableLiveData<Boolean>()
     val saveSuccess = MutableLiveData<Boolean>()
+    val deleteSuccess = MutableLiveData<Boolean>()
 
     val taxInput = MutableLiveData<Int>()
     var checkedItemIds: Collection<Long>? = null
@@ -74,5 +75,15 @@ class EditTaxViewModel(application: Application) : AndroidViewModel(application)
                 saveSuccess.value = false
             }).execute(it)
         }
+    }
+
+    fun delete() {
+        DaoWorkerAsync<Tax>({
+            dao.delete(it).let { true }
+        }, {
+            deleteSuccess.value = true
+        }, {
+            deleteSuccess.value = false
+        }).execute(tax.value)
     }
 }

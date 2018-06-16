@@ -1,9 +1,11 @@
 package com.jsoft.pos.ui.views.setting
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.support.v7.preference.PreferenceManager
+import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.ui.utils.AlertUtil
 
@@ -40,6 +42,12 @@ class SettingFragment : PreferenceFragmentCompat()
     override fun onPause() {
         super.onPause()
         preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val app = context as MainActivity
+        app.setTitle(R.string.setting)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {

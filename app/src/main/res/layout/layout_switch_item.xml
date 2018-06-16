@@ -22,8 +22,6 @@
             android:focusable="true"
             android:padding="16dp"
             android:text="@{obj._name}"
-            android:lines="1"
-            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/switch2"
             app:layout_constraintStart_toStartOf="parent"

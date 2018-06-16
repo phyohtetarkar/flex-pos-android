@@ -15,6 +15,7 @@ import com.jsoft.pos.data.entity.Discount
 import com.jsoft.pos.data.entity.Tax
 import com.jsoft.pos.databinding.EditItemBinding
 import com.jsoft.pos.ui.custom.CustomViewAdapter
+import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.utils.ImageUtil
 import com.jsoft.pos.ui.views.SimpleListDialogFragment
@@ -43,7 +44,7 @@ class EditItemActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_white)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
         edChooseCategory.onTouchDelegate = { showSelectDialog(DialogCategories())}
         edChooseUnit.onTouchDelegate = { showSelectDialog(DialogUnits()) }
@@ -78,6 +79,13 @@ class EditItemActivity : AppCompatActivity() {
 
         }
 
+        viewModel.deleteSuccess.observe(this, Observer {
+            when (it) {
+                false -> AlertUtil.showToast(this, resources.getString(R.string.fail_to_delete, "item"))
+                true -> onBackPressed()
+            }
+        })
+
         tvAddCategory.setOnClickListener {
             startActivity(Intent(this, EditCategoryActivity::class.java))
         }
@@ -104,6 +112,16 @@ class EditItemActivity : AppCompatActivity() {
             startActivityForResult(intent, PICKIMAGE)
         }
 
+        btnRemoveImage.setOnClickListener {
+            ImageUtil.deleteImage(this, viewModel.item.value?.image)
+            viewModel.removeImage()
+        }
+
+        btnDeleteItem.setOnClickListener {
+            AlertUtil.showConfirmDelete(this, {
+                viewModel.delete()
+            }, {})
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -117,10 +135,6 @@ class EditItemActivity : AppCompatActivity() {
             android.R.id.home -> onBackPressed()
             R.id.action_save -> {
                 viewModel.save()
-                onBackPressed()
-            }
-            R.id.action_delete -> {
-                viewModel.delete()
                 onBackPressed()
             }
         }
@@ -138,7 +152,7 @@ class EditItemActivity : AppCompatActivity() {
 
                         val path = ImageUtil.writeImage(this@EditItemActivity, this, viewModel.item.value?.name)
 
-                        viewModel.item.value?.image = path ?: ""
+                        viewModel.item.value?.image = path
                         imageViewItemImage.setImageBitmap(ImageUtil.readImage(this@EditItemActivity, path))
                     }
 

@@ -15,6 +15,7 @@ import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.databinding.EditTaxBinding
+import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import kotlinx.android.synthetic.main.activity_edit_tax.*
 
@@ -43,7 +44,7 @@ class EditTaxActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_white)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
         viewModel.apply {
             if (tax.value != null) {
@@ -52,6 +53,7 @@ class EditTaxActivity : AppCompatActivity() {
 
             taxInput.value = taxId
         }
+
 
         edTaxName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -76,6 +78,12 @@ class EditTaxActivity : AppCompatActivity() {
             startActivityForResult(intent, ASSIGN_REQ)
         }
 
+        btnDeleteTax.setOnClickListener {
+            AlertUtil.showConfirmDelete(this, {
+                viewModel.delete()
+            }, {})
+        }
+
         viewModel.saveSuccess.observe(this, Observer {
             if (it == true) {
                 onBackPressed()
@@ -97,6 +105,13 @@ class EditTaxActivity : AppCompatActivity() {
         viewModel.valueValid.observe(this, Observer {
             if (it == false) {
                 binding.edTaxValue.error = "Invalid percentage"
+            }
+        })
+
+        viewModel.deleteSuccess.observe(this, Observer {
+            when (it) {
+                false -> AlertUtil.showToast(this, resources.getString(R.string.fail_to_delete, "tax"))
+                true -> onBackPressed()
             }
         })
 
