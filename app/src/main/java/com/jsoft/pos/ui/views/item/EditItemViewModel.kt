@@ -5,7 +5,6 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
-import com.jsoft.pos.BR
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.*
 import com.jsoft.pos.data.entity.Unit
@@ -22,11 +21,14 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         val liveItem = MutableLiveData<Item>()
 
         DaoWorkerAsync<Long>({
-            liveItem.postValue(repository.getItem(it)).let { true }
+            val item = repository.getItem(it)
+            return@DaoWorkerAsync liveItem.postValue(item).let { true }
         },{},{}).execute(it)
 
         return@switchMap liveItem
     }
+
+    var imageToDelete: String? = null
 
     val categories: LiveData<List<Category>> by lazy { categoryDao.findAllCategories() }
     val units: LiveData<List<Unit>> by lazy { unitDao.findAllUnits() }
@@ -66,7 +68,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     fun save() {
         DaoWorkerAsync<Item>({
-            repository.save(it, taxes.value, discounts.value).let { true }
+            return@DaoWorkerAsync repository.save(it, taxes.value, discounts.value).let { true }
         },{
 
         },{
@@ -85,7 +87,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     fun removeImage() {
         item.value?.image = null
-        item.value?.notifyPropertyChanged(BR.image)
+        imageToDelete = item.value?.image
     }
 
 }

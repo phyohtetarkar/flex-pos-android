@@ -64,11 +64,4 @@ class DiscountsFragment : SimpleListFragment<Discount>() {
         }
     }
 
-    companion object {
-        val INSTANCE: DiscountsFragment
-            get() {
-                return DiscountsFragment()
-            }
-    }
-
 }

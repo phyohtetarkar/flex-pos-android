@@ -69,11 +69,4 @@ class CategoriesFragment : SimpleListFragment<CategoryVO>() {
 
     }
 
-    companion object {
-        val INSTANCE: CategoriesFragment
-            get() {
-                return CategoriesFragment()
-            }
-    }
-
 }

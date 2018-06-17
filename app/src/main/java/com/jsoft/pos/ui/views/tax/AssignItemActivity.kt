@@ -40,6 +40,7 @@ class AssignItemActivity : AppCompatActivity() {
         viewModel.checkedIds = intent.getLongArrayExtra("checked")?.asList()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_dark)
 
         adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<Item>(){
             override fun areItemsTheSame(oldItem: Item?, newItem: Item?): Boolean {

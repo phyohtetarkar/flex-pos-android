@@ -49,14 +49,13 @@ class EditTaxViewModel(application: Application) : AndroidViewModel(application)
         tax.value?.also {
 
             nameValid.value = ValidatorUtils.isValid(it.name, ValidatorUtils.NOT_EMPTY)
+            nameNotEmpty.value = nameValid.value
 
             if (nameValid.value == false) {
                 hasErrors = true
             }
         }?.also {
             valueValid.value = ValidatorUtils.isValid(it.amount, ValidatorUtils.VALID_PERCENTAGE)
-            nameNotEmpty.value = valueValid.value
-
             if (valueValid.value == false) {
                 hasErrors = true
             }

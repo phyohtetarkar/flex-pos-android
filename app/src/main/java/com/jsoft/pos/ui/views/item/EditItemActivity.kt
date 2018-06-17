@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Discount
 import com.jsoft.pos.data.entity.Tax
@@ -100,7 +101,7 @@ class EditItemActivity : AppCompatActivity() {
             frag.show(ft, "addUnitDialog")
         }
 
-        imageViewItemImage.setOnClickListener {
+        btnAddImage.setOnClickListener {
             val getIntent = Intent(Intent.ACTION_GET_CONTENT)
             getIntent.type = "image/*"
 
@@ -113,8 +114,10 @@ class EditItemActivity : AppCompatActivity() {
         }
 
         btnRemoveImage.setOnClickListener {
-            ImageUtil.deleteImage(this, viewModel.item.value?.image)
             viewModel.removeImage()
+            imageViewItemImage.visibility = View.INVISIBLE
+            btnRemoveImage.visibility = View.GONE
+            btnAddImage.visibility = View.VISIBLE
         }
 
         btnDeleteItem.setOnClickListener {
@@ -134,6 +137,7 @@ class EditItemActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
             R.id.action_save -> {
+                ImageUtil.deleteImage(this, viewModel.imageToDelete)
                 viewModel.save()
                 onBackPressed()
             }
@@ -154,6 +158,9 @@ class EditItemActivity : AppCompatActivity() {
 
                         viewModel.item.value?.image = path
                         imageViewItemImage.setImageBitmap(ImageUtil.readImage(this@EditItemActivity, path))
+                        imageViewItemImage.visibility = View.VISIBLE
+                        btnRemoveImage.visibility = View.VISIBLE
+                        btnAddImage.visibility = View.GONE
                     }
 
                 }

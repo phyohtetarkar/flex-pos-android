@@ -1,6 +1,7 @@
 package com.jsoft.pos.ui.views.receipt
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Sale
 import com.jsoft.pos.data.model.SaleSearch
@@ -62,6 +64,12 @@ class ReceiptsFragment : AbstractListFragment<Sale>() {
         viewModel.saleInput.value = SaleSearch()
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val app = context as MainActivity
+        app.setTitle(R.string.receipts)
+    }
+
     override val recyclerView: RecyclerView
         get() = recyclerViewSimpleList
 
@@ -78,11 +86,6 @@ class ReceiptsFragment : AbstractListFragment<Sale>() {
         intent.putExtra("id", adapter.getItemAt(position).id)
         intent.putExtra("historyMode", true)
         startActivity(intent)
-    }
-
-    companion object {
-        val INSTANCE: ReceiptsFragment
-            get() = ReceiptsFragment()
     }
 
 }

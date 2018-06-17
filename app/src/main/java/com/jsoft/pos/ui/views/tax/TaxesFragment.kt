@@ -63,11 +63,4 @@ class TaxesFragment : SimpleListFragment<Tax>() {
         }
     }
 
-    companion object {
-        val INSTANCE: TaxesFragment
-            get() {
-                return TaxesFragment()
-            }
-    }
-
 }

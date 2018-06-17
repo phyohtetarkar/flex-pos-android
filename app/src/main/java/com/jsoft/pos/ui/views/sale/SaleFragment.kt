@@ -36,6 +36,7 @@ import com.jsoft.pos.ui.views.SimplePagedListAdapter
 import kotlinx.android.synthetic.main.fragment_simple_list.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import kotlinx.android.synthetic.main.layout_item_compact.view.*
+import kotlin.math.roundToInt
 
 
 class SaleFragment : SimpleListFragment<ItemVO>() {
@@ -200,7 +201,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         val origin = view.roundedImageView
 
         val copy = RoundedImageView(activity!!)
-        copy.layoutParams = origin.layoutParams
         copy.setImageBitmap((origin.drawable as BitmapDrawable).bitmap)
 
         val dm = DisplayMetrics()
@@ -223,7 +223,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         val asy = ObjectAnimator.ofFloat(copy, "scaleY", 0.2f)
 
         val animSet = AnimatorSet()
-        animSet.duration = 600
+        animSet.duration = 500
         animSet.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
             }
@@ -237,11 +237,14 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             }
 
             override fun onAnimationStart(animation: Animator?) {
-                activity!!.layoutMain.addView(copy)
+
             }
 
         })
         animSet.playTogether(ax, ay, asx, asy)
+
+        val w = (50 * dm.density).roundToInt()
+        activity!!.layoutMain.addView(copy, ViewGroup.LayoutParams(w, w))
         animSet.start()
 
     }
@@ -263,13 +266,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         badge.setCount(CheckOutItemsHolder.itemCount.toString())
         icon?.mutate()
         icon?.setDrawableByLayerId(R.id.ic_badge, badge)
-    }
-
-    companion object {
-        val INSTANCE: SaleFragment
-            get() {
-                return SaleFragment()
-            }
     }
 
 }

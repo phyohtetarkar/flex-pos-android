@@ -106,9 +106,4 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
 
     }
 
-    companion object {
-        val INSTANCE: ItemsFragment
-            get() = ItemsFragment()
-    }
-
 }

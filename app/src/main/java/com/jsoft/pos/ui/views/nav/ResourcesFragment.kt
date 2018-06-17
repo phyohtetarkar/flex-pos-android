@@ -41,8 +41,6 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
         tv_res_products.setOnClickListener(this)
         tv_res_categories.setOnClickListener(this)
         tv_res_units.setOnClickListener(this)
-        tvResDiscounts.setOnClickListener(this)
-        tvResTaxes.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -57,8 +55,6 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
             R.id.tv_res_products -> fragment = ServiceLocator.locate(ItemsFragment::class.java)
             R.id.tv_res_categories -> fragment = ServiceLocator.locate(CategoriesFragment::class.java)
             R.id.tv_res_units -> fragment = ServiceLocator.locate(UnitsFragment::class.java)
-            R.id.tvResDiscounts -> fragment = ServiceLocator.locate(DiscountsFragment::class.java)
-            R.id.tvResTaxes -> fragment = ServiceLocator.locate(TaxesFragment::class.java)
         }
 
         fragmentManager?.beginTransaction()
@@ -69,13 +65,6 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
         val main = activity as MainActivity
         main.animateToArrow()
 
-    }
-
-    companion object {
-        val INSTANCE: ResourcesFragment
-            get() {
-                return ResourcesFragment()
-            }
     }
 
 }

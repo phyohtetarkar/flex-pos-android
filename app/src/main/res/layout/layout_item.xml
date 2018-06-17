@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor='@{obj.color, default="@color/colorAccent"}'
-        app:cardCornerRadius="@dimen/cardview_default_radius"
+        app:cardCornerRadius="@dimen/card_custom_radius"
         app:cardElevation="@dimen/cardview_default_elevation"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">

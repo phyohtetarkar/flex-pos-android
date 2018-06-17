@@ -15,11 +15,13 @@ import android.view.View
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.utils.ServiceLocator
+import com.jsoft.pos.ui.views.discount.DiscountsFragment
 import com.jsoft.pos.ui.views.nav.ResourcesFragment
 import com.jsoft.pos.ui.views.receipt.ReceiptsFragment
 import com.jsoft.pos.ui.views.sale.CheckOutItemsHolder
 import com.jsoft.pos.ui.views.sale.SaleFragment
 import com.jsoft.pos.ui.views.setting.SettingFragment
+import com.jsoft.pos.ui.views.tax.TaxesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 
@@ -98,13 +100,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             var fragment: Fragment? = null
 
             when (id) {
-                R.id.action_pos -> fragment = SaleFragment.INSTANCE
-                R.id.action_resources -> fragment = ResourcesFragment.INSTANCE
-                R.id.action_receipts -> fragment = ReceiptsFragment.INSTANCE
-                R.id.action_statistics -> {
-
-                }
-
+                R.id.action_pos -> fragment = ServiceLocator.locate(SaleFragment::class.java)
+                R.id.action_resources -> fragment = ServiceLocator.locate(ResourcesFragment::class.java)
+                R.id.action_taxes -> fragment = ServiceLocator.locate(TaxesFragment::class.java)
+                R.id.action_discounts -> fragment = ServiceLocator.locate(DiscountsFragment::class.java)
+                R.id.action_receipts -> fragment = ServiceLocator.locate(ReceiptsFragment::class.java)
                 R.id.action_setting -> fragment = ServiceLocator.locate(SettingFragment::class.java)
             }
 

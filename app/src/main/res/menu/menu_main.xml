@@ -6,19 +6,28 @@
 
         <item
             android:id="@+id/action_pos"
+            android:icon="@drawable/ic_store_black"
             android:title="@string/pos" />
 
         <item
             android:id="@+id/action_resources"
-            android:title="@string/resources" />
+            android:icon="@drawable/ic_view_list_black"
+            android:title="@string/items" />
+
+        <item
+            android:id="@+id/action_taxes"
+            android:icon="@drawable/ic_attach_money_black"
+            android:title="@string/taxes"/>
+
+        <item
+            android:id="@+id/action_discounts"
+            android:icon="@drawable/ic_local_offer_black"
+            android:title="@string/discounts"/>
 
         <item
             android:id="@+id/action_receipts"
+            android:icon="@drawable/ic_receipt_black"
             android:title="@string/receipts"/>
-
-        <item
-            android:id="@+id/action_statistics"
-            android:title="@string/statistic"/>
 
     </group>
 
@@ -27,6 +36,7 @@
 
         <item
             android:id="@+id/action_setting"
+            android:icon="@drawable/ic_settings_black"
             android:title="Setting"/>
 
     </group>

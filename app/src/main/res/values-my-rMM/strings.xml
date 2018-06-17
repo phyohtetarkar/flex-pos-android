@@ -64,4 +64,6 @@
     <string name="change">ပြန်အမ်းငွေ</string>
     <string name="fail_to_delete">Fail to delete %s</string>
     <string name="fail_to_save">Fail to save %s</string>
+    <string name="off">off</string>
+    <string name="new_sale">New Sale</string>
 </resources>

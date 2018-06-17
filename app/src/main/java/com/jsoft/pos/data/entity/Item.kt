@@ -27,7 +27,6 @@ data class Item(
         var amount: Double = 0.0,
         var price: Double = 0.0,
         var cost: Double = 0.0,
-        @Bindable
         var image: String? = null,
         var available: Boolean = true,
 

@@ -67,15 +67,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="@drawable/chip_accent"
-            android:padding="2dp"
-            android:text="off"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:text="@string/off"
             android:textAllCaps="true"
             android:textColor="@color/whitePrimary"
             android:textSize="10sp"
             android:visibility="@{obj.item.discounts.size() > 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/textView10"
             app:layout_constraintStart_toEndOf="@+id/textView10"
-            app:layout_constraintTop_toTopOf="@+id/textView10" />
+            app:layout_constraintTop_toTopOf="@+id/textView10"
+            tools:ignore="SmallSp" />
 
         <!--<ImageView
             android:id="@+id/view24"

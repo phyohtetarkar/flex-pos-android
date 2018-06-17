@@ -123,11 +123,4 @@ class UnitsFragment : SimpleListFragment<Unit>() {
         frag.show(ft, "dialog")
     }
 
-    companion object {
-        val INSTANCE: UnitsFragment
-            get() {
-                return UnitsFragment()
-            }
-    }
-
 }

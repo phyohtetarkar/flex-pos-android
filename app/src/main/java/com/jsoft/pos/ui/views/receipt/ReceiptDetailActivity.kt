@@ -10,6 +10,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
 import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.SaleItem
@@ -100,10 +101,19 @@ class ReceiptDetailActivity : AppCompatActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (!historyMode) {
+            menuInflater.inflate(R.menu.menu_receipt_detail, menu)
+        }
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when (item?.itemId) {
             android.R.id.home -> onBackPressed()
+            R.id.action_new_sale -> finish()
         }
 
         return super.onOptionsItemSelected(item)
