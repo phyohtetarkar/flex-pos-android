@@ -49,7 +49,8 @@
 
     <style name="AppTheme.ActionBar.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/colorTextPrimary</item>
-        <item name="android:fontFamily">@font/app_font_bold</item>
+        <item name="android:textStyle">bold</item>
+        <!--<item name="android:fontFamily">@font/app_font_bold</item>-->
     </style>
     
     <style name="DialogAnimation">
@@ -59,33 +60,36 @@
 
     <style name="TitleTextNormal" parent="@android:style/TextAppearance">
         <item name="android:textSize">18sp</item>
-        <item name="fontFamily">@font/app_font_normal</item>
+        <!--<item name="fontFamily">@font/app_font_normal</item>-->
     </style>
 
     <style name="TitleTextMedium" parent="@android:style/TextAppearance">
         <item name="android:textSize">18sp</item>
-        <item name="fontFamily">@font/app_font_medium</item>
+        <item name="android:textStyle">bold</item>
+        <!--<item name="fontFamily">@font/app_font_medium</item>-->
     </style>
 
     <style name="ButtonTextNormal" parent="@style/Base.Widget.AppCompat.Button">
-        <item name="fontFamily">@font/app_font_medium</item>
+        <!--<item name="fontFamily">@font/app_font_medium</item>-->
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/whitePrimary</item>
     </style>
 
     <style name="ButtonTextColored" parent="@style/Base.Widget.AppCompat.Button.Borderless">
-        <item name="fontFamily">@font/app_font_medium</item>
+        <!--<item name="fontFamily">@font/app_font_medium</item>-->
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="AppTextNormal" parent="@android:style/TextAppearance">
-        <item name="fontFamily">@font/app_font_normal</item>
+        <!--<item name="fontFamily">@font/app_font_normal</item>-->
     </style>
     <style name="AppTextSecondary" parent="AppTextNormal">
         <item name="android:textColor">@color/colorTextSecondary</item>
     </style>
 
     <style name="MenuTextNormal" parent="@android:style/TextAppearance">
-        <item name="fontFamily">@font/app_font_normal</item>
+        <!--<item name="fontFamily">@font/app_font_normal</item>-->
         <item name="android:textAllCaps">true</item>
     </style>
 
@@ -110,7 +114,7 @@
     <style name="ErrorText" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/colorError</item>
         <item name="android:textSize">14sp</item>
-        <item name="fontFamily">@font/app_font_normal</item>
+        <!--<item name="fontFamily">@font/app_font_normal</item>-->
     </style>
 
     <style name="BorderLessButton" parent="ButtonTextColored">
@@ -120,7 +124,7 @@
 
     <style name="SpinnerItemStyle" parent="Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:textColor">@color/colorError</item>
-        <item name="android:fontFamily">@font/app_font_normal</item>
+        <!--<item name="android:fontFamily">@font/app_font_normal</item>-->
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         app:behavior_hideable="false"
         app:behavior_peekHeight="@dimen/checkout_sheet_peek_height"
-        android:background="@color/whitePrimary"
+        android:background="@color/colorPrimary"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
 
@@ -27,6 +27,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Subtotal"
+            android:textColor="@color/colorTextPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view12"
             tools:text="Subtotal" />
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="@{vm.sale.subTotalPrice}"
+            android:textColor="@color/colorTextPrimary"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView24"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="1000" />
@@ -49,16 +51,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Discount"
+            android:textColor="@color/colorTextPrimary"
             app:layout_constraintStart_toStartOf="@+id/textView24"
             app:layout_constraintTop_toBottomOf="@+id/textView24"
             tools:text="Discount" />
 
         <com.jsoft.pos.ui.custom.RoundedFractionTextView
             android:id="@+id/textView28"
+            style="@style/AppTextSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/AppTextSecondary"
             android:text="@{vm.sale.discount, default=0}"
+            android:textColor="@color/colorTextPrimary"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView26"
             app:layout_constraintEnd_toEndOf="@+id/textView25"
             tools:text="100" />
@@ -96,8 +100,7 @@
         <View
             android:id="@+id/view14"
             android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:background="@drawable/bottom_sheet_shadow"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -131,9 +134,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textStyle="bold"
                 android:text="@string/total_price"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorTextPrimary"
+                android:textStyle="bold" />
 
             <com.jsoft.pos.ui.custom.RoundedFractionTextView
                 style="@style/TitleTextMedium"

@@ -65,7 +65,6 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="24dp"
                 android:checked="@={vm.tax.included, default=true}"
-                android:fontFamily="@font/app_font_medium"
                 android:text="Included in item price"
                 android:textColor="@color/colorTextPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/btnAssignTax"

@@ -43,7 +43,7 @@ class SaleDetailFragment : Fragment() {
 
         }, R.layout.layout_sale_item)
 
-        groupTaxAdapter = object : CustomViewAdapter<TaxAmount>(itemViewId = R.layout.layout_receipt_tax) {
+        groupTaxAdapter = object : CustomViewAdapter<TaxAmount>(itemViewId = R.layout.layout_receipt_tax_sheet) {
             override fun onBindView(holder: SimpleViewHolder, position: Int) {
                 holder.bind(list[position])
             }

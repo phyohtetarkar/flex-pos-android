@@ -48,7 +48,6 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="16dp"
                     android:checked="@={vm.item.available, default=true}"
-                    android:fontFamily="@font/app_font_medium"
                     android:text="Available for sale"
                     android:textColor="@color/colorTextPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
