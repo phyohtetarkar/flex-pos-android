@@ -2,8 +2,9 @@ package com.jsoft.pos.ui.views.sale
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.databinding.ObservableBoolean
+import android.arch.lifecycle.Transformations
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Sale
 import com.jsoft.pos.data.entity.SaleItem
@@ -14,7 +15,16 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class CheckoutViewModel(application: Application) : AndroidViewModel(application) {
 
-    val sale = MutableLiveData<Sale>()
+    val saleId = MutableLiveData<Long>()
+
+    val sale: LiveData<Sale> = Transformations.switchMap(saleId) {
+        if (it > 0) {
+            return@switchMap repository.getSale(it)
+        } else {
+            return@switchMap MutableLiveData<Sale>()
+        }
+    }
+
     val saleItem = MutableLiveData<SaleItem>()
     val saleItems = MutableLiveData<List<SaleItem>>()
 
@@ -54,8 +64,8 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun populateSale(list: List<SaleItem>) {
-        repository.initializeSale(list, sale, saleItems)
+    fun initSale(list: List<SaleItem>) {
+        repository.initializeSale(list, sale as MutableLiveData, saleItems)
     }
 
 }

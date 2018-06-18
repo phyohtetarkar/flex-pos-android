@@ -78,10 +78,10 @@ class SaleDetailFragment : Fragment() {
 //                    if (CheckOutItemsHolder.itemCount == 0) {
 //                        activity?.onBackPressed()
 //                    } else {
-//                        viewModel?.populateSale(CheckOutItemsHolder.list)
+//                        viewModel?.initSale(CheckOutItemsHolder.list)
 //                    }
 
-                    viewModel?.populateSale(CheckOutItemsHolder.list)
+                    viewModel?.initSale(CheckOutItemsHolder.list)
                 }
             }
 
@@ -141,7 +141,7 @@ class SaleDetailFragment : Fragment() {
             groupTaxAdapter?.submitList(it?.groupTaxes)
         })
 
-        viewModel?.populateSale(CheckOutItemsHolder.list)
+        viewModel?.initSale(CheckOutItemsHolder.list)
 
     }
 
@@ -155,7 +155,7 @@ class SaleDetailFragment : Fragment() {
             R.id.action_clear -> {
                 CheckOutItemsHolder.clear()
                 //activity?.onBackPressed()
-                viewModel?.populateSale(CheckOutItemsHolder.list)
+                viewModel?.initSale(CheckOutItemsHolder.list)
                 return true
             }
         }
