@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.MotionEvent
@@ -31,15 +30,7 @@ class UnitsFragment : SimpleListFragment<Unit>() {
 
         viewModel = ViewModelProviders.of(this).get(UnitsViewModel::class.java)
 
-        adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<Unit>() {
-            override fun areItemsTheSame(oldItem: Unit, newItem: Unit): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(oldItem: Unit, newItem: Unit): Boolean {
-                return oldItem == newItem
-            }
-        })
+        adapter = UnitAdapter()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

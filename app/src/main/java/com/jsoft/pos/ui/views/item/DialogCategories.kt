@@ -8,6 +8,7 @@ import android.view.View
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListDialogFragment
+import com.jsoft.pos.ui.views.category.CategoryAdapter
 import kotlinx.android.synthetic.main.fragment_simple_list_dialog.*
 
 class DialogCategories : SimpleListDialogFragment<Category>() {
@@ -22,15 +23,7 @@ class DialogCategories : SimpleListDialogFragment<Category>() {
 
         viewModel = activity?.let { ViewModelProviders.of(it).get(EditItemViewModel::class.java) }
 
-        adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<Category>() {
-            override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
-                return oldItem == newItem
-            }
-        })
+        adapter = CategoryAdapter()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

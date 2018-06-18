@@ -46,15 +46,14 @@
                 android:id="@+id/edTaxValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="24dp"
                 android:hint="@string/hint_value"
                 android:inputType="numberDecimal"
                 android:text="@={vm.tax.amount}"
                 app:checkResult="@{vm.valueValid}"
-                android:drawableEnd="@drawable/ic_percantage_dark"
                 app:layout_constraintBottom_toTopOf="@+id/switch1"
-                app:layout_constraintEnd_toEndOf="@+id/edTaxName"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/imageView2"
                 app:layout_constraintStart_toStartOf="@+id/edTaxName"
                 app:layout_constraintTop_toBottomOf="@+id/edTaxName" />
 
@@ -68,8 +67,7 @@
                 android:text="Included in item price"
                 android:textColor="@color/colorTextPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/btnAssignTax"
-                app:layout_constraintEnd_toEndOf="@+id/edTaxValue"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="@+id/edTaxName"
                 app:layout_constraintStart_toStartOf="@+id/edTaxValue"
                 app:layout_constraintTop_toBottomOf="@+id/edTaxValue"
                 tools:checked="true" />
@@ -90,6 +88,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switch1" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="32dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/edTaxValue"
+                app:layout_constraintEnd_toEndOf="@+id/edTaxName"
+                app:layout_constraintTop_toTopOf="@+id/edTaxValue"
+                android:src="@drawable/ic_percantage_dark" />
 
 
         </android.support.constraint.ConstraintLayout>

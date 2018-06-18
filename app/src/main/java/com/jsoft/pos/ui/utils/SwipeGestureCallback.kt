@@ -91,7 +91,7 @@ class SwipeGestureCallback(
             icon = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getBitmapFromVector(context.resources.getDrawable(R.drawable.ic_delete_white, null))
             } else {
-                getBitmapFromVector(context.resources.getDrawable(R.drawable.ic_delete_white_compat))
+                getBitmapFromVector(context.resources.getDrawable(R.drawable.ic_delete_white))
             }
 
             val iconDest = RectF(itemView.right.toFloat() - 2 * width, itemView.top.toFloat() + width, itemView.right.toFloat() - width, itemView.bottom.toFloat() - width)

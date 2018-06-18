@@ -15,7 +15,7 @@
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="done">done</string>
+    <string name="done">Done</string>
     <string name="select_color">အေရာင္ေရြးပါ</string>
     <string name="choose">ေရြးပါ</string>
     <string name="hint_unit">ယူနစ္ *</string>
@@ -30,7 +30,7 @@
     <string name="app_mail">phyohtetarkar@gmail.com</string>
     <string name="no_data">မရွိပါ</string>
     <string name="pos">POS</string>
-    <string name="receipts">Receipts</string>
+    <string name="receipts">အေရာင္းစာရင္း</string>
     <string name="statistic">Statistic</string>
 
     <string name="confirm_message_delete">ဖ်က္မွာေသခ်ာလား?</string>

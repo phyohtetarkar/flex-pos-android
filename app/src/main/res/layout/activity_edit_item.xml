@@ -80,7 +80,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:drawableEnd="@drawable/ic_arrow_drop_dark"
+                    android:drawableEnd="@drawable/ic_arrow_drop_dark_drawable"
                     android:hint="@string/hint_category"
                     android:imeOptions="actionDone"
                     android:inputType="none"
@@ -175,7 +175,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="8dp"
-                    android:drawableEnd="@drawable/ic_arrow_drop_dark"
+                    android:drawableEnd="@drawable/ic_arrow_drop_dark_drawable"
                     android:hint="@string/hint_unit"
                     android:inputType="none"
                     android:text="@{vm.item.unit.name}"
@@ -367,20 +367,20 @@
 
                 <ImageButton
                     android:id="@+id/btnAddImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
                     android:layout_marginBottom="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/selectable_outline_bordered_background"
-                    android:padding="32dp"
-                    android:src="@drawable/ic_add_a_photo_accent"
                     android:visibility='@{vm.item.image == null ? View.VISIBLE : View.GONE}'
                     app:layout_constraintBottom_toTopOf="@+id/view3"
+                    app:layout_constraintDimensionRatio="w,1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView6"
+                    android:src="@drawable/ic_add_a_photo_accent"
                     tools:ignore="ContentDescription" />
 
             </android.support.constraint.ConstraintLayout>

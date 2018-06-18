@@ -14,7 +14,6 @@ import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.RecyclerView
 import android.util.DisplayMetrics
@@ -33,6 +32,7 @@ import com.jsoft.pos.ui.views.BindingViewHolder
 import com.jsoft.pos.ui.views.ListViewModel
 import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimplePagedListAdapter
+import com.jsoft.pos.ui.views.item.ItemVOAdapter
 import kotlinx.android.synthetic.main.fragment_simple_list.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import kotlinx.android.synthetic.main.layout_item_compact.view.*
@@ -60,16 +60,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(SaleViewModel::class.java)
-        adapter = SimplePagedListAdapter(object : DiffUtil.ItemCallback<ItemVO>() {
-            override fun areItemsTheSame(oldItem: ItemVO?, newItem: ItemVO?): Boolean {
-                return oldItem?.id == newItem?.id
-            }
-
-            override fun areContentsTheSame(oldItem: ItemVO?, newItem: ItemVO?): Boolean {
-                return oldItem == newItem
-            }
-
-        }, R.layout.layout_item_compact)
+        adapter = ItemVOAdapter(R.layout.layout_item_compact)
 
         setHasOptionsMenu(true)
 

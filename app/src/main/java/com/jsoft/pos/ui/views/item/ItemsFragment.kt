@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -29,15 +28,7 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
 
         viewModel = ViewModelProviders.of(this).get(ItemsViewModel::class.java)
 
-        adapter = SimplePagedListAdapter(object : DiffUtil.ItemCallback<ItemVO>() {
-            override fun areItemsTheSame(oldItem: ItemVO, newItem: ItemVO): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(oldItem: ItemVO, newItem: ItemVO): Boolean {
-                return oldItem == newItem
-            }
-        }, R.layout.layout_item)
+        adapter = ItemVOAdapter(R.layout.layout_item)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

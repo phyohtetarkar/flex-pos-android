@@ -118,6 +118,10 @@ class EditItemActivity : AppCompatActivity() {
             imageViewItemImage.visibility = View.INVISIBLE
             btnRemoveImage.visibility = View.GONE
             btnAddImage.visibility = View.VISIBLE
+
+            viewModel.item.value?.id?.takeIf { it == 0L }.apply {
+                ImageUtil.deleteImage(this@EditItemActivity, viewModel.item.value?.image)
+            }
         }
 
         btnDeleteItem.setOnClickListener {

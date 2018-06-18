@@ -7,7 +7,7 @@ import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
-class SimplePagedListAdapter<T>(
+open class SimplePagedListAdapter<T>(
         DIFF_CALLBACK: DiffUtil.ItemCallback<T>,
         private val layoutId: Int
 ) : PagedListAdapter<T, BindingViewHolder>(DIFF_CALLBACK) {

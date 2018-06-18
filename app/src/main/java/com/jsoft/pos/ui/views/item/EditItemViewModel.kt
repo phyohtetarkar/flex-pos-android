@@ -87,7 +87,9 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     fun removeImage() {
         item.value?.image = null
-        imageToDelete = item.value?.image
+        item.value?.id?.takeIf { it > 0 }.apply {
+            imageToDelete = item.value?.image
+        }
     }
 
 }
