@@ -59,11 +59,11 @@ data class Sale(
             field = value
 
             totalItem = value.sumBy { it.quantity }
-            discount = calculateDiscount(value).round()
+            discount = value.sumByDouble { it.computedDiscount }.round()
             subTotalPrice = value.sumByDouble { it.total }.round()
 
-            val taxIn = calculateInclusiveTax(value)
-            val taxEx = calculateExclusiveTax(value)
+            val taxIn = value.sumByDouble { it.computedInclusiveCharge }
+            val taxEx = value.sumByDouble { it.computedExclusiveCharge }
 
             taxAmount = taxIn.plus(taxEx).round()
             totalPrice = subTotalPrice.minus(discount)
@@ -89,59 +89,6 @@ data class Sale(
             val amount = en.value.sumByDouble { it.amount }
             return@map TaxAmount(en.key, amount)
         }
-
-    fun remove(saleItem: SaleItem) {
-        saleItems.remove(saleItem)
-        refresh()
-    }
-
-    fun removeAll() {
-        saleItems.clear()
-        refresh()
-    }
-
-    fun refresh() {
-        saleItems = saleItems
-    }
-
-    companion object {
-        fun create(list: List<SaleItem>?): Sale {
-
-            if (list.orEmpty().isEmpty()) {
-                return Sale()
-            }
-
-            val sale = Sale(totalItem = list?.sumBy { it.quantity } ?: 0,
-                    discount = calculateDiscount(list).round(),
-                    subTotalPrice = list?.sumByDouble { it.total }?.round() ?: 0.00)
-
-            val taxIn = calculateInclusiveTax(list)
-            val taxEx = calculateExclusiveTax(list)
-
-            sale.taxAmount = taxIn.plus(taxEx).round()
-            sale.totalPrice = sale.subTotalPrice.minus(sale.discount)
-                    .plus(taxEx)
-                    .round()
-
-            //sale.saleItems = list.orEmpty()
-
-            return sale
-        }
-
-        private fun calculateDiscount(list: List<SaleItem>?): Double {
-            return list?.sumByDouble { it.computedDiscount } ?: 0.0
-        }
-
-        private fun calculateInclusiveTax(list: List<SaleItem>?): Double {
-            return list?.sumByDouble { it.computedInclusiveCharge } ?: 0.0
-        }
-
-        private fun calculateExclusiveTax(list: List<SaleItem>?): Double {
-            return list?.sumByDouble { it.computedExclusiveCharge } ?: 0.0
-        }
-
-    }
-
 }
 
 data class TaxAmount(

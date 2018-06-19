@@ -7,6 +7,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Sale
 import com.jsoft.pos.data.entity.SaleItem
+import com.jsoft.pos.data.entity.TaxAmount
 import com.jsoft.pos.data.model.ItemRepository
 import com.jsoft.pos.data.model.SaleDao
 import com.jsoft.pos.data.model.SaleRepository
@@ -18,6 +19,9 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
     val saleItems = MutableLiveData<List<SaleItem>>()
 
     val saleItem = MutableLiveData<SaleItem>()
+
+    val vSaleItems = MutableLiveData<MutableList<SaleItem>>()
+    val vTaxAmounts = MutableLiveData<List<TaxAmount>>()
 
     val sale = MediatorLiveData<Sale>()
 
@@ -64,7 +68,7 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun updateSaleItem() {
-        val iterator = sale.value?.saleItems?.listIterator()
+        val iterator = vSaleItems.value?.listIterator()
         val mod = saleItem.value
 
         while (iterator?.hasNext() == true) {
@@ -75,15 +79,20 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
             }
         }
 
-        sale.value?.refresh()
+        sale.value?.saleItems = vSaleItems.value.orEmpty().toMutableList()
+
     }
 
     fun removeSaleItem(saleItem: SaleItem) {
-        sale.value?.remove(saleItem)
+        vSaleItems.value?.remove(saleItem)
+        sale.value?.saleItems = vSaleItems.value.orEmpty().toMutableList()
+        vTaxAmounts.value = sale.value?.groupTaxes
     }
 
     fun removeAll() {
-        sale.value?.removeAll()
+        vSaleItems.value?.clear()
+        sale.value?.saleItems = mutableListOf()
+        vTaxAmounts.value = sale.value?.groupTaxes
     }
 
 }

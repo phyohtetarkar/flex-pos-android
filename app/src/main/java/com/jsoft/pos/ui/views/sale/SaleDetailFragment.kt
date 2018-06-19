@@ -11,6 +11,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.*
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.SaleItem
@@ -142,8 +143,18 @@ class SaleDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel?.sale?.observe(this, Observer {
-            adapter.submitList(it?.saleItems)
-            groupTaxAdapter?.submitList(it?.groupTaxes)
+            Log.v("TAG", "changed")
+            viewModel?.vSaleItems?.value = it?.saleItems
+            viewModel?.vTaxAmounts?.value = it?.groupTaxes
+
+        })
+
+        viewModel?.vSaleItems?.observe(this, Observer {
+            adapter.submitList(it)
+        })
+
+        viewModel?.vTaxAmounts?.observe(this, Observer {
+            groupTaxAdapter?.submitList(it)
         })
 
     }
