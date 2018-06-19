@@ -37,296 +37,308 @@
                     app:cardElevation="@dimen/card_custom_elevation"
                     app:cardUseCompatPadding="true">
 
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/constLayoutReceipt"
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/textView3"
-                            style="@style/HeaderText.Normal"
-                            android:layout_width="0dp"
+                        <ImageView
+                            android:id="@+id/imageViewReceipt"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="24dp"
-                            android:text="@string/app_name"
-                            android:textAlignment="center"
-                            android:textSize="18sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            tools:ignore="ContentDescription" />
 
-                        <View
-                            android:id="@+id/view16"
-                            android:layout_width="0dp"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/divider_dotted_drawable"
-                            android:layerType="software"
-                            app:layout_constraintBottom_toTopOf="@+id/linearLayoutReceiptItems"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView49" />
+                        <android.support.constraint.ConstraintLayout
+                            android:id="@+id/constLayoutReceipt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                        <LinearLayout
-                            android:id="@+id/linearLayoutReceiptItems"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="5dp"
-                            app:layout_constraintBottom_toTopOf="@+id/view17"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view16">
+                            <TextView
+                                android:id="@+id/textView3"
+                                style="@style/HeaderText.Normal"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="24dp"
+                                android:text="@string/app_name"
+                                android:textAlignment="center"
+                                android:textSize="18sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                        </LinearLayout>
+                            <View
+                                android:id="@+id/view16"
+                                android:layout_width="0dp"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/divider_dotted_drawable"
+                                android:layerType="software"
+                                app:layout_constraintBottom_toTopOf="@+id/linearLayoutReceiptItems"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
-                        <TextView
-                            android:id="@+id/textView22"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginTop="24dp"
-                            android:textColor="@color/darkSecondary"
-                            android:textSize="12sp"
-                            app:engText="@{sale.receiptCode}"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView3"
-                            tools:text="10001" />
+                            <LinearLayout
+                                android:id="@+id/linearLayoutReceiptItems"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="5dp"
+                                app:layout_constraintBottom_toTopOf="@+id/view17"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view16">
 
-                        <View
-                            android:id="@+id/view17"
-                            android:layout_width="0dp"
-                            android:layout_height="2dp"
-                            android:background="@drawable/divider_dotted_drawable"
-                            android:layerType="software"
-                            app:layout_constraintBottom_toTopOf="@+id/textView37"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/linearLayoutReceiptItems" />
+                            </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/textView23"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Subtotal"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="@+id/textView37"
-                            app:layout_constraintTop_toBottomOf="@+id/view18" />
+                            <TextView
+                                android:id="@+id/textView22"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginTop="24dp"
+                                android:textColor="@color/darkSecondary"
+                                android:textSize="12sp"
+                                app:engText="@{sale.receiptCode}"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                                tools:text="10001" />
 
-                        <com.jsoft.pos.ui.custom.RoundedFractionTextView
-                            android:id="@+id/textView32"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{sale.subTotalPrice}"
-                            android:textAlignment="textEnd"
-                            android:textSize="14sp"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/textView23"
-                            app:layout_constraintEnd_toEndOf="@+id/textView38"
-                            tools:text="1000" />
+                            <View
+                                android:id="@+id/view17"
+                                android:layout_width="0dp"
+                                android:layout_height="2dp"
+                                android:background="@drawable/divider_dotted_drawable"
+                                android:layerType="software"
+                                app:layout_constraintBottom_toTopOf="@+id/textView37"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/linearLayoutReceiptItems" />
 
-                        <TextView
-                            android:id="@+id/textView33"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Discount"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="@+id/textView23"
-                            app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                            <TextView
+                                android:id="@+id/textView23"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Subtotal"
+                                android:textSize="14sp"
+                                app:layout_constraintStart_toStartOf="@+id/textView37"
+                                app:layout_constraintTop_toBottomOf="@+id/view18" />
 
-                        <com.jsoft.pos.ui.custom.RoundedFractionTextView
-                            android:id="@+id/textView34"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{sale.discount}"
-                            android:textAlignment="textEnd"
-                            android:textSize="14sp"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/textView33"
-                            app:layout_constraintEnd_toEndOf="@+id/textView32"
-                            tools:text="100" />
+                            <com.jsoft.pos.ui.custom.RoundedFractionTextView
+                                android:id="@+id/textView32"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{sale.subTotalPrice}"
+                                android:textAlignment="textEnd"
+                                android:textSize="14sp"
+                                app:layout_constraintBaseline_toBaselineOf="@+id/textView23"
+                                app:layout_constraintEnd_toEndOf="@+id/textView38"
+                                tools:text="1000" />
 
-                        <View
-                            android:id="@+id/view18"
-                            android:layout_width="0dp"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/divider_dotted_drawable"
-                            android:layerType="software"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView37" />
+                            <TextView
+                                android:id="@+id/textView33"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Discount"
+                                android:textSize="14sp"
+                                app:layout_constraintStart_toStartOf="@+id/textView23"
+                                app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
-                        <TextView
-                            android:id="@+id/textView37"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Total Price"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@+id/textView48"
-                            app:layout_constraintTop_toBottomOf="@+id/view17" />
+                            <com.jsoft.pos.ui.custom.RoundedFractionTextView
+                                android:id="@+id/textView34"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{sale.discount}"
+                                android:textAlignment="textEnd"
+                                android:textSize="14sp"
+                                app:layout_constraintBaseline_toBaselineOf="@+id/textView33"
+                                app:layout_constraintEnd_toEndOf="@+id/textView32"
+                                tools:text="100" />
 
-                        <com.jsoft.pos.ui.custom.RoundedFractionTextView
-                            android:id="@+id/textView38"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{sale.totalPrice}"
-                            android:textStyle="bold"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/textView37"
-                            app:layout_constraintEnd_toEndOf="@+id/textView22"
-                            tools:text="900" />
+                            <View
+                                android:id="@+id/view18"
+                                android:layout_width="0dp"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/divider_dotted_drawable"
+                                android:layerType="software"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
-                        <View
-                            android:id="@+id/view20"
-                            android:layout_width="0dp"
-                            android:layout_height="2dp"
-                            android:background="@drawable/divider_dotted_drawable"
-                            android:layerType="software"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/linearLayoutGroupTaxes" />
+                            <TextView
+                                android:id="@+id/textView37"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Total Price"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="@+id/textView48"
+                                app:layout_constraintTop_toBottomOf="@+id/view17" />
 
-                        <TextView
-                            android:id="@+id/textView43"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Pay"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="@+id/textView33"
-                            app:layout_constraintTop_toBottomOf="@+id/view20" />
+                            <com.jsoft.pos.ui.custom.RoundedFractionTextView
+                                android:id="@+id/textView38"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{sale.totalPrice}"
+                                android:textStyle="bold"
+                                app:layout_constraintBaseline_toBaselineOf="@+id/textView37"
+                                app:layout_constraintEnd_toEndOf="@+id/textView22"
+                                tools:text="900" />
 
-                        <TextView
-                            android:id="@+id/textView44"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{sale.payPrice}"
-                            android:textSize="14sp"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/textView43"
-                            app:layout_constraintEnd_toEndOf="@+id/textView34"
-                            tools:text="1000" />
+                            <View
+                                android:id="@+id/view20"
+                                android:layout_width="0dp"
+                                android:layout_height="2dp"
+                                android:background="@drawable/divider_dotted_drawable"
+                                android:layerType="software"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/linearLayoutGroupTaxes" />
 
-                        <TextView
-                            android:id="@+id/textView45"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Change"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="@+id/textView43"
-                            app:layout_constraintTop_toBottomOf="@+id/textView43" />
+                            <TextView
+                                android:id="@+id/textView43"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Pay"
+                                android:textSize="14sp"
+                                app:layout_constraintStart_toStartOf="@+id/textView33"
+                                app:layout_constraintTop_toBottomOf="@+id/view20" />
 
-                        <TextView
-                            android:id="@+id/textView46"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{sale.change}"
-                            android:textSize="14sp"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/textView45"
-                            app:layout_constraintEnd_toEndOf="@+id/textView44"
-                            tools:text="100" />
+                            <TextView
+                                android:id="@+id/textView44"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{sale.payPrice}"
+                                android:textSize="14sp"
+                                app:layout_constraintBaseline_toBaselineOf="@+id/textView43"
+                                app:layout_constraintEnd_toEndOf="@+id/textView34"
+                                tools:text="1000" />
 
-                        <View
-                            android:id="@+id/view21"
-                            android:layout_width="0dp"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/divider_dotted_drawable"
-                            android:layerType="software"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView45" />
+                            <TextView
+                                android:id="@+id/textView45"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Change"
+                                android:textSize="14sp"
+                                app:layout_constraintStart_toStartOf="@+id/textView43"
+                                app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
-                        <TextView
-                            android:id="@+id/textView47"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="24dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:text="Thank You"
-                            android:textAlignment="center"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view21" />
+                            <TextView
+                                android:id="@+id/textView46"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{sale.change}"
+                                android:textSize="14sp"
+                                app:layout_constraintBaseline_toBaselineOf="@+id/textView45"
+                                app:layout_constraintEnd_toEndOf="@+id/textView44"
+                                tools:text="100" />
 
-                        <TextView
-                            android:id="@+id/textView48"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:textColor="@color/darkSecondary"
-                            android:textSize="12sp"
-                            app:engText="@{sale._issueDate}"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/textView22"
-                            app:layout_constraintStart_toStartOf="parent"
-                            tools:text="2018/06/09 7:30 AM" />
+                            <View
+                                android:id="@+id/view21"
+                                android:layout_width="0dp"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/divider_dotted_drawable"
+                                android:layerType="software"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView45" />
 
-                        <View
-                            android:id="@+id/view23"
-                            android:layout_width="wrap_content"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/divider_dotted_drawable"
-                            android:layerType="software"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView48" />
+                            <TextView
+                                android:id="@+id/textView47"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="24dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:text="Thank You"
+                                android:textAlignment="center"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view21" />
 
-                        <TextView
-                            android:id="@+id/textView49"
-                            android:layout_width="22dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Qty"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view23" />
+                            <TextView
+                                android:id="@+id/textView48"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:textColor="@color/darkSecondary"
+                                android:textSize="12sp"
+                                app:engText="@{sale._issueDate}"
+                                app:layout_constraintBaseline_toBaselineOf="@+id/textView22"
+                                app:layout_constraintStart_toStartOf="parent"
+                                tools:text="2018/06/09 7:30 AM" />
 
-                        <TextView
-                            android:id="@+id/textView51"
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:text="Amount"
-                            android:textAlignment="textEnd"
-                            android:textSize="14sp"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/textView49"
-                            app:layout_constraintEnd_toEndOf="parent" />
+                            <View
+                                android:id="@+id/view23"
+                                android:layout_width="wrap_content"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/divider_dotted_drawable"
+                                android:layerType="software"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView48" />
 
-                        <TextView
-                            android:id="@+id/textView52"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginStart="8dp"
-                            android:text="Description"
-                            android:textSize="14sp"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/textView49"
-                            app:layout_constraintEnd_toStartOf="@+id/textView51"
-                            app:layout_constraintStart_toEndOf="@+id/textView49" />
+                            <TextView
+                                android:id="@+id/textView49"
+                                android:layout_width="22dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Qty"
+                                android:textSize="14sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view23" />
 
-                        <LinearLayout
-                            android:id="@+id/linearLayoutGroupTaxes"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="4dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView33" />
+                            <TextView
+                                android:id="@+id/textView51"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:text="Amount"
+                                android:textAlignment="textEnd"
+                                android:textSize="14sp"
+                                app:layout_constraintBaseline_toBaselineOf="@+id/textView49"
+                                app:layout_constraintEnd_toEndOf="parent" />
 
-                    </android.support.constraint.ConstraintLayout>
+                            <TextView
+                                android:id="@+id/textView52"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="8dp"
+                                android:text="Description"
+                                android:textSize="14sp"
+                                app:layout_constraintBaseline_toBaselineOf="@+id/textView49"
+                                app:layout_constraintEnd_toStartOf="@+id/textView51"
+                                app:layout_constraintStart_toEndOf="@+id/textView49" />
+
+                            <LinearLayout
+                                android:id="@+id/linearLayoutGroupTaxes"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="4dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </FrameLayout>
 
                 </android.support.v7.widget.CardView>
 

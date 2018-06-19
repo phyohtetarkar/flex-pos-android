@@ -22,6 +22,7 @@ data class SaleItem(
         var id: Long = 0,
         var quantity: Int = 0,
         var price: Double = 0.00,
+        var discount: Double = 0.00,
         var remark: String = "",
 
         @ColumnInfo(name = "item_id")

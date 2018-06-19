@@ -26,7 +26,7 @@ class CheckoutActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_dark)
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.contentCheckout, SaleDetailFragment.INSTANCE)
+                .replace(R.id.contentCheckout, SaleDetailFragment.getInstance(intent.getLongExtra("id", 0)))
                 .commit()
 
     }

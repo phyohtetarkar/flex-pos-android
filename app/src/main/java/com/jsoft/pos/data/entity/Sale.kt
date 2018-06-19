@@ -29,12 +29,13 @@ data class Sale(
         var payPrice: Double = 0.0,
         @Bindable
         var change: Double = 0.0,
-        var receipt: String = ""
+        var receipt: String? = null
 ) : BaseObservable() {
 
     @Ignore
     var _payPrice = payPrice
         set(value) {
+
             val v = value - totalPrice
             if (v > -1) {
                 payPrice = value
@@ -53,7 +54,24 @@ data class Sale(
         }
 
     @Ignore
-    var saleItems: List<SaleItem> = mutableListOf()
+    var saleItems = mutableListOf<SaleItem>()
+        set(value) {
+            field = value
+
+            totalItem = value.sumBy { it.quantity }
+            discount = calculateDiscount(value).round()
+            subTotalPrice = value.sumByDouble { it.total }.round()
+
+            val taxIn = calculateInclusiveTax(value)
+            val taxEx = calculateExclusiveTax(value)
+
+            taxAmount = taxIn.plus(taxEx).round()
+            totalPrice = subTotalPrice.minus(discount)
+                    .plus(taxEx)
+                    .round()
+
+            notifyChange()
+        }
 
     val groupTaxes: List<TaxAmount>
         get() = saleItems.flatMap {
@@ -68,9 +86,23 @@ data class Sale(
                 }
             }?.toList() ?: listOf()
         }.groupBy { it.name }.map { en ->
-                    val amount = en.value.sumByDouble { it.amount }
-                    return@map TaxAmount(en.key, amount)
-                }
+            val amount = en.value.sumByDouble { it.amount }
+            return@map TaxAmount(en.key, amount)
+        }
+
+    fun remove(saleItem: SaleItem) {
+        saleItems.remove(saleItem)
+        refresh()
+    }
+
+    fun removeAll() {
+        saleItems.clear()
+        refresh()
+    }
+
+    fun refresh() {
+        saleItems = saleItems
+    }
 
     companion object {
         fun create(list: List<SaleItem>?): Sale {
@@ -91,7 +123,7 @@ data class Sale(
                     .plus(taxEx)
                     .round()
 
-            sale.saleItems = list.orEmpty()
+            //sale.saleItems = list.orEmpty()
 
             return sale
         }

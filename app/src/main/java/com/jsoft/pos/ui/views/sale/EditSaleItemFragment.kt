@@ -30,6 +30,9 @@ class EditSaleItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btnUpdateSaleItem.setOnClickListener {
+            if (CheckOutItemsHolder.onSale) {
+                CheckOutItemsHolder.update(viewModel?.saleItem?.value)
+            }
             viewModel?.updateSaleItem()
             activity?.onBackPressed()
         }

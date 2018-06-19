@@ -91,18 +91,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         fabSimpleList.visibility = View.GONE
 
         super.onViewCreated(view, savedInstanceState)
-
-//        recyclerViewSimpleList.removeItemDecorationAt(0)
-//        recyclerViewSimpleList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82, resources.newTheme()))
-//            } else {
-//                it.setDrawable(resources.getDrawable(R.drawable.padded_divider_82))
-//            }
-//        })
-
-
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

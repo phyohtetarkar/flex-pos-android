@@ -2,9 +2,8 @@ package com.jsoft.pos.ui.views.sale
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Sale
 import com.jsoft.pos.data.entity.SaleItem
@@ -16,17 +15,11 @@ import com.jsoft.pos.data.utils.DaoWorkerAsync
 class CheckoutViewModel(application: Application) : AndroidViewModel(application) {
 
     val saleId = MutableLiveData<Long>()
-
-    val sale: LiveData<Sale> = Transformations.switchMap(saleId) {
-        if (it > 0) {
-            return@switchMap repository.getSale(it)
-        } else {
-            return@switchMap MutableLiveData<Sale>()
-        }
-    }
+    val saleItems = MutableLiveData<List<SaleItem>>()
 
     val saleItem = MutableLiveData<SaleItem>()
-    val saleItems = MutableLiveData<List<SaleItem>>()
+
+    val sale = MediatorLiveData<Sale>()
 
     private val saleDao: SaleDao
 
@@ -45,11 +38,23 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
                         app.db.taxDao(),
                         app.db.discountDao())
         )
+
+        sale.addSource(saleId, {
+            DaoWorkerAsync<Long>({
+                return@DaoWorkerAsync sale.postValue(repository.getSaleSync(it)).let { true }
+            }, {}, {}).execute(it)
+        })
+        sale.addSource(saleItems, {
+            DaoWorkerAsync<List<SaleItem>>({
+                return@DaoWorkerAsync sale.postValue(repository.initSale(it)).let { true }
+            }, {}, {}).execute(it)
+        })
+
     }
 
     fun save() {
         DaoWorkerAsync<Sale>({
-            saleDao.save(it, saleItems.value.orEmpty().toMutableList()).let { true }
+            saleDao.save(it).let { true }
         }, {
             saveObserver.value = true
         }, {
@@ -59,13 +64,26 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun updateSaleItem() {
-        saleItem.value?.also {
-            CheckOutItemsHolder.update(it)
+        val iterator = sale.value?.saleItems?.listIterator()
+        val mod = saleItem.value
+
+        while (iterator?.hasNext() == true) {
+            val origin = iterator.next()
+            if (mod?.itemId == origin.itemId) {
+                iterator.set(mod)
+                break
+            }
         }
+
+        sale.value?.refresh()
     }
 
-    fun initSale(list: List<SaleItem>) {
-        repository.initializeSale(list, sale as MutableLiveData, saleItems)
+    fun removeSaleItem(saleItem: SaleItem) {
+        sale.value?.remove(saleItem)
+    }
+
+    fun removeAll() {
+        sale.value?.removeAll()
     }
 
 }

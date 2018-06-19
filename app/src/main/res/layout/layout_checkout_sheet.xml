@@ -88,7 +88,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/selectable_accent_background"
-            android:enabled="@{vm.saleItems.size() > 0}"
+            android:enabled="@{vm.sale.saleItems.size() > 0}"
             android:text="Checkout"
             android:textColor="@color/whitePrimary"
             app:layout_constraintBottom_toBottomOf="parent"

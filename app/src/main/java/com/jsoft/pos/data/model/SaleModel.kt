@@ -19,20 +19,17 @@ class SaleRepository(
         private val saleDao: SaleDao,
         private val itemRepo: ItemRepository? = null
 ) {
-    fun initializeSale(saleItems: List<SaleItem>, updateField: MutableLiveData<Sale>, updateList: MutableLiveData<List<SaleItem>>) {
+    fun initSale(saleItems: List<SaleItem>): Sale? {
+        saleItems.forEach { si ->
+            if (si.item == null) {
+                si.item = itemRepo?.getItem(si.itemId)
+            }
+        }
 
-        DaoWorkerAsync<List<SaleItem>>({
-            saleItems.forEach { si ->
-                        if (si.item == null) {
-                            si.item = itemRepo?.getItem(si.itemId)
-                        }
-                    }
+        val sale = Sale()
+        sale.saleItems = saleItems.toMutableList()
 
-            updateList.postValue(saleItems)
-            updateField.postValue(Sale.create(saleItems))
-
-            return@DaoWorkerAsync true
-        }, {}, {}).execute(saleItems)
+        return sale
 
     }
 
@@ -42,15 +39,7 @@ class SaleRepository(
         DaoWorkerAsync<Long>({
 
             if (it > 0) {
-                val sale = saleDao.findByIdSync(id)
-                val saleItems = saleDao.findSaleItemsSync(id)
-                saleItems.forEach {
-                    it.item = itemRepo?.getItem(it.itemId)
-                }
-
-                sale.saleItems = saleItems
-
-                liveSale.postValue(sale)
+                liveSale.postValue(getSaleSync(it))
             }
 
             return@DaoWorkerAsync true
@@ -58,6 +47,23 @@ class SaleRepository(
         }, {}, {}).execute(id)
 
         return liveSale
+    }
+
+    fun getSaleSync(id: Long): Sale? {
+
+        if (id > 0) {
+            val sale = saleDao.findByIdSync(id)
+            val saleItems = saleDao.findSaleItemsSync(id)
+            saleItems.forEach {
+                it.item = itemRepo?.getItem(it.itemId)
+            }
+
+            sale.saleItems = saleItems.toMutableList()
+
+            return sale
+        }
+
+        return null
     }
 
     fun findSales(search: SaleSearch): LiveData<PagedList<Sale>> {
@@ -103,7 +109,7 @@ abstract class SaleDao : BaseDao<Sale> {
     abstract fun deleteSaleItems(saleItems: List<SaleItem>)
 
     @Transaction
-    open fun save(sale: Sale, saleItems: MutableList<SaleItem>) {
+    open fun save(sale: Sale) {
         var saleId = sale.id
 
         if (sale.id > 0) {
@@ -116,7 +122,7 @@ abstract class SaleDao : BaseDao<Sale> {
             update(sale)
         }
 
-        saleItems.forEach {
+        sale.saleItems.forEach {
             it.saleId = saleId
             insertSaleItem(it)
         }

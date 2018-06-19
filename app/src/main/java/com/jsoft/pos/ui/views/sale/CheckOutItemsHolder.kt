@@ -35,8 +35,10 @@ object CheckOutItemsHolder {
         saleItems.remove(saleItem.itemId)
     }
 
-    fun update(saleItem: SaleItem) {
-        saleItems[saleItem.itemId] = saleItem
+    fun update(saleItem: SaleItem?) {
+        saleItem?.also {
+            saleItems[it.itemId] = it
+        }
     }
 
     fun clear() {

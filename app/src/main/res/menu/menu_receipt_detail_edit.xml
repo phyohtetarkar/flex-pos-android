@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_new_sale"
-        android:title="@string/finish"
+        android:id="@+id/action_edit_sale"
+        android:title="Edit"
         app:showAsAction="ifRoom|collapseActionView"/>
 
 </menu>

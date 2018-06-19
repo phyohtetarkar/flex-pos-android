@@ -24,13 +24,23 @@ import kotlinx.android.synthetic.main.layout_checkout_sheet.*
 
 class SaleDetailFragment : Fragment() {
 
+    private var saleId: Long = 0
     private var viewModel: CheckoutViewModel? = null
     private lateinit var adapter: SimpleListAdapter<SaleItem>
     private var groupTaxAdapter: CustomViewAdapter<TaxAmount>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        saleId = arguments?.getLong("id") ?: 0
+
         viewModel = activity?.let { ViewModelProviders.of(it).get(CheckoutViewModel::class.java) }
+
+        if (saleId > 0) {
+            viewModel?.saleId?.value = saleId
+        } else {
+            viewModel?.saleItems?.value = CheckOutItemsHolder.list
+        }
 
         adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<SaleItem>() {
             override fun areItemsTheSame(oldItem: SaleItem?, newItem: SaleItem?): Boolean {
@@ -54,8 +64,8 @@ class SaleDetailFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = CheckoutBinding.inflate(inflater, container, false)
-        binding.checkoutSheet?.setLifecycleOwner(this)
-        binding.checkoutSheet?.vm = viewModel
+        binding.checkoutSheet.setLifecycleOwner(this)
+        binding.checkoutSheet.vm = viewModel
         return binding.root
     }
 
@@ -74,14 +84,12 @@ class SaleDetailFragment : Fragment() {
         val swipeCallback = SwipeGestureCallback(context!!, object : SwipeGestureCallback.OnSwipeDeleteListener {
             override fun onDelete(position: Int) {
                 adapter.getItemAt(position).apply {
-                    CheckOutItemsHolder.remove(this)
-//                    if (CheckOutItemsHolder.itemCount == 0) {
-//                        activity?.onBackPressed()
-//                    } else {
-//                        viewModel?.initSale(CheckOutItemsHolder.list)
-//                    }
+                    if (CheckOutItemsHolder.onSale) {
+                        CheckOutItemsHolder.remove(this)
+                    }
 
-                    viewModel?.initSale(CheckOutItemsHolder.list)
+                    viewModel?.removeSaleItem(this)
+                    adapter.notifyItemRemoved(position)
                 }
             }
 
@@ -133,15 +141,10 @@ class SaleDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel?.saleItems?.observe(this, Observer {
-            adapter.submitList(it)
-        })
-
         viewModel?.sale?.observe(this, Observer {
+            adapter.submitList(it?.saleItems)
             groupTaxAdapter?.submitList(it?.groupTaxes)
         })
-
-        viewModel?.initSale(CheckOutItemsHolder.list)
 
     }
 
@@ -154,8 +157,8 @@ class SaleDetailFragment : Fragment() {
         when (item?.itemId) {
             R.id.action_clear -> {
                 CheckOutItemsHolder.clear()
-                //activity?.onBackPressed()
-                viewModel?.initSale(CheckOutItemsHolder.list)
+                viewModel?.removeAll()
+                adapter.notifyDataSetChanged()
                 return true
             }
         }
@@ -176,10 +179,16 @@ class SaleDetailFragment : Fragment() {
     }
 
     companion object {
-        val INSTANCE: SaleDetailFragment
-            get() {
-                return SaleDetailFragment()
+        fun getInstance(id: Long): SaleDetailFragment {
+            val frag = SaleDetailFragment()
+            val b = Bundle().apply {
+                putLong("id", id)
             }
+
+            frag.arguments = b
+            return frag
+        }
+
     }
 
 }

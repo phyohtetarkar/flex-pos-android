@@ -66,4 +66,5 @@
     <string name="fail_to_save">Fail to save %s</string>
     <string name="off">off</string>
     <string name="new_sale">New Sale</string>
+    <string name="finish">Finish</string>
 </resources>

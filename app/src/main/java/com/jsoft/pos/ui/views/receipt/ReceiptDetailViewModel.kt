@@ -10,6 +10,7 @@ import com.jsoft.pos.data.entity.Sale
 import com.jsoft.pos.data.model.ItemRepository
 import com.jsoft.pos.data.model.SaleDao
 import com.jsoft.pos.data.model.SaleRepository
+import com.jsoft.pos.data.utils.DaoWorkerAsync
 
 class ReceiptDetailViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -34,5 +35,11 @@ class ReceiptDetailViewModel(application: Application) : AndroidViewModel(applic
                         app.db.taxDao(),
                         app.db.discountDao())
         )
+    }
+
+    fun update() {
+        DaoWorkerAsync<Sale>({
+            return@DaoWorkerAsync saleDao.update(it).let { true }
+        }, {}, {}).execute(sale.value)
     }
 }
