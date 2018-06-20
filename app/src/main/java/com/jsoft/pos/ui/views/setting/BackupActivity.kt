@@ -1,67 +1,62 @@
 package com.jsoft.pos.ui.views.setting
 
+import android.Manifest
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.os.Build
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.jsoft.pos.R
 import com.jsoft.pos.ui.utils.AlertUtil
-import com.jsoft.pos.ui.utils.RecyclerViewItemTouchListener
-import com.jsoft.pos.ui.views.SimpleListAdapter
-import kotlinx.android.synthetic.main.fragment_simple_list.*
+import kotlinx.android.synthetic.main.activity_backup.*
 
 class BackupActivity : AppCompatActivity() {
 
-    private var adapter: SimpleListAdapter<String>? = null
+    private var adapter: BackupAdapter? = null
     private var viewModel: BackupViewModel? = null
 
-    private val viewStub: View by lazy { viewStubSimpleList.inflate() }
+    private val viewStub: View by lazy { viewStubBackup.inflate() }
+
+    private val WRITE_STORAGE_PERMISSION_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_simple_list)
+        setContentView(R.layout.activity_backup)
 
-        adapter = SimpleListAdapter(object : DiffUtil.ItemCallback<String>() {
-            override fun areItemsTheSame(oldItem: String?, newItem: String?): Boolean {
-                return oldItem == newItem
-            }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_dark)
 
-            override fun areContentsTheSame(oldItem: String?, newItem: String?): Boolean {
-                return oldItem == newItem
-            }
-        })
+        adapter = BackupAdapter()
 
-        fabSimpleList.visibility = View.GONE
-
-        recyclerViewSimpleList.apply {
+        recyclerViewBackup.apply {
             layoutManager = LinearLayoutManager(this@BackupActivity)
             setHasFixedSize(true)
-            addOnItemTouchListener(RecyclerViewItemTouchListener(this@BackupActivity, this, object : RecyclerViewItemTouchListener.OnTouchListener {
-                override fun onTouch(view: View, position: Int) {
-
-                }
-
-                override fun onLongTouch(view: View, position: Int) {
-
-                }
-
-            }))
         }
 
-        recyclerViewSimpleList.adapter = adapter
+        recyclerViewBackup.adapter = adapter
 
-        recyclerViewSimpleList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL).also {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                it.setDrawable(resources.getDrawable(R.drawable.divider_simple, resources.newTheme()))
-            } else {
-                it.setDrawable(resources.getDrawable(R.drawable.divider_simple))
+        adapter?.backupActionListener = object : BackupAdapter.BackupActionListener {
+            override fun restore(position: Int) {
+                viewModel?.restoreBackup(adapter?.getItemAt(position))
             }
-        })
+
+            override fun delete(position: Int) {
+                AlertUtil.showConfirmDelete(this@BackupActivity, {
+                    viewModel?.deleteBackup(adapter?.getItemAt(position))
+                    viewModel?.loadBackups()
+                }, {
+
+                })
+
+            }
+
+        }
 
         viewModel = ViewModelProviders.of(this).get(BackupViewModel::class.java)
 
@@ -88,10 +83,62 @@ class BackupActivity : AppCompatActivity() {
         viewModel?.restoreSuccess?.observe(this, Observer {
             if (it == true) {
                 AlertUtil.showToast(this, "Restore success")
+                AlertUtil.showToast(this, "Please restart application to take effect")
             } else {
-                AlertUtil.showToast(this, "Backup failed")
+                AlertUtil.showToast(this, "Restore failed")
             }
         })
+
+        viewModel?.deleteSuccess?.observe(this, Observer {
+            if (it == true) {
+                AlertUtil.showToast(this, "Delete success")
+                viewModel?.loadBackups()
+            } else {
+                AlertUtil.showToast(this, "Delete failed")
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel?.loadBackups()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_backup, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+            android.R.id.home -> onBackPressed()
+            R.id.action_backup -> {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    viewModel?.saveBackup()
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            WRITE_STORAGE_PERMISSION_REQUEST)
+                }
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            WRITE_STORAGE_PERMISSION_REQUEST -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    viewModel?.saveBackup()
+                } else {
+                    AlertUtil.showToast(this, "Permission denied, cannot backup data")
+                }
+            }
+        }
     }
 
 }

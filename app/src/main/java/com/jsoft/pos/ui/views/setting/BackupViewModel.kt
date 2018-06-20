@@ -5,7 +5,6 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.os.Environment
-import com.jsoft.pos.FlexPosApplication
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -16,19 +15,31 @@ class BackupViewModel(application: Application) : AndroidViewModel(application) 
     val backups = MutableLiveData<List<String>>()
 
     val restoreSuccess = MutableLiveData<Boolean>()
+    val deleteSuccess = MutableLiveData<Boolean>()
     val backupSuccess = MutableLiveData<Boolean>()
 
+    private val pathBackup = "FlexPos/.backup"
     @SuppressLint("SdCardPath")
+    private val source = "/data/data/com.jsoft.pos/databases"
+
     fun saveBackup() {
         try {
-            val dir = File(Environment.getExternalStorageDirectory(), "FlexPosBackups")
-            val source = File("/data/data/com.jsoft.pos/databases/pos.db")
+            val dir = File(Environment.getExternalStorageDirectory(), pathBackup)
+            val source = File(source)
+
+            if (!dir.exists()) {
+                dir.mkdirs()
+            }
 
             if (source.exists()) {
                 val format = SimpleDateFormat("yyyyMMddhhmmss", Locale.ENGLISH)
-                val fileName = format.format(Date()).plus(".db")
-                val outFile = File(dir, fileName)
-                source.copyTo(outFile, true)
+                val outDir = File(dir, format.format(Date()))
+                outDir.mkdirs()
+
+                source.listFiles().forEach {
+                    val outFile = File(outDir, it.name).also { it.createNewFile() }
+                    it.copyTo(outFile, true)
+                }
                 backupSuccess.value = true
             }
         } catch (e: IOException) {
@@ -36,33 +47,49 @@ class BackupViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun loadBackups() {
-        val dir = File(Environment.getExternalStorageDirectory(), "FlexPosBackups")
-        if (!dir.exists()) {
-            dir.mkdir()
-        }
+    fun deleteBackup(name: String?) {
+        try {
+            val dir = File(Environment.getExternalStorageDirectory(), pathBackup)
+            val file = File(dir, name)
 
-        backups.value = dir.listFiles().map { f -> f.name }
+
+            if (file.exists()) {
+                deleteSuccess.value = file.deleteRecursively()
+            }
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    fun loadBackups() {
+        val dir = File(Environment.getExternalStorageDirectory(), pathBackup)
+
+        if (dir.exists()) {
+            backups.value = dir.list().orEmpty().sortedDescending()
+        } else {
+            backups.value = emptyList()
+        }
     }
 
     @SuppressLint("SdCardPath")
-    fun restoreBackup(fileName: String) {
+    fun restoreBackup(name: String?) {
         try {
-            val dir = File(Environment.getExternalStorageDirectory(), "FlexPosBackups")
-            val from = File(dir, fileName)
-            val to = File("/data/data/com.jsoft.pos/databases/pos.db")
+            val dir = File(Environment.getExternalStorageDirectory(), pathBackup)
+            val from = File(dir, name)
+            val to = File(source)
 
             if (from.exists()) {
-                from.copyTo(to, true)
-                restoreSuccess.value = true
-                getApplication<FlexPosApplication>().also {
-                    it.closeDb()
-                }.also {
-                    it.initDb()
+                to.listFiles().forEach { it.delete() }
+                from.listFiles().forEach {
+                    val outFile = File(to, it.name).also { it.createNewFile() }
+                    it.copyTo(outFile, true)
                 }
+                restoreSuccess.value = true
             }
         } catch (e: IOException) {
             e.printStackTrace()
+        } finally {
         }
     }
 

@@ -8,7 +8,8 @@ import com.jsoft.pos.ui.utils.ContextWrapperUtil
 
 class FlexPosApplication : Application() {
 
-    var db: PosDatabase? = null
+    lateinit var db: PosDatabase
+        private set
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(ContextWrapperUtil.create(base))
@@ -17,15 +18,6 @@ class FlexPosApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        initDb()
-    }
-
-    fun closeDb() {
-        db?.close()
-        db = null
-    }
-
-    fun initDb() {
         db = Room.databaseBuilder(this, PosDatabase::class.java, PosDatabase.DB_NAME)
                 .build()
     }

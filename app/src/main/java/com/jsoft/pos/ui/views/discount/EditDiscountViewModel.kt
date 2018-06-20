@@ -41,7 +41,7 @@ class EditDiscountViewModel(application: Application) : AndroidViewModel(applica
 
     init {
         val app = application as FlexPosApplication
-        dao = app.db!!.discountDao()
+        dao = app.db.discountDao()
     }
 
     fun save() {

@@ -40,7 +40,7 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
 
     init {
         val app = application as FlexPosApplication
-        dao = app.db!!.categoryDao()
+        dao = app.db.categoryDao()
     }
 
     fun save() {

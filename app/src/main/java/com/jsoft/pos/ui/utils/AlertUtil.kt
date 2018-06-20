@@ -41,7 +41,7 @@ class AlertUtil {
 
             toast.view = layout
             toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, offset)
-            toast.duration = Toast.LENGTH_SHORT
+            toast.duration = Toast.LENGTH_LONG
             toast.show()
         }
 
