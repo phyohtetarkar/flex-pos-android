@@ -97,6 +97,18 @@ class SwipeGestureCallback(
             val iconDest = RectF(itemView.right.toFloat() - 2 * width, itemView.top.toFloat() + width, itemView.right.toFloat() - width, itemView.bottom.toFloat() - width)
             c.drawBitmap(icon, null, iconDest, p)
 
+
+
+            super.onChildDraw(c, recyclerView, viewHolder, tX, dY, actionState, isCurrentlyActive)
+
+        }
+    }
+
+    override fun onChildDrawOver(c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+        super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        val position = viewHolder?.adapterPosition
+
+        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             if (!isCurrentlyActive) {
                 for (s in swpItems) {
                     if (s.position == position) {
@@ -105,9 +117,6 @@ class SwipeGestureCallback(
                     }
                 }
             }
-
-            super.onChildDraw(c, recyclerView, viewHolder, tX, dY, actionState, isCurrentlyActive)
-
         }
     }
 

@@ -94,7 +94,7 @@
     </style>
 
     <style name="EditTextNormal" parent="@android:style/Widget.EditText">
-        <item name="android:padding">16dp</item>
+        <item name="android:padding">12dp</item>
         <item name="android:background">@drawable/custom_edittext_drawable</item>
     </style>
 

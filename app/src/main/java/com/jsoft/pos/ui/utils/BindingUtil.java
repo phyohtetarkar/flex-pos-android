@@ -25,7 +25,7 @@ public class BindingUtil {
 
     @BindingAdapter({"image"})
     public static void setImage(RoundedImageView imageView, String image) {
-        imageView.setImageBitmap(ImageUtil.INSTANCE.readImage(imageView.getContext(), image));
+        imageView.setImageBitmap(FileUtil.INSTANCE.readImage(imageView.getContext(), image));
     }
 
     @BindingAdapter({"engText"})

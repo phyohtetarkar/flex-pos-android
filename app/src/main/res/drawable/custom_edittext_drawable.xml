@@ -2,17 +2,19 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:my="http://schemas.android.com/apk/res/com.jsoft.pos">
 
-    <item android:state_focused="true">
+    <!--<item android:state_focused="true">
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
-            <stroke android:color="?attr/colorControlActivated"
-                android:width="2dp"/>
+            <solid android:color="@color/darkLighter"/>
+            <stroke android:color="@color/darkLighter"
+                android:width="0dp"/>
         </shape>
-    </item>
+    </item>-->
 
     <item my:state_error="true">
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
+            <solid android:color="@color/darkLighter"/>
             <stroke android:color="@color/colorError"
                 android:width="2dp"/>
         </shape>
@@ -21,8 +23,9 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
-            <stroke android:color="?attr/colorControlHighlight"
-                android:width="2dp"/>
+            <solid android:color="@color/darkLighter"/>
+            <stroke android:color="@color/darkLighter"
+                android:width="0dp"/>
         </shape>
     </item>
 

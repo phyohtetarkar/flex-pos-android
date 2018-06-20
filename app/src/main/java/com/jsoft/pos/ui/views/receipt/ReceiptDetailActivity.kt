@@ -8,7 +8,6 @@ import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
@@ -21,7 +20,7 @@ import com.jsoft.pos.data.entity.TaxAmount
 import com.jsoft.pos.databinding.ReceiptSlipBinding
 import com.jsoft.pos.ui.custom.CustomViewAdapter
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
-import com.jsoft.pos.ui.utils.ImageUtil
+import com.jsoft.pos.ui.utils.FileUtil
 import com.jsoft.pos.ui.views.sale.CheckoutActivity
 import kotlinx.android.synthetic.main.activity_receipt_detail.*
 
@@ -67,7 +66,7 @@ class ReceiptDetailActivity : AppCompatActivity() {
 
         viewModel.sale.observe(this, Observer {
             if (historyMode) {
-                ImageUtil.readReceipt(this, it?.receipt)?.also {
+                FileUtil.readReceipt(this, it?.receipt)?.also {
                     imageViewReceipt.setImageURI(it)
                 }
             } else {
@@ -85,14 +84,14 @@ class ReceiptDetailActivity : AppCompatActivity() {
                     cv.drawColor(Color.WHITE)
                     constLayoutReceipt.draw(cv)
 
-                    it?.receipt = ImageUtil.generateReceipt(this, b, it?.receipt)
+                    it?.receipt = FileUtil.generateReceipt(this, b, it?.receipt)
                     viewModel.update()
                 }, 2000)
             }
         })
 
         fabSendReceipt.setOnClickListener {
-            val uri = ImageUtil.readReceipt(this, viewModel.sale.value?.receipt)
+            val uri = FileUtil.readReceipt(this, viewModel.sale.value?.receipt)
 
             uri?.also {
                 val emailIntent = Intent(Intent.ACTION_SEND)

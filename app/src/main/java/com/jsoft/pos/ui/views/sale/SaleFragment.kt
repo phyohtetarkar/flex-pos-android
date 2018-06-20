@@ -7,8 +7,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
-import android.databinding.ObservableArrayMap
-import android.databinding.ObservableMap
+import android.databinding.ObservableList
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
@@ -38,7 +37,6 @@ import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import kotlinx.android.synthetic.main.layout_item_compact.view.*
 import kotlin.math.roundToInt
 
-
 class SaleFragment : SimpleListFragment<ItemVO>() {
 
     private lateinit var adapter: SimplePagedListAdapter<ItemVO>
@@ -49,8 +47,24 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     private val receiptPosition = IntArray(2)
 
-    private val mapChangeListener = object : ObservableMap.OnMapChangedCallback<ObservableArrayMap<Long, SaleItem>, Long, SaleItem>() {
-        override fun onMapChanged(sender: ObservableArrayMap<Long, SaleItem>?, key: Long?) {
+    private val listChangeListener = object : ObservableList.OnListChangedCallback<ObservableList<SaleItem>>() {
+        override fun onItemRangeRemoved(sender: ObservableList<SaleItem>?, positionStart: Int, itemCount: Int) {
+            updateBadgeCount()
+        }
+
+        override fun onItemRangeMoved(sender: ObservableList<SaleItem>?, fromPosition: Int, toPosition: Int, itemCount: Int) {
+            updateBadgeCount()
+        }
+
+        override fun onItemRangeInserted(sender: ObservableList<SaleItem>?, positionStart: Int, itemCount: Int) {
+            updateBadgeCount()
+        }
+
+        override fun onItemRangeChanged(sender: ObservableList<SaleItem>?, positionStart: Int, itemCount: Int) {
+            updateBadgeCount()
+        }
+
+        override fun onChanged(sender: ObservableList<SaleItem>?) {
             updateBadgeCount()
         }
 
@@ -102,7 +116,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             spinnerAdapter.addAll(it)
         })
 
-        CheckOutItemsHolder.addOnMapChangeListener(mapChangeListener)
+        CheckOutItemsHolder.addOnListChangeListener(listChangeListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -148,7 +162,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     override fun onDestroyView() {
         super.onDestroyView()
         activity?.toolbarMain?.removeView(mSpinner)
-        CheckOutItemsHolder.removeOnMapChangeListener(mapChangeListener)
+        CheckOutItemsHolder.removeOnListChangeListener(listChangeListener)
         mSpinner = null
         icon = null
     }

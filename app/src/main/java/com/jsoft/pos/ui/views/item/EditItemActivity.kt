@@ -18,7 +18,7 @@ import com.jsoft.pos.databinding.EditItemBinding
 import com.jsoft.pos.ui.custom.CustomViewAdapter
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
-import com.jsoft.pos.ui.utils.ImageUtil
+import com.jsoft.pos.ui.utils.FileUtil
 import com.jsoft.pos.ui.views.SimpleListDialogFragment
 import com.jsoft.pos.ui.views.category.EditCategoryActivity
 import com.jsoft.pos.ui.views.unit.EditUnitFragment
@@ -120,7 +120,7 @@ class EditItemActivity : AppCompatActivity() {
             btnAddImage.visibility = View.VISIBLE
 
             viewModel.item.value?.id?.takeIf { it == 0L }.apply {
-                ImageUtil.deleteImage(this@EditItemActivity, viewModel.item.value?.image)
+                FileUtil.deleteImage(this@EditItemActivity, viewModel.item.value?.image)
             }
         }
 
@@ -141,7 +141,7 @@ class EditItemActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
             R.id.action_save -> {
-                ImageUtil.deleteImage(this, viewModel.imageToDelete)
+                FileUtil.deleteImage(this, viewModel.imageToDelete)
                 viewModel.save()
                 onBackPressed()
             }
@@ -158,10 +158,10 @@ class EditItemActivity : AppCompatActivity() {
                 if (resultCode == Activity.RESULT_OK) {
                     data?.data?.apply {
 
-                        val path = ImageUtil.writeImage(this@EditItemActivity, this, viewModel.item.value?.name)
+                        val path = FileUtil.writeImage(this@EditItemActivity, this, viewModel.item.value?.name)
 
                         viewModel.item.value?.image = path
-                        imageViewItemImage.setImageBitmap(ImageUtil.readImage(this@EditItemActivity, path))
+                        imageViewItemImage.setImageBitmap(FileUtil.readImage(this@EditItemActivity, path))
                         imageViewItemImage.visibility = View.VISIBLE
                         btnRemoveImage.visibility = View.VISIBLE
                         btnAddImage.visibility = View.GONE

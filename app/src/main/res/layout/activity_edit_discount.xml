@@ -34,6 +34,7 @@
                 android:hint="@string/hint_name"
                 android:inputType="text"
                 android:text="@={vm.discount.name}"
+                app:checkResult="@{vm.nameValid}"
                 app:layout_constraintBottom_toTopOf="@+id/edDiscountValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -49,6 +50,7 @@
                 android:hint="@string/hint_value"
                 android:inputType="numberDecimal"
                 android:text="@={vm.discount.amount}"
+                app:checkResult="@{vm.valueValid}"
                 app:layout_constraintBottom_toTopOf="@+id/btnAssignDiscount"
                 app:layout_constraintEnd_toStartOf="@+id/radioGroup"
                 app:layout_constraintStart_toStartOf="@+id/edDiscountName"
@@ -58,7 +60,6 @@
                 android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/edDiscountValue"
                 app:layout_constraintEnd_toEndOf="@+id/edDiscountName">
@@ -71,13 +72,13 @@
                     android:background="@drawable/toggle_state_left_drawable"
                     android:button="@android:color/transparent"
                     android:checked="@{vm.discount.percentage, default=true}"
-                    android:textStyle="bold"
                     android:onCheckedChanged="@{(rb, isChecked) -> vm.updateDiscountMode(isChecked)}"
                     android:padding="12dp"
                     android:text="@string/percent_symbol"
                     android:textAlignment="center"
                     android:textColor="@drawable/toggle_text_drawable"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/radioBtnFixed"
@@ -87,12 +88,12 @@
                     android:background="@drawable/toggle_state_right_drawable"
                     android:button="@android:color/transparent"
                     android:checked="@{vm.discount.percentage == false}"
-                    android:textStyle="bold"
                     android:padding="12dp"
                     android:text="@string/_00"
                     android:textAlignment="center"
                     android:textColor="@drawable/toggle_text_drawable"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </RadioGroup>
 
             <Button

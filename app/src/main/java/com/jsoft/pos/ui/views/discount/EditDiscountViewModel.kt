@@ -5,13 +5,20 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
+import android.text.TextUtils
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Discount
 import com.jsoft.pos.data.model.DiscountDao
 import com.jsoft.pos.data.utils.DaoWorkerAsync
+import com.jsoft.pos.ui.utils.ValidatorUtils
 
 class EditDiscountViewModel(application: Application) : AndroidViewModel(application) {
 
+    val nameValid = MutableLiveData<Boolean>()
+    val valueValid = MutableLiveData<Boolean>()
+    val nameNotEmpty = MutableLiveData<Boolean>()
+    val nameUnique = MutableLiveData<Boolean>()
+    val saveSuccess = MutableLiveData<Boolean>()
     val deleteSuccess = MutableLiveData<Boolean>()
 
     val discountInput = MutableLiveData<Int>()
@@ -38,14 +45,38 @@ class EditDiscountViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun save() {
-        DaoWorkerAsync<Discount>({
-            dao.save(it, checkedItemIds)
-            return@DaoWorkerAsync true
-        }, {
+        var hasErrors = false
 
-        }, {
+        discount.value?.also {
+            nameValid.value = !TextUtils.isEmpty(it.name)
+            nameNotEmpty.value = nameValid.value
 
-        }).execute(discount.value)
+            if (nameValid.value == false) {
+                hasErrors = true
+            }
+        }?.also {
+            if (it.percentage) {
+                valueValid.value = ValidatorUtils.isValid(it.amount, ValidatorUtils.VALID_PERCENTAGE)
+            }
+
+            if (valueValid.value == false) {
+                hasErrors = true
+            }
+        }.takeUnless { hasErrors }?.let {
+            DaoWorkerAsync<Discount>({
+                if (dao.findByUniqueNameSync(it.name) != null) {
+                    nameUnique.postValue(false)
+                    nameValid.postValue(false)
+                    return@DaoWorkerAsync false
+                } else {
+                    return@DaoWorkerAsync dao.save(it, checkedItemIds).let { true }
+                }
+            }, {
+                saveSuccess.value = true
+            }, {
+                saveSuccess.value = false
+            }).execute(it)
+        }
     }
 
     fun delete() {

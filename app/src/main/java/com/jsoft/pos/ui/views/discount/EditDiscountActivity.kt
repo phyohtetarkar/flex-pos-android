@@ -83,6 +83,30 @@ class EditDiscountActivity : AppCompatActivity() {
             }, {})
         }
 
+        viewModel.saveSuccess.observe(this, Observer {
+            if (it == true) {
+                onBackPressed()
+            }
+        })
+
+        viewModel.nameNotEmpty.observe(this, Observer {
+            if (it == false) {
+                binding.edDiscountName.error = resources.getString(R.string.error_empty_input_format, "Discount name")
+            }
+        })
+
+        viewModel.nameUnique.observe(this, Observer {
+            if (it == false) {
+                binding.edDiscountName.error = resources.getString(R.string.error_name_conflict_format, "Discount name")
+            }
+        })
+
+        viewModel.valueValid.observe(this, Observer {
+            if (it == false) {
+                binding.edDiscountValue.error = "Invalid percentage"
+            }
+        })
+
         viewModel.deleteSuccess.observe(this, Observer {
             when (it) {
                 false -> AlertUtil.showToast(this, resources.getString(R.string.fail_to_delete, "discount"))
@@ -105,7 +129,6 @@ class EditDiscountActivity : AppCompatActivity() {
             }
             R.id.action_save -> {
                 viewModel.save()
-                onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)

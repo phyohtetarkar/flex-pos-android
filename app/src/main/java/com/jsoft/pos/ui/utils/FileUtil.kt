@@ -14,7 +14,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-object ImageUtil {
+object FileUtil {
 
     fun writeImage(context: Context, uri: Uri?, name: String?): String? {
 
@@ -66,35 +66,6 @@ object ImageUtil {
                 file.delete()
             }
         }
-    }
-
-    fun generateTempReceipt(context: Context, bitmap: Bitmap?): Uri? {
-
-        var fos: FileOutputStream? = null
-
-        try {
-
-            val dir = context.cacheDir
-
-            val format = SimpleDateFormat("yyyyMMddhhmmss", Locale.ENGLISH)
-            val file = File(dir, String.format(Locale.ENGLISH, "%s.png", format.format(Date())))
-            file.deleteOnExit()
-
-            fos = FileOutputStream(file)
-
-            bitmap?.compress(Bitmap.CompressFormat.PNG, 100, fos)
-
-            return Uri.fromFile(file)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            AlertUtil.showToast(context, "Error generating receipt")
-        } finally {
-            fos?.close()
-        }
-
-        return null
-
     }
 
     fun generateReceipt(context: Context, bitmap: Bitmap, name: String?): String? {

@@ -5,12 +5,12 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
+import android.text.TextUtils
 import com.jsoft.pos.BR
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.model.CategoryDao
 import com.jsoft.pos.data.utils.DaoWorkerAsync
-import com.jsoft.pos.ui.utils.ValidatorUtils
 
 class EditCategoryViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -48,7 +48,7 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
         var hasErrors = false
 
         category.value?.also {
-            nameValid.value = ValidatorUtils.isValid(it.name, ValidatorUtils.NOT_EMPTY)
+            nameValid.value = !TextUtils.isEmpty(it.name)
             nameNotEmpty.value = nameValid.value
             if (nameValid.value == false) {
                 hasErrors = true

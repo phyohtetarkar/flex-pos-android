@@ -1,43 +1,51 @@
 package com.jsoft.pos.ui.views.sale
 
-import android.databinding.ObservableArrayMap
-import android.databinding.ObservableMap
+import android.databinding.ObservableArrayList
+import android.databinding.ObservableList
 import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.entity.SaleItem
 
 object CheckOutItemsHolder {
 
-    private val saleItems = ObservableArrayMap<Long, SaleItem>()
+    private val saleItems = ObservableArrayList<SaleItem>()
 
     val itemCount: Int
-        get() = saleItems.values.map { it.quantity }.sum()
+        get() = saleItems.map { it.quantity }.sum()
 
     val list: List<SaleItem>
-        get() = saleItems.values.toList()
+        get() = saleItems.toList()
 
     val onSale: Boolean
-        get() = saleItems.values.isNotEmpty()
+        get() = saleItems.isNotEmpty()
 
     fun add(vo: ItemVO) {
         val saleItem = SaleItem(quantity = 1, price = vo.price, itemId = vo.id)
 
-        val result = saleItems[saleItem.itemId]
+        val result = saleItems.find { it.itemId == vo.id }
 
         if (result != null) {
+            val index = saleItems.indexOf(result)
             result.quantity += 1
-            saleItems[saleItem.itemId] = result
+            saleItems.remove(result)
+            saleItems.add(index, result)
         } else {
-            saleItems[saleItem.itemId] = saleItem
+            saleItems.add(saleItem)
         }
+
     }
 
     fun remove(saleItem: SaleItem) {
-        saleItems.remove(saleItem.itemId)
+        saleItems.find { it.itemId == saleItem.itemId }?.also {
+            saleItems.remove(it)
+        }
     }
 
     fun update(saleItem: SaleItem?) {
-        saleItem?.also {
-            saleItems[it.itemId] = it
+        saleItem?.also { si ->
+            val result = saleItems.find { it.itemId == si.itemId }
+            result?.quantity = si.quantity
+            result?.remark = si.remark
+            result?.notifyChange()
         }
     }
 
@@ -45,12 +53,12 @@ object CheckOutItemsHolder {
         saleItems.clear()
     }
 
-    fun addOnMapChangeListener(listener: ObservableMap.OnMapChangedCallback<ObservableArrayMap<Long, SaleItem>, Long, SaleItem>) {
-        saleItems.addOnMapChangedCallback(listener)
+    fun addOnListChangeListener(listener: ObservableList.OnListChangedCallback<ObservableList<SaleItem>>) {
+        saleItems.addOnListChangedCallback(listener)
     }
 
-    fun removeOnMapChangeListener(listener: ObservableMap.OnMapChangedCallback<ObservableArrayMap<Long, SaleItem>, Long, SaleItem>) {
-        saleItems.removeOnMapChangedCallback(listener)
+    fun removeOnListChangeListener(listener: ObservableList.OnListChangedCallback<ObservableList<SaleItem>>) {
+        saleItems.removeOnListChangedCallback(listener)
     }
 
 }

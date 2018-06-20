@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
+import android.text.TextUtils
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.Tax
 import com.jsoft.pos.data.model.TaxDao
@@ -47,8 +48,7 @@ class EditTaxViewModel(application: Application) : AndroidViewModel(application)
         var hasErrors = false
 
         tax.value?.also {
-
-            nameValid.value = ValidatorUtils.isValid(it.name, ValidatorUtils.NOT_EMPTY)
+            nameValid.value = !TextUtils.isEmpty(it.name)
             nameNotEmpty.value = nameValid.value
 
             if (nameValid.value == false) {
