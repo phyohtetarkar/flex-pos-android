@@ -59,11 +59,11 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     init {
         val app = application as FlexPosApplication
-        categoryDao = app.db.categoryDao()
-        unitDao = app.db.unitDao()
-        repository = ItemRepository(app.db.itemDao(), unitDao, categoryDao)
-        taxDao = app.db.taxDao()
-        discountDao = app.db.discountDao()
+        categoryDao = app.db!!.categoryDao()
+        unitDao = app.db!!.unitDao()
+        repository = ItemRepository(app.db!!.itemDao(), unitDao, categoryDao)
+        taxDao = app.db!!.taxDao()
+        discountDao = app.db!!.discountDao()
     }
 
     fun save() {

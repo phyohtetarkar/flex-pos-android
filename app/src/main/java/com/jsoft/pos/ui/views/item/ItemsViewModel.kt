@@ -24,7 +24,7 @@ class ItemsViewModel(application: Application) : AndroidViewModel(application), 
 
     init {
         val app = application as FlexPosApplication
-        repository = ItemRepository(app.db.itemDao())
+        repository = ItemRepository(app.db!!.itemDao())
     }
 
 }

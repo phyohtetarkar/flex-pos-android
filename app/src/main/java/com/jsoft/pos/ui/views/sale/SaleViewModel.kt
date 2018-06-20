@@ -29,8 +29,8 @@ class SaleViewModel(application: Application): AndroidViewModel(application), Pa
 
     init {
         val app = application as FlexPosApplication
-        repository = ItemRepository(app.db.itemDao())
-        categoryDao = app.db.categoryDao()
+        repository = ItemRepository(app.db!!.itemDao())
+        categoryDao = app.db!!.categoryDao()
     }
 
 }

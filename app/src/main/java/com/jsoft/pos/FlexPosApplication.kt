@@ -8,7 +8,7 @@ import com.jsoft.pos.ui.utils.ContextWrapperUtil
 
 class FlexPosApplication : Application() {
 
-    private var db: PosDatabase? = null
+    var db: PosDatabase? = null
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(ContextWrapperUtil.create(base))

@@ -22,11 +22,11 @@ class ResourcesViewModel(application: Application) : AndroidViewModel(applicatio
 
     init {
         val app = application as FlexPosApplication
-        itemDao = app.db.itemDao()
-        unitDao = app.db.unitDao()
-        categoryDao = app.db.categoryDao()
-        discountDao = app.db.discountDao()
-        taxDao = app.db.taxDao()
+        itemDao = app.db!!.itemDao()
+        unitDao = app.db!!.unitDao()
+        categoryDao = app.db!!.categoryDao()
+        discountDao = app.db!!.discountDao()
+        taxDao = app.db!!.taxDao()
     }
 
 }

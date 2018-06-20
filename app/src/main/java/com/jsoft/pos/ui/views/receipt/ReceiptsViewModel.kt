@@ -24,7 +24,7 @@ class ReceiptsViewModel(application: Application) : AndroidViewModel(application
 
     init {
         val app = application as FlexPosApplication
-        repository = SaleRepository(app.db.saleDao())
+        repository = SaleRepository(app.db!!.saleDao())
     }
 
 }

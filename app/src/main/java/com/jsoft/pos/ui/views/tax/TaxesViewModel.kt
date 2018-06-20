@@ -16,7 +16,7 @@ class TaxesViewModel(application: Application) : AndroidViewModel(application), 
 
     init {
         val app = application as FlexPosApplication
-        dao = app.db.taxDao()
+        dao = app.db!!.taxDao()
     }
 
 }

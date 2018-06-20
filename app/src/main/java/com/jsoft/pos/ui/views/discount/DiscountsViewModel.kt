@@ -16,7 +16,7 @@ class DiscountsViewModel(application: Application) : AndroidViewModel(applicatio
 
     init {
         val app = application as FlexPosApplication
-        dao = app.db.discountDao()
+        dao = app.db!!.discountDao()
     }
 
 }

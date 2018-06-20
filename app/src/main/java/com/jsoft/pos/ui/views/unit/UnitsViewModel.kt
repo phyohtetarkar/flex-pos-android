@@ -31,7 +31,7 @@ class UnitsViewModel(application: Application) : AndroidViewModel(application), 
 
     init {
         val app = application as FlexPosApplication
-        dao = app.db.unitDao()
+        dao = app.db!!.unitDao()
     }
 
     fun delete(unit: Unit) {

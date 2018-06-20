@@ -26,14 +26,14 @@ class ReceiptDetailViewModel(application: Application) : AndroidViewModel(applic
 
     init {
         val app = application as FlexPosApplication
-        saleDao = app.db.saleDao()
+        saleDao = app.db!!.saleDao()
         repository = SaleRepository(saleDao,
                 ItemRepository(
-                        app.db.itemDao(),
-                        app.db.unitDao(),
-                        app.db.categoryDao(),
-                        app.db.taxDao(),
-                        app.db.discountDao())
+                        app.db!!.itemDao(),
+                        app.db!!.unitDao(),
+                        app.db!!.categoryDao(),
+                        app.db!!.taxDao(),
+                        app.db!!.discountDao())
         )
     }
 

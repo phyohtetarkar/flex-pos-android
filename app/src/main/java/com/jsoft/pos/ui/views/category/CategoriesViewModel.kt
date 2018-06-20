@@ -24,7 +24,7 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
 
     init {
         val app = application as FlexPosApplication
-        dao = app.db.categoryDao()
+        dao = app.db!!.categoryDao()
     }
 
 }
