@@ -93,13 +93,13 @@
                 android:id="@+id/imageView2"
                 android:layout_width="32dp"
                 android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_percantage_dark"
                 app:layout_constraintBottom_toBottomOf="@+id/edTaxValue"
                 app:layout_constraintEnd_toEndOf="@+id/edTaxName"
-                app:layout_constraintTop_toTopOf="@+id/edTaxValue"
-                android:src="@drawable/ic_percantage_dark" />
+                app:layout_constraintTop_toTopOf="@+id/edTaxValue" />
 
 
         </android.support.constraint.ConstraintLayout>
