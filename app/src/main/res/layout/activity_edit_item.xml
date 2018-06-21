@@ -347,6 +347,7 @@
                     android:layout_marginStart="16dp"
                     android:background="@drawable/selectable_important_background"
                     android:text="@string/delete"
+                    android:textColor="@color/whitePrimary"
                     android:visibility="@{safeUnbox(vm.item.id) > 0 ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

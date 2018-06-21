@@ -23,7 +23,8 @@ class BackupActivity : AppCompatActivity() {
 
     private val viewStub: View by lazy { viewStubBackup.inflate() }
 
-    private val WRITE_STORAGE_PERMISSION_REQUEST = 1
+    private val READ_STORAGE_PERMISSION_FOR_LOAD_BACKUP_REQUEST = 1
+    private val WRITE_STORAGE_PERMISSION_FOR_BACKUP_REQUEST = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +102,14 @@ class BackupActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel?.loadBackups()
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            viewModel?.loadBackups()
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    READ_STORAGE_PERMISSION_FOR_LOAD_BACKUP_REQUEST)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -120,7 +128,7 @@ class BackupActivity : AppCompatActivity() {
                 } else {
                     ActivityCompat.requestPermissions(this,
                             arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                            WRITE_STORAGE_PERMISSION_REQUEST)
+                            WRITE_STORAGE_PERMISSION_FOR_BACKUP_REQUEST)
                 }
             }
         }
@@ -131,11 +139,19 @@ class BackupActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            WRITE_STORAGE_PERMISSION_REQUEST -> {
+            WRITE_STORAGE_PERMISSION_FOR_BACKUP_REQUEST -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     viewModel?.saveBackup()
                 } else {
                     AlertUtil.showToast(this, "Permission denied, cannot backup data")
+                }
+            }
+
+            READ_STORAGE_PERMISSION_FOR_LOAD_BACKUP_REQUEST -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    viewModel?.loadBackups()
+                } else {
+                    AlertUtil.showToast(this, "Permission denied, cannot load backups")
                 }
             }
         }

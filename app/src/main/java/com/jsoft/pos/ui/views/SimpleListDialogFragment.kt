@@ -4,16 +4,14 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.jsoft.pos.R
 import kotlinx.android.synthetic.main.fragment_simple_list_dialog.*
 
 abstract class SimpleListDialogFragment<T> : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        dialog.window.requestFeature(Window.FEATURE_NO_TITLE)
         return inflater.inflate(R.layout.fragment_simple_list_dialog, container, false)
     }
 

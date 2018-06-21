@@ -54,6 +54,7 @@ abstract class TaxDao : BaseDao<Tax> {
     @Transaction
     open fun save(tax: Tax, itemIds: Collection<Long>?) {
         var id = tax.id
+        tax.uniqueName = tax.name.toUpperCase()
         if (tax.id > 0) {
             update(tax)
         } else {

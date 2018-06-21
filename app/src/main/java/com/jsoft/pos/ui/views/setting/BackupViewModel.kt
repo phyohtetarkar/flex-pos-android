@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.content.Context
 import android.os.Environment
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("SdCardPath")
 class BackupViewModel(application: Application) : AndroidViewModel(application) {
 
     val backups = MutableLiveData<List<String>>()
@@ -19,31 +21,59 @@ class BackupViewModel(application: Application) : AndroidViewModel(application) 
     val backupSuccess = MutableLiveData<Boolean>()
 
     private val pathBackup = "FlexPos/.backup"
-    @SuppressLint("SdCardPath")
-    private val source = "/data/data/com.jsoft.pos/databases"
+    private val dbSource: File by lazy { File("/data/data/com.jsoft.pos/databases") }
+    private val imageSource: File by lazy { application.getDir("item_image", Context.MODE_PRIVATE) }
+    private val receiptSource: File by lazy { application.getExternalFilesDir("receipts") }
+
+    private val dbDir = "db"
+    private val imgDir = "image"
+    private val receiptDir = "receipts"
 
     fun saveBackup() {
         try {
             val dir = File(Environment.getExternalStorageDirectory(), pathBackup)
-            val source = File(source)
 
             if (!dir.exists()) {
                 dir.mkdirs()
             }
+            val format = SimpleDateFormat("yyyyMMddhhmmss", Locale.ENGLISH)
+            val outDir = File(dir, format.format(Date()))
+            outDir.mkdir()
 
-            if (source.exists()) {
-                val format = SimpleDateFormat("yyyyMMddhhmmss", Locale.ENGLISH)
-                val outDir = File(dir, format.format(Date()))
-                outDir.mkdirs()
+            if (dbSource.exists()) {
+                val outDb = File(outDir, dbDir)
+                outDb.mkdir()
 
-                source.listFiles().forEach {
-                    val outFile = File(outDir, it.name).also { it.createNewFile() }
+                dbSource.listFiles().forEach {
+                    val outFile = File(outDb, it.name).also { it.createNewFile() }
                     it.copyTo(outFile, true)
                 }
-                backupSuccess.value = true
             }
+
+            if (imageSource.exists()) {
+                val outImg = File(outDir, imgDir)
+                outImg.mkdir()
+
+                imageSource.listFiles().forEach {
+                    val outFile = File(outImg, it.name).also { it.createNewFile() }
+                    it.copyTo(outFile, true)
+                }
+            }
+
+            if (receiptSource.exists()) {
+                val outReceipt = File(outDir, receiptDir)
+                outReceipt.mkdir()
+
+                receiptSource.listFiles().forEach {
+                    val outFile = File(outReceipt, it.name).also { it.createNewFile() }
+                    it.copyTo(outFile, true)
+                }
+            }
+
+            backupSuccess.value = true
         } catch (e: IOException) {
             e.printStackTrace()
+            backupSuccess.value = false
         }
     }
 
@@ -59,6 +89,7 @@ class BackupViewModel(application: Application) : AndroidViewModel(application) 
 
         } catch (e: IOException) {
             e.printStackTrace()
+            deleteSuccess.value = false
         }
     }
 
@@ -72,24 +103,54 @@ class BackupViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    @SuppressLint("SdCardPath")
     fun restoreBackup(name: String?) {
         try {
             val dir = File(Environment.getExternalStorageDirectory(), pathBackup)
-            val from = File(dir, name)
-            val to = File(source)
+            val bkp = File(dir, name)
 
-            if (from.exists()) {
-                to.listFiles().forEach { it.delete() }
-                from.listFiles().forEach {
-                    val outFile = File(to, it.name).also { it.createNewFile() }
+            if (dbSource.exists()) {
+                val dbBkp = File(bkp, dbDir)
+
+                if (dbBkp.exists()) {
+                    dbSource.listFiles().forEach { it.delete() }
+
+                    dbBkp.listFiles().forEach {
+                        val outFile = File(dbSource, it.name).also { it.createNewFile() }
+                        it.copyTo(outFile, true)
+                    }
+                }
+            }
+
+            if (!imageSource.exists()) {
+                imageSource.mkdirs()
+            }
+
+            val imgBkp = File(bkp, imgDir)
+
+            if (imgBkp.exists()) {
+                imageSource.listFiles().forEach { it.delete() }
+
+                imgBkp.listFiles().forEach {
+                    val outFile = File(imageSource, it.name).also { it.createNewFile() }
                     it.copyTo(outFile, true)
                 }
-                restoreSuccess.value = true
             }
+
+            val receiptBkp = File(bkp, receiptDir)
+
+            if (receiptBkp.exists()) {
+                receiptSource.listFiles().forEach { it.delete() }
+
+                receiptBkp.listFiles().forEach {
+                    val outFile = File(receiptSource, it.name).also { it.createNewFile() }
+                    it.copyTo(outFile, true)
+                }
+            }
+
+            restoreSuccess.value = true
         } catch (e: IOException) {
             e.printStackTrace()
-        } finally {
+            restoreSuccess.value = false
         }
     }
 
