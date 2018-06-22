@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
+import com.jsoft.pos.ui.utils.LockHandler
+import java.util.concurrent.locks.Lock
 
 class CheckoutActivity : AppCompatActivity() {
 
@@ -29,6 +31,13 @@ class CheckoutActivity : AppCompatActivity() {
                 .replace(R.id.contentCheckout, SaleDetailFragment.getInstance(intent.getLongExtra("id", 0)))
                 .commit()
 
+        LockHandler.navigated(this, false)
+
+    }
+
+    override fun onBackPressed() {
+        LockHandler.navigated(this, true)
+        super.onBackPressed()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

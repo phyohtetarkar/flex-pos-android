@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Discount
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.BindingViewHolder
 import com.jsoft.pos.ui.views.ListViewModel
 import com.jsoft.pos.ui.views.SimpleListAdapter
@@ -53,6 +54,8 @@ class DiscountsFragment : SimpleListFragment<Discount>() {
     }
 
     override fun showEdit(id: Any) {
+        LockHandler.navigated(activity, true)
+
         val i = Intent(context, EditDiscountActivity::class.java)
         i.putExtra("id", id as Int)
 

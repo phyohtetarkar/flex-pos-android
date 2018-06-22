@@ -57,6 +57,8 @@ class EditDiscountViewModel(application: Application) : AndroidViewModel(applica
         }?.also {
             if (it.percentage) {
                 valueValid.value = ValidatorUtils.isValid(it.amount, ValidatorUtils.VALID_PERCENTAGE)
+            } else {
+                valueValid.value = true
             }
 
             if (valueValid.value == false) {
@@ -90,9 +92,7 @@ class EditDiscountViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun updateDiscountMode(isPercent: Boolean) {
-        discount.value?.apply {
-            percentage = isPercent
-        }
+        discount.value?.percentage = isPercent
     }
 
 }

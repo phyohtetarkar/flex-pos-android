@@ -18,6 +18,7 @@ import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.data.model.ItemSearch
 import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import kotlinx.android.synthetic.main.activity_checkable_list.*
 
@@ -79,6 +80,13 @@ class AssignItemActivity : AppCompatActivity() {
             }
         })
 
+        LockHandler.navigated(this, false)
+
+    }
+
+    override fun onBackPressed() {
+        LockHandler.navigated(this, true)
+        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.RadioButton
+import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.R
 import com.jsoft.pos.databinding.EditCategoryBinding
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
+import com.jsoft.pos.ui.utils.LockHandler
 import kotlinx.android.synthetic.main.activity_edit_category.*
 
 class EditCategoryActivity : AppCompatActivity() {
@@ -81,6 +83,18 @@ class EditCategoryActivity : AppCompatActivity() {
             }
         })
 
+        LockHandler.navigated(this, false)
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+    }
+
+    override fun onBackPressed() {
+        LockHandler.navigated(this, true)
+        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

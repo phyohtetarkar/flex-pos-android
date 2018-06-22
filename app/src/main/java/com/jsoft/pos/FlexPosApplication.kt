@@ -11,6 +11,8 @@ class FlexPosApplication : Application() {
     lateinit var db: PosDatabase
         private set
 
+    var isNavigation: Boolean? = false
+
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(ContextWrapperUtil.create(base))
     }

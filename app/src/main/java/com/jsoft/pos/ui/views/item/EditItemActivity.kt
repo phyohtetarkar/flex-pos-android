@@ -19,6 +19,7 @@ import com.jsoft.pos.ui.custom.CustomViewAdapter
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.utils.FileUtil
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.SimpleListDialogFragment
 import com.jsoft.pos.ui.views.category.EditCategoryActivity
 import com.jsoft.pos.ui.views.unit.EditUnitFragment
@@ -129,6 +130,13 @@ class EditItemActivity : AppCompatActivity() {
                 viewModel.delete()
             }, {})
         }
+
+        LockHandler.navigated(this, false)
+    }
+
+    override fun onBackPressed() {
+        LockHandler.navigated(this, true)
+        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

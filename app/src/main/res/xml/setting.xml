@@ -21,21 +21,35 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="App Setting">
 
-        <ListPreference
+        <!-- next version -->
+        <!--<ListPreference
             android:defaultValue="english"
             android:entries="@array/lang_entries"
             android:entryValues="@array/lang_values"
             android:key="p_app_language"
             android:title="Language"
             android:dialogTitle="Language"
-            android:summary="english"/>
+            android:summary="english"/>-->
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="p_app_lock"
+            android:title="Enable App Lock"/>
+
+        <Preference
+            android:title="App Lock Code"
+            android:summary="modify lock code"
+            android:key="p_lock_code">
+        </Preference>
 
         <Preference
             android:title="Backups"
-            android:summary="backup your data">
+            android:summary="backup your data"
+            android:key="p_backup">
             <intent android:targetPackage="com.jsoft.pos"
                 android:targetClass="com.jsoft.pos.ui.views.setting.BackupActivity"/>
         </Preference>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

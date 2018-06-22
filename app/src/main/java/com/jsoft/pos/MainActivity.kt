@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.utils.ServiceLocator
 import com.jsoft.pos.ui.views.discount.DiscountsFragment
 import com.jsoft.pos.ui.views.nav.ResourcesFragment
@@ -81,7 +82,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navigationViewMain.setNavigationItemSelectedListener(this)
 
+        LockHandler.handle(this)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LockHandler.navigated(this, false)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LockHandler.handle(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -126,6 +138,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
+
+        if (LockHandler.backFreeze) {
+            finish()
+            return
+        }
+
         if (drawerLayoutMain.isDrawerOpen(GravityCompat.START)) {
             drawerLayoutMain.closeDrawer(GravityCompat.START)
         } else {

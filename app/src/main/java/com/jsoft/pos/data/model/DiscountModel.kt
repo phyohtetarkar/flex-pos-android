@@ -43,7 +43,7 @@ abstract class DiscountDao : BaseDao<Discount> {
 
     @Transaction
     open fun save(discount: Discount) {
-        discount.uniqueName = discount.uniqueName.toUpperCase()
+        discount.uniqueName = discount.name.toUpperCase()
         if (discount.id > 0) {
             update(discount)
         } else {
@@ -54,7 +54,7 @@ abstract class DiscountDao : BaseDao<Discount> {
     @Transaction
     open fun save(discount: Discount, itemIds: Collection<Long>?) {
         var id = discount.id
-        discount.uniqueName = discount.uniqueName.toUpperCase()
+        discount.uniqueName = discount.name.toUpperCase()
         if (discount.id > 0) {
             update(discount)
         } else {

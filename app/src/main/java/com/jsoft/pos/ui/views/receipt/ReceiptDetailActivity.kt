@@ -21,6 +21,7 @@ import com.jsoft.pos.databinding.ReceiptSlipBinding
 import com.jsoft.pos.ui.custom.CustomViewAdapter
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.utils.FileUtil
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.sale.CheckoutActivity
 import kotlinx.android.synthetic.main.activity_receipt_detail.*
 
@@ -120,6 +121,13 @@ class ReceiptDetailActivity : AppCompatActivity() {
             }
         }
 
+        LockHandler.navigated(this, false)
+
+    }
+
+    override fun onBackPressed() {
+        LockHandler.navigated(this, true)
+        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -136,8 +144,9 @@ class ReceiptDetailActivity : AppCompatActivity() {
 
         when (item?.itemId) {
             android.R.id.home -> onBackPressed()
-            R.id.action_new_sale -> finish()
+            R.id.action_new_sale -> onBackPressed()
             R.id.action_edit_sale -> {
+                LockHandler.navigated(this, true)
                 val intent = Intent(this, CheckoutActivity::class.java)
                 intent.putExtra("id", viewModel.saleId.value)
                 startActivity(intent)

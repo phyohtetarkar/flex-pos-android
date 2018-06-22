@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_clear"
-        android:title="Remove All"
-        android:icon="@drawable/ic_delete_dark"
-        app:showAsAction="ifRoom|collapseActionView" />
+        android:title="@string/clear_all"
+        app:showAsAction="ifRoom" />
 
-    <item
+    <!-- next version -->
+    <!--<item
         android:id="@+id/action_detail"
         android:title="Apply Discount"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 </menu>

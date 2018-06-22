@@ -4,27 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="obj"
-            type="com.jsoft.pos.data.entity.ItemVO"/>
+            type="com.jsoft.pos.data.entity.ItemVO" />
     </data>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor='@{obj.color, default="@color/colorAccent"}'
         app:cardCornerRadius="@dimen/card_custom_radius"
-        app:cardElevation="@dimen/cardview_default_elevation"
         app:cardPreventCornerOverlap="true"
+        app:cardElevation="@dimen/cardview_default_elevation"
         app:cardUseCompatPadding="true">
+
+        <!--<View
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background='@{obj.color, default="@color/colorAccent"}'/>-->
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:focusable="true"
+            android:background="@drawable/selectable_white_background"
             android:clickable="true"
-            android:background="@drawable/selectable_white_background">
+            android:focusable="true">
 
             <com.jsoft.pos.ui.custom.RoundedImageView
                 android:id="@+id/roundedImageView_itemImage"
@@ -80,6 +84,7 @@
                 tools:text="120 ml" />
 
         </android.support.constraint.ConstraintLayout>
+
 
     </android.support.v7.widget.CardView>
 

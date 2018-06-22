@@ -13,6 +13,7 @@ import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.model.ItemVOSearch
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.AbstractListFragment
 import com.jsoft.pos.ui.views.PagedListViewModel
 import com.jsoft.pos.ui.views.SimplePagedListAdapter
@@ -85,6 +86,8 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
     }
 
     private fun showEdit(id: Long) {
+        LockHandler.navigated(activity, true)
+
         val i = Intent(context, EditItemActivity::class.java)
         i.putExtra("id", id)
 

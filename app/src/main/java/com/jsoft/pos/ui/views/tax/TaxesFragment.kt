@@ -9,6 +9,7 @@ import android.support.v7.util.DiffUtil
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Tax
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimpleListViewModel
@@ -52,6 +53,8 @@ class TaxesFragment : SimpleListFragment<Tax>() {
     }
 
     override fun showEdit(id: Any) {
+        LockHandler.navigated(activity, true)
+
         val i = Intent(context, EditTaxActivity::class.java)
         i.putExtra("id", id as Int)
 

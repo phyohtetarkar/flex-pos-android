@@ -8,4 +8,5 @@
     <dimen name="card_custom_margin">2dp</dimen>
 
     <dimen name="checkout_sheet_peek_height">64dp</dimen>
+    <dimen name="pin_button_margin">0.01dp</dimen>
 </resources>

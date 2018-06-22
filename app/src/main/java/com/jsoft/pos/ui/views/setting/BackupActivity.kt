@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import com.jsoft.pos.R
 import com.jsoft.pos.ui.utils.AlertUtil
+import com.jsoft.pos.ui.utils.LockHandler
 import kotlinx.android.synthetic.main.activity_backup.*
 
 class BackupActivity : AppCompatActivity() {
@@ -98,6 +99,13 @@ class BackupActivity : AppCompatActivity() {
                 AlertUtil.showToast(this, "Delete failed")
             }
         })
+
+        LockHandler.navigated(this,false)
+    }
+
+    override fun onBackPressed() {
+        LockHandler.navigated(this, true)
+        super.onBackPressed()
     }
 
     override fun onResume() {

@@ -6,10 +6,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
+import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.CategoryVO
 import com.jsoft.pos.data.model.CategorySearch
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimpleListViewModel
@@ -57,6 +59,8 @@ class CategoriesFragment : SimpleListFragment<CategoryVO>() {
     }
 
     override fun showEdit(id: Any) {
+        LockHandler.navigated(activity, true)
+
         val i = Intent(context, EditCategoryActivity::class.java)
         i.putExtra("id", id as Int)
 

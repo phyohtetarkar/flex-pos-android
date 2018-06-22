@@ -57,7 +57,7 @@
                 app:layout_constraintStart_toStartOf="@+id/edTaxName"
                 app:layout_constraintTop_toBottomOf="@+id/edTaxName" />
 
-            <Switch
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switch1"
                 android:layout_width="0dp"
                 android:layout_height="2dp"

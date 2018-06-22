@@ -15,6 +15,7 @@ import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Sale
 import com.jsoft.pos.data.model.SaleSearch
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.AbstractListFragment
 import com.jsoft.pos.ui.views.BindingViewHolder
 import com.jsoft.pos.ui.views.ListViewModel
@@ -82,6 +83,8 @@ class ReceiptsFragment : AbstractListFragment<Sale>() {
     get() = adapter
 
     override fun onItemTouch(position: Int) {
+        LockHandler.navigated(activity, true)
+
         val intent = Intent(context, ReceiptDetailActivity::class.java)
         intent.putExtra("id", adapter.getItemAt(position).id)
         intent.putExtra("historyMode", true)

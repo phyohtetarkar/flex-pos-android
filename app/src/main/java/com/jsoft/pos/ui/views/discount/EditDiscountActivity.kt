@@ -17,6 +17,7 @@ import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.databinding.EditDiscountBinding
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.tax.AssignItemActivity
 import kotlinx.android.synthetic.main.activity_edit_discount.*
 
@@ -114,6 +115,15 @@ class EditDiscountActivity : AppCompatActivity() {
             }
         })
 
+        LockHandler.navigated(this, false)
+
+    }
+
+
+
+    override fun onBackPressed() {
+        LockHandler.navigated(this, true)
+        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

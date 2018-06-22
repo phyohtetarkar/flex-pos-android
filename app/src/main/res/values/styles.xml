@@ -52,7 +52,7 @@
         <item name="android:textStyle">bold</item>
         <!--<item name="android:fontFamily">@font/app_font_bold</item>-->
     </style>
-    
+
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
@@ -84,6 +84,7 @@
     <style name="AppTextNormal" parent="@android:style/TextAppearance">
         <!--<item name="fontFamily">@font/app_font_normal</item>-->
     </style>
+
     <style name="AppTextSecondary" parent="AppTextNormal">
         <item name="android:textColor">@color/colorTextSecondary</item>
     </style>
@@ -132,6 +133,21 @@
     <style name="PreferenceTheme" parent="PreferenceThemeOverlay.v14.Material">
         <item name="android:textViewStyle">@style/AppTextNormal</item>
         <item name="android:dividerHeight">0.5dp</item>
+    </style>
+
+    <style name="PinButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/selectable_white_background</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/darkSecondary</item>
+    </style>
+
+    <style name="PinCode">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@drawable/pin_code_drawable</item>
     </style>
 
 </resources>

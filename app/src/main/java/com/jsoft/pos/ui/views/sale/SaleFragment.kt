@@ -27,6 +27,7 @@ import com.jsoft.pos.data.entity.SaleItem
 import com.jsoft.pos.data.model.ItemVOSearch
 import com.jsoft.pos.ui.custom.BadgeDrawable
 import com.jsoft.pos.ui.custom.RoundedImageView
+import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.BindingViewHolder
 import com.jsoft.pos.ui.views.ListViewModel
 import com.jsoft.pos.ui.views.SimpleListFragment
@@ -137,6 +138,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
             R.id.action_receipt -> {
                 if (CheckOutItemsHolder.itemCount > 0) {
+                    LockHandler.navigated(activity, true)
                     val intent = Intent(context, CheckoutActivity::class.java)
                     startActivity(intent)
                 }
