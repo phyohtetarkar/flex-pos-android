@@ -295,37 +295,43 @@
 
                             <TextView
                                 android:id="@+id/textView49"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="10dp"
+                                android:lines="1"
                                 android:text="Qty"
                                 android:textSize="14sp"
+                                app:layout_constraintEnd_toStartOf="@+id/guideline4"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/view23" />
 
                             <TextView
                                 android:id="@+id/textView51"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="16dp"
+                                android:layout_marginStart="4dp"
                                 android:text="Amount"
                                 android:textAlignment="textEnd"
                                 android:textSize="14sp"
+                                android:lines="1"
                                 app:layout_constraintBaseline_toBaselineOf="@+id/textView49"
-                                app:layout_constraintEnd_toEndOf="parent" />
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="@+id/guideline5" />
 
                             <TextView
                                 android:id="@+id/textView52"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="4dp"
+                                android:layout_marginStart="4dp"
                                 android:text="Description"
                                 android:textSize="14sp"
                                 app:layout_constraintBaseline_toBaselineOf="@+id/textView49"
-                                app:layout_constraintEnd_toStartOf="@+id/textView51"
-                                app:layout_constraintStart_toEndOf="@+id/textView49" />
+                                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                                app:layout_constraintStart_toStartOf="@+id/guideline4" />
 
                             <LinearLayout
                                 android:id="@+id/linearLayoutGroupTaxes"
@@ -336,6 +342,20 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+                            <android.support.constraint.Guideline
+                                android:id="@+id/guideline4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintGuide_percent="0.14" />
+
+                            <android.support.constraint.Guideline
+                                android:id="@+id/guideline5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintGuide_percent="0.77" />
 
                         </android.support.constraint.ConstraintLayout>
 

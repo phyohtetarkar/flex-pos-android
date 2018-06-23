@@ -149,7 +149,7 @@ class ItemVOSearch : BaseObservable(), Searchable {
                     "WHERE 1 = 1 ")
 
             name?.takeUnless { it.isEmpty() }?.apply {
-                sb.append("and UPPER(c.name) LIKE ? ")
+                sb.append("and UPPER(i.name) LIKE ? ")
                 objects.add("${toUpperCase()}%")
             }
 

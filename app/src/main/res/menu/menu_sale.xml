@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_search"
-        android:title="Search"
+        android:title="@string/search"
         android:orderInCategory="100"
         android:icon="@drawable/ic_search_dark"
         app:showAsAction="always"

@@ -66,14 +66,12 @@ class UnitsFragment : SimpleListFragment<Unit>() {
 
             override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
 
-                if (swipeCallback?.gestureDetector?.onTouchEvent(e) == true) {
-                    return true
-                }
-
                 val v = rv!!.findChildViewUnder(e!!.x, e.y)
                 val position = rv.getChildAdapterPosition(v)
 
-                if (v != null && e.action == MotionEvent.ACTION_UP) {
+                if (swipeCallback?.gestureDetector?.onTouchEvent(e) == true
+                        && e.action == MotionEvent.ACTION_UP
+                        && v != null) {
                     onItemTouch(position)
                 }
 

@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import com.jsoft.pos.R
@@ -39,11 +38,11 @@ class SwipeGestureCallback(
                     }, {
                         listener.onCancel(s.position)
                     })
-                    return true
+                    return false
                 }
             }
 
-            return false
+            return true
         }
 
     }

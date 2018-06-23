@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
 import android.util.DisplayMetrics
 import android.view.*
 import android.widget.AdapterView
@@ -28,6 +29,7 @@ import com.jsoft.pos.data.model.ItemVOSearch
 import com.jsoft.pos.ui.custom.BadgeDrawable
 import com.jsoft.pos.ui.custom.RoundedImageView
 import com.jsoft.pos.ui.utils.LockHandler
+import com.jsoft.pos.ui.utils.Utils
 import com.jsoft.pos.ui.views.BindingViewHolder
 import com.jsoft.pos.ui.views.ListViewModel
 import com.jsoft.pos.ui.views.SimpleListFragment
@@ -129,6 +131,19 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             val v = activity?.findViewById<View>(R.id.action_receipt)
             v?.getLocationOnScreen(receiptPosition)
         }
+
+        val searchView = Utils.initSearchView(activity, menu)
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.itemSearch.value?.name = newText
+                return false
+            }
+
+        })
 
     }
 
