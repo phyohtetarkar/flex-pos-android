@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.R
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.LockHandler
@@ -85,7 +86,8 @@ class BackupActivity : AppCompatActivity() {
         viewModel?.restoreSuccess?.observe(this, Observer {
             if (it == true) {
                 AlertUtil.showToast(this, "Restore success")
-                AlertUtil.showToast(this, "Please restart application to take effect")
+                val app = application as FlexPosApplication
+                app.loadDatabase()
             } else {
                 AlertUtil.showToast(this, "Restore failed")
             }

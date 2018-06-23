@@ -67,6 +67,7 @@ class SettingFragment : PreferenceFragmentCompat()
     override fun onResume() {
         super.onResume()
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
     }
 
     override fun onPause() {
@@ -90,6 +91,14 @@ class SettingFragment : PreferenceFragmentCompat()
             }
 
             "p_app_lock" -> {
+
+            }
+
+            "p_lock_code" -> {
+                val code = sharedPreferences?.getString(key, null)
+                findPreference("p_app_lock").apply {
+                    isEnabled = !code.isNullOrBlank()
+                }
             }
 
             else -> {

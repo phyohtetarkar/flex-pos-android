@@ -68,6 +68,7 @@
     <string name="new_sale">New Sale</string>
     <string name="finish">Finish</string>
     <string name="clear_all">Clear All</string>
+    <string name="active_sale">Sale in progress. Please finish sale or clear first</string>
 
     <string name="_7">7</string>
     <string name="_8">8</string>

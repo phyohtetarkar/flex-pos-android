@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         toolbarMain.setNavigationOnClickListener {
             when {
-                CheckOutItemsHolder.onSale -> AlertUtil.showToast(this, "Active Sale")
+                CheckOutItemsHolder.onSale -> AlertUtil.showToast(this, R.string.active_sale)
                 drawerLayoutMain.getDrawerLockMode(GravityCompat.START) == DrawerLayout.LOCK_MODE_LOCKED_CLOSED -> {
                     animateToBurger()
                     super.onBackPressed()

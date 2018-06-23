@@ -1,12 +1,14 @@
 package com.jsoft.pos.ui.views.lock
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.Button
 import com.jsoft.pos.R
 import kotlinx.android.synthetic.main.layout_pin_lock.*
@@ -14,6 +16,7 @@ import kotlinx.android.synthetic.main.layout_pin_lock.*
 abstract class LockFragment : DialogFragment() {
 
     private val pinCode = StringBuilder()
+    private var vibrator: Vibrator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +26,8 @@ abstract class LockFragment : DialogFragment() {
         } else {
             setStyle(STYLE_NORMAL, android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen)
         }
+
+        vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -80,6 +85,11 @@ abstract class LockFragment : DialogFragment() {
             tvPinMessage.setTextColor(resources.getColor(R.color.colorError))
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator?.vibrate(200)
+        }
         tvPinMessage.text = message
         resetPin()
     }

@@ -20,6 +20,10 @@ class FlexPosApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        loadDatabase()
+    }
+
+    fun loadDatabase() {
         db = Room.databaseBuilder(this, PosDatabase::class.java, PosDatabase.DB_NAME)
                 .build()
     }

@@ -120,6 +120,7 @@
             android:layout_marginTop="24dp"
             android:background="@drawable/selectable_accent_background"
             android:text="Confirm"
+            android:enabled='@{safeUnbox(vm.sale.change) >= 0 &amp;&amp; safeUnbox(vm.sale.payPrice) > 0, default=false}'
             android:textColor="@color/whitePrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

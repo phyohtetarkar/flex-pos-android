@@ -136,11 +136,9 @@
     </style>
 
     <style name="PinButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@drawable/selectable_white_background</item>
-        <item name="android:clickable">true</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/darkSecondary</item>
+        <item name="android:background">@drawable/selectable_primary_background</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
     <style name="PinCode">

@@ -2,11 +2,9 @@ package com.jsoft.pos.ui.utils
 
 import android.content.Context
 import android.os.Build
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.Toast
 import com.jsoft.pos.R
 import kotlinx.android.synthetic.main.layout_toast.view.*
@@ -24,7 +22,11 @@ class AlertUtil {
             showConfirm(context, R.string.confirm_message_delete, ok, cancel)
         }
 
-        fun showToast(context: Context?, msg: String) {
+        fun showToast(context: Context?, stringRes: Int) {
+            showToast(context, context?.getString(stringRes))
+        }
+
+        fun showToast(context: Context?, msg: String?) {
             val toast = Toast(context)
             val layout = LayoutInflater.from(context).inflate(R.layout.layout_toast, null, false)
 
@@ -41,7 +43,7 @@ class AlertUtil {
 
             toast.view = layout
             toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, offset)
-            toast.duration = Toast.LENGTH_LONG
+            toast.duration = Toast.LENGTH_SHORT
             toast.show()
         }
 
