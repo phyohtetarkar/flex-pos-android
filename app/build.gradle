@@ -45,7 +45,7 @@ android {
 }
 
 dependencies {
-    def roomVersion = "1.1.0"
+    def roomVersion = "1.1.1"
     def archVersion = "1.1.1"
     def supportLibVersion = "27.1.1"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
