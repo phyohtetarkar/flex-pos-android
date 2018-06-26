@@ -13,6 +13,7 @@ import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
@@ -46,7 +47,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     private lateinit var spinnerAdapter: ArrayAdapter<Category>
     private lateinit var viewModel: SaleViewModel
     private var mSpinner: AppCompatSpinner? = null
-    private var icon: LayerDrawable? = null
+    private var menu: Menu? = null
 
     private val receiptPosition = IntArray(2)
 
@@ -126,8 +127,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_sale, menu)
 
-        icon = menu?.findItem(R.id.action_receipt)?.icon as? LayerDrawable
-
         Handler().post {
             val v = activity?.findViewById<View>(R.id.action_receipt)
             v?.getLocationOnScreen(receiptPosition)
@@ -145,7 +144,10 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             }
 
         })
+
         super.onCreateOptionsMenu(menu, inflater)
+
+        this.menu = menu
 
     }
 
@@ -171,15 +173,13 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         viewModel.itemSearch.value = ItemVOSearch().also { it.isAvailable = true }
 
         val app = activity as MainActivity
+        app.invalidateOptionsMenu()
+
         if (!CheckOutItemsHolder.onSale) {
             app.unlockDrawer()
         } else {
             updateBadgeCount()
         }
-    }
-
-    override fun onDestroyOptionsMenu() {
-        super.onDestroyOptionsMenu()
     }
 
     override fun onDestroyView() {
@@ -266,6 +266,8 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     fun updateBadgeCount() {
 
+        val icon = menu?.findItem(R.id.action_receipt)?.icon as? LayerDrawable
+
         val badge: BadgeDrawable
 
         val reuse =  icon?.findDrawableByLayerId(R.id.ic_badge)
@@ -277,10 +279,11 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             app.lockDrawer()
         }
 
+        badge.setCount(CheckOutItemsHolder.itemCount.toString())
+
         icon?.mutate()
         icon?.setDrawableByLayerId(R.id.ic_badge, badge)
-
-        badge.setCount(CheckOutItemsHolder.itemCount.toString())
+        icon?.invalidateSelf()
 
     }
 
