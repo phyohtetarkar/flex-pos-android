@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import com.jsoft.pos.R
 import com.jsoft.pos.databinding.EditUnitBinding
+import com.jsoft.pos.ui.utils.AlertUtil
 
 class EditUnitFragment : DialogFragment() {
 
@@ -55,6 +56,8 @@ class EditUnitFragment : DialogFragment() {
         viewModel.saveSuccess.observe(this, Observer {
             if (it == true) {
                 dismiss()
+            } else {
+                AlertUtil.showToast(context, R.string.fail_to_save, "unit")
             }
         })
 

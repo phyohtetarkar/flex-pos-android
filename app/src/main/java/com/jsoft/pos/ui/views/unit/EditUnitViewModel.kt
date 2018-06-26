@@ -51,7 +51,8 @@ class EditUnitViewModel(application: Application) : AndroidViewModel(application
             }
         }.takeUnless { hasErrors }?.let {
             DaoWorkerAsync<Unit>({
-                if (dao.findByUniqueNameSync(it.name.toUpperCase()) != null) {
+                val src = dao.findByUniqueNameSync(it.name)
+                if (src != null && src.id != it.id) {
                     nameUnique.postValue(false)
                     nameValid.postValue(false)
                     return@DaoWorkerAsync false

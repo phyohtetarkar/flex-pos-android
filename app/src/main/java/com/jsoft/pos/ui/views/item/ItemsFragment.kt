@@ -55,7 +55,7 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
             }
         })
 
-        fabItems.setOnClickListener { showEdit(0) }
+        fabItems.setOnClickListener { onItemTouch(-1) }
 
     }
 
@@ -82,10 +82,11 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
         get() = viewModel
 
     override fun onItemTouch(position: Int) {
-        showEdit(adapter.getItemAt(position).id)
-    }
+        var id = 0L
+        if (position > -1) {
+            id = adapter.getItemAt(position).id
+        }
 
-    private fun showEdit(id: Long) {
         LockHandler.navigated(activity, true)
 
         val i = Intent(context, EditItemActivity::class.java)
@@ -97,7 +98,6 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
         } else {
             startActivity(i)
         }
-
     }
 
 }

@@ -37,10 +37,11 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:spinnerItemStyle">@style/SpinnerItemStyle</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerItemStyle</item>
+    </style>
 
     <style name="AppTheme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="background">@color/colorPrimary</item>
@@ -124,8 +125,8 @@
     </style>
 
     <style name="SpinnerItemStyle" parent="Widget.AppCompat.TextView.SpinnerItem">
-        <item name="android:textColor">@color/colorError</item>
         <!--<item name="android:fontFamily">@font/app_font_normal</item>-->
+        <item name="android:textColor">@color/whitePrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>

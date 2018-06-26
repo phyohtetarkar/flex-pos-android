@@ -38,7 +38,7 @@ abstract class TaxDao : BaseDao<Tax> {
     @Delete
     protected abstract fun deleteItemTaxes(itemTaxes: List<ItemTax>)
 
-    @Query("SELECT * FROM tax WHERE unique_name = :name LIMIT 1")
+    @Query("SELECT * FROM tax WHERE unique_name = UPPER(:name) LIMIT 1")
     abstract fun findByUniqueNameSync(name: String): Tax?
 
     @Transaction

@@ -50,14 +50,16 @@ class DiscountsFragment : SimpleListFragment<Discount>() {
         get() = adapter
 
     override fun onItemTouch(position: Int) {
-        showEdit(adapter.getItemAt(position).id)
-    }
+        var id = 0
 
-    override fun showEdit(id: Any) {
+        if (position > -1) {
+            id = adapter.getItemAt(position).id
+        }
+
         LockHandler.navigated(activity, true)
 
         val i = Intent(context, EditDiscountActivity::class.java)
-        i.putExtra("id", id as Int)
+        i.putExtra("id", id)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //startActivity(i, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())

@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
@@ -17,11 +16,11 @@ import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.databinding.EditDiscountBinding
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
-import com.jsoft.pos.ui.utils.LockHandler
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import com.jsoft.pos.ui.views.tax.AssignItemActivity
 import kotlinx.android.synthetic.main.activity_edit_discount.*
 
-class EditDiscountActivity : AppCompatActivity() {
+class EditDiscountActivity : AutoLockActivity() {
 
     private val ASSIGN_REQ = 1
 
@@ -87,6 +86,8 @@ class EditDiscountActivity : AppCompatActivity() {
         viewModel.saveSuccess.observe(this, Observer {
             if (it == true) {
                 onBackPressed()
+            } else {
+                AlertUtil.showToast(this, R.string.fail_to_save, "discount")
             }
         })
 
@@ -110,20 +111,11 @@ class EditDiscountActivity : AppCompatActivity() {
 
         viewModel.deleteSuccess.observe(this, Observer {
             when (it) {
-                false -> AlertUtil.showToast(this, resources.getString(R.string.fail_to_delete, "discount"))
+                false -> AlertUtil.showToast(this, R.string.fail_to_delete, "discount")
                 true -> onBackPressed()
             }
         })
 
-        LockHandler.navigated(this, false)
-
-    }
-
-
-
-    override fun onBackPressed() {
-        LockHandler.navigated(this, true)
-        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

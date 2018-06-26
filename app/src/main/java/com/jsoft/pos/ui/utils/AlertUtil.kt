@@ -26,6 +26,10 @@ class AlertUtil {
             showToast(context, context?.getString(stringRes))
         }
 
+        fun showToast(context: Context?, stringRes: Int, vararg args: String) {
+            showToast(context, context?.getString(stringRes, args))
+        }
+
         fun showToast(context: Context?, msg: String?) {
             val toast = Toast(context)
             val layout = LayoutInflater.from(context).inflate(R.layout.layout_toast, null, false)

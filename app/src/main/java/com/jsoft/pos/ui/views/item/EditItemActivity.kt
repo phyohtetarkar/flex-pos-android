@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,13 +18,13 @@ import com.jsoft.pos.ui.custom.CustomViewAdapter
 import com.jsoft.pos.ui.utils.AlertUtil
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.utils.FileUtil
-import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.SimpleListDialogFragment
 import com.jsoft.pos.ui.views.category.EditCategoryActivity
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import com.jsoft.pos.ui.views.unit.EditUnitFragment
 import kotlinx.android.synthetic.main.activity_edit_item.*
 
-class EditItemActivity : AppCompatActivity() {
+class EditItemActivity : AutoLockActivity() {
 
     private val PICKIMAGE = 1
 
@@ -115,13 +114,13 @@ class EditItemActivity : AppCompatActivity() {
         }
 
         btnRemoveImage.setOnClickListener {
-            viewModel.removeImage()
             imageViewItemImage.visibility = View.INVISIBLE
             btnRemoveImage.visibility = View.GONE
             btnAddImage.visibility = View.VISIBLE
 
-            viewModel.item.value?.id?.takeIf { it == 0L }.apply {
-                FileUtil.deleteImage(this@EditItemActivity, viewModel.item.value?.image)
+            viewModel.item.value?.also {
+                FileUtil.deleteImage(this@EditItemActivity, it.image)
+                it.image = null
             }
         }
 
@@ -131,12 +130,6 @@ class EditItemActivity : AppCompatActivity() {
             }, {})
         }
 
-        LockHandler.navigated(this, false)
-    }
-
-    override fun onBackPressed() {
-        LockHandler.navigated(this, true)
-        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -149,7 +142,6 @@ class EditItemActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
             R.id.action_save -> {
-                FileUtil.deleteImage(this, viewModel.imageToDelete)
                 viewModel.save()
                 onBackPressed()
             }

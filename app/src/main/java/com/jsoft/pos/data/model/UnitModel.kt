@@ -53,7 +53,7 @@ abstract class UnitDao : BaseDao<Unit> {
     @Query("SELECT COUNT(*) FROM unit")
     abstract fun findCount(): LiveData<Long>
 
-    @Query("SELECT * FROM unit WHERE unique_name = :name LIMIT 1")
+    @Query("SELECT * FROM unit WHERE unique_name = UPPER(:name) LIMIT 1")
     abstract fun findByUniqueNameSync(name: String): Unit?
 
     @Transaction

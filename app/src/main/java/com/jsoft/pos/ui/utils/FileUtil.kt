@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import com.jsoft.pos.R
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -107,7 +106,13 @@ object FileUtil {
 
     }
 
-    fun readReceipt(context: Context, name: String?): Uri? {
+    fun readReceipt(context: Context, name: String?): Bitmap? {
+        return getReceiptUri(context, name)?.let {
+            BitmapFactory.decodeStream(context.contentResolver?.openInputStream(it))
+        }
+    }
+
+    fun getReceiptUri(context: Context, name: String?): Uri? {
         if (!name.isNullOrEmpty()) {
 
             val dir = context.getExternalFilesDir("receipts")
@@ -127,23 +132,20 @@ object FileUtil {
 
         if (!name.isNullOrEmpty()) {
 
-            var fin: FileInputStream? = null
-
             try {
                 val dir = context.getDir("item_image", Context.MODE_PRIVATE)
                 val file = File(dir, name)
 
-                fin = FileInputStream(file)
-
-                return BitmapFactory.decodeStream(fin)
+                if (file.exists()) {
+                    return Uri.fromFile(file).let {
+                        BitmapFactory.decodeStream(context.contentResolver?.openInputStream(it))
+                    }
+                }
 
             } catch (e: Exception) {
                 e.printStackTrace()
                 AlertUtil.showToast(context, "Error reading image")
-            } finally {
-                fin?.close()
             }
-
         }
 
         val bitmapDrawable: BitmapDrawable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

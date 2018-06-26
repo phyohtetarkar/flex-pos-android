@@ -55,14 +55,16 @@ class CategoriesFragment : SimpleListFragment<CategoryVO>() {
         get() = viewModel
 
     override fun onItemTouch(position: Int) {
-        showEdit(adapter.getItemAt(position).id)
-    }
+        var id = 0
 
-    override fun showEdit(id: Any) {
+        if (position > -1) {
+            id = adapter.getItemAt(position).id
+        }
+
         LockHandler.navigated(activity, true)
 
         val i = Intent(context, EditCategoryActivity::class.java)
-        i.putExtra("id", id as Int)
+        i.putExtra("id", id)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //startActivity(i, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
@@ -70,7 +72,6 @@ class CategoriesFragment : SimpleListFragment<CategoryVO>() {
         } else {
             startActivity(i)
         }
-
     }
 
 }

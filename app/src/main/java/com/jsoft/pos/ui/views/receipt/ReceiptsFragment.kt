@@ -83,6 +83,11 @@ class ReceiptsFragment : AbstractListFragment<Sale>() {
     get() = adapter
 
     override fun onItemTouch(position: Int) {
+
+        if (position == -1) {
+            return
+        }
+
         LockHandler.navigated(activity, true)
 
         val intent = Intent(context, ReceiptDetailActivity::class.java)

@@ -7,7 +7,7 @@
         android:title="@string/search"
         android:orderInCategory="100"
         android:icon="@drawable/ic_search_dark"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
 
     <item
@@ -15,7 +15,7 @@
         android:title="Receipt"
         android:orderInCategory="200"
         android:icon="@drawable/layer_receipt_drawable"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom|collapseActionView"/>
 
     <!--<item
         android:id="@+id/action_scan"

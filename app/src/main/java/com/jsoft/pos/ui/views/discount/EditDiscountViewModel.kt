@@ -66,7 +66,8 @@ class EditDiscountViewModel(application: Application) : AndroidViewModel(applica
             }
         }.takeUnless { hasErrors }?.let {
             DaoWorkerAsync<Discount>({
-                if (dao.findByUniqueNameSync(it.name) != null) {
+                val src = dao.findByUniqueNameSync(it.name)
+                if (src != null && src.id != it.id) {
                     nameUnique.postValue(false)
                     nameValid.postValue(false)
                     return@DaoWorkerAsync false

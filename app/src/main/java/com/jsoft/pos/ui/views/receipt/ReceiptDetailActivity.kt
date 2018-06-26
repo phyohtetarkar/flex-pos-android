@@ -10,7 +10,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -22,10 +21,11 @@ import com.jsoft.pos.ui.custom.CustomViewAdapter
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.utils.FileUtil
 import com.jsoft.pos.ui.utils.LockHandler
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import com.jsoft.pos.ui.views.sale.CheckoutActivity
 import kotlinx.android.synthetic.main.activity_receipt_detail.*
 
-class ReceiptDetailActivity : AppCompatActivity() {
+class ReceiptDetailActivity : AutoLockActivity() {
 
     private lateinit var viewModel: ReceiptDetailViewModel
     private var historyMode = false
@@ -68,7 +68,7 @@ class ReceiptDetailActivity : AppCompatActivity() {
         viewModel.sale.observe(this, Observer {
             if (historyMode) {
                 FileUtil.readReceipt(this, it?.receipt)?.also {
-                    imageViewReceipt.setImageURI(it)
+                    imageViewReceipt.setImageBitmap(it)
                 }
             } else {
                 binding.sale = it
@@ -92,7 +92,7 @@ class ReceiptDetailActivity : AppCompatActivity() {
         })
 
         fabSendReceipt.setOnClickListener {
-            val uri = FileUtil.readReceipt(this, viewModel.sale.value?.receipt)
+            val uri = FileUtil.getReceiptUri(this, viewModel.sale.value?.receipt)
 
             uri?.also {
                 val emailIntent = Intent(Intent.ACTION_SEND)
@@ -121,13 +121,6 @@ class ReceiptDetailActivity : AppCompatActivity() {
             }
         }
 
-        LockHandler.navigated(this, false)
-
-    }
-
-    override fun onBackPressed() {
-        LockHandler.navigated(this, true)
-        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

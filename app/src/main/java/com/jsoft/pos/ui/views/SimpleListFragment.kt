@@ -29,7 +29,7 @@ abstract class SimpleListFragment<T> : AbstractListFragment<T>() {
 
         if (fabSimpleList.visibility == View.VISIBLE) {
 
-            fabSimpleList.setOnClickListener { showEdit(0) }
+            fabSimpleList.setOnClickListener { onItemTouch(-1) }
 
             recyclerViewSimpleList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
@@ -54,7 +54,5 @@ abstract class SimpleListFragment<T> : AbstractListFragment<T>() {
         get() = recyclerViewSimpleList
 
     override val viewStub: View by lazy { viewStubSimpleList.inflate() }
-
-    protected abstract fun showEdit(id: Any)
 
 }

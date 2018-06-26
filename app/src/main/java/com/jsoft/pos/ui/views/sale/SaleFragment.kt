@@ -102,6 +102,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         }
 
         app.toolbarMain.addView(mSpinner)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -125,7 +126,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_sale, menu)
 
-        icon = menu?.findItem(R.id.action_receipt)?.icon as LayerDrawable?
+        icon = menu?.findItem(R.id.action_receipt)?.icon as? LayerDrawable
 
         Handler().post {
             val v = activity?.findViewById<View>(R.id.action_receipt)
@@ -144,6 +145,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             }
 
         })
+        super.onCreateOptionsMenu(menu, inflater)
 
     }
 
@@ -176,12 +178,15 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         }
     }
 
+    override fun onDestroyOptionsMenu() {
+        super.onDestroyOptionsMenu()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         activity?.toolbarMain?.removeView(mSpinner)
         CheckOutItemsHolder.removeOnListChangeListener(listChangeListener)
         mSpinner = null
-        icon = null
     }
 
     override fun onDestroy() {
@@ -196,15 +201,15 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     override val _adapter: RecyclerView.Adapter<BindingViewHolder>
         get() = adapter
 
-    override fun showEdit(id: Any) {
-
-    }
-
     override fun onItemTouch(position: Int) {
 
     }
 
     override fun onItemTouch(view: View, position: Int) {
+
+        if (position == -1) {
+            return
+        }
 
         val itemVO = adapter.getItemAt(position)
 
@@ -263,19 +268,20 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
         val badge: BadgeDrawable
 
-        // Reuse drawable if possible
-        val reuse = icon?.findDrawableByLayerId(R.id.ic_badge)
-        if (reuse != null && reuse is BadgeDrawable) {
+        val reuse =  icon?.findDrawableByLayerId(R.id.ic_badge)
+        if (reuse != null && reuse is BadgeDrawable){
             badge = reuse
         } else {
-            badge = BadgeDrawable(activity!!)
+            badge = BadgeDrawable(context!!)
             val app = activity as MainActivity
             app.lockDrawer()
         }
 
-        badge.setCount(CheckOutItemsHolder.itemCount.toString())
         icon?.mutate()
         icon?.setDrawableByLayerId(R.id.ic_badge, badge)
+
+        badge.setCount(CheckOutItemsHolder.itemCount.toString())
+
     }
 
 }

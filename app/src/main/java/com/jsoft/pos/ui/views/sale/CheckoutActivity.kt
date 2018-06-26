@@ -3,14 +3,12 @@ package com.jsoft.pos.ui.views.sale
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.jsoft.pos.R
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
-import com.jsoft.pos.ui.utils.LockHandler
-import java.util.concurrent.locks.Lock
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 
-class CheckoutActivity : AppCompatActivity() {
+class CheckoutActivity : AutoLockActivity() {
 
     private lateinit var viewModel: CheckoutViewModel
 
@@ -31,13 +29,7 @@ class CheckoutActivity : AppCompatActivity() {
                 .replace(R.id.contentCheckout, SaleDetailFragment.getInstance(intent.getLongExtra("id", 0)))
                 .commit()
 
-        LockHandler.navigated(this, false)
 
-    }
-
-    override fun onBackPressed() {
-        LockHandler.navigated(this, true)
-        super.onBackPressed()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

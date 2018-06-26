@@ -2,32 +2,32 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/darkLighter"/>
-            <stroke android:color="@color/darkLighter"
+            <solid android:color="@color/colorAccentDark"/>
+            <stroke android:color="@color/colorAccentDark"
                 android:width="1dp"/>
             <corners android:radius="2dp"/>
         </shape>
     </item>
     <item android:state_checked="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/darkLighter"/>
-            <stroke android:color="@color/darkLighter"
+            <solid android:color="@color/colorAccentDark"/>
+            <stroke android:color="@color/colorAccentDark"
                 android:width="1dp"/>
             <corners android:radius="2dp"/>
         </shape>
     </item>
     <item android:state_activated="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/darkLighter"/>
-            <stroke android:color="@color/darkLighter"
+            <solid android:color="@color/colorAccentDark"/>
+            <stroke android:color="@color/colorAccentDark"
                 android:width="1dp"/>
             <corners android:radius="2dp"/>
         </shape>
     </item>
     <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/darkLighter"/>
-            <stroke android:color="@color/darkLighter"
+            <solid android:color="@color/colorAccentDark"/>
+            <stroke android:color="@color/colorAccentDark"
                 android:width="1dp"/>
             <corners android:radius="2dp"/>
         </shape>

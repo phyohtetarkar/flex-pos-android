@@ -49,10 +49,12 @@ class TaxesFragment : SimpleListFragment<Tax>() {
         get() = viewModel
 
     override fun onItemTouch(position: Int) {
-        showEdit(adapter.getItemAt(position).id)
-    }
+        var id = 0
 
-    override fun showEdit(id: Any) {
+        if (position > -1) {
+            id = adapter.getItemAt(position).id
+        }
+
         LockHandler.navigated(activity, true)
 
         val i = Intent(context, EditTaxActivity::class.java)

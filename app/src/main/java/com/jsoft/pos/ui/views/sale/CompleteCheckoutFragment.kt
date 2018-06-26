@@ -20,6 +20,10 @@ class CompleteCheckoutFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         viewModel = activity?.let { ViewModelProviders.of(it).get(CheckoutViewModel::class.java) }
+        viewModel?.sale?.value?.also {
+            it.change = 0.0
+            it.payPrice = 0.0
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

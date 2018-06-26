@@ -28,8 +28,6 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         return@switchMap liveItem
     }
 
-    var imageToDelete: String? = null
-
     val categories: LiveData<List<Category>> by lazy { categoryDao.findAllCategories() }
     val units: LiveData<List<Unit>> by lazy { unitDao.findAllUnits() }
 
@@ -59,11 +57,11 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     init {
         val app = application as FlexPosApplication
-        categoryDao = app.db!!.categoryDao()
-        unitDao = app.db!!.unitDao()
-        repository = ItemRepository(app.db!!.itemDao(), unitDao, categoryDao)
-        taxDao = app.db!!.taxDao()
-        discountDao = app.db!!.discountDao()
+        categoryDao = app.db.categoryDao()
+        unitDao = app.db.unitDao()
+        repository = ItemRepository(app.db.itemDao(), unitDao, categoryDao)
+        taxDao = app.db.taxDao()
+        discountDao = app.db.discountDao()
     }
 
     fun save() {
@@ -83,13 +81,6 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         },{
             deleteSuccess.value = false
         }).execute(item.value)
-    }
-
-    fun removeImage() {
-        item.value?.image = null
-        item.value?.id?.takeIf { it > 0 }.apply {
-            imageToDelete = item.value?.image
-        }
     }
 
 }

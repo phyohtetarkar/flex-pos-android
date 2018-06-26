@@ -1,16 +1,10 @@
 package com.jsoft.pos.ui.custom
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.Paint
-import android.graphics.PixelFormat
-import android.graphics.Rect
-import android.graphics.Typeface
+import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.support.v4.content.ContextCompat
-
 import com.jsoft.pos.R
 
 class BadgeDrawable(context: Context) : Drawable() {
@@ -48,8 +42,19 @@ class BadgeDrawable(context: Context) : Drawable() {
         if (!mWillDraw) {
             return
         }
-        val width = (bounds.right - bounds.left).toFloat()
-        val height = (bounds.bottom - bounds.top).toFloat()
+        //val width = (bounds.right - bounds.left).toFloat()
+        //val height = (bounds.bottom - bounds.top).toFloat()
+
+        val width: Float
+        val height: Float
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            width = (bounds.right - bounds.left).toFloat()
+            height = (bounds.bottom - bounds.top).toFloat()
+        } else {
+            width = 72.toFloat()
+            height = 72.toFloat()
+        }
 
         // Position the badge in the top-right quadrant of the icon.
 
@@ -75,6 +80,8 @@ class BadgeDrawable(context: Context) : Drawable() {
             canvas.drawText("99+", centerX, textY, mTextPaint)
         else
             canvas.drawText(mCount, centerX, textY, mTextPaint)
+
+
     }
 
     /*

@@ -17,6 +17,7 @@
 
     <color name="colorError">#D13638</color>
     <color name="colorImportant">#D13638</color>
+    <color name="colorImportantDark">#a72628</color>
     <color name="colorBack">#EEEEEE</color>
     <color name="colorGrayNormal">#e0e0e0</color>
     <color name="colorDisabled">#BBBBBB</color>

@@ -38,7 +38,7 @@ abstract class DiscountDao : BaseDao<Discount> {
     @Delete
     protected abstract fun deleteItemDiscounts(itemDiscounts: List<ItemDiscount>)
 
-    @Query("SELECT * FROM discount WHERE unique_name = :name LIMIT 1")
+    @Query("SELECT * FROM discount WHERE unique_name = UPPER(:name) LIMIT 1")
     abstract fun findByUniqueNameSync(name: String): Discount?
 
     @Transaction

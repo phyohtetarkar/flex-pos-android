@@ -56,7 +56,7 @@ class UnitsFragment : SimpleListFragment<Unit>() {
 
         viewModel.deleteSuccess.observe(this, Observer {
             if (it == false) {
-                AlertUtil.showToast(activity!!, resources.getString(R.string.fail_to_delete, "unit"))
+                AlertUtil.showToast(activity!!, R.string.fail_to_delete, "unit")
             }
         })
     }
@@ -99,10 +99,12 @@ class UnitsFragment : SimpleListFragment<Unit>() {
         get() = viewModel
 
     override fun onItemTouch(position: Int) {
-        showEdit(adapter.getItemAt(position).id)
-    }
+        var id = 0
 
-    override fun showEdit(id: Any) {
+        if (position > -1) {
+            id = adapter.getItemAt(position).id
+        }
+
         val ft = fragmentManager?.beginTransaction()
         val prev = fragmentManager?.findFragmentByTag("dialog")
         if (prev != null) {
