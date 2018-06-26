@@ -68,6 +68,7 @@ class EditDiscountActivity : AutoLockActivity() {
         })
 
         btnAssignDiscount.setOnClickListener {
+            navigated = true
             val intent = Intent(this, AssignItemActivity::class.java)
             intent.putExtra("id", discountId)
             intent.putExtra("type", Item.AssignType.DISCOUNT)

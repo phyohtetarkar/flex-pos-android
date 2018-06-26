@@ -15,6 +15,7 @@ import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimpleListViewModel
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 
 class CategoriesFragment : SimpleListFragment<CategoryVO>() {
 
@@ -61,7 +62,7 @@ class CategoriesFragment : SimpleListFragment<CategoryVO>() {
             id = adapter.getItemAt(position).id
         }
 
-        LockHandler.navigated(activity, true)
+        (activity as? AutoLockActivity)?.navigated = true
 
         val i = Intent(context, EditCategoryActivity::class.java)
         i.putExtra("id", id)

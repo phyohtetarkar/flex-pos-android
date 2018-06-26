@@ -95,7 +95,7 @@ class EditCategoryActivity : AutoLockActivity() {
 
         when (item.itemId) {
             android.R.id.home -> {
-                supportFinishAfterTransition()
+                onBackPressed()
                 return true
             }
             R.id.action_save -> viewModel.save()

@@ -23,6 +23,4 @@ data class Tax(
     val taxDesc: String
         get() = "${amount.toSimplifyString()} %"
 
-    val totalAmount: Double
-        get() = 0.0
 }

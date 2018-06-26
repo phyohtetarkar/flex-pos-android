@@ -69,6 +69,7 @@ class EditTaxActivity : AutoLockActivity() {
         })
 
         btnAssignTax.setOnClickListener {
+            navigated = true
             val intent = Intent(this, AssignItemActivity::class.java)
             intent.putExtra("id", taxId)
             intent.putExtra("type", Item.AssignType.TAX)

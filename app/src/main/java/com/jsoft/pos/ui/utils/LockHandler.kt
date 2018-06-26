@@ -20,12 +20,12 @@ object LockHandler {
         val isEnable = PreferenceManager.getDefaultSharedPreferences(activity)
                 .getBoolean("p_app_lock", false)
 
-        if (isEnable && app?.isNavigation == false) {
+        if (isEnable) {
             backFreeze = true
-            val ft = activity.supportFragmentManager.beginTransaction()
-            val prev = activity.supportFragmentManager?.findFragmentByTag("lock")
+            val ft = activity?.supportFragmentManager?.beginTransaction()
+            val prev = activity?.supportFragmentManager?.findFragmentByTag("lock")
             if (prev != null) {
-                ft.remove(prev)
+                ft?.remove(prev)
             }
             val frag = ServiceLocator.locate(AuthorizeLockFragment::class.java)
             frag?.show(ft, "lock")

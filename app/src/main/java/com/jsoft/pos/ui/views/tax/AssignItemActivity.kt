@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -18,11 +17,11 @@ import com.jsoft.pos.data.entity.Item
 import com.jsoft.pos.data.model.ItemSearch
 import com.jsoft.pos.ui.custom.SimpleDividerItemDecoration
 import com.jsoft.pos.ui.utils.ContextWrapperUtil
-import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.SimpleListAdapter
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import kotlinx.android.synthetic.main.activity_checkable_list.*
 
-class AssignItemActivity : AppCompatActivity() {
+class AssignItemActivity : AutoLockActivity() {
 
     private lateinit var viewModel: AssignItemViewModel
     private lateinit var adapter: SimpleListAdapter<Item>
@@ -80,13 +79,6 @@ class AssignItemActivity : AppCompatActivity() {
             }
         })
 
-        LockHandler.navigated(this, false)
-
-    }
-
-    override fun onBackPressed() {
-        LockHandler.navigated(this, true)
-        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

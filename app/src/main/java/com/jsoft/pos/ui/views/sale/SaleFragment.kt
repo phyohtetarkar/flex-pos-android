@@ -13,7 +13,6 @@ import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
@@ -29,13 +28,13 @@ import com.jsoft.pos.data.entity.SaleItem
 import com.jsoft.pos.data.model.ItemVOSearch
 import com.jsoft.pos.ui.custom.BadgeDrawable
 import com.jsoft.pos.ui.custom.RoundedImageView
-import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.utils.Utils
 import com.jsoft.pos.ui.views.BindingViewHolder
 import com.jsoft.pos.ui.views.ListViewModel
 import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimplePagedListAdapter
 import com.jsoft.pos.ui.views.item.ItemVOAdapter
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import kotlinx.android.synthetic.main.fragment_simple_list.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import kotlinx.android.synthetic.main.layout_item_compact.view.*
@@ -47,7 +46,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     private lateinit var spinnerAdapter: ArrayAdapter<Category>
     private lateinit var viewModel: SaleViewModel
     private var mSpinner: AppCompatSpinner? = null
-    private var menu: Menu? = null
 
     private val receiptPosition = IntArray(2)
 
@@ -147,8 +145,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
         super.onCreateOptionsMenu(menu, inflater)
 
-        this.menu = menu
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -157,7 +153,8 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
             R.id.action_receipt -> {
                 if (CheckOutItemsHolder.itemCount > 0) {
-                    LockHandler.navigated(activity, true)
+                    (activity as? AutoLockActivity)?.navigated = true
+
                     val intent = Intent(context, CheckoutActivity::class.java)
                     startActivity(intent)
                 }
@@ -266,7 +263,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     fun updateBadgeCount() {
 
-        val icon = menu?.findItem(R.id.action_receipt)?.icon as? LayerDrawable
+        val icon = activity?.toolbarMain?.menu?.findItem(R.id.action_receipt)?.icon as? LayerDrawable
 
         val badge: BadgeDrawable
 

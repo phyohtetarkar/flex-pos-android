@@ -9,10 +9,10 @@ import android.support.v7.util.DiffUtil
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Tax
-import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListFragment
 import com.jsoft.pos.ui.views.SimpleListViewModel
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 
 class TaxesFragment : SimpleListFragment<Tax>() {
 
@@ -55,7 +55,7 @@ class TaxesFragment : SimpleListFragment<Tax>() {
             id = adapter.getItemAt(position).id
         }
 
-        LockHandler.navigated(activity, true)
+        (activity as? AutoLockActivity)?.navigated = true
 
         val i = Intent(context, EditTaxActivity::class.java)
         i.putExtra("id", id as Int)

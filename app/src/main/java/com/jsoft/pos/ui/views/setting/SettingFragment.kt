@@ -8,8 +8,8 @@ import android.support.v7.preference.PreferenceManager
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.ui.utils.AlertUtil
-import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.utils.ServiceLocator
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import com.jsoft.pos.ui.views.lock.EditLockFragment
 
 class SettingFragment : PreferenceFragmentCompat()
@@ -54,7 +54,7 @@ class SettingFragment : PreferenceFragmentCompat()
         }
 
         findPreference("p_backup").setOnPreferenceClickListener {
-            LockHandler.navigated(activity, true)
+            (activity as? AutoLockActivity)?.navigated = true
             return@setOnPreferenceClickListener false
         }
 

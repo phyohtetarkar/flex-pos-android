@@ -15,11 +15,11 @@ import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Sale
 import com.jsoft.pos.data.model.SaleSearch
-import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.AbstractListFragment
 import com.jsoft.pos.ui.views.BindingViewHolder
 import com.jsoft.pos.ui.views.ListViewModel
 import com.jsoft.pos.ui.views.SimplePagedListAdapter
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import kotlinx.android.synthetic.main.fragment_simple_list.*
 
 class ReceiptsFragment : AbstractListFragment<Sale>() {
@@ -88,7 +88,7 @@ class ReceiptsFragment : AbstractListFragment<Sale>() {
             return
         }
 
-        LockHandler.navigated(activity, true)
+        (activity as? AutoLockActivity)?.navigated = true
 
         val intent = Intent(context, ReceiptDetailActivity::class.java)
         intent.putExtra("id", adapter.getItemAt(position).id)

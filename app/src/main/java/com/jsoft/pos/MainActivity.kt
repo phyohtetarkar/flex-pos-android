@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import com.jsoft.pos.ui.utils.AlertUtil
@@ -17,6 +16,7 @@ import com.jsoft.pos.ui.utils.ContextWrapperUtil
 import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.utils.ServiceLocator
 import com.jsoft.pos.ui.views.discount.DiscountsFragment
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import com.jsoft.pos.ui.views.nav.ResourcesFragment
 import com.jsoft.pos.ui.views.receipt.ReceiptsFragment
 import com.jsoft.pos.ui.views.sale.CheckOutItemsHolder
@@ -26,7 +26,7 @@ import com.jsoft.pos.ui.views.tax.TaxesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AutoLockActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var mPendingRunnable: (() -> Unit)? = null
     private lateinit var toggle: ActionBarDrawerToggle
@@ -82,18 +82,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navigationViewMain.setNavigationItemSelectedListener(this)
 
+
         LockHandler.handle(this)
 
     }
 
     override fun onResume() {
         super.onResume()
-        LockHandler.navigated(this, false)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        LockHandler.handle(this)
+        navigationViewMain.menu.getItem(0).isChecked = true
+        onNavigationItemSelected(navigationViewMain.menu.findItem(R.id.action_pos))
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

@@ -13,12 +13,8 @@ import java.util.*
 
 class BackupAdapter : ListAdapter<String, BackupAdapter.BackupViewHolder>(DIFF_CALLBACK) {
 
-    interface BackupActionListener {
-        fun restore(position: Int)
-        fun delete(position: Int)
-    }
-
-    var backupActionListener: BackupActionListener? = null
+    var onRestore: ((Int) -> Unit)? = null
+    var onDelete: ((Int) -> Unit)? = null
 
     private val formatFrom = SimpleDateFormat("yyyyMMddhhmmss", Locale.ENGLISH)
     private val formatTo = SimpleDateFormat("yyyy/MM/dd hh:mm:ss a", Locale.ENGLISH)
@@ -55,11 +51,11 @@ class BackupAdapter : ListAdapter<String, BackupAdapter.BackupViewHolder>(DIFF_C
         init {
 
             binding.root.imvDeleteBackup.setOnClickListener {
-                backupActionListener?.delete(adapterPosition)
+                onDelete?.invoke(adapterPosition)
             }
 
             binding.root.imvRestoreBackup.setOnClickListener {
-                backupActionListener?.restore(adapterPosition)
+                onRestore?.invoke(adapterPosition)
             }
         }
 

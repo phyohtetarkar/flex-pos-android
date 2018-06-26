@@ -13,10 +13,10 @@ import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.model.ItemVOSearch
-import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.AbstractListFragment
 import com.jsoft.pos.ui.views.PagedListViewModel
 import com.jsoft.pos.ui.views.SimplePagedListAdapter
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import kotlinx.android.synthetic.main.fragment_items.*
 
 class ItemsFragment : AbstractListFragment<ItemVO>() {
@@ -87,7 +87,7 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
             id = adapter.getItemAt(position).id
         }
 
-        LockHandler.navigated(activity, true)
+        (activity as? AutoLockActivity)?.navigated = true
 
         val i = Intent(context, EditItemActivity::class.java)
         i.putExtra("id", id)

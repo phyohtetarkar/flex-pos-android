@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -15,10 +14,10 @@ import android.view.View
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.R
 import com.jsoft.pos.ui.utils.AlertUtil
-import com.jsoft.pos.ui.utils.LockHandler
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import kotlinx.android.synthetic.main.activity_backup.*
 
-class BackupActivity : AppCompatActivity() {
+class BackupActivity : AutoLockActivity() {
 
     private var adapter: BackupAdapter? = null
     private var viewModel: BackupViewModel? = null
@@ -44,21 +43,17 @@ class BackupActivity : AppCompatActivity() {
 
         recyclerViewBackup.adapter = adapter
 
-        adapter?.backupActionListener = object : BackupAdapter.BackupActionListener {
-            override fun restore(position: Int) {
-                viewModel?.restoreBackup(adapter?.getItemAt(position))
-            }
+        adapter?.onRestore = {
+            viewModel?.restoreBackup(adapter?.getItemAt(it))
+        }
 
-            override fun delete(position: Int) {
-                AlertUtil.showConfirmDelete(this@BackupActivity, {
-                    viewModel?.deleteBackup(adapter?.getItemAt(position))
-                    viewModel?.loadBackups()
-                }, {
+        adapter?.onDelete = {
+            AlertUtil.showConfirmDelete(this@BackupActivity, {
+                viewModel?.deleteBackup(adapter?.getItemAt(it))
+                viewModel?.loadBackups()
+            }, {
 
-                })
-
-            }
-
+            })
         }
 
         viewModel = ViewModelProviders.of(this).get(BackupViewModel::class.java)
@@ -85,9 +80,9 @@ class BackupActivity : AppCompatActivity() {
 
         viewModel?.restoreSuccess?.observe(this, Observer {
             if (it == true) {
-                AlertUtil.showToast(this, "Restore success")
                 val app = application as FlexPosApplication
                 app.loadDatabase()
+                AlertUtil.showToast(this, "Restore success")
             } else {
                 AlertUtil.showToast(this, "Restore failed")
             }
@@ -102,12 +97,6 @@ class BackupActivity : AppCompatActivity() {
             }
         })
 
-        LockHandler.navigated(this,false)
-    }
-
-    override fun onBackPressed() {
-        LockHandler.navigated(this, true)
-        super.onBackPressed()
     }
 
     override fun onResume() {

@@ -43,13 +43,6 @@ abstract class LockFragment : DialogFragment() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-       /* val window = dialog.window
-
-        window?.setLayout(MATCH_PARENT, MATCH_PARENT)*/
-    }
-
     private fun onClick(view: View) {
         val btn = view as Button
 

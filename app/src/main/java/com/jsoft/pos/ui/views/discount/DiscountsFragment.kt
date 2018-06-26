@@ -10,11 +10,11 @@ import android.support.v7.widget.RecyclerView
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Discount
-import com.jsoft.pos.ui.utils.LockHandler
 import com.jsoft.pos.ui.views.BindingViewHolder
 import com.jsoft.pos.ui.views.ListViewModel
 import com.jsoft.pos.ui.views.SimpleListAdapter
 import com.jsoft.pos.ui.views.SimpleListFragment
+import com.jsoft.pos.ui.views.lock.AutoLockActivity
 
 class DiscountsFragment : SimpleListFragment<Discount>() {
 
@@ -56,7 +56,7 @@ class DiscountsFragment : SimpleListFragment<Discount>() {
             id = adapter.getItemAt(position).id
         }
 
-        LockHandler.navigated(activity, true)
+        (activity as? AutoLockActivity)?.navigated = true
 
         val i = Intent(context, EditDiscountActivity::class.java)
         i.putExtra("id", id)
