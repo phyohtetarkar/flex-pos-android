@@ -53,7 +53,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/textView3"
+                                android:id="@+id/tvReceiptHeader"
                                 style="@style/HeaderText.Normal"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                                 android:textSize="12sp"
                                 app:engText="@{sale.receiptCode}"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                                app:layout_constraintTop_toBottomOf="@+id/tvReceiptHeader"
                                 tools:text="10001" />
 
                             <View

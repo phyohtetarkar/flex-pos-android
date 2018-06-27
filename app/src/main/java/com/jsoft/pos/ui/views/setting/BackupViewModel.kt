@@ -6,6 +6,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.os.Environment
+import com.jsoft.pos.FlexPosApplication
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -112,6 +113,8 @@ class BackupViewModel(application: Application) : AndroidViewModel(application) 
                 val dbBkp = File(bkp, dbDir)
 
                 if (dbBkp.exists()) {
+                    getApplication<FlexPosApplication>().db.close()
+
                     dbSource.listFiles().forEach { it.delete() }
 
                     dbBkp.listFiles().forEach {

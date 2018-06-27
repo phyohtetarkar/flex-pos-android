@@ -21,11 +21,17 @@ class SettingFragment : PreferenceFragmentCompat()
         val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
 
         findPreference("p_shop_name").apply {
-            summary = prefs.getString("p_shop_name", "Flex POS")
+            summary = prefs.getString("p_shop_name", resources.getString(R.string.pref_receipt_header_summary))
+            if (summary.isEmpty()) {
+                setSummary(R.string.pref_receipt_header_summary)
+            }
         }
 
-        findPreference("p_shop_mail").apply {
-            summary = prefs.getString("p_shop_mail", "mail for sending receipt")
+        findPreference("p_mail_subject").apply {
+            summary = prefs.getString("p_mail_subject", resources.getString(R.string.pref_mail_subject_summary))
+            if (summary.isEmpty()) {
+                setSummary(R.string.pref_mail_subject_summary)
+            }
         }
 
         // next version
@@ -101,16 +107,25 @@ class SettingFragment : PreferenceFragmentCompat()
                 }
             }
 
-            else -> {
+            "p_shop_name" -> {
                 val pref = findPreference(key)
-                val origin = pref.summary.toString()
-                pref.summary = sharedPreferences?.getString(key, origin)?.let {
-                    if (it.isEmpty()) {
-                        return@let origin
-                    } else {
-                        return@let it
-                    }
+                pref.summary = sharedPreferences?.getString(key, resources.getString(R.string.pref_receipt_header_summary))
+
+                if (pref.summary.isEmpty()) {
+                    pref.setSummary(R.string.pref_receipt_header_summary)
                 }
+            }
+
+            "p_mail_subject" -> {
+                val pref = findPreference(key)
+                pref.summary = sharedPreferences?.getString(key, resources.getString(R.string.pref_mail_subject_summary))
+
+                if (pref.summary.isEmpty()) {
+                    pref.setSummary(R.string.pref_mail_subject_summary)
+                }
+            }
+
+            else -> {
             }
         }
 

@@ -1,28 +1,37 @@
 package com.jsoft.pos.ui.views.item
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.SearchView
+import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
+import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.model.ItemVOSearch
+import com.jsoft.pos.ui.utils.Utils
 import com.jsoft.pos.ui.views.AbstractListFragment
 import com.jsoft.pos.ui.views.PagedListViewModel
 import com.jsoft.pos.ui.views.SimplePagedListAdapter
 import com.jsoft.pos.ui.views.lock.AutoLockActivity
 import kotlinx.android.synthetic.main.fragment_items.*
+import kotlinx.android.synthetic.main.layout_app_bar_main.*
 
 class ItemsFragment : AbstractListFragment<ItemVO>() {
 
     private lateinit var adapter: SimplePagedListAdapter<ItemVO>
+    private lateinit var spinnerAdapter: ArrayAdapter<Category>
     private lateinit var viewModel: ItemsViewModel
+
+    private var mSpinner: AppCompatSpinner? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +39,28 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
         viewModel = ViewModelProviders.of(this).get(ItemsViewModel::class.java)
 
         adapter = ItemVOAdapter(R.layout.layout_item)
+
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+
+        inflater?.inflate(R.menu.menu_search, menu)
+
+        val searchView = Utils.initSearchView(activity, menu)
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.searchModel.value?.name = newText
+                return false
+            }
+
+        })
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -59,6 +90,16 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
 
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.categories.observe(this, Observer {
+            spinnerAdapter.clear()
+            spinnerAdapter.add(Category(name = "All Item"))
+            spinnerAdapter.addAll(it)
+        })
+    }
+
     override fun onResume() {
         super.onResume()
         viewModel.searchModel.value = ItemVOSearch()
@@ -67,7 +108,28 @@ class ItemsFragment : AbstractListFragment<ItemVO>() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val app = context as MainActivity
-        app.setTitle(R.string.items)
+        app.supportActionBar?.title = null
+
+        mSpinner = LayoutInflater.from(context).inflate(R.layout.layout_toolbar_spinner, app.toolbarMain, false) as AppCompatSpinner?
+        spinnerAdapter = ArrayAdapter(app.appbar_main.context, R.layout.extended_simple_list_item_1)
+        mSpinner?.adapter = spinnerAdapter
+        mSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.searchModel.value?.categoryId = spinnerAdapter.getItem(position).id
+            }
+
+        }
+
+        app.toolbarMain.addView(mSpinner)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        activity?.toolbarMain?.removeView(mSpinner)
+        mSpinner = null
     }
 
     override val recyclerView: RecyclerView

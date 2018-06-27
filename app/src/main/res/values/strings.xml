@@ -11,6 +11,7 @@
 
     <string name="taxes">Taxes</string>
     <string name="discounts">Discounts</string>
+    <string name="backups">Backups</string>
 
     <string name="app_name">Flex POS</string>
     <string name="save">Save</string>
@@ -70,7 +71,7 @@
     <string name="new_sale">New Sale</string>
     <string name="finish">Finish</string>
     <string name="clear_all">Clear All</string>
-    <string name="active_sale">Sale in progress. Please finish sale or clear first</string>
+    <string name="active_sale">Sale in progress. Please finish sale or clear items first</string>
 
     <string name="_7">7</string>
     <string name="_8">8</string>
@@ -84,5 +85,19 @@
     <string name="_0">0</string>
     <string name="clear">Clear</string>
     <string name="search">Search</string>
-    <string name="search_hint">Search...</string>
+    <string name="search_hint">Search…</string>
+    
+    <string name="edit_item">Edit Item</string>
+    <string name="create_item">Create Item</string>
+    <string name="edit_category">Edit Category</string>
+    <string name="create_category">Create Category</string>
+    <string name="edit_tax">Edit Tax</string>
+    <string name="create_tax">Create Tax</string>
+    <string name="edit_discount">Edit Discount</string>
+    <string name="create_discount">Create Discount</string>
+    <string name="receipt_detail">Receipt Detail</string>
+
+    <string name="pref_receipt_header_summary">header name on receipt</string>
+    <string name="pref_mail_subject_summary">mail subject for sending receipt</string>
+
 </resources>

@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import com.jsoft.pos.ui.utils.AlertUtil
@@ -63,6 +62,8 @@ class MainActivity : AutoLockActivity(), NavigationView.OnNavigationItemSelected
         setSupportActionBar(toolbarMain)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        supportActionBar?.title = null
+
         toggle = ActionBarDrawerToggle(
                 this, drawerLayoutMain, toolbarMain, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
 
@@ -83,22 +84,18 @@ class MainActivity : AutoLockActivity(), NavigationView.OnNavigationItemSelected
 
         navigationViewMain.setNavigationItemSelectedListener(this)
 
-
         LockHandler.handle(this)
 
-    }
-
-    override fun onResume() {
-        super.onResume()
         navigationViewMain.menu.getItem(0).isChecked = true
-        onNavigationItemSelected(navigationViewMain.menu.findItem(R.id.action_pos))
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.contentMain, ServiceLocator.locate(SaleFragment::class.java), "content")
+                .commit()
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         val id = item.itemId
-
-        Log.v("TAG", item.toString())
 
         mPendingRunnable = {
 

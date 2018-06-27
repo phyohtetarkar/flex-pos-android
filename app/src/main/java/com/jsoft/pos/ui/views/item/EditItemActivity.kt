@@ -47,6 +47,14 @@ class EditItemActivity : AutoLockActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
+        intent.getLongExtra("id", 0).also {
+            if (it > 0) {
+                supportActionBar?.setTitle(R.string.edit_item)
+            } else {
+                supportActionBar?.setTitle(R.string.create_item)
+            }
+        }
+
         edChooseCategory.onTouchDelegate = { showSelectDialog(DialogCategories())}
         edChooseUnit.onTouchDelegate = { showSelectDialog(DialogUnits()) }
 

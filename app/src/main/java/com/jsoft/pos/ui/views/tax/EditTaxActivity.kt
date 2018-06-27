@@ -46,6 +46,13 @@ class EditTaxActivity : AutoLockActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
+        if (taxId > 0) {
+            supportActionBar?.setTitle(R.string.edit_tax)
+        } else {
+            supportActionBar?.setTitle(R.string.create_tax)
+        }
+
+
         viewModel.apply {
             if (tax.value != null) {
                 return

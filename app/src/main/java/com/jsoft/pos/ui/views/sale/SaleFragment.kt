@@ -84,7 +84,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val app = context as MainActivity
-        app.toolbarMain.title = ""
+        app.supportActionBar?.title = null
 
         mSpinner = LayoutInflater.from(context).inflate(R.layout.layout_toolbar_spinner, app.toolbarMain, false) as AppCompatSpinner?
         spinnerAdapter = ArrayAdapter(app.appbar_main.context, R.layout.extended_simple_list_item_1)
@@ -169,7 +169,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         viewModel.itemSearch.value = ItemVOSearch().also { it.isAvailable = true }
 
         val app = activity as MainActivity
-        //app.invalidateOptionsMenu()
 
         if (!CheckOutItemsHolder.onSale) {
             app.unlockDrawer()

@@ -46,6 +46,14 @@ class EditDiscountActivity : AutoLockActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
+        intent.getIntExtra("id", 0).also {
+            if (it > 0) {
+                supportActionBar?.setTitle(R.string.edit_discount)
+            } else {
+                supportActionBar?.setTitle(R.string.create_discount)
+            }
+        }
+
         viewModel.apply {
             if (discount.value != null) {
                 return

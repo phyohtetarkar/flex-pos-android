@@ -33,6 +33,7 @@ class BackupActivity : AutoLockActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_dark)
+        supportActionBar?.setTitle(R.string.backups)
 
         adapter = BackupAdapter()
 

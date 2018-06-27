@@ -36,6 +36,14 @@ class EditCategoryActivity : AutoLockActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_dark)
 
+        intent.getIntExtra("id", 0).also {
+            if (it > 0) {
+                supportActionBar?.setTitle(R.string.edit_category)
+            } else {
+                supportActionBar?.setTitle(R.string.create_category)
+            }
+        }
+
         btnDeleteCategory.setOnClickListener {
             AlertUtil.showConfirmDelete(this, {
                 viewModel.delete()

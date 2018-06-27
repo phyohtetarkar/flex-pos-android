@@ -46,7 +46,7 @@ class ResourcesFragment : Fragment(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         val activity = activity as MainActivity
-        activity.setTitle(R.string.resources)
+        activity.setTitle(R.string.items)
     }
 
     override fun onClick(view: View) {

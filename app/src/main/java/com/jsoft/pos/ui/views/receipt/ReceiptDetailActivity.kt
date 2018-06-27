@@ -10,6 +10,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -42,6 +43,8 @@ class ReceiptDetailActivity : AutoLockActivity() {
         historyMode = intent.getBooleanExtra("historyMode", false)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(historyMode)
+        supportActionBar?.setTitle(R.string.receipt_detail)
+
         if (historyMode) {
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_dark)
             imageViewReceipt.visibility = View.VISIBLE
@@ -75,6 +78,9 @@ class ReceiptDetailActivity : AutoLockActivity() {
                 receiptItemAdapter.submitList(it?.saleItems)
                 groupTaxAdapter.submitList(it?.groupTaxes)
 
+                tvReceiptHeader.text = PreferenceManager.getDefaultSharedPreferences(this)
+                        .getString("p_shop_name", resources.getString(R.string.app_name))
+
                 Handler().postDelayed({
                     val w = constLayoutReceipt.width
                     val h = constLayoutReceipt.height
@@ -96,8 +102,10 @@ class ReceiptDetailActivity : AutoLockActivity() {
 
             uri?.also {
                 val emailIntent = Intent(Intent.ACTION_SEND)
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("ibelieveinlove12@gmail.com"))
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Flex POS Receipt")
+                PreferenceManager.getDefaultSharedPreferences(this)
+                        .getString("p_mail_subject", "Flex POS").also {
+                            emailIntent.putExtra(Intent.EXTRA_SUBJECT, it)
+                        }
                 emailIntent.putExtra(Intent.EXTRA_TEXT, "")
                 emailIntent.type = "image/*"
                 emailIntent.putExtra(Intent.EXTRA_STREAM, it)

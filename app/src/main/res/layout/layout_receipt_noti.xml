@@ -20,7 +20,7 @@
         android:id="@+id/notification_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/chip_accent"
+        android:background="@drawable/chip_circle_accent"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
         android:textSize="12sp"
