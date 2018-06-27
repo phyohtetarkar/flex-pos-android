@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackgroundBorderless">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_receipt_dark_drawable"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/notification_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chip_accent"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:textSize="12sp"
+        android:layout_gravity="center"
+        android:textColor="@color/whitePrimary"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"
+        tools:text="10" />
+
+</android.support.design.widget.CoordinatorLayout>

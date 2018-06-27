@@ -64,7 +64,7 @@ class EditDiscountViewModel(application: Application) : AndroidViewModel(applica
             if (valueValid.value == false) {
                 hasErrors = true
             }
-        }.takeUnless { hasErrors }?.let {
+        }.takeUnless { hasErrors }?.also {
             DaoWorkerAsync<Discount>({
                 val src = dao.findByUniqueNameSync(it.name)
                 if (src != null && src.id != it.id) {

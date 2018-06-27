@@ -140,22 +140,6 @@ public class BindingUtil {
         return Double.parseDouble(value);
     }
 
-    @BindingAdapter({"checkResult", "errorMessage"})
-    public static void errorCheck(TextInputLayout layout, boolean valid, String message) {
-        if (!valid) {
-            //layout.setError(message);
-            //layout.setHintTextAppearance(R.style.ErrorText);
-        }
-    }
-
-    @BindingAdapter({"checkResult"})
-    public static void errorCheck(TextInputEditText editText, boolean valid) {
-        if (!valid) {
-            editText.setError("Error");
-            //editText.setHintTextColor(Color.parseColor("#D13638"));
-        }
-    }
-
     @BindingAdapter({"checkResult"})
     public static void errorCheck(CustomEditText editText, Boolean valid) {
         if (valid != null && !valid) {

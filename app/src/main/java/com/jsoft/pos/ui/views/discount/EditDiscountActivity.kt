@@ -106,7 +106,7 @@ class EditDiscountActivity : AutoLockActivity() {
 
         viewModel.valueValid.observe(this, Observer {
             if (it == false) {
-                binding.edDiscountValue.error = "Invalid percentage"
+                binding.edDiscountValue.error = resources.getString(R.string.error_not_valid, "Value")
             }
         })
 

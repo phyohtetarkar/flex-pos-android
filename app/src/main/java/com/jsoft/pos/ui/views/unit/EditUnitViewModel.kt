@@ -36,7 +36,7 @@ class EditUnitViewModel(application: Application) : AndroidViewModel(application
 
     init {
         val app = application as FlexPosApplication
-        dao = app.db!!.unitDao()
+        dao = app.db.unitDao()
     }
 
     fun save() {
@@ -49,7 +49,7 @@ class EditUnitViewModel(application: Application) : AndroidViewModel(application
             if (nameValid.value == false) {
                 hasErrors = true
             }
-        }.takeUnless { hasErrors }?.let {
+        }.takeUnless { hasErrors }?.also {
             DaoWorkerAsync<Unit>({
                 val src = dao.findByUniqueNameSync(it.name)
                 if (src != null && src.id != it.id) {

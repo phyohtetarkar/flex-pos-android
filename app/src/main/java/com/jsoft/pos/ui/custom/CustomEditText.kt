@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.jsoft.pos.R
 
-class CustomEditText : AppCompatEditText {
+open class CustomEditText : AppCompatEditText {
 
     private val STATE_ERROR = IntArray(1) { R.attr.state_error }
 

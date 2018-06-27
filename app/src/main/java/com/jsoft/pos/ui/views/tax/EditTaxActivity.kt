@@ -107,7 +107,7 @@ class EditTaxActivity : AutoLockActivity() {
 
         viewModel.valueValid.observe(this, Observer {
             if (it == false) {
-                binding.edTaxValue.error = "Invalid percentage"
+                binding.edTaxValue.error = resources.getString(R.string.error_not_valid, "Percentage")
             }
         })
 

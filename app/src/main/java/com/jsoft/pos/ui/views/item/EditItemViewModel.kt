@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
+import android.text.TextUtils
 import com.jsoft.pos.FlexPosApplication
 import com.jsoft.pos.data.entity.*
 import com.jsoft.pos.data.entity.Unit
@@ -15,6 +16,13 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     val itemInput = MutableLiveData<Long>()
 
+    val nameNotEmpty = MutableLiveData<Boolean>()
+    val categoryNotEmpty = MutableLiveData<Boolean>()
+    val unitNotEmpty = MutableLiveData<Boolean>()
+    val amountValid = MutableLiveData<Boolean>()
+    val priceValid = MutableLiveData<Boolean>()
+
+    val saveSuccess = MutableLiveData<Boolean>()
     val deleteSuccess = MutableLiveData<Boolean>()
 
     val item: LiveData<Item> = Transformations.switchMap(itemInput) {
@@ -65,12 +73,44 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun save() {
-        DaoWorkerAsync<Item>({
-            return@DaoWorkerAsync repository.save(it, taxes.value, discounts.value).let { true }
-        },{
+        var hasError = false
 
-        },{
-        }).execute(item.value)
+        item.value?.apply {
+            nameNotEmpty.value = !TextUtils.isEmpty(name)
+
+            if (nameNotEmpty.value == false) {
+                hasError = true
+            }
+        }?.apply {
+            categoryNotEmpty.value = (categoryId != null && categoryId!! > 0)
+            if (categoryNotEmpty.value == false) {
+                hasError = true
+            }
+        }?.apply {
+            unitNotEmpty.value = (unitId != null && unitId!! > 0)
+            if (unitNotEmpty.value == false) {
+                hasError = true
+            }
+        }?.apply {
+            amountValid.value = (amount > 0)
+            if (amountValid.value == false) {
+                hasError = true
+            }
+        }?.apply {
+            priceValid.value = (price > 0)
+            if (priceValid.value == false) {
+                hasError = true
+            }
+        }.takeUnless { hasError }?.also {
+            DaoWorkerAsync<Item>({
+                return@DaoWorkerAsync repository.save(it, taxes.value, discounts.value).let { true }
+            },{
+                saveSuccess.value = true
+            },{
+                saveSuccess.value = false
+            }).execute(it)
+        }
+
     }
 
     fun delete() {

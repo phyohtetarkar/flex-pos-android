@@ -14,8 +14,8 @@
         android:id="@+id/action_receipt"
         android:title="Receipt"
         android:orderInCategory="200"
-        android:icon="@drawable/layer_receipt_drawable"
-        app:showAsAction="ifRoom|collapseActionView"/>
+        app:showAsAction="always"
+        app:actionLayout="@layout/layout_receipt_noti"/>
 
     <!--<item
         android:id="@+id/action_scan"

@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.ObservableList
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -20,13 +19,13 @@ import android.util.DisplayMetrics
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.jsoft.pos.MainActivity
 import com.jsoft.pos.R
 import com.jsoft.pos.data.entity.Category
 import com.jsoft.pos.data.entity.ItemVO
 import com.jsoft.pos.data.entity.SaleItem
 import com.jsoft.pos.data.model.ItemVOSearch
-import com.jsoft.pos.ui.custom.BadgeDrawable
 import com.jsoft.pos.ui.custom.RoundedImageView
 import com.jsoft.pos.ui.utils.Utils
 import com.jsoft.pos.ui.views.BindingViewHolder
@@ -125,6 +124,15 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_sale, menu)
 
+        val notiLayout = menu?.findItem(R.id.action_receipt)?.actionView
+        notiLayout?.setOnClickListener {
+            if (CheckOutItemsHolder.itemCount > 0) {
+                (activity as? AutoLockActivity)?.navigated = true
+                val intent = Intent(context, CheckoutActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
         Handler().post {
             val v = activity?.findViewById<View>(R.id.action_receipt)
             v?.getLocationOnScreen(receiptPosition)
@@ -151,15 +159,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
         when (item?.itemId) {
 
-            R.id.action_receipt -> {
-                if (CheckOutItemsHolder.itemCount > 0) {
-                    (activity as? AutoLockActivity)?.navigated = true
-
-                    val intent = Intent(context, CheckoutActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-
         }
 
         return true
@@ -170,13 +169,13 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         viewModel.itemSearch.value = ItemVOSearch().also { it.isAvailable = true }
 
         val app = activity as MainActivity
-        app.invalidateOptionsMenu()
+        //app.invalidateOptionsMenu()
 
         if (!CheckOutItemsHolder.onSale) {
             app.unlockDrawer()
-        } else {
-            updateBadgeCount()
         }
+
+        updateBadgeCount()
     }
 
     override fun onDestroyView() {
@@ -256,31 +255,29 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         animSet.playTogether(ax, ay, asx, asy)
 
         val w = (50 * dm.density).roundToInt()
-        activity!!.layoutMain.addView(copy, ViewGroup.LayoutParams(w, w))
+        activity?.layoutMain?.addView(copy, ViewGroup.LayoutParams(w, w))
         animSet.start()
 
     }
 
     fun updateBadgeCount() {
 
-        val icon = activity?.toolbarMain?.menu?.findItem(R.id.action_receipt)?.icon as? LayerDrawable
+        val count = CheckOutItemsHolder.itemCount.toString()
 
-        val badge: BadgeDrawable
+        val item = activity?.toolbarMain?.menu?.findItem(R.id.action_receipt)
+        val tv = item?.actionView?.findViewById<TextView>(R.id.notification_count)
 
-        val reuse =  icon?.findDrawableByLayerId(R.id.ic_badge)
-        if (reuse != null && reuse is BadgeDrawable){
-            badge = reuse
+        if (count.equals("0", ignoreCase = true)) {
+            tv?.visibility = View.GONE
         } else {
-            badge = BadgeDrawable(context!!)
-            val app = activity as MainActivity
-            app.lockDrawer()
+            if (count.length > 2) {
+                tv?.text = "99+"
+            } else {
+                tv?.text = count
+            }
+
+            tv?.visibility = View.VISIBLE
         }
-
-        badge.setCount(CheckOutItemsHolder.itemCount.toString())
-
-        icon?.mutate()
-        icon?.setDrawableByLayerId(R.id.ic_badge, badge)
-        icon?.invalidateSelf()
 
     }
 

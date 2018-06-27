@@ -53,7 +53,7 @@ class EditCategoryViewModel(application: Application) : AndroidViewModel(applica
             if (nameValid.value == false) {
                 hasErrors = true
             }
-        }.takeUnless { hasErrors }?.let {
+        }.takeUnless { hasErrors }?.also {
             DaoWorkerAsync<Category>({
                 val src = dao.findByUniqueNameSync(it.name)
                 if (src != null && src.id != it.id ) {

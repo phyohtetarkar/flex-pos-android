@@ -80,13 +80,6 @@ class EditItemActivity : AutoLockActivity() {
 
         }
 
-        viewModel.deleteSuccess.observe(this, Observer {
-            when (it) {
-                false -> AlertUtil.showToast(this, resources.getString(R.string.fail_to_delete, "item"))
-                true -> onBackPressed()
-            }
-        })
-
         tvAddCategory.setOnClickListener {
             startActivity(Intent(this, EditCategoryActivity::class.java))
         }
@@ -130,6 +123,8 @@ class EditItemActivity : AutoLockActivity() {
             }, {})
         }
 
+        initValidationObserve()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -143,7 +138,6 @@ class EditItemActivity : AutoLockActivity() {
             android.R.id.home -> onBackPressed()
             R.id.action_save -> {
                 viewModel.save()
-                onBackPressed()
             }
         }
 
@@ -171,6 +165,54 @@ class EditItemActivity : AutoLockActivity() {
             }
         }
 
+    }
+
+    private fun initValidationObserve() {
+
+        viewModel.nameNotEmpty.observe(this, Observer {
+            if (it == false) {
+                binding.edItemName.error = resources.getString(R.string.error_empty_input_format, "Item name")
+            }
+        })
+
+        viewModel.categoryNotEmpty.observe(this, Observer {
+            if (it == false) {
+                binding.edChooseCategory.error = resources.getString(R.string.error_empty_choice, "Category")
+            }
+        })
+
+        viewModel.unitNotEmpty.observe(this, Observer {
+            if (it == false) {
+                binding.edChooseUnit.error = resources.getString(R.string.error_empty_choice, "Unit")
+            }
+        })
+
+        viewModel.amountValid.observe(this, Observer {
+            if (it == false) {
+                binding.edItemAmount.error = resources.getString(R.string.error_not_valid, "Amount")
+            }
+        })
+
+        viewModel.priceValid.observe(this, Observer {
+            if (it == false) {
+                binding.edItemPrice.error = resources.getString(R.string.error_not_valid, "Price")
+            }
+        })
+
+        viewModel.saveSuccess.observe(this, Observer {
+            if (it == true) {
+                onBackPressed()
+            } else {
+                AlertUtil.showToast(this, R.string.fail_to_save, "item")
+            }
+        })
+
+        viewModel.deleteSuccess.observe(this, Observer {
+            when (it) {
+                false -> AlertUtil.showToast(this, resources.getString(R.string.fail_to_delete, "item"))
+                true -> onBackPressed()
+            }
+        })
     }
 
     private fun <T> showSelectDialog(fragment: SimpleListDialogFragment<T>) {

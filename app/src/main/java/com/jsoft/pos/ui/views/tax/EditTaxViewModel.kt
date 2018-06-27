@@ -59,7 +59,7 @@ class EditTaxViewModel(application: Application) : AndroidViewModel(application)
             if (valueValid.value == false) {
                 hasErrors = true
             }
-        }.takeUnless { hasErrors }?.let {
+        }.takeUnless { hasErrors }?.also {
             DaoWorkerAsync<Tax>({
                 val src = dao.findByUniqueNameSync(it.name)
                 if (src != null && src.id != it.id) {

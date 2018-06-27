@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import com.jsoft.pos.ui.utils.AlertUtil
@@ -97,6 +98,8 @@ class MainActivity : AutoLockActivity(), NavigationView.OnNavigationItemSelected
 
         val id = item.itemId
 
+        Log.v("TAG", item.toString())
+
         mPendingRunnable = {
 
             val ft = supportFragmentManager.beginTransaction()
@@ -106,15 +109,14 @@ class MainActivity : AutoLockActivity(), NavigationView.OnNavigationItemSelected
                 ft.remove(prev)
             }
 
-            var fragment: Fragment? = null
-
-            when (id) {
-                R.id.action_pos -> fragment = ServiceLocator.locate(SaleFragment::class.java)
-                R.id.action_resources -> fragment = ServiceLocator.locate(ResourcesFragment::class.java)
-                R.id.action_taxes -> fragment = ServiceLocator.locate(TaxesFragment::class.java)
-                R.id.action_discounts -> fragment = ServiceLocator.locate(DiscountsFragment::class.java)
-                R.id.action_receipts -> fragment = ServiceLocator.locate(ReceiptsFragment::class.java)
-                R.id.action_setting -> fragment = ServiceLocator.locate(SettingFragment::class.java)
+            val fragment: Fragment? = when (id) {
+                R.id.action_pos -> ServiceLocator.locate(SaleFragment::class.java)
+                R.id.action_resources -> ServiceLocator.locate(ResourcesFragment::class.java)
+                R.id.action_taxes -> ServiceLocator.locate(TaxesFragment::class.java)
+                R.id.action_discounts -> ServiceLocator.locate(DiscountsFragment::class.java)
+                R.id.action_receipts -> ServiceLocator.locate(ReceiptsFragment::class.java)
+                R.id.action_setting -> ServiceLocator.locate(SettingFragment::class.java)
+                else -> null
             }
 
             if (fragment != null) {
