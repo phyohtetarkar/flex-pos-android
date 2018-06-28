@@ -38,7 +38,19 @@
         <item
             android:id="@+id/action_setting"
             android:icon="@drawable/ic_settings_black"
-            android:title="Setting"/>
+            android:title="@string/setting"/>
+
+        <item
+            android:id="@+id/action_about"
+            android:icon="@drawable/ic_info_outline_black"
+            android:checkable="false"
+            android:title="@string/about"/>
+
+        <item
+            android:id="@+id/action_rate"
+            android:icon="@drawable/ic_rate_review_black"
+            android:checkable="false"
+            android:title="@string/rate_app"/>
 
     </group>
 

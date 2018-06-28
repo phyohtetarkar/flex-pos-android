@@ -14,6 +14,9 @@
     <string name="backups">Backups</string>
 
     <string name="app_name">Flex POS</string>
+    <string name="app_version">Version 1.0.0</string>
+    <string name="created_by">Created by Phyo Htet Arkar</string>
+
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -100,5 +103,7 @@
     <string name="pref_receipt_header_summary">header name on receipt</string>
     <string name="pref_mail_subject_summary">mail subject for sending receipt</string>
     <string name="_99_plus">99+</string>
+    <string name="about">About</string>
+    <string name="rate_app">Rate this app</string>
 
 </resources>

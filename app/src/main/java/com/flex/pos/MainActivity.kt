@@ -2,7 +2,11 @@ package com.flex.pos
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -11,6 +15,7 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
+import com.flex.pos.ui.AboutActivity
 import com.flex.pos.ui.utils.AlertUtil
 import com.flex.pos.ui.utils.ContextWrapperUtil
 import com.flex.pos.ui.utils.LockHandler
@@ -25,6 +30,7 @@ import com.flex.pos.ui.views.setting.SettingFragment
 import com.flex.pos.ui.views.tax.TaxesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
+
 
 class MainActivity : AutoLockActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -97,6 +103,32 @@ class MainActivity : AutoLockActivity(), NavigationView.OnNavigationItemSelected
 
         val id = item.itemId
 
+        if (id == R.id.action_about) {
+            startActivity(Intent(this, AboutActivity::class.java))
+            return true
+        }
+
+        if (id == R.id.action_rate) {
+            val uri = Uri.parse("market://details?id=$packageName")
+            val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+            } else {
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+            }
+
+            try {
+                startActivity(goToMarket)
+            } catch (e: ActivityNotFoundException) {
+                startActivity(Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://play.google.com/store/apps/details?id=$packageName")))
+            }
+
+        }
+
         mPendingRunnable = {
 
             val ft = supportFragmentManager.beginTransaction()
@@ -118,9 +150,8 @@ class MainActivity : AutoLockActivity(), NavigationView.OnNavigationItemSelected
 
             if (fragment != null) {
                 ft.replace(R.id.contentMain, fragment, "content")
+                ft.commit()
             }
-
-            ft.commit()
 
         }
 
