@@ -21,7 +21,7 @@
             android:textSize="18sp"
             tools:text="Name" />
 
-        <com.jsoft.pos.ui.custom.CustomEditText
+        <com.flex.pos.ui.custom.CustomEditText
             android:id="@android:id/edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

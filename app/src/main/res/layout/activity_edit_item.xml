@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.jsoft.pos.ui.views.item.EditItemViewModel" />
+            type="com.flex.pos.ui.views.item.EditItemViewModel" />
     </data>
 
     <ScrollView
@@ -57,7 +57,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/edItemBarcode" />
 
 
-                <com.jsoft.pos.ui.custom.CustomEditText
+                <com.flex.pos.ui.custom.CustomEditText
                     android:id="@+id/edItemName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView5"
                     app:layout_constraintVertical_chainStyle="spread" />
 
-                <com.jsoft.pos.ui.custom.SpinnerEditText
+                <com.flex.pos.ui.custom.SpinnerEditText
                     android:id="@+id/edChooseCategory"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                     app:layout_constraintStart_toStartOf="@+id/edItemName"
                     app:layout_constraintTop_toBottomOf="@+id/edItemName" />
 
-                <com.jsoft.pos.ui.custom.CustomEditText
+                <com.flex.pos.ui.custom.CustomEditText
                     android:id="@+id/edItemBarcode"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/edChooseCategory"
                     app:layout_constraintTop_toBottomOf="@+id/edChooseCategory" />
 
-                <com.jsoft.pos.ui.custom.CustomEditText
+                <com.flex.pos.ui.custom.CustomEditText
                     android:id="@+id/edItemAmount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/edChooseUnit" />
 
 
-                <com.jsoft.pos.ui.custom.CustomEditText
+                <com.flex.pos.ui.custom.CustomEditText
                     android:id="@+id/edItemPrice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
                     app:layout_constraintStart_toStartOf="@+id/edItemName"
                     app:layout_constraintTop_toBottomOf="@+id/edItemAmount" />
 
-                <com.jsoft.pos.ui.custom.SpinnerEditText
+                <com.flex.pos.ui.custom.SpinnerEditText
                     android:id="@+id/edChooseUnit"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -311,7 +311,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.jsoft.pos.ui.custom.RoundedImageView
+                <com.flex.pos.ui.custom.RoundedImageView
                     android:id="@+id/imageViewItemImage"
                     android:layout_width="0dp"
                     android:layout_height="150dp"

@@ -9,7 +9,7 @@
 
         <variable
             name="obj"
-            type="com.jsoft.pos.data.entity.SaleItem" />
+            type="com.flex.pos.data.entity.SaleItem" />
     </data>
 
     <android.support.constraint.ConstraintLayout

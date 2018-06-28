@@ -6,7 +6,7 @@
     <data>
         <variable
             name="obj"
-            type="com.jsoft.pos.data.entity.Checkable"/>
+            type="com.flex.pos.data.entity.Checkable"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

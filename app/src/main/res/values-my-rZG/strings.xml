@@ -98,4 +98,5 @@
 
     <string name="pref_receipt_header_summary">header name on receipt</string>
     <string name="pref_mail_subject_summary">mail subject for sending receipt</string>
+    <string name="_99_plus">99+</string>
 </resources>

@@ -7,11 +7,11 @@
 
         <import type="android.view.View" />
 
-        <import type="com.jsoft.pos.data.entity.Category" />
+        <import type="com.flex.pos.data.entity.Category" />
 
         <variable
             name="vm"
-            type="com.jsoft.pos.ui.views.category.EditCategoryViewModel" />
+            type="com.flex.pos.ui.views.category.EditCategoryViewModel" />
 
     </data>
 
@@ -21,7 +21,7 @@
         android:background="@color/whitePrimary"
         android:orientation="vertical">
 
-        <com.jsoft.pos.ui.custom.CustomEditText
+        <com.flex.pos.ui.custom.CustomEditText
             android:id="@+id/edCategoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.jsoft.pos.ui.custom.SquareRadioButton
+                <com.flex.pos.ui.custom.SquareRadioButton
                     android:id="@+id/radioButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                     tools:checked="true"
                     tools:ignore="HardcodedText" />
 
-                <com.jsoft.pos.ui.custom.SquareRadioButton
+                <com.flex.pos.ui.custom.SquareRadioButton
                     android:id="@+id/radioButton2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                     app:layout_constraintTop_toTopOf="@+id/radioButton"
                     tools:ignore="HardcodedText" />
 
-                <com.jsoft.pos.ui.custom.SquareRadioButton
+                <com.flex.pos.ui.custom.SquareRadioButton
                     android:id="@+id/radioButton3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                     app:layout_constraintTop_toTopOf="@+id/radioButton2"
                     tools:ignore="HardcodedText" />
 
-                <com.jsoft.pos.ui.custom.SquareRadioButton
+                <com.flex.pos.ui.custom.SquareRadioButton
                     android:id="@+id/radioButton4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                     app:layout_constraintTop_toTopOf="@+id/radioButton3"
                     tools:ignore="HardcodedText" />
 
-                <com.jsoft.pos.ui.custom.SquareRadioButton
+                <com.flex.pos.ui.custom.SquareRadioButton
                     android:id="@+id/radioButton5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/radioButton"
                     tools:ignore="HardcodedText" />
 
-                <com.jsoft.pos.ui.custom.SquareRadioButton
+                <com.flex.pos.ui.custom.SquareRadioButton
                     android:id="@+id/radioButton6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
                     app:layout_constraintTop_toTopOf="@+id/radioButton5"
                     tools:ignore="HardcodedText" />
 
-                <com.jsoft.pos.ui.custom.SquareRadioButton
+                <com.flex.pos.ui.custom.SquareRadioButton
                     android:id="@+id/radioButton7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
                     app:layout_constraintTop_toTopOf="@+id/radioButton6"
                     tools:ignore="HardcodedText" />
 
-                <com.jsoft.pos.ui.custom.SquareRadioButton
+                <com.flex.pos.ui.custom.SquareRadioButton
                     android:id="@+id/radioButton8"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

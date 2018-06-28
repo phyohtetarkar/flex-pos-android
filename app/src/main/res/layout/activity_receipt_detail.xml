@@ -7,7 +7,7 @@
 
         <variable
             name="sale"
-            type="com.jsoft.pos.data.entity.Sale" />
+            type="com.flex.pos.data.entity.Sale" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -130,7 +130,7 @@
                                 app:layout_constraintStart_toStartOf="@+id/textView37"
                                 app:layout_constraintTop_toBottomOf="@+id/view18" />
 
-                            <com.jsoft.pos.ui.custom.RoundedFractionTextView
+                            <com.flex.pos.ui.custom.RoundedFractionTextView
                                 android:id="@+id/textView32"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
                                 app:layout_constraintStart_toStartOf="@+id/textView23"
                                 app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
-                            <com.jsoft.pos.ui.custom.RoundedFractionTextView
+                            <com.flex.pos.ui.custom.RoundedFractionTextView
                                 android:id="@+id/textView34"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -184,7 +184,7 @@
                                 app:layout_constraintStart_toStartOf="@+id/textView48"
                                 app:layout_constraintTop_toBottomOf="@+id/view17" />
 
-                            <com.jsoft.pos.ui.custom.RoundedFractionTextView
+                            <com.flex.pos.ui.custom.RoundedFractionTextView
                                 android:id="@+id/textView38"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

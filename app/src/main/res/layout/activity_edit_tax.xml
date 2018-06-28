@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.jsoft.pos.ui.views.tax.EditTaxViewModel" />
+            type="com.flex.pos.ui.views.tax.EditTaxViewModel" />
 
     </data>
 
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.jsoft.pos.ui.custom.CustomEditText
+            <com.flex.pos.ui.custom.CustomEditText
                 android:id="@+id/edTaxName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.jsoft.pos.ui.custom.CustomEditText
+            <com.flex.pos.ui.custom.CustomEditText
                 android:id="@+id/edTaxValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

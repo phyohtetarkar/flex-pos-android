@@ -7,7 +7,7 @@
 
         <variable
             name="obj"
-            type="com.jsoft.pos.data.entity.CategoryVO" />
+            type="com.flex.pos.data.entity.CategoryVO" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -17,7 +17,7 @@
         android:focusable="true"
         android:background="@drawable/selectable_white_background">
 
-        <com.jsoft.pos.ui.custom.RoundedView
+        <com.flex.pos.ui.custom.RoundedView
             android:id="@+id/roundedView"
             android:layout_width="50dp"
             android:layout_height="50dp"

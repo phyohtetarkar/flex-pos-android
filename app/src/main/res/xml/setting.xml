@@ -46,8 +46,8 @@
             android:title="Backups"
             android:summary="backup your data"
             android:key="p_backup">
-            <intent android:targetPackage="com.jsoft.pos"
-                android:targetClass="com.jsoft.pos.ui.views.setting.BackupActivity"/>
+            <intent android:targetPackage="com.flex.pos"
+                android:targetClass="com.flex.pos.ui.views.setting.BackupActivity"/>
         </Preference>
 
     </PreferenceCategory>

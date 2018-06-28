@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="EditDiscountBinding">
 
@@ -9,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.jsoft.pos.ui.views.discount.EditDiscountViewModel" />
+            type="com.flex.pos.ui.views.discount.EditDiscountViewModel" />
     </data>
 
     <LinearLayout
@@ -22,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.jsoft.pos.ui.custom.CustomEditText
+            <com.flex.pos.ui.custom.CustomEditText
                 android:id="@+id/edDiscountName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -41,7 +40,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.jsoft.pos.ui.custom.CustomEditText
+            <com.flex.pos.ui.custom.CustomEditText
                 android:id="@+id/edDiscountValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

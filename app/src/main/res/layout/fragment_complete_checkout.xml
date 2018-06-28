@@ -6,7 +6,7 @@
     <data class="CompleteCheckoutBinding">
         <variable
             name="vm"
-            type="com.jsoft.pos.ui.views.sale.CheckoutViewModel"/>
+            type="com.flex.pos.ui.views.sale.CheckoutViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -76,7 +76,7 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.35" />
 
-        <com.jsoft.pos.ui.custom.CustomEditText
+        <com.flex.pos.ui.custom.CustomEditText
             android:id="@+id/edPayPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

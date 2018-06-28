@@ -6,7 +6,7 @@
     <data>
         <variable
             name="obj"
-            type="com.jsoft.pos.data.entity.Item"/>
+            type="com.flex.pos.data.entity.Item"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

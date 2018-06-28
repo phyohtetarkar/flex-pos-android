@@ -6,7 +6,7 @@
     <data class="EditSaleItemBinding">
         <variable
             name="vm"
-            type="com.jsoft.pos.ui.views.sale.CheckoutViewModel"/>
+            type="com.flex.pos.ui.views.sale.CheckoutViewModel"/>
     </data>
 
     <LinearLayout
@@ -43,7 +43,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
-            <com.jsoft.pos.ui.custom.CustomEditText
+            <com.flex.pos.ui.custom.CustomEditText
                 android:id="@+id/edSaleItemQty"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="300" />
 
-            <com.jsoft.pos.ui.custom.CustomEditText
+            <com.flex.pos.ui.custom.CustomEditText
                 android:id="@+id/edSaleItemRemark"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

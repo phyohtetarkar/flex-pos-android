@@ -12,6 +12,8 @@
 #   public *;
 #}
 
+-keep class android.support.v7.widget.SearchView { *; }
+
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable
