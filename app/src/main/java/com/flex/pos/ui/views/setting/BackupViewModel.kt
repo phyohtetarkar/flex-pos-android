@@ -22,7 +22,7 @@ class BackupViewModel(application: Application) : AndroidViewModel(application) 
     val backupSuccess = MutableLiveData<Boolean>()
 
     private val pathBackup = "FlexPos/.backup"
-    private val dbSource: File by lazy { File("/data/data/com.flex.pos/databases") }
+    private val dbSource: File by lazy { File("/data/data/${application.packageName}/databases") }
     private val imageSource: File by lazy { application.getDir("item_image", Context.MODE_PRIVATE) }
     private val receiptSource: File by lazy { application.getExternalFilesDir("receipts") }
 
@@ -37,7 +37,7 @@ class BackupViewModel(application: Application) : AndroidViewModel(application) 
             if (!dir.exists()) {
                 dir.mkdirs()
             }
-            val format = SimpleDateFormat("yyyyMMddhhmmss", Locale.ENGLISH)
+            val format = SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH)
             val outDir = File(dir, format.format(Date()))
             outDir.mkdir()
 

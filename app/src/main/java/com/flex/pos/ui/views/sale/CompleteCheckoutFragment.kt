@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.flex.pos.R
 import com.flex.pos.databinding.CompleteCheckoutBinding
+import com.flex.pos.ui.utils.AlertUtil
 import com.flex.pos.ui.views.receipt.ReceiptDetailActivity
 import kotlinx.android.synthetic.main.fragment_complete_checkout.*
 
@@ -54,6 +56,10 @@ class CompleteCheckoutFragment : Fragment() {
                     intent.putExtra("id", viewModel?.sale?.value?.id)
                     startActivity(intent)
                     activity?.finish()
+                }
+
+                false -> {
+                    AlertUtil.showToast(context, resources.getString(R.string.fail_to_save, "sale"))
                 }
             }
 

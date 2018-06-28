@@ -43,16 +43,16 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
                         app.db.discountDao())
         )
 
-        sale.addSource(saleId, {
+        sale.addSource(saleId) {
             DaoWorkerAsync<Long>({
                 return@DaoWorkerAsync sale.postValue(repository.getSaleSync(it)).let { true }
             }, {}, {}).execute(it)
-        })
-        sale.addSource(saleItems, {
+        }
+        sale.addSource(saleItems) {
             DaoWorkerAsync<List<SaleItem>>({
                 return@DaoWorkerAsync sale.postValue(repository.initSale(it)).let { true }
             }, {}, {}).execute(it)
-        })
+        }
 
     }
 
@@ -62,7 +62,7 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
         }, {
             saveObserver.value = true
         }, {
-
+            saveObserver.value = false
         }).execute(sale.value)
 
     }

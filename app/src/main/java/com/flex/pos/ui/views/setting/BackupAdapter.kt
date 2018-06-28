@@ -16,7 +16,7 @@ class BackupAdapter : ListAdapter<String, BackupAdapter.BackupViewHolder>(DIFF_C
     var onRestore: ((Int) -> Unit)? = null
     var onDelete: ((Int) -> Unit)? = null
 
-    private val formatFrom = SimpleDateFormat("yyyyMMddhhmmss", Locale.ENGLISH)
+    private val formatFrom = SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH)
     private val formatTo = SimpleDateFormat("yyyy/MM/dd hh:mm:ss a", Locale.ENGLISH)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BackupViewHolder {

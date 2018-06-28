@@ -14,6 +14,7 @@ import com.flex.pos.data.Searchable.Companion.BASE_QUERY
 import com.flex.pos.data.entity.Sale
 import com.flex.pos.data.entity.SaleItem
 import com.flex.pos.data.utils.DaoWorkerAsync
+import java.util.*
 
 class SaleRepository(
         private val saleDao: SaleDao,
@@ -116,6 +117,7 @@ abstract class SaleDao : BaseDao<Sale> {
             update(sale)
             deleteSaleItems(findSaleItemsSync(saleId))
         } else {
+            sale.issueDate = Date()
             saleId = insertAndGet(sale)
             sale.id = saleId
             sale.receiptCode = "${10000 + saleId}"
