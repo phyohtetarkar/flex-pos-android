@@ -63,7 +63,7 @@
 
     <string name="hint_value">တန်ဖိုး *</string>
 
-    <string name="total_price">ကျသင့်ငွေ</string>
+    <string name="total_price">ကျသင့်ငွေ :</string>
     <string name="change">ပြန်အမ်းငွေ</string>
     <string name="fail_to_delete">Fail to delete %s</string>
     <string name="fail_to_save">Fail to save %s</string>
@@ -101,4 +101,7 @@
     <string name="pref_mail_subject_summary">mail subject for sending receipt</string>
     <string name="_99_plus">99+</string>
     <string name="about">About</string>
+    <string name="checkout">Checkout</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="logo_by">Logo by flaticon.com</string>
 </resources>

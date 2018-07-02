@@ -1,12 +1,16 @@
 package com.flex.pos.ui.views.item
 
+import android.Manifest
 import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -27,6 +31,7 @@ import kotlinx.android.synthetic.main.activity_edit_item.*
 class EditItemActivity : AutoLockActivity() {
 
     private val PICKIMAGE = 1
+    private val WRITE_STORAGE_PERMISSION_FOR_PICKIMAGE_REQUEST = 2
 
     private lateinit var viewModel: EditItemViewModel
     private lateinit var binding: EditItemBinding
@@ -103,17 +108,17 @@ class EditItemActivity : AutoLockActivity() {
         }
 
         btnAddImage.setOnClickListener {
-            val getIntent = Intent(Intent.ACTION_GET_CONTENT)
-            getIntent.type = "image/*"
 
-            val pickIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                invokePick()
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        WRITE_STORAGE_PERMISSION_FOR_PICKIMAGE_REQUEST)
+            }
 
-            val intent = Intent.createChooser(getIntent, "Select Image")
-            intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
 
-            navigated = true
-
-            startActivityForResult(intent, PICKIMAGE)
         }
 
         btnRemoveImage.setOnClickListener {
@@ -152,6 +157,19 @@ class EditItemActivity : AutoLockActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            WRITE_STORAGE_PERMISSION_FOR_PICKIMAGE_REQUEST -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    invokePick()
+                } else {
+                    AlertUtil.showToast(this, "Permission denied, cannot load image")
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -232,6 +250,20 @@ class EditItemActivity : AutoLockActivity() {
             ft?.remove(prev)
         }
         fragment.show(ft, "dialog")
+    }
+
+    private fun invokePick() {
+        val getIntent = Intent(Intent.ACTION_GET_CONTENT)
+        getIntent.type = "image/*"
+
+        val pickIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+        val intent = Intent.createChooser(getIntent, "Select Image")
+        intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
+
+        navigated = true
+
+        startActivityForResult(intent, PICKIMAGE)
     }
 
 }

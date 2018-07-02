@@ -66,7 +66,7 @@
 
     <string name="hint_value">value *</string>
 
-    <string name="total_price">Total Price</string>
+    <string name="total_price">Total Price :</string>
     <string name="change">Change</string>
     <string name="fail_to_delete">Fail to delete %s</string>
     <string name="fail_to_save">Fail to save %s</string>
@@ -105,5 +105,8 @@
     <string name="_99_plus">99+</string>
     <string name="about">About</string>
     <string name="rate_app">Rate this app</string>
+    <string name="checkout">Checkout</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="logo_by">Logo by flaticon.com</string>
 
 </resources>

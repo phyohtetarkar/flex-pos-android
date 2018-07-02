@@ -13,6 +13,7 @@
 #}
 
 -keep class android.support.v7.widget.SearchView { *; }
+-keep class android.support.v7.graphics.drawable.DrawerArrowDrawable { *; }
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.

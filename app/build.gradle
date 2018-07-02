@@ -26,13 +26,18 @@ android {
         }
 
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -75,7 +80,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     kapt "android.arch.persistence.room:compiler:$roomVersion"
-    implementation 'com.google.android.gms:play-services-vision:15.0.2'
 }
 
 repositories {

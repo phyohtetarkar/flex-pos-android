@@ -21,7 +21,6 @@ import com.flex.pos.databinding.ReceiptSlipBinding
 import com.flex.pos.ui.custom.CustomViewAdapter
 import com.flex.pos.ui.utils.ContextWrapperUtil
 import com.flex.pos.ui.utils.FileUtil
-import com.flex.pos.ui.utils.LockHandler
 import com.flex.pos.ui.views.lock.AutoLockActivity
 import com.flex.pos.ui.views.sale.CheckoutActivity
 import kotlinx.android.synthetic.main.activity_receipt_detail.*

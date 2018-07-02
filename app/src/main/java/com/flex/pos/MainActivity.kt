@@ -104,11 +104,13 @@ class MainActivity : AutoLockActivity(), NavigationView.OnNavigationItemSelected
         val id = item.itemId
 
         if (id == R.id.action_about) {
+            navigated = true
             startActivity(Intent(this, AboutActivity::class.java))
             return true
         }
 
         if (id == R.id.action_rate) {
+            navigated = true
             val uri = Uri.parse("market://details?id=$packageName")
             val goToMarket = Intent(Intent.ACTION_VIEW, uri)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -77,6 +77,7 @@ class SaleSearch : BaseObservable(), Searchable {
     override val query: String
         get() {
             val sb = StringBuilder(String.format(BASE_QUERY, "sale"))
+            sb.append("ORDER BY sale.issue_date desc ")
             objects.clear()
 
             return sb.toString()

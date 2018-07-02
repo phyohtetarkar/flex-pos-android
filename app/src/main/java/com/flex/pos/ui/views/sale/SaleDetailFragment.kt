@@ -2,10 +2,12 @@ package com.flex.pos.ui.views.sale
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v4.app.Fragment
 import android.support.v7.util.DiffUtil
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -118,20 +120,20 @@ class SaleDetailFragment : Fragment() {
             })
         }
 
-        /*recyclerViewCheckout.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
+        recyclerViewCheckout.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 it.setDrawable(resources.getDrawable(R.drawable.divider_simple, resources.newTheme()))
             } else {
                 it.setDrawable(resources.getDrawable(R.drawable.divider_simple))
             }
-        })*/
+        })
 
         recyclerViewCheckout.adapter = adapter
 
         val helper = ItemTouchHelper(swipeCallback)
         helper.attachToRecyclerView(recyclerViewCheckout)
 
-        BottomSheetBehavior.from(checkoutSheet).state = BottomSheetBehavior.STATE_EXPANDED
+//        BottomSheetBehavior.from(checkoutSheet).state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
