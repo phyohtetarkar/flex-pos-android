@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
@@ -7,8 +8,9 @@
         android:title="@string/search"
         android:orderInCategory="100"
         android:icon="@drawable/ic_search_dark"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        tools:ignore="AlwaysShowAction" />
 
     <item
         android:id="@+id/action_receipt"
@@ -17,11 +19,11 @@
         app:showAsAction="always"
         app:actionLayout="@layout/layout_receipt_noti"/>
 
-    <!--<item
+    <item
         android:id="@+id/action_scan"
-        android:title="Receipt"
+        android:title="Scan Barcode"
         android:orderInCategory="300"
         android:icon="@drawable/ic_crop_free_dark"
-        app:showAsAction="ifRoom"/>-->
+        app:showAsAction="never"/>
 
 </menu>
