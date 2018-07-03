@@ -15,6 +15,11 @@
         android:theme="@style/AppBaseTheme"
         android:name=".FlexPosApplication"
         android:fullBackupContent="true">
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"

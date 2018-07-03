@@ -1,5 +1,6 @@
 package com.flex.pos.ui.views.sale
 
+import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -7,11 +8,14 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.databinding.ObservableList
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
@@ -27,6 +31,7 @@ import com.flex.pos.data.entity.ItemVO
 import com.flex.pos.data.entity.SaleItem
 import com.flex.pos.data.model.ItemVOSearch
 import com.flex.pos.ui.custom.RoundedImageView
+import com.flex.pos.ui.utils.AlertUtil
 import com.flex.pos.ui.utils.Utils
 import com.flex.pos.ui.views.BindingViewHolder
 import com.flex.pos.ui.views.ListViewModel
@@ -40,6 +45,9 @@ import kotlinx.android.synthetic.main.layout_item_compact.view.*
 import kotlin.math.roundToInt
 
 class SaleFragment : SimpleListFragment<ItemVO>() {
+
+    private val CAMERA_PERMISSION_FOR_SCAN = 1;
+    private val SCANNER_SHEET_TAG = "scannerSheet"
 
     private lateinit var adapter: SimplePagedListAdapter<ItemVO>
     private lateinit var spinnerAdapter: ArrayAdapter<Category>
@@ -155,6 +163,38 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+            R.id.action_scan -> {
+                if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    showScannerSheet()
+                } else {
+                    ActivityCompat.requestPermissions(activity!!,
+                            arrayOf(Manifest.permission.CAMERA),
+                            CAMERA_PERMISSION_FOR_SCAN)
+                }
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            CAMERA_PERMISSION_FOR_SCAN -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    showScannerSheet()
+                } else {
+                    AlertUtil.showToast(context, "Permission denied, cannot access camera")
+                }
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         viewModel.itemSearch.value = ItemVOSearch().also { it.isAvailable = true }
@@ -250,7 +290,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     }
 
-    fun updateBadgeCount() {
+    private fun updateBadgeCount() {
 
         val count = CheckOutItemsHolder.itemCount.toString()
 
@@ -268,6 +308,18 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
             tv?.visibility = View.VISIBLE
         }
+    }
+
+    private fun showScannerSheet() {
+        val ft = fragmentManager?.beginTransaction();
+        val prev = fragmentManager?.findFragmentByTag(SCANNER_SHEET_TAG)
+
+        if (prev != null) {
+            ft?.remove(prev)
+        }
+
+        val frag = FragmentScannerSheet()
+        frag.show(ft, SCANNER_SHEET_TAG)
 
     }
 
