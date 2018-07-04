@@ -15,11 +15,13 @@ class AlertUtil {
     companion object {
 
         fun showConfirmDelete(context: Context, ok: () -> Unit, cancel: () -> Unit) {
-            showConfirm(context, R.string.confirm_message_delete, ok, cancel)
+            showDialog(context, context.resources?.getString(R.string.confirm_message_delete),
+                    R.string.delete,  ok, cancel)
         }
 
         fun showConfirmDeleteAll(context: Context, ok: () -> Unit, cancel: () -> Unit) {
-            showConfirm(context, R.string.confirm_message_delete, ok, cancel)
+            showDialog(context, context.resources?.getString(R.string.confirm_message_delete),
+                    R.string.delete, ok, cancel)
         }
 
         fun showToast(context: Context?, stringRes: Int) {
@@ -51,11 +53,13 @@ class AlertUtil {
             toast.show()
         }
 
-        private fun showConfirm(context: Context, msgRes: Int, ok: () -> Unit, cancel: () -> Unit) {
+        fun showDialog(context: Context, msg: String?, positiveBtn: Int,  ok: () -> Unit, cancel: (() -> Unit)?) {
             val builder = AlertDialog.Builder(context)
-            builder.setMessage(msgRes)
-            builder.setPositiveButton(R.string.delete) { _, _ -> ok() }
-            builder.setNegativeButton(R.string.cancel) { _, _ -> cancel() }
+            builder.setMessage(msg)
+            builder.setPositiveButton(positiveBtn) { _, _ -> ok() }
+            cancel?.also { c ->
+                builder.setNegativeButton(R.string.cancel) { _, _ -> c() }
+            }
             builder.setCancelable(false)
             builder.show()
         }

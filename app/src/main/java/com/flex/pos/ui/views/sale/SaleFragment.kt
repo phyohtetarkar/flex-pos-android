@@ -37,6 +37,7 @@ import com.flex.pos.ui.views.BindingViewHolder
 import com.flex.pos.ui.views.ListViewModel
 import com.flex.pos.ui.views.SimpleListFragment
 import com.flex.pos.ui.views.SimplePagedListAdapter
+import com.flex.pos.ui.views.barcode.FragmentScannerSheet
 import com.flex.pos.ui.views.item.ItemVOAdapter
 import com.flex.pos.ui.views.lock.AutoLockActivity
 import kotlinx.android.synthetic.main.fragment_simple_list.*
