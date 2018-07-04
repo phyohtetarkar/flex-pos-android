@@ -2,7 +2,6 @@ package com.flex.pos.ui.views.sale
 
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableList
-import com.flex.pos.data.entity.ItemVO
 import com.flex.pos.data.entity.SaleItem
 
 object CheckOutItemsHolder {
@@ -18,10 +17,10 @@ object CheckOutItemsHolder {
     val onSale: Boolean
         get() = saleItems.isNotEmpty()
 
-    fun add(vo: ItemVO) {
-        val saleItem = SaleItem(quantity = 1, price = vo.price, itemId = vo.id)
+    fun add(price: Double, itemId: Long) {
+        val saleItem = SaleItem(quantity = 1, price = price, itemId = itemId)
 
-        val result = saleItems.find { it.itemId == vo.id }
+        val result = saleItems.find { it.itemId == itemId }
 
         if (result != null) {
             val index = saleItems.indexOf(result)
@@ -31,7 +30,6 @@ object CheckOutItemsHolder {
         } else {
             saleItems.add(saleItem)
         }
-
     }
 
     fun remove(saleItem: SaleItem) {

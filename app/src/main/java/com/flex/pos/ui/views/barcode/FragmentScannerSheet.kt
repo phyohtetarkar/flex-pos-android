@@ -7,7 +7,6 @@ import android.os.Handler
 import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v4.content.PermissionChecker
 import android.support.v4.content.PermissionChecker.PERMISSION_GRANTED
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.SurfaceHolder
 import android.view.View
@@ -24,11 +23,14 @@ import kotlinx.android.synthetic.main.fragment_scanner_sheet.*
 import kotlin.math.max
 import kotlin.math.min
 
-class FragmentScannerSheet : BottomSheetDialogFragment(), SurfaceHolder.Callback {
+class FragmentScannerSheet : BottomSheetDialogFragment(), SurfaceHolder.Callback, BarcodeGraphicTracker.BarcodeDetectorDelegate {
 
     private val RC_HANDLE_GMS = 9001
 
     private var cameraSource: CameraSource? = null
+    private var mPrevCode: String? = null
+
+    var onBarcodeDetected: ((Barcode?) -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_scanner_sheet, container, false)
@@ -39,12 +41,7 @@ class FragmentScannerSheet : BottomSheetDialogFragment(), SurfaceHolder.Callback
 
         surfaceViewScanner.holder.addCallback(this)
 
-        val parentFrag = arguments?.getBoolean("hasParentFragment")
-
-        val barcodeFactory = when (parentFrag) {
-            true -> BarcodeTrackerFactory(graphicOverlay as GraphicOverlay<BarcodeGraphic>, parentFragment)
-            else -> BarcodeTrackerFactory(graphicOverlay as GraphicOverlay<BarcodeGraphic>, activity)
-        }
+        val barcodeFactory = BarcodeTrackerFactory(this)
 
         val barcodeDetector = BarcodeDetector.Builder(context).build()
 
@@ -63,6 +60,7 @@ class FragmentScannerSheet : BottomSheetDialogFragment(), SurfaceHolder.Callback
         }
 
         cameraSource = CameraSource.Builder(context, barcodeDetector)
+                .setRequestedPreviewSize(380, 160)
                 .setFacing(facing)
                 .build()
 
@@ -71,12 +69,14 @@ class FragmentScannerSheet : BottomSheetDialogFragment(), SurfaceHolder.Callback
     override fun onDestroyView() {
         super.onDestroyView()
         surfaceViewScanner.holder.removeCallback(this)
+        onBarcodeDetected = null
     }
 
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder?) {
+
         cameraSource?.stop()
     }
 
@@ -112,12 +112,12 @@ class FragmentScannerSheet : BottomSheetDialogFragment(), SurfaceHolder.Callback
                     try {
                         cameraSource?.start(holder)
 
-                        cameraSource?.also {
+                        /*cameraSource?.also {
                             val min = min(it.previewSize.width, it.previewSize.height)
                             val max = max(it.previewSize.width, it.previewSize.height)
                             graphicOverlay.setCameraInfo(min, max, it.cameraFacing)
                             graphicOverlay.clear()
-                        }
+                        }*/
                     } catch (e: Exception) {
                         AlertUtil.showToast(context, "Unable to start camera")
                         cameraSource?.release()
@@ -127,6 +127,14 @@ class FragmentScannerSheet : BottomSheetDialogFragment(), SurfaceHolder.Callback
 
             }, 250)
         }
+    }
+
+    override fun onBarcodeDetected(b: Barcode?) {
+        if (mPrevCode != b?.rawValue) {
+            mPrevCode = b?.rawValue
+            onBarcodeDetected?.invoke(b)
+        }
+
     }
 
 }

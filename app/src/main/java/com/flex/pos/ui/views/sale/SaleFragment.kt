@@ -38,7 +38,6 @@ import com.flex.pos.ui.views.BindingViewHolder
 import com.flex.pos.ui.views.ListViewModel
 import com.flex.pos.ui.views.SimpleListFragment
 import com.flex.pos.ui.views.SimplePagedListAdapter
-import com.flex.pos.ui.views.barcode.BarcodeGraphicTracker
 import com.flex.pos.ui.views.barcode.FragmentScannerSheet
 import com.flex.pos.ui.views.item.ItemVOAdapter
 import com.flex.pos.ui.views.lock.AutoLockActivity
@@ -48,7 +47,7 @@ import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import kotlinx.android.synthetic.main.layout_item_compact.view.*
 import kotlin.math.roundToInt
 
-class SaleFragment : SimpleListFragment<ItemVO>(), BarcodeGraphicTracker.BarcodeDetectorDelegate {
+class SaleFragment : SimpleListFragment<ItemVO>() {
 
     private val CAMERA_PERMISSION_FOR_SCAN = 1;
     private val SCANNER_SHEET_TAG = "scannerSheet"
@@ -128,6 +127,16 @@ class SaleFragment : SimpleListFragment<ItemVO>(), BarcodeGraphicTracker.Barcode
             spinnerAdapter.clear()
             spinnerAdapter.add(Category(name = "All Item"))
             spinnerAdapter.addAll(it)
+        })
+
+        viewModel.item.observe(this, Observer {
+            if (it == null) {
+                AlertUtil.showToast(context, "No item found")
+            }
+
+            it?.also {
+                CheckOutItemsHolder.add(it.price, it.id)
+            }
         })
 
         CheckOutItemsHolder.addOnListChangeListener(listChangeListener)
@@ -274,7 +283,7 @@ class SaleFragment : SimpleListFragment<ItemVO>(), BarcodeGraphicTracker.Barcode
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                CheckOutItemsHolder.add(itemVO.copy())
+                CheckOutItemsHolder.add(itemVO.price, itemVO.id)
                 activity!!.layoutMain.removeView(copy)
             }
 
@@ -294,9 +303,12 @@ class SaleFragment : SimpleListFragment<ItemVO>(), BarcodeGraphicTracker.Barcode
 
     }
 
-    override fun onBarcodeDetected(b: Barcode?) {
+    private fun handleBarcode(b: Barcode?) {
         Log.v("TAG", "Detected: ${b?.rawValue}")
+        viewModel.barcode.postValue(b?.rawValue)
+
     }
+
 
     private fun updateBadgeCount() {
 
@@ -327,9 +339,7 @@ class SaleFragment : SimpleListFragment<ItemVO>(), BarcodeGraphicTracker.Barcode
         }
 
         val frag = FragmentScannerSheet()
-        frag.arguments = Bundle().also {
-            it.putBoolean("hasParentFragment", true)
-        }
+        frag.onBarcodeDetected = { handleBarcode(it) }
         frag.show(ft, SCANNER_SHEET_TAG)
 
     }

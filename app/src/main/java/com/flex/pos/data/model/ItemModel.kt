@@ -190,6 +190,9 @@ abstract class ItemDao : BaseDao<Item> {
     @Query("SELECT * FROM item WHERE id = :id LIMIT 1")
     abstract fun findById(id: Long): LiveData<Item>
 
+    @Query("SELECT * FROM item WHERE barcode = :barcode LIMIT 1")
+    abstract fun findByBarcode(barcode: String): LiveData<Item>
+
     @Query("SELECT * FROM item WHERE id = :id LIMIT 1")
     abstract fun findByIdSync(id: Long): Item
 
