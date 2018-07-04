@@ -20,6 +20,7 @@ import com.flex.pos.ui.utils.AlertUtil
 import com.flex.pos.ui.utils.ContextWrapperUtil
 import com.flex.pos.ui.utils.LockHandler
 import com.flex.pos.ui.utils.ServiceLocator
+import com.flex.pos.ui.views.barcode.BarcodeGraphicTracker
 import com.flex.pos.ui.views.discount.DiscountsFragment
 import com.flex.pos.ui.views.lock.AutoLockActivity
 import com.flex.pos.ui.views.nav.ResourcesFragment
@@ -28,6 +29,7 @@ import com.flex.pos.ui.views.sale.CheckOutItemsHolder
 import com.flex.pos.ui.views.sale.SaleFragment
 import com.flex.pos.ui.views.setting.SettingFragment
 import com.flex.pos.ui.views.tax.TaxesFragment
+import com.google.android.gms.vision.barcode.Barcode
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 
@@ -203,20 +205,20 @@ class MainActivity : AutoLockActivity(), NavigationView.OnNavigationItemSelected
 
     }
 
-    fun animateToBurger() {
-        toggle.isDrawerIndicatorEnabled = true
-        unlockDrawer()
-        val drawable = toggle.drawerArrowDrawable
-        val animator = ObjectAnimator.ofFloat(drawable, "progress", 0f)
-        animator.start()
-    }
-
     fun unlockDrawer() {
         drawerLayoutMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
     fun lockDrawer() {
         drawerLayoutMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+    private fun animateToBurger() {
+        toggle.isDrawerIndicatorEnabled = true
+        unlockDrawer()
+        val drawable = toggle.drawerArrowDrawable
+        val animator = ObjectAnimator.ofFloat(drawable, "progress", 0f)
+        animator.start()
     }
 
     private fun toggle() {

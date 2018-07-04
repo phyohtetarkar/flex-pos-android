@@ -20,6 +20,7 @@ import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -37,15 +38,17 @@ import com.flex.pos.ui.views.BindingViewHolder
 import com.flex.pos.ui.views.ListViewModel
 import com.flex.pos.ui.views.SimpleListFragment
 import com.flex.pos.ui.views.SimplePagedListAdapter
+import com.flex.pos.ui.views.barcode.BarcodeGraphicTracker
 import com.flex.pos.ui.views.barcode.FragmentScannerSheet
 import com.flex.pos.ui.views.item.ItemVOAdapter
 import com.flex.pos.ui.views.lock.AutoLockActivity
+import com.google.android.gms.vision.barcode.Barcode
 import kotlinx.android.synthetic.main.fragment_simple_list.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import kotlinx.android.synthetic.main.layout_item_compact.view.*
 import kotlin.math.roundToInt
 
-class SaleFragment : SimpleListFragment<ItemVO>() {
+class SaleFragment : SimpleListFragment<ItemVO>(), BarcodeGraphicTracker.BarcodeDetectorDelegate {
 
     private val CAMERA_PERMISSION_FOR_SCAN = 1;
     private val SCANNER_SHEET_TAG = "scannerSheet"
@@ -291,6 +294,10 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     }
 
+    override fun onBarcodeDetected(b: Barcode?) {
+        Log.v("TAG", "Detected: ${b?.rawValue}")
+    }
+
     private fun updateBadgeCount() {
 
         val count = CheckOutItemsHolder.itemCount.toString()
@@ -320,6 +327,9 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
         }
 
         val frag = FragmentScannerSheet()
+        frag.arguments = Bundle().also {
+            it.putBoolean("hasParentFragment", true)
+        }
         frag.show(ft, SCANNER_SHEET_TAG)
 
     }

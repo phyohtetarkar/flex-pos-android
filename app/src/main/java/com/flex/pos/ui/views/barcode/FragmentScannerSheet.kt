@@ -39,8 +39,11 @@ class FragmentScannerSheet : BottomSheetDialogFragment(), SurfaceHolder.Callback
 
         surfaceViewScanner.holder.addCallback(this)
 
-        val barcodeFactory = BarcodeTrackerFactory(graphicOverlay as GraphicOverlay<BarcodeGraphic>) {
-            Log.v("TAG", "Detected: ${it?.rawValue}")
+        val parentFrag = arguments?.getBoolean("hasParentFragment")
+
+        val barcodeFactory = when (parentFrag) {
+            true -> BarcodeTrackerFactory(graphicOverlay as GraphicOverlay<BarcodeGraphic>, parentFragment)
+            else -> BarcodeTrackerFactory(graphicOverlay as GraphicOverlay<BarcodeGraphic>, activity)
         }
 
         val barcodeDetector = BarcodeDetector.Builder(context).build()
