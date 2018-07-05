@@ -19,11 +19,11 @@
         app:showAsAction="always"
         app:actionLayout="@layout/layout_receipt_noti"/>
 
-    <item
+    <!--<item
         android:id="@+id/action_scan"
         android:title="Scan Barcode"
         android:orderInCategory="300"
         android:icon="@drawable/ic_crop_free_dark"
-        app:showAsAction="never"/>
+        app:showAsAction="never"/>-->
 
 </menu>

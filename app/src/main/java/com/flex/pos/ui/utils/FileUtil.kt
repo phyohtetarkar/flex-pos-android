@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
+import android.support.v4.content.FileProvider
 import com.flex.pos.R
 import java.io.File
 import java.io.FileOutputStream
@@ -119,7 +120,7 @@ object FileUtil {
             val file = File(dir, name)
 
             if (file.exists()) {
-                return Uri.fromFile(file)
+                return FileProvider.getUriForFile(context, "${context.applicationContext.packageName}.ui.provider", file)
             }
         }
 

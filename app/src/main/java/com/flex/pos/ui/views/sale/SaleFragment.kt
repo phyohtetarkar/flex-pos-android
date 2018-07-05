@@ -94,11 +94,11 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        val app = context as MainActivity
-        app.toolbarMain.title = null
+        val app = context as? MainActivity
+        app?.toolbarMain?.title = null
 
-        mSpinner = LayoutInflater.from(context).inflate(R.layout.layout_toolbar_spinner, app.toolbarMain, false) as AppCompatSpinner?
-        spinnerAdapter = ArrayAdapter(app.appbar_main.context, R.layout.extended_simple_list_item_1)
+        mSpinner = LayoutInflater.from(context).inflate(R.layout.layout_toolbar_spinner, app?.toolbarMain, false) as AppCompatSpinner?
+        spinnerAdapter = ArrayAdapter(app?.appbar_main?.context, R.layout.extended_simple_list_item_1)
         mSpinner?.adapter = spinnerAdapter
         mSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -110,7 +110,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
         }
 
-        app.toolbarMain.addView(mSpinner)
+        app?.toolbarMain?.addView(mSpinner)
 
     }
 
@@ -178,7 +178,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        when (item?.itemId) {
+        /*when (item?.itemId) {
             R.id.action_scan -> {
                 if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA)
                         == PackageManager.PERMISSION_GRANTED) {
@@ -189,7 +189,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
                             CAMERA_PERMISSION_FOR_SCAN)
                 }
             }
-        }
+        }*/
 
         return super.onOptionsItemSelected(item)
     }

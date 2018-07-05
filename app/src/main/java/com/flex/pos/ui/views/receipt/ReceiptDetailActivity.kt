@@ -108,6 +108,7 @@ class ReceiptDetailActivity : AutoLockActivity() {
                 emailIntent.putExtra(Intent.EXTRA_TEXT, "")
                 emailIntent.type = "image/*"
                 emailIntent.putExtra(Intent.EXTRA_STREAM, it)
+                emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
                 navigated = true
 
