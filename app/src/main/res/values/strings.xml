@@ -14,7 +14,7 @@
     <string name="backups">Backups</string>
 
     <string name="app_name">Flex POS</string>
-    <string name="app_version">Version 1.0.0</string>
+    <string name="app_version">Version %s</string>
     <string name="created_by">Created by Phyo Htet Arkar</string>
 
     <string name="save">Save</string>
