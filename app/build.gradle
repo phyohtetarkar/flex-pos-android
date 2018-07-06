@@ -81,6 +81,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     kapt "android.arch.persistence.room:compiler:$roomVersion"
     implementation 'com.google.android.gms:play-services-vision:9.6.1'
+    implementation 'com.google.firebase:firebase-ml-vision:16.0.0'
 }
 
 repositories {

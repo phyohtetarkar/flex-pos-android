@@ -64,6 +64,7 @@ class FragmentScannerSheet : BottomSheetDialogFragment(), SurfaceHolder.Callback
                 .setFacing(facing)
                 .build()
 
+
     }
 
     override fun onDestroyView() {

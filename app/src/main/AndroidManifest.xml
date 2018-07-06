@@ -20,6 +20,10 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="barcode"/>
+
         <provider
             android:name=".ui.GenericFileProvider"
             android:authorities="${applicationId}.ui.provider"
