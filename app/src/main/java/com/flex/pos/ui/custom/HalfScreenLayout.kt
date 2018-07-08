@@ -1,10 +1,10 @@
 package com.flex.pos.ui.custom
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
-import android.view.SurfaceView
 
-class HalfScreenSurfaceView : SurfaceView {
+class HalfScreenLayout : ConstraintLayout {
 
     constructor(context: Context?) : super(context)
 
@@ -13,6 +13,6 @@ class HalfScreenSurfaceView : SurfaceView {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec - 100)
+        super.onMeasure(widthMeasureSpec, (heightMeasureSpec - widthMeasureSpec) + 100)
     }
 }

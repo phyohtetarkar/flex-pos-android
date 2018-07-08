@@ -20,7 +20,6 @@ import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -38,10 +37,9 @@ import com.flex.pos.ui.views.BindingViewHolder
 import com.flex.pos.ui.views.ListViewModel
 import com.flex.pos.ui.views.SimpleListFragment
 import com.flex.pos.ui.views.SimplePagedListAdapter
-import com.flex.pos.ui.views.barcode.FragmentScannerSheet
+import com.flex.pos.ui.views.barcode.ScannerSheetFragment
 import com.flex.pos.ui.views.item.ItemVOAdapter
 import com.flex.pos.ui.views.lock.AutoLockActivity
-import com.google.android.gms.vision.barcode.Barcode
 import kotlinx.android.synthetic.main.fragment_simple_list.*
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import kotlinx.android.synthetic.main.layout_item_compact.view.*
@@ -135,6 +133,13 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             }
 
             it?.also {
+                /*try {
+                    val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                    val r = RingtoneManager.getRingtone(activity, notification)
+                    r.play()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }*/
                 CheckOutItemsHolder.add(it.price, it.id)
             }
         })
@@ -178,7 +183,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        /*when (item?.itemId) {
+        when (item?.itemId) {
             R.id.action_scan -> {
                 if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA)
                         == PackageManager.PERMISSION_GRANTED) {
@@ -189,7 +194,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
                             CAMERA_PERMISSION_FOR_SCAN)
                 }
             }
-        }*/
+        }
 
         return super.onOptionsItemSelected(item)
     }
@@ -303,13 +308,6 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
 
     }
 
-    private fun handleBarcode(b: Barcode?) {
-        Log.v("TAG", "Detected: ${b?.rawValue}")
-        viewModel.barcode.postValue(b?.rawValue)
-
-    }
-
-
     private fun updateBadgeCount() {
 
         val count = CheckOutItemsHolder.itemCount.toString()
@@ -338,8 +336,7 @@ class SaleFragment : SimpleListFragment<ItemVO>() {
             ft?.remove(prev)
         }
 
-        val frag = FragmentScannerSheet()
-        frag.onBarcodeDetected = { handleBarcode(it) }
+        val frag = ScannerSheetFragment()
         frag.show(ft, SCANNER_SHEET_TAG)
 
     }

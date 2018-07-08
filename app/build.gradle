@@ -10,8 +10,8 @@ android {
         applicationId 'com.flex.pos'
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -80,8 +80,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     kapt "android.arch.persistence.room:compiler:$roomVersion"
-    implementation 'com.google.android.gms:play-services-vision:9.6.1'
+    implementation 'com.google.android.gms:play-services-vision:15.0.2'
     implementation 'com.google.firebase:firebase-ml-vision:16.0.0'
+
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 }
 
 repositories {

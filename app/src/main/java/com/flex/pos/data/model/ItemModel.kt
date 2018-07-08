@@ -193,6 +193,9 @@ abstract class ItemDao : BaseDao<Item> {
     @Query("SELECT * FROM item WHERE barcode = :barcode LIMIT 1")
     abstract fun findByBarcode(barcode: String): LiveData<Item>
 
+    @Query("SELECT * FROM item WHERE barcode = :barcode LIMIT 1")
+    abstract fun findByBarcodeSync(barcode: String): Item?
+
     @Query("SELECT * FROM item WHERE id = :id LIMIT 1")
     abstract fun findByIdSync(id: Long): Item
 
@@ -217,6 +220,7 @@ abstract class ItemDao : BaseDao<Item> {
     @Transaction
     open fun save(item: Item, taxes: List<Tax>, discounts: List<Discount>) {
         var itemId = item.id
+        item.barcode = item.barcode.trim()
         if (item.id > 0) {
             update(item)
         } else {

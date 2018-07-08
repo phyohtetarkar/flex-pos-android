@@ -227,6 +227,12 @@ class EditItemActivity : AutoLockActivity() {
             }
         })
 
+        viewModel.barcodeValid.observe(this, Observer {
+            if (it == false) {
+                binding.edItemBarcode.error = resources.getString(R.string.error_name_conflict_format, "Barcode")
+            }
+        })
+
         viewModel.saveSuccess.observe(this, Observer {
             if (it == true) {
                 onBackPressed()

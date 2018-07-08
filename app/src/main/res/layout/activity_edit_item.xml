@@ -101,6 +101,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:text="@={vm.item.barcode}"
+                    app:checkResult="@{vm.barcodeValid}"
                     app:layout_constraintBottom_toTopOf="@+id/switchCompat2"
                     app:layout_constraintEnd_toEndOf="@+id/edChooseCategory"
                     app:layout_constraintStart_toStartOf="@+id/edChooseCategory"

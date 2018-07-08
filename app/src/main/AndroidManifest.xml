@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme"
         android:name=".FlexPosApplication"
-        android:fullBackupContent="true">
+        android:fullBackupContent="true"
+        android:hardwareAccelerated="true">
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"

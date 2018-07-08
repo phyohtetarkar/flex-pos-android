@@ -21,6 +21,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val unitNotEmpty = MutableLiveData<Boolean>()
     val amountValid = MutableLiveData<Boolean>()
     val priceValid = MutableLiveData<Boolean>()
+    val barcodeValid = MutableLiveData<Boolean>()
 
     val saveSuccess = MutableLiveData<Boolean>()
     val deleteSuccess = MutableLiveData<Boolean>()
@@ -58,6 +59,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     private val repository: ItemRepository
 
+    private val itemDao: ItemDao
     private val categoryDao: CategoryDao
     private val unitDao: UnitDao
     private val taxDao: TaxDao
@@ -65,6 +67,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     init {
         val app = application as FlexPosApplication
+        itemDao = app.db.itemDao()
         categoryDao = app.db.categoryDao()
         unitDao = app.db.unitDao()
         repository = ItemRepository(app.db.itemDao(), unitDao, categoryDao)
@@ -103,6 +106,16 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
             }
         }.takeUnless { hasError }?.also {
             DaoWorkerAsync<Item>({
+
+                if (!it.barcode.isEmpty()) {
+                    val item = itemDao.findByBarcodeSync(it.barcode.trim())
+
+                    if (item != null && it.id != item.id) {
+                        barcodeValid.postValue(false)
+                        return@DaoWorkerAsync false
+                    }
+                }
+
                 return@DaoWorkerAsync repository.save(it, taxes.value, discounts.value).let { true }
             },{
                 saveSuccess.value = true
